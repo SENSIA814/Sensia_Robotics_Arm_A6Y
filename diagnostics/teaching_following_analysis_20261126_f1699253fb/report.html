@@ -1,0 +1,21 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>J4 KP80 真机日志复核</title><style>
+body{background:#101722;color:#e7edf5;font:16px/1.75 system-ui,sans-serif;max-width:1180px;margin:auto;padding:38px 24px}h1{font-size:30px;line-height:1.4}h2{font-size:22px;margin-top:38px}p{max-width:1060px}.muted{color:#aab9ca}.card{background:#1b2738;border-left:4px solid #6eb9de;padding:18px 24px;border-radius:7px}table{width:100%;border-collapse:collapse;margin:20px 0}th,td{text-align:left;border-bottom:1px solid #334358;padding:10px}th{color:#a5d8ee}img{width:100%;border-radius:8px;background:white;margin:12px 0}a{color:#91d2f0}code{font-size:.9em}details{margin:20px 0}summary{cursor:pointer;font-size:20px}li{margin:8px 0}
+</style><h1>J4：启动追随更快，快速变向仍有滞后</h1><p class="muted">真机 2026-11-25 23:52:02–23:53:42 · 会话 f1699253fb · 与 23:13 的 KP54 记录对比<br>本次仅分析保存的日志；未修改程序，未连接或读写电机。</p>
+<div class="card">这轮未再看到此前右 J4 持续放大的大幅静止振荡。两侧启动追齐更快；但右 J4 快速变向时，示教与实际的瞬时差值仍达 44.81°。目前更值得关注运动端响应与原程序限步的共同作用，没有证据支持继续提高通信频率。</div>
+<h2>相近初始条件下的启动追齐</h2><table><tr><th>关节</th><th>进入并保持 ±0.5°：上轮 → 本轮</th><th>末段静止波动峰峰值：上轮 → 本轮</th></tr><tr><td>左 J4</td><td>0.76 → 0.53 s</td><td>0.197 → 0.087°</td></tr><tr><td>右 J4</td><td>1.32 → 0.90 s</td><td>0.066 → 0.066°</td></tr></table>
+<p>两轮启动时，左 J4 误差约 10°，右 J4 约 21°，示教位置基本静止。到位时间从开始跟随计，要求进入 ±0.5° 后保持到第 2 秒。这是整条跟随链路的追齐时间，不是电机内部闭环周期。末段静止窗口：上轮 40–44.3 s，本轮 95–100 s。</p>
+<p>末段表现良好不代表所有姿态完全没有波动：按“六轴示教在连续 2 秒内各自变化不超过 0.1°”筛选，取最后 1 秒计算，本轮左 J4 最大峰峰值约 0.50°（38.25–39.25 s），右约 0.17°。未观察到此前持续放大的十几度振荡，但仍有小幅残余波动。</p>
+<a href="j4_comparison.png"><img src="j4_comparison.png" alt="J4 启动追齐、快速变向和末段静止对比"></a>
+<h2>快速变向时，差值在哪里产生</h2><p>右 J4 在 t=59.246 s：示教 −47.68°、原始目标 −47.46°、底层下发目标 −6.47°、实际 −2.87°。示教与原始目标接近，但原程序相对运动臂反馈的限步让下发目标只领先实际约 3.60°，最终示教与实际相差 44.81°。左 J4 最大示教误差约 29.09°。</p>
+<p>J4–J6 每次目标允许领先跟随臂当前位置约 4.30°；运动臂来不及跟上时，限步持续作用，目标变成受约束的追赶过程。不能把总差值全部当成通信延迟，也不能把限步与电机动态简单分成互不相关的两个原因。</p>
+<h2>本轮全六轴表现</h2><p class="muted">3–90 s，含其中的停顿。表内按“左 / 右”排列，误差单位为度。目标受限指 |原始目标−限步目标| &gt; 0.001 rad。</p><table><tr><th>轴</th><th>下发目标−实际 RMS</th><th>示教−实际 RMS</th><th>目标受限占比</th></tr><tr><td>J1</td><td>0.26 / 0.30</td><td>0.38 / 0.44</td><td>0.0% / 0.1%</td></tr><tr><td>J2</td><td>0.29 / 0.44</td><td>0.44 / 0.64</td><td>0.0% / 0.2%</td></tr><tr><td>J3</td><td>0.32 / 0.53</td><td>0.48 / 0.77</td><td>0.0% / 0.2%</td></tr><tr><td>J4</td><td>1.23 / 1.95</td><td>3.65 / 6.90</td><td>6.5% / 16.5%</td></tr><tr><td>J5</td><td>1.28 / 1.16</td><td>2.89 / 2.07</td><td>6.0% / 3.7%</td></tr><tr><td>J6</td><td>0.82 / 0.91</td><td>0.99 / 1.69</td><td>1.2% / 2.0%</td></tr></table>
+<p>J1–J3 的下发目标跟随误差较小；剩余差距主要在 J4，J5 快速动作也有明显误差。两轮手动轨迹的幅度、速度及停顿比例不同，不能用整段 RMS 的下降百分比作为参数改善量。这里保留逐轴数据，避免只用末段静止表现判断效果。</p>
+<h2>时序与数据完整性</h2><p>跟随 100.352 s；四条臂底层循环及每轴指令约 250 Hz，上位机目标约 99.99 Hz。跟随阶段没有新增控制超时计数、缺失周期、记录队列丢弃、位置无效或故障标志。</p>
+<table><tr><th>主机链路匹配</th><th>中位数</th><th>P95</th><th>匹配 / 有效变化向量</th></tr><tr><td>左 · 示教快照→原始目标</td><td>2.33 ms</td><td>4.30 ms</td><td>5447 / 5447</td></tr><tr><td>左 · 限步目标→底层串口写入</td><td>2.81 ms</td><td>3.67 ms</td><td>5562 / 5562</td></tr><tr><td>右 · 示教快照→原始目标</td><td>1.34 ms</td><td>2.68 ms</td><td>6553 / 6553</td></tr><tr><td>右 · 限步目标→底层串口写入</td><td>2.36 ms</td><td>3.48 ms</td><td>6553 / 6553</td></tr></table>
+<p class="muted">仅匹配变化中的六轴向量，窗口为 80 ms。示教使用最近相同快照，底层使用最早相同串口写入；量化后重复值可能低估间隔。这些是主机观测时间，不是 CAN ACK、纯通信延迟或电机内部采样周期。</p>
+<p>自动摘要的 sample_gaps_or_invalid_feedback 标记来自启动时各数据流尚未对齐：12 个示教字段空值，24 个原始/限步目标字段空值。第 1 秒之后没有空值；原生控制周期连续。整段包含多次往返，不能拟合成一个理想阶跃。</p>
+<h2>启动、退出与参数证据</h2><p>启动未回零，运动臂直接追随示教位置。退出时四条臂均记录 Reached arm/home，原生轨迹为保持 2 秒、运动 20 秒；回零阶段约 22.1–22.5 秒结束，随后全部确认失能，无关闭错误。</p>
+<p>本轮参数标签依据 23:41 的已核验写入：双运动臂 J4 KP_APR=80、KI_APR=0、KP_ASR=0.00372、KI_ASR=0.002，仅写 RAM。日志本身没有运行期间的增益回读；若写入后曾断电重启，不能据此确认运行时仍为 80。本次没有重新连接电机扫描。</p>
+<details><summary>全六轴：示教实际与运动目标</summary><a href="01_teacher_vs_target.png"><img src="01_teacher_vs_target.png" alt="全六轴示教和目标曲线"></a></details>
+<details><summary>全六轴：运动目标与实际位置</summary><a href="02_target_vs_actual.png"><img src="02_target_vs_actual.png" alt="全六轴目标和反馈曲线"></a></details>
+<p class="muted">曲线未经平滑或人为时间平移；时间零点均为进入跟随状态。<a href="analysis.json">完整统计与源文件哈希</a> · <a href="analyze.py">离线复现脚本</a></p></html>

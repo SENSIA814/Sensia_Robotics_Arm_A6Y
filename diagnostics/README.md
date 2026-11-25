@@ -16,6 +16,7 @@
 | `teaching_tracking_analysis_20261125/` | 示教跟踪、速度与时序分析及 HTML 报告生成 |
 | `teaching_250hz_analysis_20261125/` | 250 Hz 阶段的跟踪分析 |
 | `teaching_following_analysis_20261125_*/` | 指定实验会话的跟随误差分析 |
+| `teaching_following_analysis_20261126_f1699253fb/` | 11 月 26 日跟随误差、目标与实际位置对比、J4 图表及 HTML 报告 |
 | `teaching_step_logging_20261125/scan_parameters.py` | 当时阶跃日志实验使用的电机参数读取 |
 | `teaching_motor_limits_revision_20261125/read_limits.py` | 读取电机量程与寄存器记录 |
 | `teaching_tuning_20261125/`、`*_trial_20261125/` | 实验调参脚本、基准和结果；其中 `apply_gains.py` 属于真机参数操作 |
