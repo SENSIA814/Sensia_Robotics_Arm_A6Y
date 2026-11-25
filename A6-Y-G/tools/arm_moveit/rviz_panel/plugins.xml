@@ -1,0 +1,5 @@
+<library path="a6y_rviz_panel">
+  <class name="a6y_rviz_panel/PlanningPanel" type="a6y_rviz_panel::PlanningPanel" base_class_type="rviz_common::Panel">
+    <description>MoveIt Plan, Execute, TCP goal and gripper opening controls for the selected A6Y arm.</description>
+  </class>
+</library>

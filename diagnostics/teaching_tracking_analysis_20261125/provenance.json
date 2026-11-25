@@ -1,0 +1,54 @@
+{
+  "teaching_2b6bab1c45": {
+    "frequency": 50,
+    "following_seconds": 219.6344072818756,
+    "reported_hz": 49.99807064885116,
+    "source_hashes": {
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_2b6bab1c45/session.json": "49d0c1a3f4a4e91091b2b9f155c342502289e99700421deae6ba4a170890789a",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_2b6bab1c45/result.json": "5e0c36b4efbfb4f205f1e3615e843830129d0ec42f1a46229e12d6ca22d6d51a",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_2b6bab1c45/events.jsonl": "aeb0fa165931ec96e0272ea0f0e8a38e07edc979cd57b173c56a777f67f48ace",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_2b6bab1c45/references.csv": "59508d8aa373d0fd13ee0e79a6810e1ca5cc0445b0d2668c86f544ffdbf0b42c",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_2b6bab1c45/software.json": "8bc616c508c9bf2a500cb5509872fbcd767a66ebbdb44b8fec7055fb7f0f5b78",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/arms/motion_left_8be6c0f67b/telemetry.csv": "805ff819be1f31b25459576d4e9927ef7d5446d5792e997899671d4860c99585",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/arms/motion_left_8be6c0f67b/control_controller_manager_1.yaml": "de671f078face8292af62230ccca84013f2ee49b0f7d707070f4aafea01c3008",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_2b6bab1c45/motion_left_teleop.yaml": "8d24f4a3a779ffb5f5cc72bc03c02683d3f2bcd6b7f91a3de657d45182e2b065",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/arms/teaching_left_3a2ddd6278/telemetry.csv": "6a2366879dfdb6cfd82afcd38f74794d749e880703cb1bcbe9b80ecaecf6bf23",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/arms/motion_right_982113ba6d/telemetry.csv": "919b21622e90fe42b9265a26da20d99ac9bad288b25a38fb007a87d94b3e7607",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/arms/motion_right_982113ba6d/control_controller_manager_1.yaml": "dc6bc94e044d8550b43f895e51a5cea82a567a06a830be4a373dd42d5237a294",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_2b6bab1c45/motion_right_teleop.yaml": "cd715d40ee7e5905fecbb823738c1222b707d9efd122a06329094647c067849c",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/arms/teaching_right_6808c48610/telemetry.csv": "f971c2ad9ca598a5b2f9600676db76baa26595fbee7629c02ab071f9515ef5cc"
+    },
+    "source_manifest": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_2b6bab1c45/software.json",
+    "status_changes": [
+      "running",
+      "running"
+    ],
+    "result_error": ""
+  },
+  "teaching_ac84a69ae6": {
+    "frequency": 100,
+    "following_seconds": 33.0855348110199,
+    "reported_hz": 99.48381579311209,
+    "source_hashes": {
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_ac84a69ae6/session.json": "d56d5042202c6dc39df2348ce6430ae00dae3b6f9a70339c240ce9450a76751f",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_ac84a69ae6/result.json": "bd86be5dc0b66f6b2693ccdfc32724d36008c80911e8fb7e697a3167dc4f65b1",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_ac84a69ae6/events.jsonl": "a3716d28d8522c7e2e2bab6b284e91d6bba44a8d9b074d41db98514c9f1b282f",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_ac84a69ae6/references.csv": "0041021074e22238175a31e88c415471533d8b387667e6627fd6be4e131b023c",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_ac84a69ae6/software.json": "8bc616c508c9bf2a500cb5509872fbcd767a66ebbdb44b8fec7055fb7f0f5b78",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/arms/motion_left_4a34ac5f6a/telemetry.csv": "5d6603fb445d797b59986bb924550eb4dd4b5c84ce8ea3f61825dcd9c2af8489",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/arms/motion_left_4a34ac5f6a/control_controller_manager_1.yaml": "1fa80ecfff8cfeb7c555a71a503089484b2c0342f0882edff18a7e97c2bbc801",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_ac84a69ae6/motion_left_teleop.yaml": "640bbfa608958be4c7de223f83221f64744ee8ede5de4e7a9ed1fa700e710199",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/arms/teaching_left_91c8f203fe/telemetry.csv": "f6d5491d6db8873dd04b43f3ca7a23a4dc8d1ebefc7b8a59f6484bd98eb99cc4",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/arms/motion_right_000f85e361/telemetry.csv": "7f9d2ac51107767d8ca777b6b275bcd8eea66b2868e664e592a19c4e13cd62d5",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/arms/motion_right_000f85e361/control_controller_manager_1.yaml": "1397125af0ad49ea4fae70c2e01392242fdcdba6b5e7fb4ef63cb34a33de2923",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_ac84a69ae6/motion_right_teleop.yaml": "1d505c1e46a7ad631ed116f3ee96f6f7830d2eb9fa8fa2428e3c0041306a9f00",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/arms/teaching_right_9a3b4fb9a6/telemetry.csv": "2df055379be62e46abd3853c4afe6b6dee5881622e12c7134225cf6efe905425"
+    },
+    "source_manifest": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_ac84a69ae6/software.json",
+    "status_changes": [
+      "running",
+      "running"
+    ],
+    "result_error": ""
+  }
+}

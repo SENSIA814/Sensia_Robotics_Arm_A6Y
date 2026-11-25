@@ -1,0 +1,1069 @@
+--- before/src/a6_y_ros2_control/include/a6_y_ros2_control/A6_y_damiao_system.hpp
++++ after/src/a6_y_ros2_control/include/a6_y_ros2_control/A6_y_damiao_system.hpp
+@@ -76,6 +76,13 @@
+     double state_position_age{ -1.0 }, state_position_valid{ 0.0 }, state_position_rejections{ 0.0 };
+     double state_dry_run{ 1.0 };
+     double command_count{ 0.0 }, feedback_count{ 0.0 };
++    double sent_position{ std::numeric_limits<double>::quiet_NaN() };
++    double sent_motor_position{ std::numeric_limits<double>::quiet_NaN() };
++    double sent_velocity_limit{ std::numeric_limits<double>::quiet_NaN() };
++    double send_begin_time{ 0.0 }, send_complete_time{ 0.0 }, feedback_receive_time{ 0.0 };
++    double sent_mode{ 0.0 };
++    double motor_position{ std::numeric_limits<double>::quiet_NaN() };
++    double motor_velocity{ std::numeric_limits<double>::quiet_NaN() };
+     double feedback_position_jump{ 0.2 }, feedback_position_alpha{ 0.4 };
+     AcceptedPosition accepted_position;
+     double command_position{ 0.0 };
+--- before/src/a6_y_ros2_control/src/A6_y_damiao_system.cpp
++++ after/src/a6_y_ros2_control/src/A6_y_damiao_system.cpp
+@@ -518,6 +518,15 @@
+       state_interfaces.emplace_back(joint.name, "write_duration", &last_write_duration_);
+       state_interfaces.emplace_back(joint.name, "command_count", &joint.command_count);
+       state_interfaces.emplace_back(joint.name, "feedback_count", &joint.feedback_count);
++      state_interfaces.emplace_back(joint.name, "sent_position", &joint.sent_position);
++      state_interfaces.emplace_back(joint.name, "sent_motor_position", &joint.sent_motor_position);
++      state_interfaces.emplace_back(joint.name, "sent_velocity_limit", &joint.sent_velocity_limit);
++      state_interfaces.emplace_back(joint.name, "send_begin_time", &joint.send_begin_time);
++      state_interfaces.emplace_back(joint.name, "send_complete_time", &joint.send_complete_time);
++      state_interfaces.emplace_back(joint.name, "feedback_receive_time", &joint.feedback_receive_time);
++      state_interfaces.emplace_back(joint.name, "sent_mode", &joint.sent_mode);
++      state_interfaces.emplace_back(joint.name, "motor_position", &joint.motor_position);
++      state_interfaces.emplace_back(joint.name, "motor_velocity", &joint.motor_velocity);
+     }
+     state_interfaces.emplace_back(joint.name, "commanded_effort", &joint.command_effort);
+   }
+@@ -1121,6 +1130,8 @@
+   }
+ 
+   std::string error_message;
++  const double send_begin = std::chrono::duration<double>(
++      std::chrono::steady_clock::now().time_since_epoch()).count();
+   if (!bus_->send(frame, &error_message))
+   {
+     RCLCPP_ERROR(LOGGER, "Failed to send command for %s: %s", joint.name.c_str(), error_message.c_str());
+@@ -1128,6 +1139,20 @@
+   }
+   // A complete SLCAN frame accepted by the host serial driver, not a CAN ACK.
+   joint.command_count += 1.0;
++  joint.send_begin_time = send_begin;
++  joint.send_complete_time = std::chrono::duration<double>(
++      std::chrono::steady_clock::now().time_since_epoch()).count();
++  joint.sent_mode = static_cast<double>(control_mode_code());
++  // POS_VEL encodes float32 motor coordinates. MIT gravity has no position
++  // servo target; keep its reference field out of position-response metrics.
++  if (control_mode_ == "pos_vel") {
++    joint.sent_motor_position = static_cast<double>(static_cast<float>(motor_position));
++    joint.sent_position = joint.sign * joint.sent_motor_position * joint.position_scale + joint.offset;
++    joint.sent_velocity_limit = static_cast<double>(static_cast<float>(std::abs(motor_velocity)));
++  } else {
++    joint.sent_position = joint.sent_motor_position = joint.sent_velocity_limit =
++        std::numeric_limits<double>::quiet_NaN();
++  }
+   return true;
+ }
+ 
+@@ -1227,6 +1252,10 @@
+     return;
+   }
+   joint.feedback_count += 1.0;
++  joint.feedback_receive_time = std::chrono::duration<double>(
++      std::chrono::steady_clock::now().time_since_epoch()).count();
++  joint.motor_position = feedback.q;
++  joint.motor_velocity = feedback.dq;
+ 
+   const double raw_position = joint.sign * feedback.q * joint.position_scale + joint.offset;
+   joint.last_position = joint.state_position;
+--- before/tools/arm_gravity/TEACHING.md
++++ after/tools/arm_gravity/TEACHING.md
+@@ -39,6 +39,28 @@
+ - `*_mapper.log`、原程序状态变化、每臂 `native_home.log`、驱动日志与模式切换确认。
+ - 各臂反馈/力矩 CSV（运动臂重力列为空）、首次故障、退出故障、失能确认；日志磁盘错误不会阻止停止操作。
+ 
++### 手动阶跃采集
++
++启动跟随后先静止至少 2 秒，等待运动臂初始跟随稳定，再手动移动示教端一次，保持新姿态至少 10 秒，然后正常停止并导出诊断包。每个待分析关节都需要发生可辨识的位移；可一次只测一个关节并分会话记录，也可在同一次会话中分别移动不同关节一次。同一关节反复往返、分段移动或过早结束会被标记，不能视为理想阶跃。无需快速猛拉机械臂。
++
++跟随期间由独立的只读采集进程观测全部已选机械臂的原生诊断消息（标称 250 Hz）和原程序 raw/safe 目标（100 Hz），避免高频消息处理与上位机争用同一个 Python 解释器。采集进程内使用有界队列写盘，队列满时计数并丢弃日志记录；正常停止时生成分析报告，退出回零不等待采集进程。`step_observer.log` 保存采集进程异常。
++
++- `step_arms.csv`：每条臂每个观测周期一行，J1～J7 的实际关节角/速度/力矩、原始电机角/速度、最近成功交给串口的 POS_VEL 目标（含 float32 编码后的电机坐标及换算关节坐标）、速度字段、发送起止时间、反馈解码时间、命令/反馈计数、位置有效性、故障、使能状态及 `error_j* = sent_position - position`。示教臂 MIT 重力补偿没有位置伺服目标，目标与误差列留空；夹爪只读，没有位置控制响应指标。
++- `step_targets.csv`：每对原程序发布的 raw/safe 目标、发布 ROS 时间及观察者接收时间。原始目标、限步后的目标、底层实际下发目标分开保留。
++- `step_tracking.csv`：停止后按本机单调时间对齐的逐轴示教实际角、raw/safe 目标、下发目标、运动实际角及误差。使用过去最近值，超过 100 ms 不填充；保留各流年龄。raw/safe 的 ROS 时间通过同机系统/单调时钟偏移换算，不适用于跨主机或仿真时钟。
++- `step_summary.txt` / `.csv` / `.json`：逐轴响应延迟（10% 交叉）、10%～90% 上升时间、稳定时间、稳态/峰值/RMS 误差、超调及输入形状。稳定带为 `±max(0.01 rad, 2%输入幅值)`，持续至少 0.5 秒且直到记录结束。这里的阈值仅用于离线分析，不是控制保护或电机限值。输入幅值小于 0.03 rad 标为未激励；未进入稳定带留空，不输出假零时间。
++- `step_quality.json`：配对、端口、单位、时钟含义、队列丢弃、未观测原生周期、重复/重置计数、记录及分析完成状态。窗口实时显示采集状态与缺口；虚拟电机数据明确标记，不能当作真机动力学。
++
++`send_complete_time` 仅代表主机串口接受完整帧，不代表 CAN ACK；`feedback_receive_time` 是主机解析帧的时刻，不是电机采样时刻。每周期保存最新反馈快照，不能逐帧推算总线往返延迟。“闭环时间”以响应延迟、上升时间、稳定时间分别表达；底层循环周期另见 `control_period`，日志无法读取电机内部伺服周期。手动移动及原程序相对运动臂当前位置的限步会形成斜坡，报告会标明，不能直接套用理想阶跃调参公式。
++
++推荐等窗口显示“报告已生成”后导出。运行中导出仍可用，但记录可能不完整。若快速失能后直接关窗，后台分析可能尚未完成；原始日志保留，离线重新分析（不连接 ROS 或电机）：
++
++```bash
++/usr/bin/python3 tools/arm_gravity/analyze_teaching_step.py /绝对路径/teaching_会话目录
++```
++
++同一采样间隔内的交叉时间在原始 CSV 中可能为 0，文字报告显示“同一采样间隔内”，不代表真实物理延迟为零。高频日志会增加磁盘占用（四臂虚拟测试约 140 MB/分钟，压缩前）；本轮未改变控制/通信频率、跟随算法、电机环路参数或退出回零逻辑。
++
+ 原始参考文件和源码校验和位于 `diagnostics/teaching_upstream_port_20261125/`；本次直接启动的修改前备份与验证记录位于 `diagnostics/teaching_direct_start_20261125/`。PTY 测试运行真实 ROS 节点和 C++ 驱动，但用立即响应的位置模拟电机，只能验证软件链路、协议与退出流程，不能代表真机动力学或实际跟踪性能。
+ 
+ ### 250 Hz 频率核验
+--- /dev/null
++++ after/tools/arm_gravity/analyze_teaching_step.py
+@@ -0,0 +1,286 @@
++#!/usr/bin/env python3
++"""Offline manual-step diagnostics. Reads logs only; no ROS or motor access."""
++import argparse
++import csv
++import json
++from pathlib import Path
++
++import numpy as np
++
++
++def number(value):
++    try:
++        return float(value)
++    except (ValueError, TypeError):
++        return float('nan')
++
++
++def series(t, q):
++    t, q = np.asarray(t), np.asarray(q)
++    valid = np.isfinite(t) & np.isfinite(q) & (t > 0)
++    t, q = t[valid], q[valid]
++    order = np.argsort(t, kind='stable')
++    t, q = t[order], q[order]
++    # Keep the last snapshot for a repeated native send/feedback timestamp.
++    unique = np.r_[np.diff(t) > 0, True] if len(t) else np.array([], dtype=bool)
++    return t[unique], q[unique]
++
++
++def asof(t, source_t, values, max_age=.1):
++    source_t, values = series(source_t, values)
++    if not len(source_t):
++        return np.full(len(t), np.nan), np.full(len(t), np.nan)
++    indices = np.searchsorted(source_t, t, side='right') - 1
++    age = t - source_t[np.maximum(indices, 0)]
++    valid = (indices >= 0) & (age >= 0) & (age <= max_age)
++    return np.where(valid, values[np.maximum(indices, 0)], np.nan), np.where(valid, age, np.nan)
++
++
++def crossing(t, normalized, threshold, start):
++    indices = np.flatnonzero((t >= start) & (normalized >= threshold))
++    return float(t[indices[0]]) if len(indices) else None
++
++
++def transition(t, q, start, baseline_end):
++    before = q[(t >= baseline_end - .6) & (t < baseline_end)]
++    final = q[t >= t[-1] - 1.]
++    if not len(before) or not len(final):
++        return None
++    initial, target = float(np.median(before)), float(np.median(final))
++    amplitude = target - initial
++    if abs(amplitude) < .015:
++        return None
++    normalized = (q - initial) / amplitude
++    a, b = crossing(t, normalized, .1, start), crossing(t, normalized, .9, start)
++    return dict(initial=initial, final=target, amplitude=amplitude, t10=a, t90=b,
++                rise_s=b-a if a is not None and b is not None else None)
++
++
++def response_metrics(t, teacher, target, actual, raw=None, safe=None):
++    """One manual movement followed by a hold; t is host monotonic seconds."""
++    t, teacher, target, actual = [np.asarray(x, dtype=float) for x in (t, teacher, target, actual)]
++    result = dict(status='insufficient_data', flags=[])
++    valid = np.isfinite(t) & np.isfinite(teacher) & np.isfinite(target) & np.isfinite(actual)
++    result['invalid_samples'] = int(np.sum(~valid))
++    t, teacher, target, actual = [x[valid] for x in (t, teacher, target, actual)]
++    raw = np.asarray(raw)[valid] if raw is not None else None
++    safe = np.asarray(safe)[valid] if safe is not None else None
++    if len(t) < 50 or t[-1] - t[0] < 2.5:
++        return result
++    result['max_sample_gap_s'] = float(np.max(np.diff(t)))
++    result['median_sample_interval_s'] = float(np.median(np.diff(t)))
++    if result['max_sample_gap_s'] > .02 or result['invalid_samples'] > 0:
++        result['flags'].append('sample_gaps_or_invalid_feedback')
++    baseline = teacher[t < t[0] + .6]
++    initial, final = float(np.median(baseline)), float(np.median(teacher[t >= t[-1]-1.]))
++    amplitude = final-initial
++    excursion = float(np.max(np.abs(teacher-initial)))
++    result.update(teacher_amplitude_rad=amplitude, teacher_excursion_rad=excursion)
++    if abs(amplitude) < .03:
++        result['status'] = 'no_excitation' if excursion < .03 else 'returned_or_multiple_movements'
++        return result
++    if np.ptp(baseline) > max(.01, abs(amplitude)*.05):
++        result['status'] = 'initial_teacher_not_stable'
++        return result
++    normalized = (teacher-initial)/amplitude
++    onset = crossing(t, normalized, .05, t[0]+.6)
++    if onset is None:
++        return result
++    base = (t >= onset-.6) & (t < onset)
++    if np.ptp(actual[base]) > max(.015, abs(amplitude)*.05):
++        result['flags'].append('initial_follower_not_stable')
++    band = max(.01, abs(amplitude)*.02)
++    result.update(analysis_band_rad=band, input_onset_s=onset-float(t[0]))
++    tail = t >= t[-1]-1.
++    if np.ptp(teacher[tail]) > 2*band:
++        result['status'] = 'teacher_not_held'
++        return result
++    # Require a single direction. Quantization/noise below 5% or .015 rad is ignored.
++    moving = normalized[t >= onset]
++    reversal = float(np.max(np.maximum.accumulate(moving)-moving))*abs(amplitude)
++    if reversal > max(.015, abs(amplitude)*.1):
++        result['status'] = 'reversal_or_multiple_movements'
++        return result
++    teacher_transition = transition(t, teacher, onset-.05, onset)
++    sent_transition = transition(t, target, onset-.05, onset)
++    if not teacher_transition or not sent_transition:
++        result['status'] = 'target_not_excited'
++        return result
++    for label, values in (('teacher', teacher_transition), ('sent', sent_transition)):
++        result[label+'_rise_10_90_s'] = values['rise_s']
++    for name, values in (('raw', raw), ('safe', safe)):
++        if values is not None and np.isfinite(values).all():
++            change = transition(t, values, onset-.05, onset)
++            if change:
++                result[name+'_rise_10_90_s'] = change['rise_s']
++                if teacher_transition['t10'] is not None and change['t10'] is not None:
++                    result['teacher_to_'+name+'_t10_s'] = change['t10']-teacher_transition['t10']
++    q0, q1 = sent_transition['initial'], sent_transition['final']
++    step = q1-q0
++    response = (actual-q0)/step
++    y10, y90 = crossing(t,response,.1,onset-.05), crossing(t,response,.9,onset-.05)
++    result.update(sent_amplitude_rad=step, actual_rise_10_90_s=y90-y10 if y90 is not None and y10 is not None else None,
++                  sent_to_actual_t10_s=y10-sent_transition['t10'] if y10 is not None and sent_transition['t10'] is not None else None,
++                  teacher_to_actual_t10_s=y10-teacher_transition['t10'] if y10 is not None and teacher_transition['t10'] is not None else None)
++    if result['sent_to_actual_t10_s'] is not None and abs(result['sent_to_actual_t10_s']) < 1e-9:
++        result['flags'].append('response_below_observation_resolution')
++    elif result['sent_to_actual_t10_s'] is not None and result['sent_to_actual_t10_s'] < 0:
++        result['flags'].append('negative_observed_delay_requires_review')
++    # Final command must itself have stopped. Otherwise an apparent settling
++    # time conflates controller response with a still-moving target.
++    held = np.abs(target-q1) <= band
++    indices = np.flatnonzero((t >= onset) & ~held)
++    held_index = indices[-1]+1 if len(indices) else np.searchsorted(t,onset)
++    held_time = float(t[held_index]) if held_index < len(t) else None
++    result['target_hold_duration_s'] = float(t[-1]-held_time) if held_time is not None else 0.
++    active = t >= onset
++    error = target[active]-actual[active]
++    result.update(steady_error_rad=float(np.median(target[tail]-actual[tail])),
++                  peak_abs_error_rad=float(np.max(np.abs(error))), rms_error_rad=float(np.sqrt(np.mean(error**2))),
++                  overshoot_percent=max(0., float(np.max(response[active])-1.)*100.))
++    inside = (np.abs(actual-q1) <= band) & held & active
++    last_outside = np.flatnonzero(active & ~inside)
++    settled_index = last_outside[-1]+1 if len(last_outside) else np.searchsorted(t,onset)
++    settled = settled_index < len(t) and t[-1]-t[settled_index] >= .5
++    result['settling_from_teacher_onset_s'] = float(t[settled_index]-onset) if settled else None
++    result['settling_after_target_hold_s'] = float(max(0.,t[settled_index]-held_time)) if settled and held_time is not None else None
++    result['settling_from_sent_t10_s'] = float(t[settled_index]-sent_transition['t10']) if settled and sent_transition['t10'] is not None else None
++    result['input_shape'] = 'step_like' if max(teacher_transition['rise_s'] or 0., sent_transition['rise_s'] or 0.) <= .05 else 'ramp_or_limited'
++    # Separate spaced movements cannot be reliably fit as one step. Detect a
++    # long stationary plateau inside the 10-90% transition.
++    middle = (normalized > .1) & (normalized < .9) & active
++    plateau_start = None
++    for k in np.flatnonzero(middle):
++        if plateau_start is None or abs(teacher[k]-teacher[plateau_start]) > band:
++            plateau_start = k
++        elif t[k]-t[plateau_start] > .75:
++            result['flags'].append('intermediate_pause_or_multiple_moves')
++            break
++    result['status'] = 'measured' if settled else 'not_settled'
++    if result['target_hold_duration_s'] < 1.:
++        result['status'] = 'target_not_held_long_enough'
++    result['parameter_fit_allowed'] = (result['status'] == 'measured' and not result['flags'] and result['input_shape'] == 'step_like')
++    return result
++
++
++def load_arms(path):
++    fields = ['receive_wall','receive_monotonic','control_time','dry_run'] + [f'{name}_j{i}'
++        for i in range(1,8) for name in ('position','sent_position','feedback_receive_time',
++            'send_complete_time','sent_mode','position_valid','position_age','fault','enabled')]
++    rows = {}
++    with path.open() as stream:
++        for row in csv.DictReader(stream):
++            rows.setdefault(row['role'],[]).append([number(row.get(name)) for name in fields])
++    return {role:dict(zip(fields,np.array(values).T)) for role,values in rows.items()}
++
++
++def load_targets(path):
++    rows = {}
++    clock_bad = False
++    with path.open() as stream:
++        for row in csv.DictReader(stream):
++            ros, wall, mono = [number(row[x]) for x in ('source_ros_time','receive_wall','receive_monotonic')]
++            clock_bad |= not np.isfinite(ros) or not -.02 <= wall-ros <= .5
++            rows.setdefault((row['follower'],row['kind']),[]).append([ros+mono-wall] +
++                [number(row.get(f'q_j{i}')) for i in range(1,7)])
++    return {key:np.array(values).T for key,values in rows.items()}, bool(clock_bad)
++
++
++def clean_json(value):
++    if isinstance(value, dict):return {k:clean_json(v) for k,v in value.items()}
++    if isinstance(value, list):return [clean_json(v) for v in value]
++    if isinstance(value, float) and not np.isfinite(value):return None
++    return value
++
++
++def analyze_folder(folder):
++    folder = Path(folder)
++    quality = json.loads((folder/'step_quality.json').read_text())
++    arms = load_arms(folder/'step_arms.csv')
++    targets, bad_clock = load_targets(folder/'step_targets.csv')
++    results = []
++    fields = ['leader','follower','joint','time_monotonic','teacher_q','raw_q','safe_q',
++              'sent_q','actual_q','sent_error','teacher_error','teacher_age_s','sent_age_s','raw_age_s','safe_age_s']
++    with (folder/'step_tracking.csv').open('w',newline='') as stream:
++        writer = csv.writer(stream);writer.writerow(fields)
++        for leader,follower in quality['pairs']:
++            for joint in range(1,8):
++                result = dict(leader=leader,follower=follower,joint=joint,status='missing_data',flags=[])
++                if joint == 7:
++                    result['status'] = 'read_only_gripper'
++                elif leader in arms and follower in arms:
++                    a,b = arms[leader],arms[follower]
++                    key = lambda name:f'{name}_j{joint}'
++                    good = (b[key('position_valid')] == 1) & (b[key('fault')] == 0) & (b[key('enabled')] == 1) & (b[key('position_age')] < .1)
++                    t,actual = series(b[key('feedback_receive_time')],np.where(good,b[key('position')],np.nan))
++                    teacher_good = (a[key('position_valid')] == 1) & (a[key('fault')] == 0) & (a[key('position_age')] < .1)
++                    teacher,ta = asof(t,a[key('feedback_receive_time')],np.where(teacher_good,a[key('position')],np.nan))
++                    sent,sa = asof(t,b[key('send_complete_time')],np.where(b[key('sent_mode')]==2,b[key('sent_position')],np.nan))
++                    mapped = {}
++                    for kind in ('raw','safe'):
++                        source = targets.get((follower,kind))
++                        mapped[kind] = asof(t,source[0],source[joint]) if source is not None and not bad_clock else (np.full(len(t),np.nan),np.full(len(t),np.nan))
++                    raw,ra = mapped['raw'];safe,fa = mapped['safe']
++                    result.update(response_metrics(t,teacher,sent,actual,raw,safe))
++                    if bad_clock:result['flags'].append('ROS_system_clock_mismatch_or_stale_target')
++                    for role in (leader,follower):
++                        cycles = quality.get('cycles',{}).get(role,{})
++                        if cycles.get('skipped',0) or cycles.get('resets',0):
++                            result['flags'].append(role+':native_cycles_missing_or_reset')
++                    if np.any(b['dry_run'] != 0):result['flags'].append('dry_run_no_motor_dynamics')
++                    if quality.get('devices',{}).get(follower,'').startswith('/dev/pts/'):
++                        result['flags'].append('virtual_motor_no_physical_dynamics')
++                    if not quality.get('complete') or any(quality.get('queue_dropped',{}).values()):
++                        result['flags'].append('incomplete_or_dropped_log')
++                    result['parameter_fit_allowed'] = bool(result.get('parameter_fit_allowed') and not result['flags'])
++                    for values in zip(t,teacher,raw,safe,sent,actual,sent-actual,teacher-actual,ta,sa,ra,fa):
++                        writer.writerow([leader,follower,joint]+[format(x,'.9f') if np.isfinite(x) else '' for x in values])
++                results.append(result)
++    report = clean_json(dict(schema=1, results=results,
++        definitions=dict(response_delay='10% actual crossing minus 10% target/teacher crossing; observed pipeline delay, not pure transport latency',
++            rise_time='10% to 90% of final sent target change',
++            settling='Within ±max(0.01 rad,2% teacher amplitude) of final target for >=0.5 s and through end of recording',
++            steady_error='Median sent target minus actual over last 1 s',
++            input_shape='Manual movement and original follower-relative limiter may create a ramp; not an ideal motor step',
++            alignment='As-of native steady timestamps; raw/safe ROS times converted using same-host callback wall/monotonic offset',
++            missing='Blank/null means unavailable or criterion not reached, never zero delay'),
++        quality_file='step_quality.json', tracking_file='step_tracking.csv'))
++    (folder/'step_summary.json').write_text(json.dumps(report,ensure_ascii=False,indent=2,allow_nan=False))
++    columns = ['leader','follower','joint','status','flags'] + sorted({k for r in results for k in r}-{'leader','follower','joint','status','flags'})
++    with (folder/'step_summary.csv').open('w',newline='') as stream:
++        writer = csv.DictWriter(stream,columns);writer.writeheader()
++        for result in report['results']:
++            writer.writerow(dict(result,flags=';'.join(result['flags'])))
++    labels=dict(measured='已测得',not_settled='未稳定',no_excitation='未激励',read_only_gripper='夹爪只读',
++        insufficient_data='数据不足',missing_data='缺少数据',returned_or_multiple_movements='回到起点/多次移动',
++        initial_teacher_not_stable='初始示教姿态未静止',teacher_not_held='示教端未保持静止',
++        reversal_or_multiple_movements='反向/多次移动',target_not_excited='下发目标变化不足',
++        target_not_held_long_enough='目标保持时间不足')
++    lines=['手动阶跃采集分析（只读，不调参）',
++        '时间单位 s；误差单位 rad。— 表示无法计算或尚未达到条件，不表示 0。',
++        '响应延迟为目标/反馈的 10% 交叉时间差；不是电机内部控制周期或纯 CAN 传输延迟。',
++        '稳定时间从示教开始变化算起，要求进入 ±max(0.01 rad,2%幅值) 并持续至结束至少 0.5 s。',
++        '手动移动或限步形成斜坡时，仅供跟随响应参考；有采样缺口时需结合原始日志复核。','']
++    for r in report['results']:
++        def show(key):
++            value=r.get(key)
++            if isinstance(value,(int,float)) and key.endswith('_s') and abs(value)<1e-9:
++                return f"同一采样间隔内（约 {r.get('median_sample_interval_s',0):.4f} s）"
++            return f'{value:.4f}' if isinstance(value,(int,float)) else '—'
++        lines.append(f"{r['leader']} → {r['follower']} J{r['joint']}：{labels.get(r['status'],r['status'])}")
++        if 'actual_rise_10_90_s' in r:
++            lines.append(f"  示教→实际延迟 {show('teacher_to_actual_t10_s')}；下发→实际延迟 {show('sent_to_actual_t10_s')}；"
++                         f"上升时间 {show('actual_rise_10_90_s')}；稳定时间 {show('settling_from_teacher_onset_s')}；"
++                         f"稳态误差 {show('steady_error_rad')}；超调 {show('overshoot_percent')}%。")
++            lines.append('  输入形状：'+('近似阶跃' if r.get('input_shape')=='step_like' else '斜坡/限步输入'))
++        if r['flags']:lines.append('  数据标记：'+'; '.join(r['flags']))
++    (folder/'step_summary.txt').write_text('\n'.join(lines)+'\n')
++    return report
++
++
++if __name__ == '__main__':
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('folder',type=Path,help='Teaching session containing step_*.csv')
++    args = parser.parse_args()
++    report = analyze_folder(args.folder)
++    print(json.dumps(report,ensure_ascii=False,indent=2))
+--- before/tools/arm_gravity/teaching_port.py
++++ after/tools/arm_gravity/teaching_port.py
+@@ -14,6 +14,7 @@
+ from teaching_logs import SessionLog, software_manifest, write_json
+ from teaching_port_config import port_parameters, write_mapper_config, CONTROL_HZ, TARGET_HZ, CAN_BITRATE
+ from teaching_frequency_log import FrequencyLog
++from teaching_step_observer import StepObserverProcess
+ from teaching_port_session import PortArmSession
+ from native_stack import NativeStack
+ 
+@@ -31,6 +32,7 @@
+         self.children, self.streams, self.publishers = [], [], {}
+         self.status, self.raw, self.count, self.last_action = {}, {}, {}, {}
+         self.enabled = False
++        self.step = None
+         self.context = Context()
+         rclpy.init(args=[],context=self.context,signal_handler_options=SignalHandlerOptions.NO)
+         self.node = rclpy.create_node('teaching_port_observer',context=self.context)
+@@ -41,14 +43,16 @@
+         self.writer.writerow(['wall_time','leader','follower','sequence']+
+             [f'{kind}_j{i}' for kind in ('raw','safe','leader_q','follower_q') for i in range(1,7)])
+         try:
++            topics = {}
+             for leader,follower in pairs:
+                 path,config = write_mapper_config(folder,owner.sessions[leader],owner.sessions[follower],frequency)
+                 t = config['teleop'];self.count[follower]=0
++                topics[follower] = {kind:t[kind+'_action_topic'] for kind in ('raw','safe')}
+                 self.publishers[follower] = self.node.create_publisher(Bool,t['enable_topic'],10)
+                 self.node.create_subscription(String,t['status_topic'],
+                     lambda msg,r=follower:self.on_status(r,msg),10)
+                 self.node.create_subscription(JointState,t['raw_action_topic'],
+-                    lambda msg,r=follower:self.raw.update({r:list(msg.position)}),10)
++                    lambda msg,l=leader,r=follower:self.on_raw(l,r,msg),10)
+                 self.node.create_subscription(JointState,t['safe_action_topic'],
+                     lambda msg,l=leader,r=follower:self.on_action(l,r,msg),10)
+                 # A separate process uses the upstream node's default ROS context.
+@@ -59,6 +63,12 @@
+                 child = stack.spawn(follower+'_mapper','a6_y_teleop','leader_follower_teleop',
+                     ['--ros-args','-p','config_file:='+str(path)])
+                 self.children.append((follower,child))
++            try:
++                self.step = StepObserverProcess(folder,dict(pairs=pairs,topics=topics,
++                    devices={r:owner.roles[r]['port'] for r in owner.sessions},
++                    namespaces={r:s.namespace for r,s in owner.sessions.items()}),owner._log_failure)
++            except OSError as exc:
++                owner._log_failure(exc)
+         except BaseException:
+             self.close();raise
+ 
+@@ -66,6 +76,9 @@
+         if self.status.get(follower)!=msg.data:
+             self.owner._event('upstream_status',role=follower,status=msg.data)
+         self.status[follower] = msg.data
++
++    def on_raw(self, leader, follower, msg):
++        self.raw[follower] = list(msg.position)
+ 
+     def on_action(self, leader, follower, msg):
+         self.count[follower] += 1
+@@ -76,6 +89,7 @@
+             *self.raw.get(follower,[None]*6),*msg.position,*source[:6],*target[:6]])
+ 
+     def pump(self):
++        if self.step:self.step.check()
+         self.executor.spin_once(timeout_sec=.005)
+         for _ in range(12):self.executor.spin_once(timeout_sec=0.)
+         for role,child in self.children:
+@@ -84,6 +98,7 @@
+     def enable(self, value):
+         from std_msgs.msg import Bool
+         self.enabled = value
++        if self.step:self.step.enable(value)
+         for publisher in self.publishers.values():publisher.publish(Bool(data=value))
+ 
+     def ready(self):
+@@ -92,6 +107,7 @@
+ 
+     def close(self):
+         self.enable(False)
++        if self.step:self.step.close()
+         for stack in self.streams:stack.close()
+         self.executor.shutdown()
+         self.node.destroy_node()
+--- before/tools/arm_gravity/teaching_port_config.py
++++ after/tools/arm_gravity/teaching_port_config.py
+@@ -12,7 +12,9 @@
+ CAN_BITRATE = 1000000
+ TIMING_INTERFACES = ('control_time', 'control_cycle_count', 'control_period',
+                      'control_overrun_count', 'read_duration', 'write_duration',
+-                     'command_count', 'feedback_count')
++                     'command_count', 'feedback_count', 'sent_position', 'sent_motor_position',
++                     'sent_velocity_limit', 'send_begin_time', 'send_complete_time',
++                     'feedback_receive_time', 'sent_mode', 'motor_position', 'motor_velocity')
+ VELOCITIES = [7.5, 7.5, 7.5, 5.0, 5.0, 5.0]
+ HOME_TOLERANCE = .03  # move_to_group_state.py's original goal tolerance
+ HOME_TIMEOUT = 55.  # Includes the original client's discovery and result waits.
+--- /dev/null
++++ after/tools/arm_gravity/teaching_step_log.py
+@@ -0,0 +1,164 @@
++"""Bounded, asynchronous observation of manual step tests; never sends commands."""
++import csv
++import json
++import math
++from pathlib import Path
++import queue
++import threading
++import time
++
++from gravity_config import JOINTS
++
++
++ARM_FIELDS = ('position', 'velocity', 'effort', 'motor_position', 'motor_velocity',
++              'sent_position', 'sent_motor_position', 'sent_velocity_limit',
++              'send_begin_time', 'send_complete_time', 'feedback_receive_time', 'sent_mode',
++              'command_count', 'feedback_count', 'feedback_age', 'position_valid',
++              'position_age', 'fault', 'enabled', 'error')
++CYCLE_FIELDS = ('control_time', 'control_cycle_count', 'control_period', 'control_overrun_count', 'dry_run')
++
++
++def stamp(msg):
++    return msg.header.stamp.sec + msg.header.stamp.nanosec * 1e-9
++
++
++def finite(value):
++    return value is not None and math.isfinite(value)
++
++
++def atomic_json(path, data):
++    temp = path.with_suffix(path.suffix + '.tmp')
++    temp.write_text(json.dumps(data, ensure_ascii=False, indent=2, allow_nan=False))
++    temp.replace(path)
++
++
++class StepRecorder:
++    def __init__(self, folder, pairs, on_error, capacity=4096, analyze=True, devices=None):
++        self.folder = Path(folder)
++        self.on_error, self.analyze = on_error, analyze
++        self.queue = queue.Queue(maxsize=capacity)
++        self.finished = threading.Event()
++        self.done = threading.Event()
++        self.failed = False
++        self.analysis_complete = False
++        self.received, self.dropped, self.written, self.cycles = {}, {}, {}, {}
++        self.metadata = dict(schema=1, pairs=pairs, devices=devices or {}, nominal_arm_hz=250, nominal_target_hz=100,
++            units=dict(angle='rad', velocity='rad/s', time='s', error='sent_position - position'),
++            timebases=dict(control_time='host steady clock at native read start',
++                send_begin_time='host steady clock before serial write',
++                send_complete_time='host steady clock after serial accepted frame; NOT CAN ACK',
++                feedback_receive_time='host steady clock when decoded; NOT motor sampling time',
++                source_ros_time='publisher ROS clock, system clock in this local deployment',
++                receive_monotonic='observer callback time; NOT source time'),
++            notes=['One latest native snapshot per observed control cycle, not every CAN frame.',
++                   'J1-J6 position control on followers; J7 gripper is read-only.',
++                   'Teacher MIT gravity has no servo position target; empty values are intentional.',
++                   'Positive error means target exceeds actual in calibrated joint coordinates.',
++                   'Only following phase is captured. Exit homing is excluded.',
++                   'Queue drops and skipped native cycles invalidate precise latency estimates.'])
++        atomic_json(self.folder/'step_quality.json', self.quality(False))
++        self.thread = threading.Thread(target=self._run, name='step-log-writer', daemon=True)
++        self.thread.start()
++
++    def put(self, kind, role, msg, leader=''):
++        # A single ROS observer produces records. Never wait for disk or analysis.
++        if self.finished.is_set() or self.failed:
++            return
++        key = kind + ':' + role
++        self.received[key] = self.received.get(key, 0) + 1
++        item = (kind, role, leader, time.time(), time.monotonic(), msg)
++        try:
++            self.queue.put_nowait(item)
++        except queue.Full:
++            self.dropped[key] = self.dropped.get(key, 0) + 1
++
++    def close(self):
++        # Motor shutdown must never wait for a logger thread or disk flush.
++        self.finished.set()
++
++    def quality(self, complete, error=None):
++        return dict(self.metadata, complete=complete, received=dict(self.received),
++                    analysis_complete=self.analysis_complete,
++                    written=dict(self.written), queue_dropped=dict(self.dropped),
++                    cycles=dict(self.cycles), error=error)
++
++    def _arm_row(self, role, wall, mono, msg):
++        interfaces = {name: dict(zip(v.interface_names, v.values))
++                      for name, v in zip(msg.joint_names, msg.interface_values)}
++        first = interfaces.get(JOINTS[0], {})
++        row = dict(role=role, receive_wall=wall, receive_monotonic=mono, source_ros_time=stamp(msg))
++        row.update({key: first.get(key) for key in CYCLE_FIELDS})
++        cycle = first.get('control_cycle_count')
++        stat = self.cycles.setdefault(role, dict(first=None, last=None, skipped=0, duplicates=0, resets=0))
++        if finite(cycle):
++            previous = stat['last']
++            if previous is None:
++                stat['first'] = cycle
++            elif cycle > previous:
++                stat['skipped'] += max(0, int(cycle - previous - 1))
++            elif cycle == previous:
++                stat['duplicates'] += 1
++            else:
++                stat['resets'] += 1
++            stat['last'] = cycle
++        for index, joint in enumerate(JOINTS, 1):
++            values = interfaces.get(joint, {})
++            for name in ARM_FIELDS:
++                row[f'{name}_j{index}'] = values.get(name)
++            target, actual = values.get('sent_position'), values.get('position')
++            if (values.get('sent_mode') == 2 and values.get('command_count', 0) > 0
++                    and values.get('position_valid') == 1 and finite(target) and finite(actual)):
++                row[f'error_j{index}'] = target - actual
++        return row
++
++    def _run(self):
++        error = None
++        try:
++            with (self.folder/'step_arms.csv').open('w', newline='') as arm_file, \
++                 (self.folder/'step_targets.csv').open('w', newline='') as target_file:
++                arms = csv.DictWriter(arm_file, ['role', 'receive_wall', 'receive_monotonic',
++                    'source_ros_time', *CYCLE_FIELDS] +
++                    [f'{name}_j{i}' for i in range(1, 8) for name in ARM_FIELDS])
++                targets = csv.DictWriter(target_file, ['kind', 'leader', 'follower', 'receive_wall',
++                    'receive_monotonic', 'source_ros_time'] + [f'q_j{i}' for i in range(1, 7)])
++                arms.writeheader(); targets.writeheader()
++                last_flush = time.monotonic()
++                while not self.finished.is_set() or not self.queue.empty():
++                    try:
++                        kind, role, leader, wall, mono, msg = self.queue.get(timeout=.1)
++                    except queue.Empty:
++                        continue
++                    if kind == 'arm':
++                        row = self._arm_row(role, wall, mono, msg)
++                        writer = arms
++                    else:
++                        row = dict(kind=kind, leader=leader, follower=role, receive_wall=wall,
++                                   receive_monotonic=mono, source_ros_time=stamp(msg))
++                        # Use names when present; never silently interchange joint order.
++                        positions = dict(zip(msg.name, msg.position))
++                        row.update({f'q_j{i}': positions.get(name) for i, name in enumerate(JOINTS[:6], 1)})
++                        writer = targets
++                    writer.writerow({k: (format(v, '.9f') if finite(v) else '')
++                                     if isinstance(v, (float, int)) else v for k, v in row.items()})
++                    key = kind + ':' + role
++                    self.written[key] = self.written.get(key, 0) + 1
++                    if time.monotonic() - last_flush >= 1:
++                        arm_file.flush(); target_file.flush()
++                        atomic_json(self.folder/'step_quality.json', self.quality(False))
++                        last_flush = time.monotonic()
++            atomic_json(self.folder/'step_quality.json', self.quality(True))
++            if self.analyze:
++                from analyze_teaching_step import analyze_folder
++                analyze_folder(self.folder)
++                self.analysis_complete = True
++                atomic_json(self.folder/'step_quality.json', self.quality(True))
++        except Exception as exc:
++            error = str(exc)
++            self.failed = True
++            try:
++                atomic_json(self.folder/'step_quality.json', self.quality(False, error))
++            except OSError:
++                pass
++            self.on_error(RuntimeError('阶跃日志/分析失败：' + error))
++        finally:
++            self.done.set()
+--- /dev/null
++++ after/tools/arm_gravity/teaching_step_observer.py
+@@ -0,0 +1,117 @@
++#!/usr/bin/env python3
++"""Read-only telemetry in a separate interpreter, outside the UI/control GIL."""
++import json
++import os
++from pathlib import Path
++import subprocess
++import sys
++import threading
++import time
++
++
++class StepObserverProcess:
++    def __init__(self, folder, config, on_error):
++        self.folder, self.on_error = Path(folder), on_error
++        self.closing = self.reported = False
++        path = self.folder/'step_observer.json'
++        path.write_text(json.dumps(config,ensure_ascii=False,indent=2))
++        with (self.folder/'step_observer.log').open('w') as output:
++            self.child = subprocess.Popen([sys.executable,str(Path(__file__).resolve()),str(path)],
++                stdin=subprocess.PIPE,stdout=output,stderr=subprocess.STDOUT,start_new_session=True)
++        # At most a handful of tiny lifecycle messages; a stalled collector can
++        # never hold up disable/home while writing to its pipe.
++        os.set_blocking(self.child.stdin.fileno(),False)
++
++    def command(self, action):
++        try:
++            payload=(json.dumps(dict(action=action,monotonic=time.monotonic()))+'\n').encode()
++            if os.write(self.child.stdin.fileno(),payload) != len(payload):
++                raise OSError('incomplete telemetry lifecycle message')
++        except (OSError,ValueError) as exc:
++            if not self.reported:
++                self.on_error(RuntimeError('阶跃采集进程通信失败：'+str(exc)))
++                self.reported = True
++
++    def enable(self, enabled):
++        self.command('start' if enabled else 'pause')
++
++    def check(self):
++        code = self.child.poll()
++        if code is not None and not self.closing and not self.reported:
++            self.on_error(RuntimeError(f'阶跃采集进程提前退出（{code}），见 step_observer.log'))
++            self.reported = True
++
++    def close(self):
++        if not self.closing:
++            self.closing = True
++            self.command('stop')
++            self.child.stdin.close()
++            # Reap asynchronously. Collection/analysis owns no motor resources.
++            threading.Thread(target=self.child.wait,daemon=True,name='step-log-reaper').start()
++
++
++def collect(path):
++    import rclpy
++    from rclpy.qos import QoSProfile,ReliabilityPolicy
++    from control_msgs.msg import DynamicJointState
++    from sensor_msgs.msg import JointState
++    from teaching_step_log import StepRecorder,stamp
++
++    config=json.loads(path.read_text())
++    folder=path.parent
++    errors=[]
++    recorder=StepRecorder(folder,config['pairs'],lambda exc:errors.append(str(exc)),devices=config['devices'])
++    state=dict(enabled=False,start=0.)
++    stop=threading.Event()
++
++    def commands():
++        try:
++            for line in sys.stdin:
++                command=json.loads(line)
++                if command['action']=='start':
++                    state['start']=command['monotonic']
++                    recorder.metadata['following_start_monotonic']=state['start']
++                    state['enabled']=True
++                else:
++                    was_enabled=state['enabled']
++                    state['enabled']=False
++                    if was_enabled:
++                        recorder.metadata['following_stop_monotonic']=command['monotonic']
++                    if command['action']=='stop':break
++        finally:
++            state['enabled']=False
++            stop.set()
++
++    def observed(kind,role,msg,leader=''):
++        if state['enabled']:
++            # Do not label DDS messages queued before activation as following.
++            source=stamp(msg)+time.monotonic()-time.time()
++            if source >= state['start']:
++                recorder.put(kind,role,msg,leader)
++
++    rclpy.init()
++    node=rclpy.create_node('teaching_step_observer_'+str(os.getpid()))
++    qos=QoSProfile(depth=64,reliability=ReliabilityPolicy.BEST_EFFORT)
++    try:
++        for role,namespace in config['namespaces'].items():
++            node.create_subscription(DynamicJointState,namespace+'/dynamic_joint_states',
++                lambda msg,r=role:observed('arm',r,msg),qos)
++        for leader,follower in config['pairs']:
++            for kind in ('raw','safe'):
++                node.create_subscription(JointState,config['topics'][follower][kind],
++                    lambda msg,k=kind,l=leader,r=follower:observed(k,r,msg,l),qos)
++        (folder/'step_observer.ready').write_text(str(os.getpid()))
++        threading.Thread(target=commands,daemon=True).start()
++        while not stop.is_set():
++            rclpy.spin_once(node,timeout_sec=.02)
++            if recorder.failed:break
++    finally:
++        node.destroy_node()
++        rclpy.shutdown()
++        recorder.close()
++        # This is a separate read-only process: motor shutdown never joins it.
++        recorder.done.wait()
++    if errors:raise RuntimeError('; '.join(errors))
++
++
++if __name__=='__main__':collect(Path(sys.argv[1]))
+--- before/tools/arm_gravity/teaching_view.py
++++ after/tools/arm_gravity/teaching_view.py
+@@ -40,7 +40,8 @@
+         box=QVBoxLayout(self);box.setContentsMargins(22,18,22,18);box.setSpacing(10)
+         title=QLabel('动力示教 · 原程序位置跟随');title.setStyleSheet('font-size:24px;font-weight:600');box.addWidget(title)
+         note=QLabel('选择配对 → 示教臂开启重力补偿 → 运动臂跟随示教臂当前位置（启动不回零）\n'
+-                    '默认左对左、右对右；取消一组即为 1 对 1。仅 J1～J6 参与，夹爪保持只读。')
++                    '默认左对左、右对右；取消一组即为 1 对 1。仅 J1～J6 参与，夹爪保持只读。\n'
++                    '阶跃采集：开始跟随后静止 2 秒 → 手动移动一次 → 保持至少 10 秒 → 停止并导出日志。')
+         note.setWordWrap(True);box.addWidget(note)
+         self.pair_checks=[];self.leaders=[];self.followers=[];self.configuration=[]
+         for index,(leader,follower) in enumerate(DEFAULT_PAIRS):
+@@ -94,10 +95,12 @@
+         for button in (self.history_button,self.current_button,self.folder_button,self.copy_button,self.export_button):log_actions.addWidget(button)
+         self.log_source=QLabel('日志将在启动后自动记录，也可打开历史记录');self.log_source.setObjectName('note')
+         self.log_source.setWordWrap(True);logs_box.addWidget(self.log_source)
++        self.step_status=QLabel('阶跃日志将在跟随开始后自动采集');self.step_status.setWordWrap(True)
++        self.step_status.setObjectName('note');logs_box.addWidget(self.step_status)
+         self.log_view=QPlainTextEdit();self.log_view.setReadOnly(True);self.log_view.setMaximumBlockCount(2000)
+         self.log_view.setLineWrapMode(QPlainTextEdit.NoWrap);self.log_view.setMinimumHeight(130)
+         self.log_view.setFont(QFont('monospace',10));logs_box.addWidget(self.log_view,1)
+-        self.log_notice=QLabel('记录包含：首次故障、各臂反馈、原始/实际目标、模式切换、控制器输出与退出核验。')
++        self.log_notice=QLabel('逐轴采集目标、实际角度、误差与时间戳；停止后生成阶跃响应报告，随诊断包导出。')
+         self.log_notice.setObjectName('note');self.log_notice.setWordWrap(True);logs_box.addWidget(self.log_notice)
+         splitter.addWidget(logs);splitter.setSizes([190,260])
+         self.metrics=QLabel();self.metrics.setWordWrap(True);box.addWidget(self.metrics)
+@@ -164,6 +167,16 @@
+         if not self.log_folder or time.monotonic()<self.next_log_refresh:return
+         self.next_log_refresh=time.monotonic()+.5
+         try:
++            quality_path=self.log_folder/'step_quality.json'
++            if quality_path.is_file():
++                quality=json.loads(quality_path.read_text())
++                dropped=sum(quality.get('queue_dropped',{}).values())
++                skipped=sum(s.get('skipped',0) for s in quality.get('cycles',{}).values())
++                stage=('报告已生成：step_summary.txt' if quality.get('analysis_complete') else
++                       '采集完成，正在生成报告' if quality.get('complete') else '正在采集 / 尚未完整关闭')
++                if quality.get('error'):stage='记录异常：'+quality['error']
++                self.step_status.setText(f'阶跃日志：{stage}；队列丢弃 {dropped}，未观测周期 {skipped}')
++            else:self.step_status.setText('该会话暂无逐轴阶跃日志')
+             lines=self.log_reader.read(self.log_folder,self.log_scope.currentData(),self.selected_log_state(),detailed=self.log_detail.isChecked())
+             if lines:
+                 scroll=self.log_view.verticalScrollBar();old=scroll.value()
+--- /dev/null
++++ after/tools/arm_gravity/test_teaching_step_log.py
+@@ -0,0 +1,158 @@
++import csv
++import json
++from pathlib import Path
++import tempfile
++import threading
++import time
++from types import SimpleNamespace as NS
++import unittest
++from unittest.mock import patch
++
++import numpy as np
++
++from analyze_teaching_step import asof, response_metrics
++from teaching_step_log import StepRecorder
++from teaching_step_observer import StepObserverProcess
++
++
++class StepAnalysisTests(unittest.TestCase):
++    def setUp(self):
++        self.t = np.arange(100.,108.,.004)
++        self.u = np.where(self.t >= 102.,.5,0.)
++        self.y = .5*(1.-np.exp(-np.maximum(0.,self.t-102.1)/.4))
++
++    def test_known_positive_and_negative_step(self):
++        for sign in (1.,-1.):
++            r=response_metrics(self.t,sign*self.u,sign*self.u,sign*self.y)
++            self.assertEqual(r['status'],'measured')
++            self.assertEqual(r['input_shape'],'step_like')
++            self.assertAlmostEqual(r['actual_rise_10_90_s'],.4*np.log(9),delta=.009)
++            self.assertAlmostEqual(r['sent_to_actual_t10_s'],.1-.4*np.log(.9),delta=.009)
++            self.assertAlmostEqual(r['settling_from_teacher_onset_s'],.1-.4*np.log(.02),delta=.009)
++            self.assertTrue(r['parameter_fit_allowed'])
++
++    def test_ramp_is_not_an_ideal_motor_step(self):
++        ramp=.5*np.clip((self.t-102.)/1.,0,1)
++        r=response_metrics(self.t,ramp,ramp,np.interp(self.t-.2,self.t,ramp))
++        self.assertEqual(r['status'],'measured')
++        self.assertEqual(r['input_shape'],'ramp_or_limited')
++        self.assertFalse(r['parameter_fit_allowed'])
++
++    def test_unmoved_axis_and_gripper_do_not_get_zero_latency(self):
++        r=response_metrics(self.t,np.zeros(len(self.t)),self.u,self.y)
++        self.assertEqual(r['status'],'no_excitation')
++        self.assertNotIn('sent_to_actual_t10_s',r)
++
++    def test_unsettled_error_is_not_success_or_zero_time(self):
++        r=response_metrics(self.t,self.u,self.u,self.y*.7)
++        self.assertEqual(r['status'],'not_settled')
++        self.assertIsNone(r['actual_rise_10_90_s'])
++        self.assertIsNone(r['settling_from_teacher_onset_s'])
++        self.assertAlmostEqual(r['steady_error_rad'],.15,delta=.001)
++
++    def test_return_and_reversal_are_rejected(self):
++        returning=np.where((self.t>=102)&(self.t<104),.5,0)
++        self.assertEqual(response_metrics(self.t,returning,returning,returning)['status'],
++                         'returned_or_multiple_movements')
++        reverse=np.where(self.t>=102,.7,0.)
++        reverse[self.t>=104]=.5
++        self.assertEqual(response_metrics(self.t,reverse,reverse,reverse)['status'],
++                         'reversal_or_multiple_movements')
++
++    def test_two_separated_moves_are_flagged(self):
++        u=np.where(self.t>=102,.25,0.)
++        u[self.t>=104]=.5
++        r=response_metrics(self.t,u,u,u)
++        self.assertIn('intermediate_pause_or_multiple_moves',r['flags'])
++        self.assertFalse(r['parameter_fit_allowed'])
++
++    def test_sample_gap_does_not_silently_allow_fit(self):
++        keep=(self.t<102.2)|(self.t>102.4)
++        r=response_metrics(self.t[keep],self.u[keep],self.u[keep],self.y[keep])
++        self.assertIn('sample_gaps_or_invalid_feedback',r['flags'])
++        self.assertFalse(r['parameter_fit_allowed'])
++
++    def test_asof_never_uses_future_or_stale_values(self):
++        q,age=asof(np.array([1.,1.05,1.2,2.]),np.array([1.02,1.02,2.]),np.array([3.,4.,5.]))
++        self.assertTrue(np.isnan(q[0]) and np.isnan(q[2]))
++        self.assertEqual(q[1],4.)
++        self.assertAlmostEqual(age[1],.03)
++        self.assertEqual(q[3],5.)
++
++    def test_instant_virtual_response_is_resolution_limited(self):
++        r=response_metrics(self.t,self.u,self.u,self.u)
++        self.assertIn('response_below_observation_resolution',r['flags'])
++        self.assertFalse(r['parameter_fit_allowed'])
++
++
++def message(cycle=1,mode=2):
++    fields=dict(control_time=100.+cycle*.004,control_cycle_count=float(cycle),dry_run=0.,
++                position=.2,sent_position=.5,sent_mode=float(mode),command_count=1.,position_valid=1.)
++    return NS(header=NS(stamp=NS(sec=1000,nanosec=0)),joint_names=['joint1'],
++              interface_values=[NS(interface_names=list(fields),values=list(fields.values()))])
++
++
++class StepRecorderTests(unittest.TestCase):
++    def test_full_lifecycle_pipe_does_not_block_or_raise_into_shutdown(self):
++        observer=StepObserverProcess.__new__(StepObserverProcess)
++        errors=[]
++        observer.on_error=errors.append;observer.reported=False
++        observer.child=NS(stdin=NS(fileno=lambda:99))
++        with patch('os.write',side_effect=BlockingIOError('pipe full')):
++            observer.command('pause');observer.command('stop')
++        self.assertEqual(len(errors),1)
++    def test_actual_errors_native_gaps_and_no_mit_position_target(self):
++        with tempfile.TemporaryDirectory() as temp:
++            errors=[]
++            recorder=StepRecorder(temp,[('teaching_left','motion_left')],errors.append,analyze=False)
++            recorder.put('arm','motion_left',message(1))
++            recorder.put('arm','motion_left',message(3))
++            recorder.put('arm','teaching_left',message(1,mode=1))
++            recorder.close()
++            self.assertTrue(recorder.done.wait(2.))
++            self.assertFalse(errors)
++            with Path(temp,'step_arms.csv').open() as stream:rows=list(csv.DictReader(stream))
++            self.assertAlmostEqual(float(rows[0]['error_j1']),.3)
++            self.assertEqual(rows[2]['error_j1'],'')
++            self.assertEqual(rows[0]['error_j7'],'')
++            quality=json.loads(Path(temp,'step_quality.json').read_text())
++            self.assertTrue(quality['complete'])
++            self.assertEqual(quality['cycles']['motion_left']['skipped'],1)
++
++    def test_queue_full_drops_are_counted_without_blocking(self):
++        with tempfile.TemporaryDirectory() as temp,patch('threading.Thread.start'):
++            recorder=StepRecorder(temp,[],lambda e:None,capacity=1,analyze=False)
++            recorder.put('arm','motion_left',message())
++            recorder.put('arm','motion_left',message())
++            self.assertEqual(recorder.dropped,{'arm:motion_left':1})
++            recorder.close()
++
++    def test_disk_failure_is_reported_without_blocking_close(self):
++        with tempfile.TemporaryDirectory() as temp:
++            errors=[]
++            with patch.object(StepRecorder,'_arm_row',side_effect=OSError('full disk')):
++                recorder=StepRecorder(temp,[],errors.append,analyze=False)
++                recorder.put('arm','motion_left',message())
++                recorder.close()
++                self.assertTrue(recorder.done.wait(2.))
++            self.assertEqual(len(errors),1)
++            self.assertTrue(recorder.failed)
++            self.assertFalse(json.loads(Path(temp,'step_quality.json').read_text())['complete'])
++
++    def test_close_does_not_wait_for_stalled_writer(self):
++        entered,release=threading.Event(),threading.Event()
++        original=StepRecorder._arm_row
++        def stalled(recorder,*args):
++            entered.set();release.wait(2.)
++            return original(recorder,*args)
++        with tempfile.TemporaryDirectory() as temp,patch.object(StepRecorder,'_arm_row',stalled):
++            recorder=StepRecorder(temp,[],lambda e:None,analyze=False)
++            recorder.put('arm','motion_left',message())
++            self.assertTrue(entered.wait(1.))
++            started=time.monotonic();recorder.close()
++            elapsed=time.monotonic()-started
++            release.set();self.assertTrue(recorder.done.wait(2.))
++            self.assertLess(elapsed,.05)
++
++
++if __name__=='__main__':unittest.main()
+--- before/tools/arm_gravity/verify_teaching_port.py
++++ after/tools/arm_gravity/verify_teaching_port.py
+@@ -25,7 +25,7 @@
+     raise AssertionError('Timeout: '+json.dumps(state,ensure_ascii=False))
+ 
+ 
+-def verify(single=False, fault=False, exit_failure=False, mode_failure=False, cancel_home=False):
++def verify(single=False, fault=False, exit_failure=False, mode_failure=False, cancel_home=False, step=False):
+     pairs=DEFAULT_PAIRS[:1] if single else DEFAULT_PAIRS
+     selected=[r for pair in pairs for r in pair]
+     emulators={};c=None
+@@ -101,11 +101,12 @@
+             return dict(result='PASS',case='feedback_loss_group_hold',physical_devices=0,pairs=pairs,
+                         follower_hold_latency_s=hold_latency,report=state['directory'])
+         rate_start={r:s.feedback.snapshot()['rows']['joint1'] for r,s in c.sessions.items()}
+-        for k in range(51):
++        if step:time.sleep(2.)
++        for k in ([50] if step else range(51)):
+             for index,(leader,_) in enumerate(pairs):
+                 emulators[leader].snapshot(('set_q',[(.18 if index==0 else -.12)*k/50,.06,.08,0.,0.,0.,-.01]))
+             time.sleep(.02)
+-        time.sleep(1.)
++        time.sleep(4. if step else 1.)
+         state=wait(c,lambda s:s['packets']>60)
+         moved={f:emulators[f].snapshot()['q'][0] for _,f in pairs}
+         assert abs(moved[pairs[0][1]]-.18)<.01,moved
+@@ -158,6 +159,31 @@
+             pairs=pairs,report=state['directory'],exit_elapsed_s=exit_elapsed,movement=moved,packets=state['packets'],actual_hz=state['actual_hz'],
+             audit=audits,plant='instantaneous encoder response; no physical dynamics verification')
+         result['native_rates_hz']=rates
++        if step:
++            folder=Path(state['directory'])
++            quality=json.loads((folder/'step_quality.json').read_text())
++            assert quality['complete'] and not any(quality['queue_dropped'].values()),quality
++            coverage={r:quality['written']['arm:'+r]/(v['last']-v['first']+1)
++                      for r,v in quality['cycles'].items()}
++            assert all(.95 < value <= 1.01 for value in coverage.values()),coverage
++            with (folder/'step_arms.csv').open() as stream:
++                for row in csv.DictReader(stream):
++                    for j in range(1,7):
++                        if row['role'].startswith('motion_'):
++                            assert row[f'sent_mode_j{j}']=='2.000000000',row
++                            assert row[f'send_complete_time_j{j}'] and row[f'feedback_receive_time_j{j}']
++                            assert abs(float(row[f'error_j{j}'])-(float(row[f'sent_position_j{j}'])-float(row[f'position_j{j}'])))<2e-8
++                        else:
++                            assert not row[f'sent_position_j{j}'] and not row[f'error_j{j}']
++                    assert not row['sent_position_j7'] and not row['error_j7']
++            summary=json.loads((folder/'step_summary.json').read_text())
++            assert len(summary['results'])==7*len(pairs)
++            for row in summary['results']:
++                assert row['status']==('read_only_gripper' if row['joint']==7 else 'measured'),row
++                if row['joint']<7:
++                    assert 'virtual_motor_no_physical_dynamics' in row['flags']
++                    assert row['teacher_to_actual_t10_s'] is not None
++            result.update(step_logging=True,step_sample_coverage=coverage,step_quality=quality)
+         Path(state['directory'],'verification_port.json').write_text(json.dumps(result,ensure_ascii=False,indent=2))
+         return result
+     finally:
+@@ -175,5 +201,6 @@
+     parser.add_argument('--exit-failure',action='store_true')
+     parser.add_argument('--mode-failure',action='store_true')
+     parser.add_argument('--cancel-home',action='store_true')
++    parser.add_argument('--step',action='store_true')
+     args=parser.parse_args()
+-    print(json.dumps(verify(args.single,args.fault,args.exit_failure,args.mode_failure,args.cancel_home),ensure_ascii=False,indent=2))
++    print(json.dumps(verify(args.single,args.fault,args.exit_failure,args.mode_failure,args.cancel_home,args.step),ensure_ascii=False,indent=2))
+--- before/tools/arm_gravity/verify_teaching_ui.py
++++ after/tools/arm_gravity/verify_teaching_ui.py
+@@ -62,6 +62,9 @@
+                 assert 'arms/'+role+'/controller_manager.log' in archive.namelist()
+             assert 'references.csv' in archive.namelist()
+             assert 'frequency.csv' in archive.namelist()
++            assert 'step_arms.csv' in archive.namelist()
++            assert 'step_targets.csv' in archive.namelist()
++            assert 'step_quality.json' in archive.namelist()
+             assert json.loads(archive.read('session.json'))['configured_rates']['control_hz']==250
+         screenshot=directory/'ui_live.png';window.grab().save(str(screenshot))
+         exit_started=time.monotonic();window.close()
+@@ -74,6 +77,8 @@
+         exit_elapsed=time.monotonic()-exit_started
+         assert exit_elapsed<40.,exit_elapsed
+         state=c.snapshot();assert state['phase']=='stopped' and not c.alive(),state
++        assert json.loads((directory/'step_quality.json').read_text())['complete']
++        assert (directory/'step_summary.json').is_file()
+         assert all(s.snapshot()['release_confirmed'] for s in c.sessions.values())
+         result=dict(result='PASS',physical_devices=0,four_arm_ui_refresh=True,live_export=True,
+                     packets_before_export=initial_packets,packets=state['packets'],actual_hz=state['actual_hz'],

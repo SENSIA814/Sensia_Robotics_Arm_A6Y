@@ -1,0 +1,70 @@
+{
+  "result": "PASS",
+  "cause": "Unused execution permission incorrectly forced readonly sessions through home before exit",
+  "fix": "Decide readonly close by actual ownership, execution and confirmed release; never acquire motors merely to exit",
+  "python_tests": 18,
+  "qt_close_scenarios": 5,
+  "physical_devices_used_in_tests": 0,
+  "source_files": [
+    "native_session.py",
+    "moveit_view.py",
+    "rviz_panel/planning_panel.cpp"
+  ],
+  "integration_reports": [
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_left_z91eio9h/readonly_exit_verification.json",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_left_nxe8dgv9/readonly_exit_verification.json",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_left__ki7561x/interaction_verification.json"
+  ],
+  "integration_results": [
+    {
+      "result": "PASS",
+      "role": "motion_left",
+      "physical_devices": 0,
+      "transport": "/dev/pts/2",
+      "permitted_planning_failure_closed": true,
+      "planning_error": "MoveIt 规划失败（-26），本次动作已取消；请检查目标与碰撞",
+      "cpp_slcan_frames": 1463,
+      "all_frames_feedback_queries": true,
+      "unchanged_joints": true,
+      "no_home_or_enable": true,
+      "rviz": false,
+      "all_children_exited": true,
+      "close_seconds": 3.251488497000537,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_left_z91eio9h/session.json"
+    },
+    {
+      "result": "PASS",
+      "role": "motion_left",
+      "physical_devices": 0,
+      "transport": "/dev/pts/2",
+      "permitted_planning_failure_closed": true,
+      "planning_error": "MoveIt 规划失败（-26），本次动作已取消；请检查目标与碰撞",
+      "cpp_slcan_frames": 1575,
+      "all_frames_feedback_queries": true,
+      "unchanged_joints": true,
+      "no_home_or_enable": true,
+      "rviz": true,
+      "all_children_exited": true,
+      "close_seconds": 7.053709340005298,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_left_nxe8dgv9/session.json"
+    },
+    {
+      "result": "PASS",
+      "xyz_rpy_controls": 7,
+      "fixed_tcp_rpy": true,
+      "invalid_target_retains_model": true,
+      "position_only": true,
+      "collision_blocks_home_and_exit": true,
+      "stop_cancels_home_exit": true,
+      "native_execution_rejection_keeps_ui": true,
+      "physical_devices": 0,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_left__ki7561x/session.json"
+    }
+  ],
+  "current_session_recovery": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_left_vhx9ie99/readonly_exit_recovery.json",
+  "original_user_session_and_children_exited": true,
+  "limitations": [
+    "Physical robot motion was not tested",
+    "MoveIt path collision failures remain visible; no collision checks, controller algorithms or PID changed"
+  ]
+}

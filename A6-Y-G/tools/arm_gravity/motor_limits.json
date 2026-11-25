@@ -1,0 +1,428 @@
+{
+  "observed_at": "2026-11-25T18:06:06.896770+08:00",
+  "readonly": true,
+  "motor_writes_sent": 0,
+  "arms": {
+    "teaching_right": {
+      "usb_serial": "209D3982534B",
+      "port": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209D3982534B-if00",
+      "motors": [
+        {
+          "motor_id": 1,
+          "parameters": {
+            "ESC_ID": 1,
+            "MST_ID": 17,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 10.0,
+            "TMAX": 28.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 2,
+          "parameters": {
+            "ESC_ID": 2,
+            "MST_ID": 18,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 10.0,
+            "TMAX": 28.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 3,
+          "parameters": {
+            "ESC_ID": 3,
+            "MST_ID": 19,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 10.0,
+            "TMAX": 28.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 4,
+          "parameters": {
+            "ESC_ID": 4,
+            "MST_ID": 20,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 30.0,
+            "TMAX": 10.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 5,
+          "parameters": {
+            "ESC_ID": 5,
+            "MST_ID": 21,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 30.0,
+            "TMAX": 10.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 6,
+          "parameters": {
+            "ESC_ID": 6,
+            "MST_ID": 22,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 30.0,
+            "TMAX": 10.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 7,
+          "parameters": {
+            "ESC_ID": 7,
+            "MST_ID": 23,
+            "CTRL_MODE": 2,
+            "PMAX": 12.565999984741211,
+            "VMAX": 50.0,
+            "TMAX": 5.0,
+            "MAX_SPD": 300.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        }
+      ]
+    },
+    "teaching_left": {
+      "usb_serial": "304F33733036",
+      "port": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_304F33733036-if00",
+      "motors": [
+        {
+          "motor_id": 1,
+          "parameters": {
+            "ESC_ID": 1,
+            "MST_ID": 17,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 10.0,
+            "TMAX": 28.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 2,
+          "parameters": {
+            "ESC_ID": 2,
+            "MST_ID": 18,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 10.0,
+            "TMAX": 28.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 3,
+          "parameters": {
+            "ESC_ID": 3,
+            "MST_ID": 19,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 10.0,
+            "TMAX": 28.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 4,
+          "parameters": {
+            "ESC_ID": 4,
+            "MST_ID": 20,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 50.0,
+            "TMAX": 10.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 5,
+          "parameters": {
+            "ESC_ID": 5,
+            "MST_ID": 21,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 50.0,
+            "TMAX": 10.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 6,
+          "parameters": {
+            "ESC_ID": 6,
+            "MST_ID": 22,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 50.0,
+            "TMAX": 10.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 7,
+          "parameters": {
+            "ESC_ID": 7,
+            "MST_ID": 23,
+            "CTRL_MODE": 2,
+            "PMAX": 12.565999984741211,
+            "VMAX": 50.0,
+            "TMAX": 5.0,
+            "MAX_SPD": 300.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        }
+      ]
+    },
+    "motion_right": {
+      "usb_serial": "209B3971534B",
+      "port": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209B3971534B-if00",
+      "motors": [
+        {
+          "motor_id": 1,
+          "parameters": {
+            "ESC_ID": 1,
+            "MST_ID": 17,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 10.0,
+            "TMAX": 28.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 2,
+          "parameters": {
+            "ESC_ID": 2,
+            "MST_ID": 18,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 10.0,
+            "TMAX": 28.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 3,
+          "parameters": {
+            "ESC_ID": 3,
+            "MST_ID": 19,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 10.0,
+            "TMAX": 28.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 4,
+          "parameters": {
+            "ESC_ID": 4,
+            "MST_ID": 20,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 30.0,
+            "TMAX": 10.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 5,
+          "parameters": {
+            "ESC_ID": 5,
+            "MST_ID": 21,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 30.0,
+            "TMAX": 10.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 6,
+          "parameters": {
+            "ESC_ID": 6,
+            "MST_ID": 22,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 30.0,
+            "TMAX": 10.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 7,
+          "parameters": {
+            "ESC_ID": 7,
+            "MST_ID": 23,
+            "CTRL_MODE": 2,
+            "PMAX": 12.565999984741211,
+            "VMAX": 50.0,
+            "TMAX": 5.0,
+            "MAX_SPD": 300.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        }
+      ]
+    },
+    "motion_left": {
+      "usb_serial": "304C33733036",
+      "port": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_304C33733036-if00",
+      "motors": [
+        {
+          "motor_id": 1,
+          "parameters": {
+            "ESC_ID": 1,
+            "MST_ID": 17,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 10.0,
+            "TMAX": 28.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 2,
+          "parameters": {
+            "ESC_ID": 2,
+            "MST_ID": 18,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 10.0,
+            "TMAX": 28.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 3,
+          "parameters": {
+            "ESC_ID": 3,
+            "MST_ID": 19,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 10.0,
+            "TMAX": 28.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 4,
+          "parameters": {
+            "ESC_ID": 4,
+            "MST_ID": 20,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 50.0,
+            "TMAX": 10.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 5,
+          "parameters": {
+            "ESC_ID": 5,
+            "MST_ID": 21,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 50.0,
+            "TMAX": 10.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 6,
+          "parameters": {
+            "ESC_ID": 6,
+            "MST_ID": 22,
+            "CTRL_MODE": 1,
+            "PMAX": 12.5,
+            "VMAX": 50.0,
+            "TMAX": 10.0,
+            "MAX_SPD": 600.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        },
+        {
+          "motor_id": 7,
+          "parameters": {
+            "ESC_ID": 7,
+            "MST_ID": 23,
+            "CTRL_MODE": 2,
+            "PMAX": 3.140000104904175,
+            "VMAX": 50.0,
+            "TMAX": 5.0,
+            "MAX_SPD": 300.0,
+            "ACC": 2.0,
+            "DEC": -2.0
+          }
+        }
+      ]
+    }
+  },
+  "schema_version": 1,
+  "source": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_motor_limits_revision_20261125/motor_registers.json",
+  "source_sha256": "12eca7820e51b06709b0354c092f71622322bdaf8ef8ce54494aed0225b6a321",
+  "feedback_speed_policy": "VMAX * abs(position_scale); protocol feedback validity, not commanded speed",
+  "parameter_reference": "https://doc.switch-science.com/media/files/5e033168-99f1-4d2d-b758-e03192a1f071.pdf"
+}

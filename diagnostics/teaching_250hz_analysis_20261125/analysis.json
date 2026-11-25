@@ -1,0 +1,753 @@
+{
+  "sessions": {
+    "125": {
+      "session": "teaching_ac84a69ae6",
+      "following_seconds": 33.0855348110199,
+      "target_config_hz": 100.0,
+      "observed_target_hz": 99.48381579311209,
+      "error": "",
+      "exit_error": ""
+    },
+    "250": {
+      "session": "teaching_769d352988",
+      "following_seconds": 39.21875333786011,
+      "target_config_hz": 100.0,
+      "observed_target_hz": 99.37828556855874,
+      "error": "",
+      "exit_error": ""
+    }
+  },
+  "native": [
+    {
+      "role": "motion_left",
+      "seconds": 38.89599748100591,
+      "loop_hz": 250.00001619057394,
+      "command_hz": [
+        250.00001619057394,
+        250.00001619057394,
+        250.00001619057394,
+        250.00001619057394,
+        250.00001619057394,
+        250.00001619057394,
+        0.0
+      ],
+      "feedback_hz": [
+        250.00001619057394,
+        250.00001619057394,
+        250.00001619057394,
+        250.00001619057394,
+        250.00001619057394,
+        250.00001619057394,
+        19.230770476197996
+      ],
+      "new_cycles_over_6ms": 0.0,
+      "sampled_control_period_ms": {
+        "median": 3.999879496404901,
+        "p95_sampled": 4.009812600997975,
+        "maximum_sampled": 4.035211000882555
+      },
+      "sampled_read_write_ms": {
+        "median": 0.075155,
+        "p95_sampled": 0.19071775,
+        "maximum_sampled": 0.230736
+      },
+      "sampled_observer_diagnostic_age_s": {
+        "median": 0.004997613501473,
+        "p95_sampled": 0.019465683502494325,
+        "maximum_sampled": 0.0386244100009207
+      }
+    },
+    {
+      "role": "motion_right",
+      "seconds": 38.89599674099736,
+      "loop_hz": 250.0000209469027,
+      "command_hz": [
+        250.0000209469027,
+        250.0000209469027,
+        250.0000209469027,
+        250.0000209469027,
+        250.0000209469027,
+        250.0000209469027,
+        0.0
+      ],
+      "feedback_hz": [
+        250.0000209469027,
+        250.0000209469027,
+        250.0000209469027,
+        250.0000209469027,
+        250.0000209469027,
+        250.0000209469027,
+        19.23077084206944
+      ],
+      "new_cycles_over_6ms": 0.0,
+      "sampled_control_period_ms": {
+        "median": 3.999232998467051,
+        "p95_sampled": 4.010481400837307,
+        "maximum_sampled": 4.064537002705038
+      },
+      "sampled_read_write_ms": {
+        "median": 0.061988,
+        "p95_sampled": 0.141697,
+        "maximum_sampled": 0.234938
+      },
+      "sampled_observer_diagnostic_age_s": {
+        "median": 0.0051530939999793,
+        "p95_sampled": 0.024705573902247042,
+        "maximum_sampled": 0.0468575300037628
+      }
+    },
+    {
+      "role": "teaching_left",
+      "seconds": 38.90000523799972,
+      "loop_hz": 249.99996633676724,
+      "command_hz": [
+        249.99996633676724,
+        249.99996633676724,
+        249.99996633676724,
+        249.99996633676724,
+        249.99996633676724,
+        249.99996633676724,
+        0.0
+      ],
+      "feedback_hz": [
+        249.99996633676724,
+        249.99996633676724,
+        249.99996633676724,
+        249.99996633676724,
+        249.99996633676724,
+        249.99996633676724,
+        19.25449612197827
+      ],
+      "new_cycles_over_6ms": 0.0,
+      "sampled_control_period_ms": {
+        "median": 3.999865999503527,
+        "p95_sampled": 4.0092144463415025,
+        "maximum_sampled": 4.057177000504453
+      },
+      "sampled_read_write_ms": {
+        "median": 0.0612739999999999,
+        "p95_sampled": 0.16405904999999993,
+        "maximum_sampled": 0.18656
+      },
+      "sampled_observer_diagnostic_age_s": {
+        "median": 0.0043739680004363495,
+        "p95_sampled": 0.021170066047852654,
+        "maximum_sampled": 0.0455459080039872
+      }
+    },
+    {
+      "role": "teaching_right",
+      "seconds": 38.86401337300049,
+      "loop_hz": 249.99991397568516,
+      "command_hz": [
+        249.99991397568516,
+        249.99991397568516,
+        249.99991397568516,
+        249.99991397568516,
+        249.99991397568516,
+        249.99991397568516,
+        0.0
+      ],
+      "feedback_hz": [
+        249.99991397568516,
+        249.99991397568516,
+        249.99991397568516,
+        249.99991397568516,
+        249.99991397568516,
+        249.99991397568516,
+        19.246596917848137
+      ],
+      "new_cycles_over_6ms": 0.0,
+      "sampled_control_period_ms": {
+        "median": 3.99937099791714,
+        "p95_sampled": 4.007270902002347,
+        "maximum_sampled": 4.073404998052865
+      },
+      "sampled_read_write_ms": {
+        "median": 0.0708725,
+        "p95_sampled": 0.18170195,
+        "maximum_sampled": 0.2101849999999999
+      },
+      "sampled_observer_diagnostic_age_s": {
+        "median": 0.004862905003392299,
+        "p95_sampled": 0.026362020947635675,
+        "maximum_sampled": 0.0390202240014332
+      }
+    }
+  ],
+  "tracking": [
+    {
+      "control_hz": 125,
+      "role": "motion_left",
+      "joint": 1,
+      "raw_range_rad": 0.0003814755474174994,
+      "safe_to_actual_alignment": null,
+      "actual_velocity_p95": 0.0024420024420024,
+      "actual_velocity_max": 0.0073260073260073,
+      "median_velocity_over_error": null,
+      "peak": {
+        "t": 21.703579425811768,
+        "raw": -0.0043869687953002,
+        "safe": -0.0043869687953002,
+        "actual": -0.0036240177004653,
+        "raw_minus_safe": 0.0,
+        "safe_minus_actual": -0.0007629510948348995
+      }
+    },
+    {
+      "control_hz": 125,
+      "role": "motion_left",
+      "joint": 2,
+      "raw_range_rad": 0.0030518043793392,
+      "safe_to_actual_alignment": null,
+      "actual_velocity_p95": 0.0024420024420024,
+      "actual_velocity_max": 0.0268620268620267,
+      "median_velocity_over_error": null,
+      "peak": {
+        "t": 8.453745126724243,
+        "raw": -0.0001907377737087,
+        "safe": 0.02,
+        "actual": 0.0204089417868313,
+        "raw_minus_safe": -0.0201907377737087,
+        "safe_minus_actual": -0.000408941786831301
+      }
+    },
+    {
+      "control_hz": 125,
+      "role": "motion_left",
+      "joint": 3,
+      "raw_range_rad": 0.40665293354696175,
+      "safe_to_actual_alignment": {
+        "seconds": 0.54,
+        "rmse_before": 0.0982317584894776,
+        "rmse_after": 0.050122460498081584,
+        "correlation": 0.945104487241434,
+        "moving_seconds": 3.5300000000000002,
+        "at_boundary": false
+      },
+      "actual_velocity_p95": 0.13943833943833872,
+      "actual_velocity_max": 0.1782661782661776,
+      "median_velocity_over_error": 1.3671445685018222,
+      "peak": {
+        "t": 22.005733489990234,
+        "raw": 0.3999771114671571,
+        "safe": 0.1878414206149383,
+        "actual": 0.0753414206149383,
+        "raw_minus_safe": 0.21213569085221878,
+        "safe_minus_actual": 0.1125
+      }
+    },
+    {
+      "control_hz": 125,
+      "role": "motion_left",
+      "joint": 4,
+      "raw_range_rad": 0.6847486076142548,
+      "safe_to_actual_alignment": {
+        "seconds": 0.17,
+        "rmse_before": 0.05585363995070753,
+        "rmse_after": 0.018505918175710876,
+        "correlation": 0.9913364293308251,
+        "moving_seconds": 4.11,
+        "at_boundary": false
+      },
+      "actual_velocity_p95": 0.3052503052503041,
+      "actual_velocity_max": 0.5250305250305232,
+      "median_velocity_over_error": 5.176660365168255,
+      "peak": {
+        "t": 22.595298528671265,
+        "raw": -0.3870069428549616,
+        "safe": 0.0552738994430452,
+        "actual": 0.1302738994430452,
+        "raw_minus_safe": -0.4422808422980068,
+        "safe_minus_actual": -0.07500000000000001
+      }
+    },
+    {
+      "control_hz": 125,
+      "role": "motion_left",
+      "joint": 5,
+      "raw_range_rad": 0.30060273136491844,
+      "safe_to_actual_alignment": {
+        "seconds": 0.18,
+        "rmse_before": 0.04316033434389076,
+        "rmse_after": 0.011696866032974824,
+        "correlation": 0.9932862071743449,
+        "moving_seconds": 2.8000000000000003,
+        "at_boundary": false
+      },
+      "actual_velocity_p95": 0.1343101343101338,
+      "actual_velocity_max": 0.4273504273504258,
+      "median_velocity_over_error": 4.770022105031555,
+      "peak": {
+        "t": 21.624518394470215,
+        "raw": -0.2977416647592878,
+        "safe": -0.1522487983520253,
+        "actual": -0.0772487983520253,
+        "raw_minus_safe": -0.14549286640726253,
+        "safe_minus_actual": -0.07499999999999998
+      }
+    },
+    {
+      "control_hz": 125,
+      "role": "motion_left",
+      "joint": 6,
+      "raw_range_rad": 0.3696498054474694,
+      "safe_to_actual_alignment": {
+        "seconds": 0.17,
+        "rmse_before": 0.04430136163805525,
+        "rmse_after": 0.014590218096311471,
+        "correlation": 0.9923265693402938,
+        "moving_seconds": 3.3200000000000003,
+        "at_boundary": false
+      },
+      "actual_velocity_p95": 0.1843711843711826,
+      "actual_velocity_max": 0.4761904761904745,
+      "median_velocity_over_error": 5.455794205794208,
+      "peak": {
+        "t": 22.55498456954956,
+        "raw": -0.0902189669642172,
+        "safe": 0.0320038910505832,
+        "actual": 0.0978484779125654,
+        "raw_minus_safe": -0.1222228580148004,
+        "safe_minus_actual": -0.0658445868619822
+      }
+    },
+    {
+      "control_hz": 125,
+      "role": "motion_right",
+      "joint": 1,
+      "raw_range_rad": 0.0011444266422521998,
+      "safe_to_actual_alignment": null,
+      "actual_velocity_p95": 0.0073260073260073,
+      "actual_velocity_max": 0.0219780219780219,
+      "median_velocity_over_error": null,
+      "peak": {
+        "t": 7.897332191467285,
+        "raw": 0.0009536888685435,
+        "safe": 0.0009536888685435,
+        "actual": 0.0020981155107957,
+        "raw_minus_safe": 0.0,
+        "safe_minus_actual": -0.0011444266422521998
+      }
+    },
+    {
+      "control_hz": 125,
+      "role": "motion_right",
+      "joint": 2,
+      "raw_range_rad": 1.1223010605020214,
+      "safe_to_actual_alignment": {
+        "seconds": 0.32,
+        "rmse_before": 0.09422831250931077,
+        "rmse_after": 0.01781339101875636,
+        "correlation": 0.9992199063273871,
+        "moving_seconds": 7.99,
+        "at_boundary": false
+      },
+      "actual_velocity_p95": 0.3296703296703303,
+      "actual_velocity_max": 0.3687423687423692,
+      "median_velocity_over_error": 3.0087901124659755,
+      "peak": {
+        "t": 9.243129253387451,
+        "raw": 1.105325398641947,
+        "safe": 0.3724755855649643,
+        "actual": 0.2599755855649643,
+        "raw_minus_safe": 0.7328498130769826,
+        "safe_minus_actual": 0.11249999999999999
+      }
+    },
+    {
+      "control_hz": 125,
+      "role": "motion_right",
+      "joint": 3,
+      "raw_range_rad": 1.3603418020904865,
+      "safe_to_actual_alignment": {
+        "seconds": 0.33,
+        "rmse_before": 0.09894182571954946,
+        "rmse_after": 0.016869065464997265,
+        "correlation": 0.9994430222353442,
+        "moving_seconds": 9.36,
+        "at_boundary": false
+      },
+      "actual_velocity_p95": 0.3296703296703303,
+      "actual_velocity_max": 0.3638583638583643,
+      "median_velocity_over_error": 2.944618848107406,
+      "peak": {
+        "t": 9.243129253387451,
+        "raw": 1.35099565117876,
+        "safe": 0.4163452735179664,
+        "actual": 0.3038452735179664,
+        "raw_minus_safe": 0.9346503776607935,
+        "safe_minus_actual": 0.11249999999999999
+      }
+    },
+    {
+      "control_hz": 125,
+      "role": "motion_right",
+      "joint": 4,
+      "raw_range_rad": 0.5020218204013104,
+      "safe_to_actual_alignment": {
+        "seconds": 0.07,
+        "rmse_before": 0.026583661761623384,
+        "rmse_after": 0.009771204762308982,
+        "correlation": 0.9977999121892244,
+        "moving_seconds": 4.8100000000000005,
+        "at_boundary": false
+      },
+      "actual_velocity_p95": 0.2710622710622701,
+      "actual_velocity_max": 0.8717948717948723,
+      "median_velocity_over_error": 10.615357479180437,
+      "peak": {
+        "t": 15.614961624145508,
+        "raw": 0.0982299534599828,
+        "safe": -0.106391622796978,
+        "actual": -0.1531624322880898,
+        "raw_minus_safe": 0.2046215762569608,
+        "safe_minus_actual": 0.04677080949111179
+      }
+    },
+    {
+      "control_hz": 125,
+      "role": "motion_right",
+      "joint": 5,
+      "raw_range_rad": 0.1461051346608676,
+      "safe_to_actual_alignment": {
+        "seconds": 0.08,
+        "rmse_before": 0.02093362265235359,
+        "rmse_after": 0.005859408196367372,
+        "correlation": 0.9930931230346568,
+        "moving_seconds": 2.62,
+        "at_boundary": false
+      },
+      "actual_velocity_p95": 0.07106227106227031,
+      "actual_velocity_max": 0.7252747252747263,
+      "median_velocity_over_error": 9.873427985146872,
+      "peak": {
+        "t": 15.822988271713257,
+        "raw": 0.0181200885023269,
+        "safe": 0.0112535286488135,
+        "actual": -0.0417715724422063,
+        "raw_minus_safe": 0.006866559853513398,
+        "safe_minus_actual": 0.0530251010910198
+      }
+    },
+    {
+      "control_hz": 125,
+      "role": "motion_right",
+      "joint": 6,
+      "raw_range_rad": 0.3006027313649184,
+      "safe_to_actual_alignment": {
+        "seconds": 0.08,
+        "rmse_before": 0.03229771664979079,
+        "rmse_after": 0.01011052550550061,
+        "correlation": 0.9921107244225876,
+        "moving_seconds": 2.66,
+        "at_boundary": false
+      },
+      "actual_velocity_p95": 0.11501831501831411,
+      "actual_velocity_max": 0.7838827838827847,
+      "median_velocity_over_error": 10.5440975868969,
+      "peak": {
+        "t": 16.813995122909546,
+        "raw": -0.0207904173342488,
+        "safe": -0.0346742198825051,
+        "actual": -0.1329442282749671,
+        "raw_minus_safe": 0.013883802548256302,
+        "safe_minus_actual": 0.098270008392462
+      }
+    },
+    {
+      "control_hz": 250,
+      "role": "motion_left",
+      "joint": 1,
+      "raw_range_rad": 0.0236514839398793,
+      "safe_to_actual_alignment": null,
+      "actual_velocity_p95": 0.0073260073260073,
+      "actual_velocity_max": 0.0659340659340657,
+      "median_velocity_over_error": null,
+      "peak": {
+        "t": 12.249549865722656,
+        "raw": 0.021934843976501,
+        "safe": 0.021934843976501,
+        "actual": 0.0017166399633783,
+        "raw_minus_safe": 0.0,
+        "safe_minus_actual": 0.0202182040131227
+      }
+    },
+    {
+      "control_hz": 250,
+      "role": "motion_left",
+      "joint": 2,
+      "raw_range_rad": 1.0135805294880598,
+      "safe_to_actual_alignment": {
+        "seconds": 0.68,
+        "rmse_before": 0.1036600366333796,
+        "rmse_after": 0.028797488534854882,
+        "correlation": 0.9958288326390339,
+        "moving_seconds": 18.42,
+        "at_boundary": false
+      },
+      "actual_velocity_p95": 0.1636141636141648,
+      "actual_velocity_max": 0.1929181929181922,
+      "median_velocity_over_error": 1.3709085082794037,
+      "peak": {
+        "t": 4.037082195281982,
+        "raw": 0.9355687800411996,
+        "safe": 0.2767252231631946,
+        "actual": 0.1630807965209424,
+        "raw_minus_safe": 0.658843556878005,
+        "safe_minus_actual": 0.11364442664225219
+      }
+    },
+    {
+      "control_hz": 250,
+      "role": "motion_left",
+      "joint": 3,
+      "raw_range_rad": 1.223773556115054,
+      "safe_to_actual_alignment": {
+        "seconds": 0.69,
+        "rmse_before": 0.10628775567903302,
+        "rmse_after": 0.02978631588194858,
+        "correlation": 0.9965683466539936,
+        "moving_seconds": 21.64,
+        "at_boundary": false
+      },
+      "actual_velocity_p95": 0.1684981684981696,
+      "actual_velocity_max": 0.1831501831501842,
+      "median_velocity_over_error": 1.3433631659185905,
+      "peak": {
+        "t": 19.06799077987671,
+        "raw": 0.0024795910582131,
+        "safe": 0.9249227512016478,
+        "actual": 1.0355153734645608,
+        "raw_minus_safe": -0.9224431601434347,
+        "safe_minus_actual": -0.110592622262913
+      }
+    },
+    {
+      "control_hz": 250,
+      "role": "motion_left",
+      "joint": 4,
+      "raw_range_rad": 1.4465552758068192,
+      "safe_to_actual_alignment": {
+        "seconds": 0.17,
+        "rmse_before": 0.05848770561853228,
+        "rmse_after": 0.01605236460692077,
+        "correlation": 0.9978259522209769,
+        "moving_seconds": 17.45,
+        "at_boundary": false
+      },
+      "actual_velocity_p95": 0.4517704517704501,
+      "actual_velocity_max": 0.5250305250305232,
+      "median_velocity_over_error": 5.342438003952683,
+      "peak": {
+        "t": 30.0285325050354,
+        "raw": 1.3189517051956958,
+        "safe": 0.5245689326314185,
+        "actual": 0.45376516365301,
+        "raw_minus_safe": 0.7943827725642774,
+        "safe_minus_actual": 0.07080376897840845
+      }
+    },
+    {
+      "control_hz": 250,
+      "role": "motion_left",
+      "joint": 5,
+      "raw_range_rad": 0.2117189288166621,
+      "safe_to_actual_alignment": {
+        "seconds": 0.16,
+        "rmse_before": 0.034874907996474,
+        "rmse_after": 0.011642033887065412,
+        "correlation": 0.9837736863936877,
+        "moving_seconds": 2.63,
+        "at_boundary": false
+      },
+      "actual_velocity_p95": 0.0610500610500608,
+      "actual_velocity_max": 0.4273504273504258,
+      "median_velocity_over_error": 5.675545826725979,
+      "peak": {
+        "t": 17.549815893173218,
+        "raw": -0.1958876935988396,
+        "safe": -0.1625486381322954,
+        "actual": -0.0852597848477909,
+        "raw_minus_safe": -0.0333390554665442,
+        "safe_minus_actual": -0.0772888532845045
+      }
+    },
+    {
+      "control_hz": 250,
+      "role": "motion_left",
+      "joint": 6,
+      "raw_range_rad": 0.18883039597161752,
+      "safe_to_actual_alignment": {
+        "seconds": 0.16,
+        "rmse_before": 0.0234523562479178,
+        "rmse_after": 0.009907471526692599,
+        "correlation": 0.9717575645710435,
+        "moving_seconds": 4.94,
+        "at_boundary": false
+      },
+      "actual_velocity_p95": 0.1343101343101338,
+      "actual_velocity_max": 0.4517704517704501,
+      "median_velocity_over_error": 4.567779891985957,
+      "peak": {
+        "t": 1.9411201477050781,
+        "raw": -0.1062409399557484,
+        "safe": -0.0999866483558403,
+        "actual": -0.0265125505455099,
+        "raw_minus_safe": -0.0062542915999081045,
+        "safe_minus_actual": -0.0734740978103304
+      }
+    },
+    {
+      "control_hz": 250,
+      "role": "motion_right",
+      "joint": 1,
+      "raw_range_rad": 0.0011444266422522,
+      "safe_to_actual_alignment": null,
+      "actual_velocity_p95": 0.0073260073260073,
+      "actual_velocity_max": 0.0415140415140413,
+      "median_velocity_over_error": null,
+      "peak": {
+        "t": 3.1178104877471924,
+        "raw": 0.0005722133211261,
+        "safe": 0.0005722133211261,
+        "actual": 0.0013351644159609,
+        "raw_minus_safe": 0.0,
+        "safe_minus_actual": -0.0007629510948348001
+      }
+    },
+    {
+      "control_hz": 250,
+      "role": "motion_right",
+      "joint": 2,
+      "raw_range_rad": 0.9929808499275196,
+      "safe_to_actual_alignment": {
+        "seconds": 0.31,
+        "rmse_before": 0.0940166971753538,
+        "rmse_after": 0.021157941302215426,
+        "correlation": 0.9981762664951752,
+        "moving_seconds": 12.22,
+        "at_boundary": false
+      },
+      "actual_velocity_p95": 0.33943833943834,
+      "actual_velocity_max": 0.3785103785103789,
+      "median_velocity_over_error": 3.0321365415094315,
+      "peak": {
+        "t": 4.009070634841919,
+        "raw": 0.8768215457389186,
+        "safe": 0.3774347676813906,
+        "actual": 0.2714198519874866,
+        "raw_minus_safe": 0.49938677805752796,
+        "safe_minus_actual": 0.10601491569390403
+      }
+    },
+    {
+      "control_hz": 250,
+      "role": "motion_right",
+      "joint": 3,
+      "raw_range_rad": 1.247043564507516,
+      "safe_to_actual_alignment": {
+        "seconds": 0.31,
+        "rmse_before": 0.09570688981629158,
+        "rmse_after": 0.022584392190688453,
+        "correlation": 0.99818247999919,
+        "moving_seconds": 13.64,
+        "at_boundary": false
+      },
+      "actual_velocity_p95": 0.33943833943834,
+      "actual_velocity_max": 0.3638583638583643,
+      "median_velocity_over_error": 3.0780079741335467,
+      "peak": {
+        "t": 12.866986989974976,
+        "raw": 1.231593804837111,
+        "safe": 0.655911917296103,
+        "actual": 0.5395971618219289,
+        "raw_minus_safe": 0.5756818875410079,
+        "safe_minus_actual": 0.11631475547417414
+      }
+    },
+    {
+      "control_hz": 250,
+      "role": "motion_right",
+      "joint": 4,
+      "raw_range_rad": 1.520943007553214,
+      "safe_to_actual_alignment": {
+        "seconds": 0.07,
+        "rmse_before": 0.04007130533223678,
+        "rmse_after": 0.012518280129847204,
+        "correlation": 0.9989918787675546,
+        "moving_seconds": 15.77,
+        "at_boundary": false
+      },
+      "actual_velocity_p95": 0.8043956043956033,
+      "actual_velocity_max": 1.0329670329670328,
+      "median_velocity_over_error": 11.91072850738217,
+      "peak": {
+        "t": 32.31353259086609,
+        "raw": 1.244563973449301,
+        "safe": 0.5436427100022889,
+        "actual": 0.5201419089036392,
+        "raw_minus_safe": 0.7009212634470121,
+        "safe_minus_actual": 0.023500801098649715
+      }
+    },
+    {
+      "control_hz": 250,
+      "role": "motion_right",
+      "joint": 5,
+      "raw_range_rad": 0.0957503624017696,
+      "safe_to_actual_alignment": {
+        "seconds": 0.09,
+        "rmse_before": 0.012272544381998138,
+        "rmse_after": 0.003329371251014996,
+        "correlation": 0.9956128488810502,
+        "moving_seconds": 1.83,
+        "at_boundary": false
+      },
+      "actual_velocity_p95": 0.0219780219780219,
+      "actual_velocity_max": 0.4468864468864453,
+      "median_velocity_over_error": 9.377094516766675,
+      "peak": {
+        "t": 17.35487651824951,
+        "raw": 0.0257495994506751,
+        "safe": 0.0257495994506751,
+        "actual": -0.0146868085755702,
+        "raw_minus_safe": 0.0,
+        "safe_minus_actual": 0.0404364080262453
+      }
+    },
+    {
+      "control_hz": 250,
+      "role": "motion_right",
+      "joint": 6,
+      "raw_range_rad": 0.2559700923170815,
+      "safe_to_actual_alignment": {
+        "seconds": 0.07,
+        "rmse_before": 0.018462589002324645,
+        "rmse_after": 0.005275054373311379,
+        "correlation": 0.9976663439366499,
+        "moving_seconds": 2.63,
+        "at_boundary": false
+      },
+      "actual_velocity_p95": 0.0512820512820511,
+      "actual_velocity_max": 0.5787545787545803,
+      "median_velocity_over_error": 12.921703864956044,
+      "peak": {
+        "t": 12.257574319839478,
+        "raw": 0.1623178454261076,
+        "safe": 0.1501106279087505,
+        "actual": 0.1073853665980006,
+        "raw_minus_safe": 0.012207217517357122,
+        "safe_minus_actual": 0.042725261310749885
+      }
+    }
+  ],
+  "conclusion": "保持底层250 Hz / 目标100 Hz，优先检查运动端POS_VEL响应及与原程序目标限步的共同影响。",
+  "caveats": [
+    "两次手动示教动作不同，不能将差值视为严格A/B因果效果。",
+    "滞后为运动段轨迹最佳平移对齐量，包含动力学/采样/调度，不等于纯通信延迟或精确时间常数。",
+    "发送计数是主机串口接受命令；反馈计数是解析帧，缺少逐条CAN ACK/电机接收时间戳。",
+    "耗时与反馈年龄为低频诊断采样，不能据此声称端到端通信为零延迟。",
+    "raw、safe、两端反馈来自异步观测，单个时刻数值是近似分解。"
+  ]
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="4" failures="0" disabled="0" errors="0" time="0" timestamp="2026-11-25T05:38:30" name="AllTests">
+  <testsuite name="ControllerMotorEnable" tests="2" failures="0" disabled="0" errors="0" time="0" timestamp="2026-11-25T05:38:30">
+    <testcase name="GravityWaitsForFullSupportCommand" status="run" result="completed" time="0" timestamp="2026-11-25T05:38:30" classname="a6_y_controllers.ControllerMotorEnable" />
+    <testcase name="FollowerRequiresCompleteSafeHold" status="run" result="completed" time="0" timestamp="2026-11-25T05:38:30" classname="a6_y_controllers.ControllerMotorEnable" />
+  </testsuite>
+  <testsuite name="SafeZeroEffortCommand" tests="2" failures="0" disabled="0" errors="0" time="0" timestamp="2026-11-25T05:38:30">
+    <testcase name="UsesMeasuredPositionWhenItIsFinite" status="run" result="completed" time="0" timestamp="2026-11-25T05:38:30" classname="a6_y_controllers.SafeZeroEffortCommand" />
+    <testcase name="FallsBackWithoutRetainingEffort" status="run" result="completed" time="0" timestamp="2026-11-25T05:38:30" classname="a6_y_controllers.SafeZeroEffortCommand" />
+  </testsuite>
+</testsuites>

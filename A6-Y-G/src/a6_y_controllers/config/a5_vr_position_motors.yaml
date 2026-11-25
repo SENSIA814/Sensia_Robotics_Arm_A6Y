@@ -1,0 +1,73 @@
+# Position trial only. Same IDs/signs/offsets/scales; zero endpoints include the approved +/-2 deg tolerance.
+# Native motor firmware regulates position. Existing effort-controller torque caps do not apply to pos_vel.
+joints:
+  joint1:
+    motor_type: DM4340P
+    slave_id: 1
+    master_id: 17
+    sign: -1.0
+    offset: 0.0
+    min_position: -2.62
+    max_position: 2.62
+    max_velocity: 0.03
+  joint2:
+    motor_type: DM4340P
+    slave_id: 2
+    master_id: 18
+    sign: 1.0
+    offset: 0.0
+    min_position: -0.03490658503988659
+    max_position: 3.16
+    max_velocity: 0.03
+  joint3:
+    motor_type: DM4340P
+    # Measured motor VMAX, feedback scaling; not a speed limit.
+    protocol_vmax: 20.0
+    slave_id: 3
+    master_id: 19
+    sign: 1.0
+    offset: 0.0
+    min_position: -0.03490658503988659
+    max_position: 3.16
+    max_velocity: 0.03
+  joint4:
+    motor_type: DM4310
+    protocol_vmax: 50.0
+    slave_id: 4
+    master_id: 20
+    sign: -1.0
+    offset: 0.0
+    min_position: -1.55
+    max_position: 1.55
+    max_velocity: 0.03
+  joint5:
+    motor_type: DM4310
+    protocol_vmax: 50.0
+    slave_id: 5
+    master_id: 21
+    sign: -1.0
+    offset: 0.0
+    min_position: -0.9
+    max_position: 0.9
+    max_velocity: 0.03
+  joint6:
+    motor_type: DM4310
+    protocol_vmax: 50.0
+    slave_id: 6
+    master_id: 22
+    sign: -1.0
+    offset: 0.0
+    min_position: -3.14
+    max_position: 3.14
+    max_velocity: 0.03
+  gripper_finger_joint1:
+    motor_type: DM3507
+    slave_id: 7
+    master_id: 23
+    sign: 1.0
+    offset: 0.0
+    position_scale: 0.0239
+    min_position: -0.03
+    max_position: 0.0
+    max_velocity: 0.1
+    read_only: true

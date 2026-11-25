@@ -1,0 +1,97 @@
+{
+  "selected_joints": [
+    "joint1",
+    "joint2",
+    "joint3",
+    "joint4"
+  ],
+  "save_scope": "all current motor RAM parameters",
+  "motion_commands_sent": false,
+  "power_cycle_verified": false,
+  "results": [
+    {
+      "joint": "joint1",
+      "command": [
+        "ros2",
+        "run",
+        "a6_y_ros2_control",
+        "save_motor_params_flash.py",
+        "--config",
+        "src/a6_y_controllers/config/a5_vr_position_full_motors.yaml",
+        "--joints",
+        "joint1",
+        "--params",
+        "CTRL_MODE,KP_APR,KI_APR,KP_ASR,KI_ASR,ACC,DEC,MAX_SPD,PMAX,VMAX,TMAX",
+        "--yes"
+      ],
+      "started_ns": 1791614781851534525,
+      "status": "save_ack_and_readback_confirmed",
+      "returncode": 0,
+      "finished_ns": 1791614785748111500,
+      "log": "joint1_flash_save.log"
+    },
+    {
+      "joint": "joint2",
+      "command": [
+        "ros2",
+        "run",
+        "a6_y_ros2_control",
+        "save_motor_params_flash.py",
+        "--config",
+        "src/a6_y_controllers/config/a5_vr_position_full_motors.yaml",
+        "--joints",
+        "joint2",
+        "--params",
+        "CTRL_MODE,KP_APR,KI_APR,KP_ASR,KI_ASR,ACC,DEC,MAX_SPD,PMAX,VMAX,TMAX",
+        "--yes"
+      ],
+      "started_ns": 1791614785748252341,
+      "status": "save_ack_and_readback_confirmed",
+      "returncode": 0,
+      "finished_ns": 1791614789631685182,
+      "log": "joint2_flash_save.log"
+    },
+    {
+      "joint": "joint3",
+      "command": [
+        "ros2",
+        "run",
+        "a6_y_ros2_control",
+        "save_motor_params_flash.py",
+        "--config",
+        "src/a6_y_controllers/config/a5_vr_position_full_motors.yaml",
+        "--joints",
+        "joint3",
+        "--params",
+        "CTRL_MODE,KP_APR,KI_APR,KP_ASR,KI_ASR,ACC,DEC,MAX_SPD,PMAX,VMAX,TMAX",
+        "--yes"
+      ],
+      "started_ns": 1791614789631842511,
+      "status": "save_ack_and_readback_confirmed",
+      "returncode": 0,
+      "finished_ns": 1791614793514038490,
+      "log": "joint3_flash_save.log"
+    },
+    {
+      "joint": "joint4",
+      "command": [
+        "ros2",
+        "run",
+        "a6_y_ros2_control",
+        "save_motor_params_flash.py",
+        "--config",
+        "src/a6_y_controllers/config/a5_vr_position_full_motors.yaml",
+        "--joints",
+        "joint4",
+        "--params",
+        "CTRL_MODE,KP_APR,KI_APR,KP_ASR,KI_ASR,ACC,DEC,MAX_SPD,PMAX,VMAX,TMAX",
+        "--yes"
+      ],
+      "started_ns": 1791614793514217775,
+      "status": "save_ack_and_readback_confirmed",
+      "returncode": 0,
+      "finished_ns": 1791614797409686382,
+      "log": "joint4_flash_save.log"
+    }
+  ]
+}

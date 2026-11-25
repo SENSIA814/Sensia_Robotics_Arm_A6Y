@@ -1,0 +1,15 @@
+# 0: status/heartbeat, 1: execute an already collision-checked path, 2: cancel.
+# Cancel restores gravity mode; it never enables an inactive controller.
+uint8 command
+uint64 revision
+float64[] times
+# Flattened rows of J1..J6, cubic Hermite knots; no gripper command.
+float64[] positions
+float64[] velocities
+---
+bool success
+string message
+uint64 revision
+# 0 idle, 1 executing/settling, 2 zero reached and holding, 3 failed
+uint8 phase
+uint64 applied_revision

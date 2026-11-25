@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A6Y · 机械臂通信诊断</title>
+<style>
+:root{color-scheme:dark;--bg:#0c1015;--panel:#131920;--raised:#181f28;--line:#28313d;--muted:#8d9aa9;--text:#e6edf5;--green:#60e3be;--amber:#edbb6c;--red:#ff8391}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.6 system-ui,-apple-system,"Noto Sans CJK SC","Microsoft YaHei",sans-serif}button,input,select{font:inherit}button,a,select,input{outline-offset:5px}button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--green)}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.38}button{border:1px solid var(--line);border-radius:7px;background:var(--raised);color:var(--text);padding:8px 14px}button:hover:enabled{border-color:#758598}a{color:var(--green)}.layout{display:grid;grid-template-columns:218px 1fr;min-height:100vh}.sidebar{border-right:1px solid var(--line);background:#10151c;padding:30px 20px;display:flex;flex-direction:column;gap:30px}.brand{display:flex;gap:11px;align-items:center;font-size:21px;font-weight:700;letter-spacing:1px}.mark{width:33px;height:33px;border:1px solid #38584e;border-radius:9px;color:var(--green);display:grid;place-items:center}.brand small{font-size:10px;letter-spacing:2px;color:var(--muted);display:block;font-weight:500}.navlabel{font-size:10px;letter-spacing:2px;color:#6f7c8c;margin:0 10px 12px}.nav{background:#17302c;color:var(--green);border:1px solid #29453e;padding:11px 14px;border-radius:7px;display:flex;align-items:center;gap:12px}.nav svg{width:18px}.side-info{border-top:1px solid var(--line);padding-top:22px;color:var(--muted);font-size:12px}.side-info h3{font-size:12px;color:#bac5d0;font-weight:500;margin:0 0 16px}.spec{display:flex;justify-content:space-between;margin:10px 0}.mono{font-family:ui-monospace,"DejaVu Sans Mono",monospace;font-size:12px}.side-bottom{margin-top:auto;color:#788799;font-size:11px}.dot{display:inline-block;width:6px;height:6px;background:var(--green);border-radius:50%;margin-right:7px}.main{min-width:0;padding:0 38px 28px;max-width:1540px;width:100%;margin:auto}.topbar{height:72px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);color:var(--muted);font-size:12px}.topbar b{color:#cad5e1;font-weight:500}.pill{border:1px solid #2d4940;color:var(--green);border-radius:20px;padding:4px 10px;font-size:11px;white-space:nowrap}.hero{padding:30px 0 24px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px}h1{font-size:29px;letter-spacing:-.7px;font-weight:600;margin:0 0 7px}p{margin:0;color:var(--muted)}.eyebrow{font-size:10px;letter-spacing:2px;color:var(--green);margin-bottom:8px}.step-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:15px}.step-head h2{margin:0;font-size:15px;font-weight:500}.step-head h2 span{color:#6f7f92;font-size:12px;margin-right:9px}.minor{font-size:12px;color:var(--muted)}.text-button{border:0;background:none;color:var(--muted);padding:4px 6px}.arm-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.arm-card{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:9px;cursor:pointer;padding:17px 16px;min-height:145px;transition:border .15s,background .15s}.arm-card:hover{border-color:#526172}.arm-card:has(input:checked){background:#142720;border-color:var(--green);box-shadow:inset 0 0 0 1px #60e3be18}.arm-card:has(input:focus-visible){outline:2px solid var(--green);outline-offset:3px}.arm-card input{position:absolute;right:16px;top:20px;accent-color:var(--green);width:16px;height:16px;cursor:pointer}.card-type{color:var(--muted);font-size:10px;letter-spacing:1.3px;margin-bottom:7px}.arm-name{font-size:17px;font-weight:550;margin-bottom:13px}.serial{color:#a0adba;font-size:11px}.connection{display:flex;gap:7px;align-items:center;color:#8392a3;font-size:11px;margin-top:5px}.connection:before{content:"";background:#627083;width:5px;height:5px;border-radius:50%}.connection.present{color:var(--green)}.connection.present:before{background:var(--green)}.actions{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:17px 0 23px}.actions-right{display:flex;align-items:center;gap:10px}.count{font-size:12px;color:var(--muted)}.count b{font-weight:600;color:var(--text)}select{border:1px solid var(--line);background:var(--panel);color:#c2cfdb;padding:8px;border-radius:6px}.primary{background:var(--green);border-color:var(--green);color:#09271e;font-weight:650;min-width:152px}.primary:hover:enabled{background:#8aefcf;border-color:#8aefcf}.stop{color:var(--red)}.notice{border:1px solid #293b3e;border-left:3px solid #63bba7;background:#132025;padding:11px 16px;border-radius:5px;color:#a2b9bb;font-size:12px;margin-bottom:27px}.notice b{color:#c2dfd7;font-weight:500}.result-panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}.result-top{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;gap:12px;border-bottom:1px solid var(--line)}.result-top h2{font-size:15px;font-weight:500;margin:0}.result-top p{font-size:11px;margin-top:3px}.result-meta{display:flex;gap:16px;font-size:12px;align-items:center}.result-meta strong{font-size:17px;font-weight:500;color:var(--green);margin-right:4px}.download{font-size:12px;text-decoration:none;border:1px solid var(--line);padding:6px 11px;border-radius:6px}.empty{padding:36px 18px;text-align:center}.empty h3{font-size:15px;font-weight:500;margin:16px 0 5px;color:#c4cfdb}.empty p{font-size:12px}.motor-chain{display:flex;align-items:center;justify-content:center}.motor-node{font:11px ui-monospace,monospace;color:#74899a;border:1px solid #344453;background:#17212b;border-radius:6px;padding:9px 11px;position:relative}.wire{height:1px;width:24px;background:#344453}.table-wrap{overflow:auto;max-height:460px}table{border-collapse:collapse;text-align:left;width:100%;white-space:nowrap}th{background:#151d27;color:#8998a8;font-size:11px;font-weight:500;padding:10px 14px;position:sticky;top:0}td{padding:11px 14px;border-bottom:1px solid #222d38;font-size:12px}tr:last-child td{border-bottom:0}.row-label{color:#c5d2e0}.row-label small{color:#77899b;display:block;font-size:10px}.status{display:inline-block;font-size:11px;border-radius:4px;padding:2px 7px;background:#242d38;color:#97a5b4}.status.ok{color:var(--green);background:#19372e}.status.warning{color:var(--amber);background:#352b1e}.status.missing{color:var(--red);background:#39232c}.raw{font-size:10px;color:#788ca2}.errors{margin:12px 0;color:var(--amber);font-size:12px}.errors p{color:inherit;margin-bottom:6px}.progress{height:3px;background:#22313c}.progress div{height:100%;width:0;background:var(--green);transition:width .2s}.report-footer{font-size:11px;padding:12px 20px;background:#11171e;border-top:1px solid var(--line);color:#8090a2;overflow-wrap:anywhere}.footer{display:flex;justify-content:space-between;margin-top:18px;color:#68798c;font-size:11px;gap:15px}.status-note{max-width:100%;overflow-wrap:anywhere}.command{margin-top:18px;color:var(--muted);font-size:11px}.command summary{cursor:pointer}.command code{display:block;white-space:pre-wrap;background:#141c25;padding:12px;border-radius:6px;color:#b1c5d6;margin-top:8px}.global-error{color:var(--red);font-size:12px;margin:8px 0;overflow-wrap:anywhere} [hidden]{display:none!important}
+@media(min-width:1500px){.main{padding:0 52px 36px}.hero{padding-top:42px;padding-bottom:30px}.arm-card{min-height:157px}}
+@media(max-width:1100px){.layout{grid-template-columns:174px 1fr}.sidebar{padding:25px 14px}.main{padding:0 24px 24px}.arm-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.arm-card{min-height:125px}.hero h1{font-size:26px}.hero p{font-size:12px}}
+@media(max-width:700px){.layout{display:block}.sidebar{display:none}.main{padding:0 16px 20px}.topbar{height:55px}.hero{padding:22px 0}.hero>div:last-child{display:none}.actions,.result-top{align-items:flex-start;flex-direction:column}.actions-right{width:100%;flex-wrap:wrap}.primary{flex:1}.motor-node{padding:8px}.wire{width:12px}.footer{display:block}.step-head .minor{display:none}.serial{font-size:10px}}
+</style>
+</head>
+<body>
+<div class="layout">
+ <aside class="sidebar">
+  <div class="brand"><span class="mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20h16M7 20v-5l6-4-4-5 4-3 5 6-3 5v6"/><circle cx="9" cy="6" r="2" fill="#10151c"/><circle cx="14" cy="12" r="2" fill="#10151c"/></svg></span><div>A6Y<small>ROBOT WORKSPACE</small></div></div>
+  <div><div class="navlabel">DIAGNOSTICS</div><div class="nav"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor"><path d="M2 6V2h4m8 0h4v4M2 14v4h4m8 0h4v-4M4 10h3l2-4 3 8 2-4h2"/></svg>七电机扫描</div></div>
+  <div class="side-info"><h3>本次功能</h3><div class="spec"><span>选择数量</span><span>1–4 台</span></div><div class="spec"><span>每臂电机</span><span>7 台</span></div><div class="spec"><span>查询模式</span><span>只读</span></div><div class="spec"><span>身份绑定</span><span>USB 序列号</span></div></div>
+  <div class="side-info"><h3>通信参数</h3><div class="spec"><span>CAN</span><span class="mono">1 Mbps</span></div><div class="spec"><span>串口</span><span class="mono">115200</span></div><div class="spec"><span>适配器</span><span>CANable2</span></div></div>
+  <div class="side-bottom"><span class="dot"></span>仅在本机运行<br><span style="padding-left:13px">A6-Y-G / 状态诊断工具</span></div>
+ </aside>
+ <main class="main">
+  <div class="topbar"><span>机械臂工作台 <span style="margin:0 12px;color:#415263">/</span> <b>通信诊断</b></span><span class="pill">● &nbsp; STATUS ONLY</span></div>
+  <div class="hero"><div><div class="eyebrow">PRE-FLIGHT · 01</div><h1>七电机通信扫描</h1><p>选择要检查的机械臂，逐一确认六个关节与夹爪的电机响应。</p></div><div class="minor" style="text-align:right;padding-top:8px">A6Y 远程遥操作<br>运动端 / 示教端</div></div>
+  <section aria-labelledby="selection-title"><div class="step-head"><h2 id="selection-title"><span>01</span>选择本次扫描对象</h2><div><span class="minor" id="adapter-count">正在读取连接状态</span><button class="text-button" id="refresh">↻ 刷新连接</button></div></div><div class="arm-grid" id="arms"></div></section>
+  <div class="actions"><div class="count" id="selection-count">已选择 <b>0</b> 台 · 请先选择机械臂</div><div class="actions-right"><button id="select-all" class="text-button">选择全部</button><label for="passes" class="minor">扫描轮数</label><select id="passes"><option value="3">3 轮 · 快速</option><option value="10" selected>10 轮 · 标准</option><option value="20">20 轮 · 复检</option></select><button id="stop" class="stop" hidden>停止扫描</button><button id="start" class="primary" disabled>开始只读扫描 →</button></div></div>
+  <div class="notice"><b>仅发送状态查询。</b> 不启用电机、不改变控制模式。扫描前请停止占用所选机械臂串口的其他程序。</div>
+  <div class="global-error" id="global-error" role="alert" hidden></div>
+  <div class="errors" id="arm-errors" role="status"></div>
+  <section class="result-panel" aria-labelledby="result-title"><div class="result-top"><div><h2 id="result-title">扫描结果</h2><p id="result-subtitle" role="status" aria-live="polite">尚未开始 · 打开页面不会连接电机</p></div><div class="result-meta"><span><strong id="online-count">—</strong><span class="minor" id="online-label">电机响应</span></span><a class="download" id="download" href="/report.json" hidden>↓ 导出 JSON</a></div></div>
+   <div class="progress" hidden id="progress"><div id="progress-fill"></div></div>
+   <div class="empty" id="empty"><div class="motor-chain" aria-hidden="true"><span class="motor-node">01</span><span class="wire"></span><span class="motor-node">02</span><span class="wire"></span><span class="motor-node">03</span><span class="wire"></span><span class="motor-node">04</span><span class="wire"></span><span class="motor-node">05</span><span class="wire"></span><span class="motor-node">06</span><span class="wire"></span><span class="motor-node">07</span></div><h3>等待选择机械臂</h3><p>每台机械臂检查 ID 1–7；结果将显示响应次数、状态与温度。</p></div>
+   <div class="table-wrap" id="table-wrap" hidden><table><thead><tr><th>机械臂 / 电机</th><th>CAN ID</th><th>响应 / 轮数</th><th>检查结果</th><th>状态码</th><th>MOS / 转子 °C</th><th>最新反馈报文</th></tr></thead><tbody id="results"></tbody></table></div>
+   <div class="report-footer" id="report-footer">只有全部七台电机在每轮都响应、状态为 0 且无异常报文，才标记本轮检查通过。</div>
+  </section>
+  <details class="command"><summary>查看终端运行方式</summary><p style="margin-top:6px">在 A6-Y-G 目录运行；每次必须明确指定机械臂。无参数运行脚本可打开此面板。</p><code id="command">bash scripts/run_arm_scan.bash --cli --arms &lt;机械臂角色&gt;</code></details>
+  <footer class="footer"><span>本次扫描只确认通信情况；无法排除重复 ID、间歇接触或其他硬件问题。</span><span>本地时间 · Asia/Shanghai</span></footer>
+ </main>
+</div>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+let arms=[],token='',selected=new Set(),running=false,timer=null,lastState=null,hadRunning=false;
+const labels={ok:['每轮响应','ok'],missing:['无响应','missing'],not_scanned:['未扫描',''],pending:['待扫描',''],intermittent:['间歇响应','warning'],state_warning:['状态需检查','warning']};
+function esc(value){return String(value??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function showError(text){$('global-error').textContent=text;$('global-error').hidden=!text;}
+async function api(path,data){const response=await fetch(path,data===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json','X-Scan-Token':token},body:JSON.stringify(data)});const value=await response.json();if(!response.ok)throw new Error(value.error||`请求失败 ${response.status}`);return value;}
+function drawCards(){
+ $('arms').innerHTML=arms.map(a=>`<label class="arm-card"><input type="checkbox" value="${esc(a.role)}" aria-label="${esc(a.name)}" ${selected.has(a.role)?'checked':''} ${running?'disabled':''}><div class="card-type">${a.role.startsWith('motion')?'MOTION · 运动端':'TEACHING · 示教端'}</div><div class="arm-name">${esc(a.name)}</div><div class="serial mono">USB ${esc(a.usb_serial)}</div><div class="connection ${a.present?'present':''}">${esc(a.connection_message)}</div></label>`).join('');
+ document.querySelectorAll('.arm-card input').forEach(input=>input.addEventListener('change',()=>{input.checked?selected.add(input.value):selected.delete(input.value);updateSelection();}));
+ $('adapter-count').textContent=`USB 识别 ${arms.filter(a=>a.usb_detected).length} / ${arms.length} · 串口可用 ${arms.filter(a=>a.present).length}`;
+}
+function updateSelection(){
+ const names=arms.filter(a=>selected.has(a.role)).map(a=>a.name);
+ $('selection-count').innerHTML=`已选择 <b>${selected.size}</b> 台${names.length?' · '+esc(names.join('、')):' · 请先选择机械臂'}`;
+ $('start').disabled=running||!selected.size||!token;
+ $('select-all').disabled=running;$('passes').disabled=running;$('refresh').disabled=running;
+ $('select-all').textContent=selected.size===arms.length?'清空选择':'选择全部';
+ $('command').textContent=`bash scripts/run_arm_scan.bash --cli --arms ${selected.size?[...selected].join(' '):'<机械臂角色>'} --passes ${$('passes').value}`;
+}
+async function refresh(){try{const data=await api('/api/init');arms=data.arms;token=data.token;drawCards();updateSelection();showError('');}catch(e){showError('无法连接本地扫描服务：'+e.message);}}
+function drawState(s){
+ lastState=s;running=s.running;
+ if(running){hadRunning=true;selected=new Set(s.selected);}
+ else if(hadRunning){selected.clear();hadRunning=false;}
+ drawCards();updateSelection();
+ $('stop').hidden=!running;$('start').textContent=running?'正在扫描…':'开始只读扫描 →';
+ $('progress').hidden=!running;$('progress-fill').style.width=`${s.total?100*s.progress/s.total:0}%`;
+ $('result-subtitle').textContent=s.message+(running?` · ${s.progress} / ${s.total} 次查询`:'');
+ const report=s.report;
+ const rows=[];
+ for(const role of s.selected||[]){const arm=report?report.arms.find(a=>a.role===role):arms.find(a=>a.role===role);for(let id=1;id<=7;id++){const motor=report?arm.motors.find(m=>m.id===id):s.motors[`${role}:${id}`];rows.push({arm,motor,id});}}
+ $('empty').hidden=rows.length>0;$('table-wrap').hidden=!rows.length;
+ $('online-count').textContent=rows.length?rows.filter(r=>r.motor?.hits>0).length:'—';
+ $('online-label').textContent=rows.length?`/ ${rows.length} 电机响应`:'电机响应';
+ $('results').innerHTML=rows.map(({arm,motor:m,id})=>{
+  const last=m?.last;let [label,style]=labels[m?.result||'pending'];
+  if(running&&m?.attempts){label=`已查询 ${m.attempts} 次`;style='';}
+  return `<tr><td class="row-label">${esc(arm.name)}<small>${id<7?'关节 J'+id:'夹爪'} · ID ${id}</small></td><td class="mono">0x${id.toString(16).padStart(2,'0')} → 0x${(id+16).toString(16)}</td><td class="mono">${m?.hits??0} / ${s.passes||report?.passes||'—'}</td><td><span class="status ${style}">${label}</span></td><td class="mono">${m?.states?.length?m.states.map(x=>'0x'+x.toString(16).toUpperCase()).join(', '):'—'}</td><td class="mono">${last?esc(last.mos_temperature_c)+' / '+esc(last.rotor_temperature_c):'—'}</td><td class="raw mono" title="${esc(last?.received_at||'尚无反馈')}">${esc(last?.raw_hex)}</td></tr>`;
+ }).join('');
+ $('download').hidden=!report;
+ const errors=report?report.arms.flatMap(a=>[a.error?`${a.name}：${a.error}`:null,a.unexpected_frames?`${a.name}：收到 ${a.unexpected_frames} 个未匹配反馈，请核查 ID 和其他总线通信。`:null,a.motors.some(m=>m.states.some(v=>v!==0))?`${a.name}：出现非零状态码，请核查电机状态；程序不会清除错误或改变使能。`:null].filter(Boolean)):[];
+ $('arm-errors').replaceChildren(...errors.map(e=>{const p=document.createElement('p');p.textContent=e;return p;}));
+ if(report){$('report-footer').textContent=`${report.finished_at.replace('T',' ')} · ${report.cancelled?'已停止':report.ok?'本轮检查通过':'需检查'}${s.report_path?' · 报告已保存：'+s.report_path:' · 报告尚未保存，可导出 JSON'}`;}
+ else if(running){$('report-footer').textContent='正在采集本轮新反馈。完成或停止后将自动保存 JSON 报告。';}
+ if(s.error)showError(s.error);
+}
+async function poll(){clearTimeout(timer);try{const s=await api('/api/state');drawState(s);if(s.running)timer=setTimeout(poll,400);}catch(e){showError('状态读取失败：'+e.message+'。请确认本地程序仍在运行。');if(running)timer=setTimeout(poll,1500);}}
+$('refresh').addEventListener('click',refresh);
+$('select-all').addEventListener('click',()=>{selected=selected.size===arms.length?new Set():new Set(arms.map(a=>a.role));drawCards();updateSelection();});
+$('passes').addEventListener('change',updateSelection);
+$('start').addEventListener('click',async()=>{if(running||!selected.size)return;$('start').disabled=true;showError('');try{await api('/api/scan',{arms:[...selected],passes:Number($('passes').value)});hadRunning=true;await poll();}catch(e){showError(e.message);await poll();}});
+$('stop').addEventListener('click',async()=>{$('stop').disabled=true;try{await api('/api/stop',{});await poll();}catch(e){showError(e.message);}finally{$('stop').disabled=false;}});
+(async()=>{await refresh();await poll();})();
+</script>
+</body>
+</html>

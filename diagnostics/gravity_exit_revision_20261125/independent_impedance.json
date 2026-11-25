@@ -1,0 +1,9 @@
+{
+  "exit_code": 1,
+  "excluded_objects": [
+    "A6_y_gravity_comp_controller.cpp.o",
+    "gravity_home.cpp.o"
+  ],
+  "test_filter": "JointControllerTest.RepeatedLargePushesWithStrongerResistance:JointControllerTest.FrictionReleaseAtRecordedPose",
+  "physical_devices": 0
+}

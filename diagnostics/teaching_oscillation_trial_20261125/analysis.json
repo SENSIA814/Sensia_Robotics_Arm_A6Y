@@ -1,0 +1,798 @@
+{
+  "session": "teaching_cc3c0a6bfe",
+  "following_duration_s": 6.3959557470006985,
+  "quality": {
+    "schema": 1,
+    "pairs": [
+      [
+        "teaching_left",
+        "motion_left"
+      ],
+      [
+        "teaching_right",
+        "motion_right"
+      ]
+    ],
+    "devices": {
+      "teaching_left": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_304F33733036-if00",
+      "motion_left": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_304C33733036-if00",
+      "teaching_right": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209D3982534B-if00",
+      "motion_right": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209B3971534B-if00"
+    },
+    "nominal_arm_hz": 250,
+    "nominal_target_hz": 100,
+    "units": {
+      "angle": "rad",
+      "velocity": "rad/s",
+      "time": "s",
+      "error": "sent_position - position"
+    },
+    "timebases": {
+      "control_time": "host steady clock at native read start",
+      "send_begin_time": "host steady clock before serial write",
+      "send_complete_time": "host steady clock after serial accepted frame; NOT CAN ACK",
+      "feedback_receive_time": "host steady clock when decoded; NOT motor sampling time",
+      "source_ros_time": "publisher ROS clock, system clock in this local deployment",
+      "receive_monotonic": "observer callback time; NOT source time"
+    },
+    "notes": [
+      "One latest native snapshot per observed control cycle, not every CAN frame.",
+      "J1-J6 position control on followers; J7 gripper is read-only.",
+      "Teacher MIT gravity has no servo position target; empty values are intentional.",
+      "Positive error means target exceeds actual in calibrated joint coordinates.",
+      "Only following phase is captured. Exit homing is excluded.",
+      "Queue drops and skipped native cycles invalidate precise latency estimates."
+    ],
+    "following_start_monotonic": 61268.785545348,
+    "following_stop_monotonic": 61275.181501095,
+    "complete": true,
+    "received": {
+      "arm:teaching_left": 1588,
+      "arm:motion_left": 1588,
+      "arm:teaching_right": 1587,
+      "arm:motion_right": 1587,
+      "raw:motion_left": 635,
+      "safe:motion_left": 635,
+      "raw:motion_right": 635,
+      "safe:motion_right": 634
+    },
+    "analysis_complete": true,
+    "written": {
+      "arm:teaching_left": 1588,
+      "arm:motion_left": 1588,
+      "arm:teaching_right": 1587,
+      "arm:motion_right": 1587,
+      "raw:motion_left": 635,
+      "safe:motion_left": 635,
+      "raw:motion_right": 635,
+      "safe:motion_right": 634
+    },
+    "queue_dropped": {},
+    "cycles": {
+      "teaching_left": {
+        "first": 724.0,
+        "last": 2311.0,
+        "skipped": 0,
+        "duplicates": 0,
+        "resets": 0
+      },
+      "motion_left": {
+        "first": 1602.0,
+        "last": 3189.0,
+        "skipped": 0,
+        "duplicates": 0,
+        "resets": 0
+      },
+      "teaching_right": {
+        "first": 293.0,
+        "last": 1879.0,
+        "skipped": 0,
+        "duplicates": 0,
+        "resets": 0
+      },
+      "motion_right": {
+        "first": 1131.0,
+        "last": 2717.0,
+        "skipped": 0,
+        "duplicates": 0,
+        "resets": 0
+      }
+    },
+    "error": null
+  },
+  "rates": [
+    {
+      "role": "motion_left",
+      "seconds": 6.347996000004059,
+      "loop_hz": 250.00015752987008,
+      "command_hz": 250.00015752987008,
+      "overrun_count": 0
+    },
+    {
+      "role": "motion_right",
+      "seconds": 6.344000819000939,
+      "loop_hz": 249.999967725377,
+      "command_hz": 249.999967725377,
+      "overrun_count": 0
+    },
+    {
+      "role": "teaching_left",
+      "seconds": 6.348003229002643,
+      "loop_hz": 249.99987283392406,
+      "command_hz": 249.99987283392406,
+      "overrun_count": 0
+    },
+    {
+      "role": "teaching_right",
+      "seconds": 6.343984089995502,
+      "loop_hz": 250.00062697211536,
+      "command_hz": 250.00062697211536,
+      "overrun_count": 0
+    }
+  ],
+  "metrics": [
+    {
+      "role": "motion_left",
+      "joint": 1,
+      "window_s": [
+        0.0,
+        1.0
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.0,
+        "raw_q": 0.0,
+        "safe_q": 1.8797237233325528,
+        "sent_q": 2.43339014409288,
+        "actual_q": 3.8249643111016223
+      },
+      "error_rms_deg": 0.2861815682972169,
+      "velocity_peak_deg_s": 67.85947022011226,
+      "torque_peak_nm": 5.066666667
+    },
+    {
+      "role": "motion_left",
+      "joint": 1,
+      "window_s": [
+        1.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.0,
+        "raw_q": 0.0,
+        "safe_q": 0.0,
+        "sent_q": 0.0,
+        "actual_q": 0.04371392957106518
+      },
+      "error_rms_deg": 0.01962547538035396,
+      "velocity_peak_deg_s": 2.0987465235080474,
+      "torque_peak_nm": 0.690598291
+    },
+    {
+      "role": "motion_left",
+      "joint": 1,
+      "window_s": [
+        3.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.0,
+        "raw_q": 0.0,
+        "safe_q": 0.0,
+        "sent_q": 0.0,
+        "actual_q": 0.04371392957106518
+      },
+      "error_rms_deg": 0.01974178381471284,
+      "velocity_peak_deg_s": 2.0987465235080474,
+      "torque_peak_nm": 0.608547009
+    },
+    {
+      "role": "motion_left",
+      "joint": 2,
+      "window_s": [
+        0.0,
+        1.0
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.0,
+        "raw_q": 0.0,
+        "safe_q": 0.02185725126443016,
+        "sent_q": 0.028295234233638143,
+        "actual_q": 0.04371387227528567
+      },
+      "error_rms_deg": 0.009515782779627002,
+      "velocity_peak_deg_s": 1.2592479026456727,
+      "torque_peak_nm": 0.499145299
+    },
+    {
+      "role": "motion_left",
+      "joint": 2,
+      "window_s": [
+        1.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.0,
+        "raw_q": 0.0,
+        "safe_q": 0.0,
+        "sent_q": 0.0,
+        "actual_q": 0.02185690748975308
+      },
+      "error_rms_deg": 0.015540982528391359,
+      "velocity_peak_deg_s": 0.13991640816250606,
+      "torque_peak_nm": 0.170940171
+    },
+    {
+      "role": "motion_left",
+      "joint": 2,
+      "window_s": [
+        3.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.0,
+        "raw_q": 0.0,
+        "safe_q": 0.0,
+        "sent_q": 0.0,
+        "actual_q": 0.02185690748975308
+      },
+      "error_rms_deg": 0.016793143963793087,
+      "velocity_peak_deg_s": 0.13991640816250606,
+      "torque_peak_nm": 0.157264957
+    },
+    {
+      "role": "motion_left",
+      "joint": 3,
+      "window_s": [
+        0.0,
+        1.0
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.0,
+        "raw_q": 0.0,
+        "safe_q": 0.07650040807339531,
+        "sent_q": 0.09903334846562324,
+        "actual_q": 0.1967124538866753
+      },
+      "error_rms_deg": 0.027027378949966752,
+      "velocity_peak_deg_s": 3.7777437079370175,
+      "torque_peak_nm": 6.803418803
+    },
+    {
+      "role": "motion_left",
+      "joint": 3,
+      "window_s": [
+        1.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.0,
+        "raw_q": 0.0,
+        "safe_q": 0.0,
+        "sent_q": 0.0,
+        "actual_q": 0.021856964785532614
+      },
+      "error_rms_deg": 0.014575365893246983,
+      "velocity_peak_deg_s": 0.4197492817832977,
+      "torque_peak_nm": 4.998290598
+    },
+    {
+      "role": "motion_left",
+      "joint": 3,
+      "window_s": [
+        3.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.0,
+        "raw_q": 0.0,
+        "safe_q": 0.0,
+        "sent_q": 0.0,
+        "actual_q": 0.021856964785532614
+      },
+      "error_rms_deg": 0.014869322498590172,
+      "velocity_peak_deg_s": 0.4197492817832977,
+      "torque_peak_nm": 4.547008547
+    },
+    {
+      "role": "motion_left",
+      "joint": 4,
+      "window_s": [
+        0.0,
+        1.0
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.021856907489752633,
+        "raw_q": 0.021856907489752633,
+        "safe_q": 5.888150037167535,
+        "sent_q": 6.621085498220679,
+        "actual_q": 12.327313528616605
+      },
+      "error_rms_deg": 2.14505203115941,
+      "velocity_peak_deg_s": 95.84275695193784,
+      "torque_peak_nm": 3.201465201
+    },
+    {
+      "role": "motion_left",
+      "joint": 4,
+      "window_s": [
+        1.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.021856907489752633,
+        "raw_q": 0.021856907489752633,
+        "safe_q": 0.021856907489752633,
+        "sent_q": 0.0218570220813116,
+        "actual_q": 2.95068675100435
+      },
+      "error_rms_deg": 0.3744185874937575,
+      "velocity_peak_deg_s": 44.07367653530276,
+      "torque_peak_nm": 2.781440781
+    },
+    {
+      "role": "motion_left",
+      "joint": 4,
+      "window_s": [
+        3.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.021856907489752633,
+        "raw_q": 0.021856907489752633,
+        "safe_q": 0.021856907489752633,
+        "sent_q": 0.0218570220813116,
+        "actual_q": 0.6557081414250643
+      },
+      "error_rms_deg": 0.1608378713430013,
+      "velocity_peak_deg_s": 13.292061181860815,
+      "torque_peak_nm": 2.332112332
+    },
+    {
+      "role": "motion_left",
+      "joint": 5,
+      "window_s": [
+        0.0,
+        1.0
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.02185690748975308,
+        "raw_q": 0.02185690748975308,
+        "safe_q": 0.3934302362808453,
+        "sent_q": 0.502875946757381,
+        "actual_q": 1.3332732476356617
+      },
+      "error_rms_deg": 0.3252017037497566,
+      "velocity_peak_deg_s": 39.87618354558245,
+      "torque_peak_nm": 0.788766789
+    },
+    {
+      "role": "motion_left",
+      "joint": 5,
+      "window_s": [
+        1.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.02185690748975308,
+        "raw_q": 0.02185690748975308,
+        "safe_q": 0.02185690748975308,
+        "sent_q": 0.02185690748975308,
+        "actual_q": 0.04371387227528565
+      },
+      "error_rms_deg": 0.023400702419497953,
+      "velocity_peak_deg_s": 2.0987465235080474,
+      "torque_peak_nm": 0.148962149
+    },
+    {
+      "role": "motion_left",
+      "joint": 5,
+      "window_s": [
+        3.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.02185690748975308,
+        "raw_q": 0.02185690748975308,
+        "safe_q": 0.02185690748975308,
+        "sent_q": 0.02185690748975308,
+        "actual_q": 0.04371387227528565
+      },
+      "error_rms_deg": 0.016826696908173296,
+      "velocity_peak_deg_s": 2.0987465235080474,
+      "torque_peak_nm": 0.148962149
+    },
+    {
+      "role": "motion_left",
+      "joint": 6,
+      "window_s": [
+        0.0,
+        1.0
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.0,
+        "raw_q": 0.0,
+        "safe_q": 1.7922947182748314,
+        "sent_q": 2.320209722820343,
+        "actual_q": 3.584537984939661
+      },
+      "error_rms_deg": 1.0906371580802037,
+      "velocity_peak_deg_s": 30.08203319803786,
+      "torque_peak_nm": 0.31990232
+    },
+    {
+      "role": "motion_left",
+      "joint": 6,
+      "window_s": [
+        1.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.0,
+        "raw_q": 0.0,
+        "safe_q": 0.0,
+        "sent_q": 0.0,
+        "actual_q": 0.06557083706081766
+      },
+      "error_rms_deg": 0.015218113174006953,
+      "velocity_peak_deg_s": 2.0987465235080474,
+      "torque_peak_nm": 0.266178266
+    },
+    {
+      "role": "motion_left",
+      "joint": 6,
+      "window_s": [
+        3.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.0,
+        "raw_q": 0.0,
+        "safe_q": 0.0,
+        "sent_q": 0.0,
+        "actual_q": 0.021856964785532118
+      },
+      "error_rms_deg": 0.011063216968331105,
+      "velocity_peak_deg_s": 2.0987465235080474,
+      "torque_peak_nm": 0.168498168
+    },
+    {
+      "role": "motion_right",
+      "joint": 1,
+      "window_s": [
+        0.0,
+        1.0
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.021856964785532913,
+        "raw_q": 0.021856964785532913,
+        "safe_q": 0.38239547021708276,
+        "sent_q": 0.5871994632697132,
+        "actual_q": 0.6994220137003498
+      },
+      "error_rms_deg": 0.04722873854388444,
+      "velocity_peak_deg_s": 12.452562560998441,
+      "torque_peak_nm": 1.264957265
+    },
+    {
+      "role": "motion_right",
+      "joint": 1,
+      "window_s": [
+        1.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.021856964785532913,
+        "raw_q": 0.021856964785532913,
+        "safe_q": 0.021856964785532913,
+        "sent_q": 0.021857022081312395,
+        "actual_q": 0.021856964785532913
+      },
+      "error_rms_deg": 0.018300410839170302,
+      "velocity_peak_deg_s": 1.5390807762664642,
+      "torque_peak_nm": 0.704273504
+    },
+    {
+      "role": "motion_right",
+      "joint": 1,
+      "window_s": [
+        3.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.021856964785532913,
+        "raw_q": 0.021856964785532913,
+        "safe_q": 0.021856964785532913,
+        "sent_q": 0.021857022081312395,
+        "actual_q": 0.021856964785532913
+      },
+      "error_rms_deg": 0.017998067837998854,
+      "velocity_peak_deg_s": 1.5390807762664642,
+      "torque_peak_nm": 0.704273504
+    },
+    {
+      "role": "motion_right",
+      "joint": 2,
+      "window_s": [
+        0.0,
+        1.0
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.0,
+        "raw_q": 0.0,
+        "safe_q": 0.27313522617883035,
+        "sent_q": 0.42828979067751777,
+        "actual_q": 0.5245665245992075
+      },
+      "error_rms_deg": 0.04615128438374245,
+      "velocity_peak_deg_s": 9.934066755707095,
+      "torque_peak_nm": 4.765811966
+    },
+    {
+      "role": "motion_right",
+      "joint": 2,
+      "window_s": [
+        1.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.0,
+        "raw_q": 0.0,
+        "safe_q": 0.0,
+        "sent_q": 0.0,
+        "actual_q": 0.06557077976503875
+      },
+      "error_rms_deg": 0.02574335902599618,
+      "velocity_peak_deg_s": 4.617242328799393,
+      "torque_peak_nm": 7.856410256
+    },
+    {
+      "role": "motion_right",
+      "joint": 2,
+      "window_s": [
+        3.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.0,
+        "raw_q": 0.0,
+        "safe_q": 0.0,
+        "sent_q": 0.0,
+        "actual_q": 0.06557077976503875
+      },
+      "error_rms_deg": 0.0287870846881577,
+      "velocity_peak_deg_s": 4.617242328799393,
+      "torque_peak_nm": 7.856410256
+    },
+    {
+      "role": "motion_right",
+      "joint": 3,
+      "window_s": [
+        0.0,
+        1.0
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.021856964785532614,
+        "raw_q": 0.021856964785532614,
+        "safe_q": 0.16388117008476594,
+        "sent_q": 0.25697392024313426,
+        "actual_q": 0.3715680002835975
+      },
+      "error_rms_deg": 0.057148413505687404,
+      "velocity_peak_deg_s": 4.617242328799393,
+      "torque_peak_nm": 12.123076923
+    },
+    {
+      "role": "motion_right",
+      "joint": 3,
+      "window_s": [
+        1.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.021856964785532614,
+        "raw_q": 0.021856964785532614,
+        "safe_q": 0.021856964785532614,
+        "sent_q": 0.021856964785532614,
+        "actual_q": 0.2622832909474936
+      },
+      "error_rms_deg": 0.07586896277289502,
+      "velocity_peak_deg_s": 6.576072386849154,
+      "torque_peak_nm": 16.430769231
+    },
+    {
+      "role": "motion_right",
+      "joint": 3,
+      "window_s": [
+        3.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.021856964785532614,
+        "raw_q": 0.021856964785532614,
+        "safe_q": 0.021856964785532614,
+        "sent_q": 0.021856964785532614,
+        "actual_q": 0.240426326161961
+      },
+      "error_rms_deg": 0.08588046833666042,
+      "velocity_peak_deg_s": 6.576072386849154,
+      "torque_peak_nm": 16.362393162
+    },
+    {
+      "role": "motion_right",
+      "joint": 4,
+      "window_s": [
+        0.0,
+        1.0
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.0,
+        "raw_q": 0.0,
+        "safe_q": 17.013331877678556,
+        "sent_q": 17.0789020844858,
+        "actual_q": 23.255782915240953
+      },
+      "error_rms_deg": 2.401841947608922,
+      "velocity_peak_deg_s": 107.03607161029062,
+      "torque_peak_nm": 3.098901099
+    },
+    {
+      "role": "motion_right",
+      "joint": 4,
+      "window_s": [
+        1.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.0,
+        "raw_q": 0.0,
+        "safe_q": 4.672794941516569,
+        "sent_q": 4.672794941516569,
+        "actual_q": 13.289018833264452
+      },
+      "error_rms_deg": 3.2164873532712344,
+      "velocity_peak_deg_s": 160.76398208497545,
+      "torque_peak_nm": 5.330891331
+    },
+    {
+      "role": "motion_right",
+      "joint": 4,
+      "window_s": [
+        3.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.0,
+        "raw_q": 0.0,
+        "safe_q": 4.672794941516569,
+        "sent_q": 4.672794941516569,
+        "actual_q": 13.289018833264452
+      },
+      "error_rms_deg": 3.678209847625199,
+      "velocity_peak_deg_s": 160.76398208497545,
+      "torque_peak_nm": 5.330891331
+    },
+    {
+      "role": "motion_right",
+      "joint": 5,
+      "window_s": [
+        0.0,
+        1.0
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.02185690748975308,
+        "raw_q": 0.02185690748975308,
+        "safe_q": 1.7699224925441384,
+        "sent_q": 2.76291186576392,
+        "actual_q": 3.562681020154129
+      },
+      "error_rms_deg": 0.7251892233271992,
+      "velocity_peak_deg_s": 33.99969331413738,
+      "torque_peak_nm": 0.373626374
+    },
+    {
+      "role": "motion_right",
+      "joint": 5,
+      "window_s": [
+        1.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.02185690748975308,
+        "raw_q": 0.02185690748975308,
+        "safe_q": 0.02185690748975308,
+        "sent_q": 0.02185690748975308,
+        "actual_q": 0.06557083706081827
+      },
+      "error_rms_deg": 0.018193570579591166,
+      "velocity_peak_deg_s": 4.617242328799393,
+      "torque_peak_nm": 0.085470085
+    },
+    {
+      "role": "motion_right",
+      "joint": 5,
+      "window_s": [
+        3.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.02185690748975308,
+        "raw_q": 0.02185690748975308,
+        "safe_q": 0.02185690748975308,
+        "sent_q": 0.02185690748975308,
+        "actual_q": 0.06557083706081827
+      },
+      "error_rms_deg": 0.019701585099548582,
+      "velocity_peak_deg_s": 4.617242328799393,
+      "torque_peak_nm": 0.085470085
+    },
+    {
+      "role": "motion_right",
+      "joint": 6,
+      "window_s": [
+        0.0,
+        1.0
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.0,
+        "raw_q": 0.0,
+        "safe_q": 0.8412565699693954,
+        "sent_q": 1.3191325919560533,
+        "actual_q": 1.6829842831337265
+      },
+      "error_rms_deg": 0.3194596015974922,
+      "velocity_peak_deg_s": 25.60470733469675,
+      "torque_peak_nm": 0.158730159
+    },
+    {
+      "role": "motion_right",
+      "joint": 6,
+      "window_s": [
+        1.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.021856964785532514,
+        "raw_q": 0.021856964785532514,
+        "safe_q": 0.021856964785532514,
+        "sent_q": 0.021856792898194068,
+        "actual_q": 0.02185690748975303
+      },
+      "error_rms_deg": 0.017047144880969336,
+      "velocity_peak_deg_s": 2.938245087074643,
+      "torque_peak_nm": 0.080586081
+    },
+    {
+      "role": "motion_right",
+      "joint": 6,
+      "window_s": [
+        3.0,
+        6.39
+      ],
+      "peak_to_peak_deg": {
+        "teacher_q": 0.021856964785532514,
+        "raw_q": 0.021856964785532514,
+        "safe_q": 0.021856964785532514,
+        "sent_q": 0.021856792898194068,
+        "actual_q": 0.02185690748975303
+      },
+      "error_rms_deg": 0.018215847610134492,
+      "velocity_peak_deg_s": 2.938245087074643,
+      "torque_peak_nm": 0.080586081
+    }
+  ],
+  "right_j4_oscillation_period_s": 0.26399906799633754,
+  "interpretation": [
+    "Right J4 raw teacher target is stationary after 1 s while actual oscillation grows.",
+    "Right J4 sent target starts oscillating after actual error exceeds the original mapper 0.075 rad step bound.",
+    "This is motor response plus follower-dependent target limiting, not transport delay.",
+    "Left J4 has a decaying transient with residual oscillation; right J3 also has smaller motion.",
+    "Change J4 first; J3 coupling versus independent servo behavior is not resolved by this capture."
+  ],
+  "source_sha256": {
+    "step_arms.csv": "4924140ca6cb57927e72ba1b84242641c27ec275a9db08552d7396a5560833ad",
+    "step_tracking.csv": "bc5052513c9133c4cbb246dd8b4d9e0c99d4c8181b53b588bce0c7ab1c3cb04b",
+    "step_targets.csv": "ebd792a2e66022ad48124a6032d05fcb30893e8dc892f7cd19218abca5e0e02f",
+    "step_quality.json": "fd16786d99347267a97789bdeac658f1f5503412202bcb41d06cdfac03849291",
+    "session.log": "a632cad993642f75f61beacbc68de0d29733eecf2e52f113f14511b068418e36"
+  }
+}

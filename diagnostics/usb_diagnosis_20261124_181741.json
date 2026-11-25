@@ -1,0 +1,109 @@
+{
+  "observed_at": "2026-11-24T18:17:41.902960+08:00",
+  "motor_commands_sent": false,
+  "source": "sysfs + udev by-id aliases",
+  "arms": [
+    {
+      "role": "motion_left",
+      "name": "运动端左臂",
+      "usb_serial": "304C33733036",
+      "port": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_304C33733036-if00",
+      "present": true,
+      "device": "/dev/ttyACM0",
+      "resolved_device": "/dev/ttyACM0",
+      "usb_detected": true,
+      "usb_devices": [
+        {
+          "serial": "304C33733036",
+          "usb_path": "1-3.4.2",
+          "idVendor": "16d0",
+          "idProduct": "117e",
+          "product": "CANable2 b158aa7-dirty github.com/normaldotcom/canable2-fw.git",
+          "manufacturer": "Openlight Labs",
+          "ttys": [
+            "/dev/ttyACM0"
+          ],
+          "mode": "serial"
+        }
+      ],
+      "connection_state": "ready",
+      "connection_message": "已连接 /dev/ttyACM0"
+    },
+    {
+      "role": "motion_right",
+      "name": "运动端右臂",
+      "usb_serial": "209B3971534B",
+      "port": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209B3971534B-if00",
+      "present": true,
+      "device": "/dev/ttyACM2",
+      "resolved_device": "/dev/ttyACM2",
+      "usb_detected": true,
+      "usb_devices": [
+        {
+          "serial": "209B3971534B",
+          "usb_path": "1-3.4.3",
+          "idVendor": "16d0",
+          "idProduct": "117e",
+          "product": "CANable2 b158aa7-dirty github.com/normaldotcom/canable2-fw.git",
+          "manufacturer": "Openlight Labs",
+          "ttys": [
+            "/dev/ttyACM2"
+          ],
+          "mode": "serial"
+        }
+      ],
+      "connection_state": "ready",
+      "connection_message": "已连接 /dev/ttyACM2"
+    },
+    {
+      "role": "teaching_left",
+      "name": "示教端左臂",
+      "usb_serial": "304F33733036",
+      "port": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_304F33733036-if00",
+      "present": true,
+      "device": "/dev/ttyACM1",
+      "resolved_device": "/dev/ttyACM1",
+      "usb_detected": true,
+      "usb_devices": [
+        {
+          "serial": "304F33733036",
+          "usb_path": "1-3.1.4",
+          "idVendor": "16d0",
+          "idProduct": "117e",
+          "product": "CANable2 b158aa7-dirty github.com/normaldotcom/canable2-fw.git",
+          "manufacturer": "Openlight Labs",
+          "ttys": [
+            "/dev/ttyACM1"
+          ],
+          "mode": "serial"
+        }
+      ],
+      "connection_state": "ready",
+      "connection_message": "已连接 /dev/ttyACM1"
+    },
+    {
+      "role": "teaching_right",
+      "name": "示教端右臂",
+      "usb_serial": "209D3982534B",
+      "port": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209D3982534B-if00",
+      "present": false,
+      "device": null,
+      "resolved_device": null,
+      "usb_detected": true,
+      "usb_devices": [
+        {
+          "serial": "209D3982534B",
+          "usb_path": "1-3.1.3",
+          "idVendor": "0483",
+          "idProduct": "df11",
+          "product": "DFU in FS Mode",
+          "manufacturer": "STMicroelectronics",
+          "ttys": [],
+          "mode": "dfu"
+        }
+      ],
+      "connection_state": "dfu",
+      "connection_message": "USB 已识别 · DFU 下载模式，无可用串口"
+    }
+  ]
+}

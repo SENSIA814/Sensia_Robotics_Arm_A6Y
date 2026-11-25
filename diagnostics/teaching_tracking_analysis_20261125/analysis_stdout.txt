@@ -1,0 +1,19 @@
+ hz         role  count  observer_hz  interval_median_ms  interval_p95_ms  interval_p99_ms  interval_max_ms  observer_counter_gaps
+ 50  motion_left  10931    50.001259           19.789219        33.296514        43.623226        92.537165                      0
+ 50 motion_right  10933    50.005120           19.827127        34.855962        46.185451       101.004362                      0
+100  motion_left   3210   100.112008            9.125233        21.630955        32.435741        53.839684                      0
+100 motion_right   3193    99.591478            8.670926        23.819911        34.907353        66.868544                      0
+50 motion_right 2 limited moving% 30.278422273781903 lag raw {'seconds': 0.43, 'rmse_before': 0.18521266516615809, 'rmse_after': 0.07525849266762888, 'correlation': 0.9882716801751172, 'moving_seconds': 24.41, 'at_boundary': False} lag safe {'seconds': 0.33, 'rmse_before': 0.13280192190061868, 'rmse_after': 0.033398850804610705, 'correlation': 0.9978709775579746, 'moving_seconds': 24.330000000000002, 'at_boundary': False}
+50 motion_right 3 limited moving% 46.05263157894737 lag raw {'seconds': 0.55, 'rmse_before': 0.2868707713171244, 'rmse_after': 0.13058789836464563, 'correlation': 0.970511710306649, 'moving_seconds': 20.1, 'at_boundary': False} lag safe {'seconds': 0.33, 'rmse_before': 0.15767747708387742, 'rmse_after': 0.038621208110269103, 'correlation': 0.9975976675175346, 'moving_seconds': 20.04, 'at_boundary': False}
+100 motion_right 2 limited moving% 74.45887445887446 lag raw {'seconds': 1.38, 'rmse_before': 0.46663051910207815, 'rmse_after': 0.2313341649689813, 'correlation': 0.924313548157966, 'moving_seconds': 8.06, 'at_boundary': False} lag safe {'seconds': 0.32, 'rmse_before': 0.09422831250931077, 'rmse_after': 0.01781339101875636, 'correlation': 0.9992199063273871, 'moving_seconds': 7.99, 'at_boundary': False}
+100 motion_right 3 limited moving% 89.50617283950618 lag raw {'seconds': 1.67, 'rmse_before': 0.5740163313370655, 'rmse_after': 0.27269021874679716, 'correlation': 0.931698143130506, 'moving_seconds': 9.39, 'at_boundary': False} lag safe {'seconds': 0.33, 'rmse_before': 0.09894182571954946, 'rmse_after': 0.016869065464997265, 'correlation': 0.9994430222353442, 'moving_seconds': 9.36, 'at_boundary': False}
+ hz         role  joint    time_s  teacher      raw     safe   actual  raw_safe  safe_actual  raw_actual
+ 50 motion_right      2 11.683142 1.027123 1.027123 0.712335 0.487335  0.314788       0.2250    0.539788
+ 50 motion_right      3 18.961821 1.517700 1.517700 0.935117 0.710117  0.582584       0.2250    0.807584
+100 motion_right      2  9.243129 1.105325 1.105325 0.372476 0.259976  0.732850       0.1125    0.845350
+100 motion_right      3  9.243129 1.350996 1.350996 0.416345 0.303845  0.934650       0.1125    1.047150
+ hz         role  joint  follower_velocity_p95  follower_velocity_max  teacher_velocity_p95  teacher_velocity_max  median_v_over_error
+ 50 motion_right      2               0.261294               0.671551              0.246642              1.555556             2.841083
+ 50 motion_right      3               0.364103               0.666667              0.021978              2.336996             2.856006
+100 motion_right      2               0.329670               0.368742              0.417582              1.838828             3.008609
+100 motion_right      3               0.329670               0.363858              0.533578              2.293040             2.945130

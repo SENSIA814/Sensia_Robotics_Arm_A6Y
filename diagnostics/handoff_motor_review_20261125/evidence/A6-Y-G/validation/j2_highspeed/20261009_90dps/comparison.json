@@ -1,0 +1,1780 @@
+[
+  {
+    "mode": "real",
+    "passed": false,
+    "disarm_confirmed": true,
+    "error": "timeout: all six joints settled",
+    "start_degrees": 0.0,
+    "end_degrees": 10.0,
+    "move_seconds": 3.75,
+    "planned_peak_speed_deg_s": 5.0,
+    "run": "real_kp1250_10deg_v5",
+    "kp_apr": 1250,
+    "native_parameters": {
+      "KP_APR": 1250.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.00384,
+      "KI_ASR": 0.002,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": false,
+      "speed": false,
+      "plan_error": false,
+      "holds": false,
+      "overshoot": false,
+      "endpoints": false,
+      "both_direction_speeds": false
+    },
+    "direction_metrics": {},
+    "endpoints": {},
+    "performance_target_met": false,
+    "operator_acceptable": null,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": false,
+    "disarm_confirmed": true,
+    "error": "command 5 rejected",
+    "start_degrees": 0.0,
+    "end_degrees": 10.0,
+    "move_seconds": 3.75,
+    "planned_peak_speed_deg_s": 5.0,
+    "run": "real_kp1250_10deg_v5_retry",
+    "kp_apr": 1250,
+    "native_parameters": {
+      "KP_APR": 1250.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.00384,
+      "KI_ASR": 0.002,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": false,
+      "speed": false,
+      "plan_error": false,
+      "holds": false,
+      "overshoot": false,
+      "endpoints": false,
+      "both_direction_speeds": false
+    },
+    "direction_metrics": {},
+    "endpoints": {},
+    "performance_target_met": false,
+    "operator_acceptable": null,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 10.0,
+    "move_seconds": 3.75,
+    "planned_peak_speed_deg_s": 5.0,
+    "samples": 4805,
+    "plan_error_max_deg": 0.246026915540255,
+    "plan_error_rms_deg": 0.14088745945520265,
+    "motor_error_max_deg": 0.24616167450072918,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 5.082606341623449,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.02185693885446026,
+        "mean_error_deg": -0.0039198294581557725
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 4.082051282051282,
+    "max_other_joint_motion_deg": 0.1529783849124109,
+    "overshoot_deg": 0.01092846942723013,
+    "run": "real_kp1250_10deg_v5_retry2",
+    "kp_apr": 1250,
+    "native_parameters": {
+      "KP_APR": 1250.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.00384,
+      "KI_ASR": 0.002,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": true,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 5.082606341623449,
+        "plan_error_max_deg": 0.246026915540255,
+        "effort_peak_nm": 4.082051282051282
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 5.02729920495582,
+        "plan_error_max_deg": 0.22338374330013153,
+        "effort_peak_nm": 2.454700854700853
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.495919137,
+        "position_span_deg": 0.02185693885445872,
+        "effort_peak_nm": 2.235897435897435,
+        "effort_span_nm": 0.8752136752136721,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.4959824810000002,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 2.3316239316239304,
+        "effort_span_nm": 0.3008547008546998,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": true,
+    "operator_acceptable": null,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": false,
+    "disarm_confirmed": true,
+    "error": "initial joint5 outside confirmed homing corridor",
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 5.625,
+    "planned_peak_speed_deg_s": 30.0,
+    "run": "real_kp1250_v30",
+    "kp_apr": 1250,
+    "native_parameters": {
+      "KP_APR": 1250.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.00384,
+      "KI_ASR": 0.002,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": false,
+      "speed": false,
+      "plan_error": false,
+      "holds": false,
+      "overshoot": false,
+      "endpoints": false,
+      "both_direction_speeds": false
+    },
+    "direction_metrics": {},
+    "endpoints": {},
+    "performance_target_met": false,
+    "operator_acceptable": null,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 5.625,
+    "planned_peak_speed_deg_s": 30.0,
+    "samples": 1944,
+    "plan_error_max_deg": 1.4081324267146476,
+    "plan_error_rms_deg": 0.8486370638098097,
+    "motor_error_max_deg": 1.3893347875653652,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 30.38158132414941,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.004054266759583556
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 6.352136752136751,
+    "max_other_joint_motion_deg": 0.17483532376687114,
+    "overshoot_deg": 0.01092846942723013,
+    "run": "real_kp1250_v30_retry",
+    "kp_apr": 1250,
+    "native_parameters": {
+      "KP_APR": 1250.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.00384,
+      "KI_ASR": 0.002,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": true,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 30.38158132414941,
+        "plan_error_max_deg": 1.4081324267146476,
+        "effort_peak_nm": 4.560683760683759
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 30.01290771158341,
+        "plan_error_max_deg": 1.355041963943431,
+        "effort_peak_nm": 6.352136752136751
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.4878877650000002,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 4.560683760683759,
+        "effort_span_nm": 1.0803418803418765,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.4880310780000001,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 2.2495726495726487,
+        "effort_span_nm": 0.2051282051282044,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": true,
+    "operator_acceptable": null,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 2.8125,
+    "planned_peak_speed_deg_s": 60.0,
+    "samples": 1241,
+    "plan_error_max_deg": 2.7846169476817755,
+    "plan_error_rms_deg": 1.7175518869135182,
+    "motor_error_max_deg": 2.73748517765483,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 59.9787559028301,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.004054266759583556
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 5.641025641025639,
+    "max_other_joint_motion_deg": 0.2841200180391724,
+    "overshoot_deg": 0.01092846942723013,
+    "run": "real_kp1250_v60",
+    "kp_apr": 1250,
+    "native_parameters": {
+      "KP_APR": 1250.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.00384,
+      "KI_ASR": 0.002,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": true,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 59.9787559028301,
+        "plan_error_max_deg": 2.7846169476817755,
+        "effort_peak_nm": 4.92991452991453
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 59.85297504312863,
+        "plan_error_max_deg": 2.715919226106985,
+        "effort_peak_nm": 5.641025641025639
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.4959140860000002,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 4.92991452991453,
+        "effort_span_nm": 1.8051282051282023,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.495976264,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 2.523076923076921,
+        "effort_span_nm": 0.3008547008546998,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": true,
+    "operator_acceptable": null,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 2.8125,
+    "planned_peak_speed_deg_s": 60.0,
+    "samples": 1255,
+    "plan_error_max_deg": 2.3558908620527967,
+    "plan_error_rms_deg": 1.464757123395665,
+    "motor_error_max_deg": 2.3533255551718426,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 60.105813686872615,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.004054266759583556
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 5.695726495726497,
+    "max_other_joint_motion_deg": 0.3496908346025532,
+    "overshoot_deg": 0.017802672094876702,
+    "run": "real_kp1600_v60",
+    "kp_apr": 1600,
+    "native_parameters": {
+      "KP_APR": 1600.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.00384,
+      "KI_ASR": 0.002,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": true,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 60.105813686872615,
+        "plan_error_max_deg": 2.3558908620527967,
+        "effort_peak_nm": 4.7521367521367495
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 59.76932999406251,
+        "plan_error_max_deg": 2.345039876152934,
+        "effort_peak_nm": 5.695726495726497
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.4960484200000002,
+        "position_span_deg": 0.021856938854455166,
+        "effort_peak_nm": 4.7521367521367495,
+        "effort_span_nm": 0.6153846153846132,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.496007376,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 2.536752136752135,
+        "effort_span_nm": 0.3555555555555543,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": true,
+    "operator_acceptable": null,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": false,
+    "disarm_confirmed": true,
+    "error": "initial arm is not stationary",
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 2.8125,
+    "planned_peak_speed_deg_s": 60.0,
+    "run": "real_kp2000_v60",
+    "kp_apr": 2000,
+    "native_parameters": {
+      "KP_APR": 2000.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.00384,
+      "KI_ASR": 0.002,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": false,
+      "speed": false,
+      "plan_error": false,
+      "holds": false,
+      "overshoot": false,
+      "endpoints": false,
+      "both_direction_speeds": false
+    },
+    "direction_metrics": {},
+    "endpoints": {},
+    "performance_target_met": false,
+    "operator_acceptable": null,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 2.8125,
+    "planned_peak_speed_deg_s": 60.0,
+    "samples": 1245,
+    "plan_error_max_deg": 2.1085264748721135,
+    "plan_error_rms_deg": 1.2793710891586796,
+    "motor_error_max_deg": 2.0749215914227603,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 60.116320870417034,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.004054266759583556
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 6.270085470085469,
+    "max_other_joint_motion_deg": 0.37154777345701345,
+    "overshoot_deg": 0.03965961094933696,
+    "run": "real_kp2000_v60_retry",
+    "kp_apr": 2000,
+    "native_parameters": {
+      "KP_APR": 2000.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.00384,
+      "KI_ASR": 0.002,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": true,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 60.116320870417034,
+        "plan_error_max_deg": 2.1085264748721135,
+        "effort_peak_nm": 6.270085470085469
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 59.78352371572585,
+        "plan_error_max_deg": 2.0678512804310962,
+        "effort_peak_nm": 5.805128205128206
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.49586383,
+        "position_span_deg": 0.06557081656337971,
+        "effort_peak_nm": 4.847863247863248,
+        "effort_span_nm": 2.023931623931624,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.495954978,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 2.3999999999999986,
+        "effort_span_nm": 0.16410256410256352,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": true,
+    "operator_acceptable": null,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 2.25,
+    "planned_peak_speed_deg_s": 75.0,
+    "samples": 1133,
+    "plan_error_max_deg": 2.5615130884145056,
+    "plan_error_rms_deg": 1.5889126421739586,
+    "motor_error_max_deg": 2.5203710511968795,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 74.99539231510295,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.004054266759583556
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 7.459829059829062,
+    "max_other_joint_motion_deg": 0.3496908346025532,
+    "overshoot_deg": 0.08337348865825747,
+    "run": "real_kp2000_v75",
+    "kp_apr": 2000,
+    "native_parameters": {
+      "KP_APR": 2000.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.00384,
+      "KI_ASR": 0.002,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": true,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 74.99539231510295,
+        "plan_error_max_deg": 2.5615130884145056,
+        "effort_peak_nm": 7.459829059829062
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 74.79833924509138,
+        "plan_error_max_deg": 2.530597296190855,
+        "effort_peak_nm": 5.668376068376066
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.4879805030000002,
+        "position_span_deg": 0.17485551083568396,
+        "effort_peak_nm": 6.31111111111111,
+        "effort_span_nm": 4.635897435897434,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.487950643,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 2.3726495726495713,
+        "effort_span_nm": 0.27350427350427253,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": true,
+    "operator_acceptable": null,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": false,
+    "disarm_confirmed": true,
+    "error": "command 1 rejected",
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 2.25,
+    "planned_peak_speed_deg_s": 75.0,
+    "run": "real_kp2500_v75",
+    "kp_apr": 2500,
+    "native_parameters": {
+      "KP_APR": 2500.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.00384,
+      "KI_ASR": 0.002,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": false,
+      "speed": false,
+      "plan_error": false,
+      "holds": false,
+      "overshoot": false,
+      "endpoints": false,
+      "both_direction_speeds": false
+    },
+    "direction_metrics": {},
+    "endpoints": {},
+    "performance_target_met": false,
+    "operator_acceptable": null,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 2.25,
+    "planned_peak_speed_deg_s": 75.0,
+    "samples": 1331,
+    "plan_error_max_deg": 2.355624951527586,
+    "plan_error_rms_deg": 1.4070099316013245,
+    "motor_error_max_deg": 2.2665060769368797,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 75.17552625206397,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.004054266759583556
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 11.165811965811965,
+    "max_other_joint_motion_deg": 0.48083246772931476,
+    "overshoot_deg": 0.21451512178501903,
+    "run": "real_kp2500_v75_retry",
+    "kp_apr": 2500,
+    "native_parameters": {
+      "KP_APR": 2500.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.00384,
+      "KI_ASR": 0.002,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": false,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 74.87775038207336,
+        "plan_error_max_deg": 2.355624951527586,
+        "effort_peak_nm": 11.165811965811965
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 75.17552625206444,
+        "plan_error_max_deg": 2.2796873208110124,
+        "effort_peak_nm": 5.791452991452992
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.48805541,
+        "position_span_deg": 0.45899571594365796,
+        "effort_peak_nm": 11.165811965811965,
+        "effort_span_nm": 12.280341880341883,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.4879586200000001,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 2.933333333333337,
+        "effort_span_nm": 0.5059829059829113,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": false,
+    "operator_acceptable": false,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 2.8125,
+    "planned_peak_speed_deg_s": 60.0,
+    "samples": 1241,
+    "plan_error_max_deg": 2.100740064296716,
+    "plan_error_rms_deg": 1.2890205853524737,
+    "motor_error_max_deg": 2.077718823724645,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 60.04656847574462,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.004054266759583556
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 5.777777777777779,
+    "max_other_joint_motion_deg": 0.32783389574809296,
+    "overshoot_deg": 0.01092846942723013,
+    "run": "real_kp2000_asr110_v60",
+    "kp_apr": 2000,
+    "native_parameters": {
+      "KP_APR": 2000.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.004224,
+      "KI_ASR": 0.002,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": true,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 59.84088623088305,
+        "plan_error_max_deg": 2.100740064296716,
+        "effort_peak_nm": 4.724786324786322
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 60.046568475744934,
+        "plan_error_max_deg": 2.0908280589745654,
+        "effort_peak_nm": 5.777777777777779
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.495998621,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 4.724786324786322,
+        "effort_span_nm": 1.1076923076923038,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.495966039,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 2.6324786324786373,
+        "effort_span_nm": 0.4649572649572704,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": true,
+    "operator_acceptable": false,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 2.25,
+    "planned_peak_speed_deg_s": 75.0,
+    "samples": 1130,
+    "plan_error_max_deg": 2.602465514189028,
+    "plan_error_rms_deg": 1.5969104378968233,
+    "motor_error_max_deg": 2.578273748010574,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 74.95325527419689,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.004054266759583556
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 6.652991452991454,
+    "max_other_joint_motion_deg": 0.590117162001616,
+    "overshoot_deg": 0.06151654980379722,
+    "run": "real_kp2000_asr110_v75",
+    "kp_apr": 2000,
+    "native_parameters": {
+      "KP_APR": 2000.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.004224,
+      "KI_ASR": 0.002,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": true,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 74.95325527419689,
+        "plan_error_max_deg": 2.5798587883892883,
+        "effort_peak_nm": 6.652991452991454
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 74.80623027552905,
+        "plan_error_max_deg": 2.602465514189028,
+        "effort_peak_nm": 5.654700854700852
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.4880950990000001,
+        "position_span_deg": 0.1529985719812288,
+        "effort_peak_nm": 6.3658119658119645,
+        "effort_span_nm": 4.129914529914526,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.488012946,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 2.9470085470085507,
+        "effort_span_nm": 0.7931623931623974,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": true,
+    "operator_acceptable": false,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 2.25,
+    "planned_peak_speed_deg_s": 75.0,
+    "samples": 1148,
+    "plan_error_max_deg": 2.5535595518869942,
+    "plan_error_rms_deg": 1.5791385748511124,
+    "motor_error_max_deg": 2.528953599292215,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 74.85222589707128,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.004054266759583556
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 7.637606837606839,
+    "max_other_joint_motion_deg": 0.37154777345701345,
+    "overshoot_deg": 0.08337348865825747,
+    "run": "real_kp2000_asr120_v75",
+    "kp_apr": 2000,
+    "native_parameters": {
+      "KP_APR": 2000.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.004608,
+      "KI_ASR": 0.002,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": true,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 74.85222589707128,
+        "plan_error_max_deg": 2.5535595518869942,
+        "effort_peak_nm": 7.637606837606839
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 74.59105636376059,
+        "plan_error_max_deg": 2.4914632338628655,
+        "effort_peak_nm": 5.736752136752138
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.487984178,
+        "position_span_deg": 0.1529985719812288,
+        "effort_peak_nm": 6.543589743589742,
+        "effort_span_nm": 5.388034188034187,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.488126169,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 2.714529914529919,
+        "effort_span_nm": 0.47863247863248404,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": true,
+    "operator_acceptable": null,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 2.25,
+    "planned_peak_speed_deg_s": 75.0,
+    "samples": 1114,
+    "plan_error_max_deg": 2.6022004410482245,
+    "plan_error_rms_deg": 1.5844826285974323,
+    "motor_error_max_deg": 2.549634564323518,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 74.91134995438291,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.004054266759583556
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 7.418803418803417,
+    "max_other_joint_motion_deg": 0.37154777345701345,
+    "overshoot_deg": 0.08337348865825747,
+    "run": "real_kp2000_asr120_ki80_v75",
+    "kp_apr": 2000,
+    "native_parameters": {
+      "KP_APR": 2000.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.004608,
+      "KI_ASR": 0.0016,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": true,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 74.91134995438291,
+        "plan_error_max_deg": 2.5545843824789354,
+        "effort_peak_nm": 7.418803418803417
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 74.77494628895009,
+        "plan_error_max_deg": 2.6022004410482245,
+        "effort_peak_nm": 5.723076923076924
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.4879883520000001,
+        "position_span_deg": 0.1529985719812288,
+        "effort_peak_nm": 6.242735042735042,
+        "effort_span_nm": 4.6769230769230745,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.488000275,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 2.5094017094017076,
+        "effort_span_nm": 0.28717948717948616,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": true,
+    "operator_acceptable": null,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 2.25,
+    "planned_peak_speed_deg_s": 75.0,
+    "samples": 1167,
+    "plan_error_max_deg": 2.452813553688812,
+    "plan_error_rms_deg": 1.4858158614056747,
+    "motor_error_max_deg": 2.3896992693733736,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 74.98079994681353,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.004054266759583556
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 8.772649572649573,
+    "max_other_joint_motion_deg": 0.48083246772931476,
+    "overshoot_deg": 0.127087366367178,
+    "run": "real_kp2250_asr120_ki80_v75",
+    "kp_apr": 2250,
+    "native_parameters": {
+      "KP_APR": 2250.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.004608,
+      "KI_ASR": 0.0016,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": false,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 74.98079994681353,
+        "plan_error_max_deg": 2.452813553688812,
+        "effort_peak_nm": 8.772649572649573
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 74.9637316147756,
+        "plan_error_max_deg": 2.3751387640812127,
+        "effort_peak_nm": 5.736752136752138
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.4881192200000002,
+        "position_span_deg": 0.2185693885446085,
+        "effort_peak_nm": 7.8700854700854705,
+        "effort_span_nm": 7.288888888888888,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.487814651,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 3.261538461538464,
+        "effort_span_nm": 1.1076923076923109,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": false,
+    "operator_acceptable": false,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 2.25,
+    "planned_peak_speed_deg_s": 75.0,
+    "samples": 1123,
+    "plan_error_max_deg": 2.607174337150939,
+    "plan_error_rms_deg": 1.6141501782953651,
+    "motor_error_max_deg": 2.5702767676313663,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 74.65585208314614,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.004054266759583556
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 5.764102564102565,
+    "max_other_joint_motion_deg": 0.37154777345701345,
+    "overshoot_deg": 0.017802672094876702,
+    "run": "real_kp2000_asr135_ki80_v75",
+    "kp_apr": 2000,
+    "native_parameters": {
+      "KP_APR": 2000.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.005184,
+      "KI_ASR": 0.0016,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": true,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 74.65585208314614,
+        "plan_error_max_deg": 2.607174337150939,
+        "effort_peak_nm": 5.764102564102565
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 74.64196104292756,
+        "plan_error_max_deg": 2.5792560517207126,
+        "effort_peak_nm": 5.68205128205128
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.488083175,
+        "position_span_deg": 0.06557081656337971,
+        "effort_peak_nm": 4.970940170940171,
+        "effort_span_nm": 2.680341880341878,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.488017815,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 2.276923076923076,
+        "effort_span_nm": 0.10940170940170901,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": true,
+    "operator_acceptable": true,
+    "accepted": true
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 2.25,
+    "planned_peak_speed_deg_s": 75.0,
+    "samples": 1160,
+    "plan_error_max_deg": 2.4707033265188656,
+    "plan_error_rms_deg": 1.4941623522643854,
+    "motor_error_max_deg": 2.4071186330420065,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 74.81870957396357,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.004054266759583556
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 8.786324786324787,
+    "max_other_joint_motion_deg": 0.415261651165934,
+    "overshoot_deg": 0.10523042751271773,
+    "run": "real_kp2250_asr135_ki80_v75",
+    "kp_apr": 2250,
+    "native_parameters": {
+      "KP_APR": 2250.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.005184,
+      "KI_ASR": 0.0016,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": true,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 74.81870957396357,
+        "plan_error_max_deg": 2.4707033265188656,
+        "effort_peak_nm": 8.786324786324787
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 74.68184615817563,
+        "plan_error_max_deg": 2.4027350736580435,
+        "effort_peak_nm": 5.68205128205128
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.4879889160000002,
+        "position_span_deg": 0.19671244969013912,
+        "effort_peak_nm": 7.432478632478631,
+        "effort_span_nm": 6.905982905982903,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.4880097410000002,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 2.3589743589743577,
+        "effort_span_nm": 0.2051282051282044,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": true,
+    "operator_acceptable": null,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 2.25,
+    "planned_peak_speed_deg_s": 75.0,
+    "samples": 1145,
+    "plan_error_max_deg": 2.4383953578978854,
+    "plan_error_rms_deg": 1.4919332189757892,
+    "motor_error_max_deg": 2.398824659366952,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 74.7566397212782,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.004054266759583556
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 7.309401709401708,
+    "max_other_joint_motion_deg": 0.37154777345701345,
+    "overshoot_deg": 0.06151654980379722,
+    "run": "real_kp2250_asr160_ki80_v75",
+    "kp_apr": 2250,
+    "native_parameters": {
+      "KP_APR": 2250.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.006144,
+      "KI_ASR": 0.0016,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": true,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 74.63467029668215,
+        "plan_error_max_deg": 2.4383953578978854,
+        "effort_peak_nm": 7.309401709401708
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 74.75663972127856,
+        "plan_error_max_deg": 2.377743808672088,
+        "effort_peak_nm": 5.70940170940171
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.488041444,
+        "position_span_deg": 0.13114163312675942,
+        "effort_peak_nm": 6.953846153846154,
+        "effort_span_nm": 5.497435897435896,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.4878891680000002,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 2.4683760683760667,
+        "effort_span_nm": 0.21880341880341803,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": true,
+    "operator_acceptable": null,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 2.25,
+    "planned_peak_speed_deg_s": 75.0,
+    "samples": 1141,
+    "plan_error_max_deg": 2.4264696668941217,
+    "plan_error_rms_deg": 1.5063890141240366,
+    "motor_error_max_deg": 2.4031079410617484,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 74.6956964257882,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.004054266759583556
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 6.283760683760683,
+    "max_other_joint_motion_deg": 0.3496908346025532,
+    "overshoot_deg": 0.017802672094876702,
+    "run": "real_kp2250_asr190_ki80_v75",
+    "kp_apr": 2250,
+    "native_parameters": {
+      "KP_APR": 2250.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.0072959999999999995,
+      "KI_ASR": 0.0016,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": true,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 74.6499674257556,
+        "plan_error_max_deg": 2.4264696668941217,
+        "effort_peak_nm": 6.283760683760683
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 74.69569642578848,
+        "plan_error_max_deg": 2.4090069621731236,
+        "effort_peak_nm": 5.736752136752138
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.487952436,
+        "position_span_deg": 0.06557081656337971,
+        "effort_peak_nm": 5.422222222222221,
+        "effort_span_nm": 3.7880341880341852,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.488072819,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 2.3726495726495713,
+        "effort_span_nm": 0.21880341880341803,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": true,
+    "operator_acceptable": null,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 2.25,
+    "planned_peak_speed_deg_s": 75.0,
+    "samples": 1134,
+    "plan_error_max_deg": 2.287824487152514,
+    "plan_error_rms_deg": 1.402506707896665,
+    "motor_error_max_deg": 2.218826226486272,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 74.78377658510155,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.004054266759583556
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 5.900854700854701,
+    "max_other_joint_motion_deg": 0.3496908346025532,
+    "overshoot_deg": 0.017802672094876702,
+    "run": "real_kp2500_asr190_ki80_v75",
+    "kp_apr": 2500,
+    "native_parameters": {
+      "KP_APR": 2500.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.0072959999999999995,
+      "KI_ASR": 0.0016,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion."
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": true,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 74.70282834978168,
+        "plan_error_max_deg": 2.2544513012512284,
+        "effort_peak_nm": 5.85982905982906
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 74.78377658510192,
+        "plan_error_max_deg": 2.287824487152514,
+        "effort_peak_nm": 5.900854700854701
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.4881967630000001,
+        "position_span_deg": 0.06557081656337971,
+        "effort_peak_nm": 5.435897435897434,
+        "effort_span_nm": 3.500854700854699,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.4880393660000002,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 2.345299145299144,
+        "effort_span_nm": 0.17777777777777715,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": true,
+    "operator_acceptable": null,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 1.9852941176470589,
+    "planned_peak_speed_deg_s": 85.0,
+    "samples": 1054,
+    "plan_error_max_deg": 2.54300910002904,
+    "plan_error_rms_deg": 1.5796529800311139,
+    "motor_error_max_deg": 2.5255472712486338,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 84.71102631727975,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.004054266759583556
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 5.791452991452992,
+    "max_other_joint_motion_deg": 0.3934047123114737,
+    "overshoot_deg": 0.017802672094876702,
+    "run": "real_kp2500_asr190_ki80_v85",
+    "kp_apr": 2500,
+    "native_parameters": {
+      "KP_APR": 2500.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.0072959999999999995,
+      "KI_ASR": 0.0016,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion.",
+      "register_snapshot": "../candidate_before_85_parameters.json"
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": true,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 84.71102631727975,
+        "plan_error_max_deg": 2.54300910002904,
+        "effort_peak_nm": 5.70940170940171
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 84.6444110967773,
+        "plan_error_max_deg": 2.5204415911527174,
+        "effort_peak_nm": 5.791452991452992
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.487918376,
+        "position_span_deg": 0.06557081656337971,
+        "effort_peak_nm": 5.53162393162393,
+        "effort_span_nm": 3.69230769230769,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.48801527,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 2.7008547008547055,
+        "effort_span_nm": 0.4649572649572704,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": true,
+    "operator_acceptable": null,
+    "accepted": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 1.875,
+    "planned_peak_speed_deg_s": 90.0,
+    "samples": 1016,
+    "plan_error_max_deg": 2.734361848708098,
+    "plan_error_rms_deg": 1.6831678854243581,
+    "motor_error_max_deg": 2.671614859201639,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 89.74570744998701,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.004054266759583556
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 5.8188034188034194,
+    "max_other_joint_motion_deg": 0.3934047123114737,
+    "overshoot_deg": 0.01092846942723013,
+    "run": "real_kp2500_asr190_ki80_v90",
+    "kp_apr": 2500,
+    "native_parameters": {
+      "KP_APR": 2500.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.0072959999999999995,
+      "KI_ASR": 0.0016,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion.",
+      "register_snapshot": "../candidate_before_85_parameters.json"
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": true,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 89.74570744998701,
+        "plan_error_max_deg": 2.734361848708098,
+        "effort_peak_nm": 4.6017094017094
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 89.50689976532969,
+        "plan_error_max_deg": 2.6908140520005275,
+        "effort_peak_nm": 5.8188034188034194
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.4879394510000001,
+        "position_span_deg": 0.021856938854469377,
+        "effort_peak_nm": 4.437606837606836,
+        "effort_span_nm": 1.0393162393162356,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.4879385120000002,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 2.345299145299144,
+        "effort_span_nm": 0.16410256410256352,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": true,
+    "operator_acceptable": true,
+    "accepted": true
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": 0.0,
+    "end_degrees": 90.0,
+    "move_seconds": 1.875,
+    "planned_peak_speed_deg_s": 90.0,
+    "samples": 1018,
+    "plan_error_max_deg": 2.730843883772424,
+    "plan_error_rms_deg": 1.6781783259869183,
+    "motor_error_max_deg": 2.671603939590942,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 89.72007690205399,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.004054266759583556
+      },
+      "return_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": -0.01092846942723013
+      }
+    },
+    "effort_peak_nm": 5.955555555555556,
+    "max_other_joint_motion_deg": 0.4371589641580161,
+    "overshoot_deg": 0.017802672094876702,
+    "run": "real_kp2500_asr190_ki80_v90_repeat",
+    "kp_apr": 2500,
+    "native_parameters": {
+      "KP_APR": 2500.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.0072959999999999995,
+      "KI_ASR": 0.0016,
+      "Deta": 4.0,
+      "V_BW": 40.0,
+      "provenance": "RAM writes verified in session *_write.log; values reconstructed from the recorded trial stage. Not a separate register read during motion.",
+      "register_snapshot": "../candidate_before_85_parameters.json"
+    },
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true,
+      "endpoints": true,
+      "both_direction_speeds": true
+    },
+    "direction_metrics": {
+      "outbound": {
+        "encoder_peak_speed_deg_s": 89.4565453324145,
+        "plan_error_max_deg": 2.730843883772424,
+        "effort_peak_nm": 5.449572649572648
+      },
+      "return": {
+        "encoder_peak_speed_deg_s": 89.72007690205449,
+        "plan_error_max_deg": 2.720593747387394,
+        "effort_peak_nm": 5.955555555555556
+      }
+    },
+    "endpoints": {
+      "outbound": {
+        "window_coverage_s": 1.4879991300000002,
+        "position_span_deg": 0.06557081656337971,
+        "effort_peak_nm": 5.203418803418803,
+        "effort_span_nm": 3.104273504273504,
+        "reference_span_deg": 0.0
+      },
+      "return": {
+        "window_coverage_s": 1.488049063,
+        "position_span_deg": 0.0,
+        "effort_peak_nm": 2.564102564102562,
+        "effort_span_nm": 0.3692307692307679,
+        "reference_span_deg": 0.0
+      }
+    },
+    "performance_target_met": true,
+    "operator_acceptable": true,
+    "accepted": true
+  }
+]

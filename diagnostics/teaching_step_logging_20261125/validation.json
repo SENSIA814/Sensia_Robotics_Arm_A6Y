@@ -1,0 +1,65 @@
+{
+  "result": "PASS",
+  "python_tests": 95,
+  "native_driver_tests": 6,
+  "physical_motion_tests": 0,
+  "native_build": "5 packages succeeded",
+  "mapper_unchanged_sha256": "515df7865584ab3f05f7b0074be0e1ac149d41e00f8b79c2771460d4f41b253f",
+  "four_arm_step": {
+    "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_6d0ea6709c",
+    "actual_hz": 99.98138946414126,
+    "exit_elapsed_s": 24.410284789999423,
+    "native_rates_hz": {
+      "teaching_left": {
+        "control_cycle_count": 250.00011119409453,
+        "command_count": 250.00011119409453,
+        "feedback_count": 250.00011119409453
+      },
+      "motion_left": {
+        "control_cycle_count": 250.0000172369878,
+        "command_count": 250.0000172369878,
+        "feedback_count": 250.0000172369878
+      },
+      "teaching_right": {
+        "control_cycle_count": 250.00029482016168,
+        "command_count": 250.00029482016168,
+        "feedback_count": 250.00029482016168
+      },
+      "motion_right": {
+        "control_cycle_count": 250.00010653491975,
+        "command_count": 250.00010653491975,
+        "feedback_count": 250.00010653491975
+      }
+    },
+    "step_sample_coverage": {
+      "teaching_right": 1.0,
+      "motion_right": 1.0,
+      "teaching_left": 1.0,
+      "motion_left": 1.0
+    }
+  },
+  "ui": {
+    "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_78bae598bd",
+    "actual_hz": 99.94187193043948,
+    "exit_elapsed_s": 29.272836008000013,
+    "live_export": true,
+    "exit_ui_responsive": true,
+    "screenshot": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_78bae598bd/ui_live.png"
+  },
+  "cancellation": {
+    "result": "PASS",
+    "physical_devices": 0,
+    "release_time_s": 0.12289449200034142,
+    "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_91798e4ebb"
+  },
+  "completed_export": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_step_logging_20261125/virtual_completed_bundle.zip",
+  "readonly_scan": {
+    "complete": true,
+    "motors": 28,
+    "motor_writes_sent": 0,
+    "enable_sent": 0,
+    "file": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_step_logging_20261125/motor_parameters.json"
+  },
+  "limitation": "Virtual motors respond immediately; physical step response awaits the user. Software rates, limits, gains, mapper and homing unchanged.",
+  "observation": "Initial in-process telemetry test slowed observer; final independent collector recorded every native cycle in four-arm step and UI tests, with no queue drops."
+}

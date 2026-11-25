@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro
+        name="y1_6_control_joint"
+        params="joint_name motor_type slave_id master_id sign offset position_scale min_position max_position max_velocity mit_kp mit_kd read_only initial_positions">
+        <joint name="${joint_name}">
+            <command_interface name="position"/>
+            <command_interface name="velocity"/>
+            <command_interface name="effort"/>
+            <state_interface name="position">
+                <param name="initial_value">${initial_positions[joint_name]}</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+            <state_interface name="effort"/>
+            <state_interface name="motor_error"/>
+            <state_interface name="fault"/>
+            <state_interface name="has_feedback"/>
+            <state_interface name="feedback_age"/>
+            <state_interface name="enabled"/>
+            <param name="motor_type">${motor_type}</param>
+            <param name="slave_id">${slave_id}</param>
+            <param name="master_id">${master_id}</param>
+            <param name="sign">${sign}</param>
+            <param name="offset">${offset}</param>
+            <param name="position_scale">${position_scale}</param>
+            <param name="min_position">${min_position}</param>
+            <param name="max_position">${max_position}</param>
+            <param name="max_velocity">${max_velocity}</param>
+            <param name="mit_kp">${mit_kp}</param>
+            <param name="mit_kd">${mit_kd}</param>
+            <param name="read_only">${read_only}</param>
+        </joint>
+    </xacro:macro>
+
+    <xacro:macro
+        name="y1_6_generic_position_joint"
+        params="joint_name initial_positions">
+        <joint name="${joint_name}">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">${initial_positions[joint_name]}</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>
+    </xacro:macro>
+
+    <xacro:macro
+        name="y1_6_ros2_control"
+        params="hardware_name initial_positions_file motor_config_file hardware_plugin dry_run can_channel can_bitrate tty_baudrate control_mode auto_enable set_control_mode_on_configure require_feedback_on_configure allow_partial_feedback disable_on_deactivate command_timeout max_start_delta receive_timeout feedback_timeout status_request_period initial_feedback_attempts mit_kp mit_kd">
+        <xacro:property name="initial_positions" value="${xacro.load_yaml(initial_positions_file)['initial_positions']}"/>
+        <xacro:property name="motor_params" value="${xacro.load_yaml(motor_config_file)['a6_y_damiao_system']['ros__parameters']['joints']}"/>
+
+        <ros2_control name="${hardware_name}" type="system">
+            <hardware>
+                <plugin>${hardware_plugin}</plugin>
+                <param name="dry_run">${dry_run}</param>
+                <param name="can_channel">${can_channel}</param>
+                <param name="can_bitrate">${can_bitrate}</param>
+                <param name="tty_baudrate">${tty_baudrate}</param>
+                <param name="control_mode">${control_mode}</param>
+                <param name="auto_enable">${auto_enable}</param>
+                <param name="set_control_mode_on_configure">${set_control_mode_on_configure}</param>
+                <param name="require_feedback_on_configure">${require_feedback_on_configure}</param>
+                <param name="allow_partial_feedback">${allow_partial_feedback}</param>
+                <param name="disable_on_deactivate">${disable_on_deactivate}</param>
+                <param name="command_timeout">${command_timeout}</param>
+                <param name="max_start_delta">${max_start_delta}</param>
+                <param name="receive_timeout">${receive_timeout}</param>
+                <param name="feedback_timeout">${feedback_timeout}</param>
+                <param name="status_request_period">${status_request_period}</param>
+                <param name="initial_feedback_attempts">${initial_feedback_attempts}</param>
+                <param name="mit_kp">${mit_kp}</param>
+                <param name="mit_kd">${mit_kd}</param>
+            </hardware>
+            <xacro:y1_6_control_joint joint_name="joint1" motor_type="${motor_params['joint1']['motor_type']}" slave_id="${motor_params['joint1']['slave_id']}" master_id="${motor_params['joint1']['master_id']}" sign="${motor_params['joint1']['sign']}" offset="${motor_params['joint1']['offset']}" position_scale="${motor_params['joint1'].get('position_scale', 1.0)}" min_position="${motor_params['joint1']['min_position']}" max_position="${motor_params['joint1']['max_position']}" max_velocity="${motor_params['joint1']['max_velocity']}" mit_kp="${motor_params['joint1'].get('mit_kp', mit_kp)}" mit_kd="${motor_params['joint1'].get('mit_kd', mit_kd)}" read_only="${motor_params['joint1'].get('read_only', False)}" initial_positions="${initial_positions}"/>
+            <xacro:y1_6_control_joint joint_name="joint2" motor_type="${motor_params['joint2']['motor_type']}" slave_id="${motor_params['joint2']['slave_id']}" master_id="${motor_params['joint2']['master_id']}" sign="${motor_params['joint2']['sign']}" offset="${motor_params['joint2']['offset']}" position_scale="${motor_params['joint2'].get('position_scale', 1.0)}" min_position="${motor_params['joint2']['min_position']}" max_position="${motor_params['joint2']['max_position']}" max_velocity="${motor_params['joint2']['max_velocity']}" mit_kp="${motor_params['joint2'].get('mit_kp', mit_kp)}" mit_kd="${motor_params['joint2'].get('mit_kd', mit_kd)}" read_only="${motor_params['joint2'].get('read_only', False)}" initial_positions="${initial_positions}"/>
+            <xacro:y1_6_control_joint joint_name="joint3" motor_type="${motor_params['joint3']['motor_type']}" slave_id="${motor_params['joint3']['slave_id']}" master_id="${motor_params['joint3']['master_id']}" sign="${motor_params['joint3']['sign']}" offset="${motor_params['joint3']['offset']}" position_scale="${motor_params['joint3'].get('position_scale', 1.0)}" min_position="${motor_params['joint3']['min_position']}" max_position="${motor_params['joint3']['max_position']}" max_velocity="${motor_params['joint3']['max_velocity']}" mit_kp="${motor_params['joint3'].get('mit_kp', mit_kp)}" mit_kd="${motor_params['joint3'].get('mit_kd', mit_kd)}" read_only="${motor_params['joint3'].get('read_only', False)}" initial_positions="${initial_positions}"/>
+            <xacro:y1_6_control_joint joint_name="joint4" motor_type="${motor_params['joint4']['motor_type']}" slave_id="${motor_params['joint4']['slave_id']}" master_id="${motor_params['joint4']['master_id']}" sign="${motor_params['joint4']['sign']}" offset="${motor_params['joint4']['offset']}" position_scale="${motor_params['joint4'].get('position_scale', 1.0)}" min_position="${motor_params['joint4']['min_position']}" max_position="${motor_params['joint4']['max_position']}" max_velocity="${motor_params['joint4']['max_velocity']}" mit_kp="${motor_params['joint4'].get('mit_kp', mit_kp)}" mit_kd="${motor_params['joint4'].get('mit_kd', mit_kd)}" read_only="${motor_params['joint4'].get('read_only', False)}" initial_positions="${initial_positions}"/>
+            <xacro:y1_6_control_joint joint_name="joint5" motor_type="${motor_params['joint5']['motor_type']}" slave_id="${motor_params['joint5']['slave_id']}" master_id="${motor_params['joint5']['master_id']}" sign="${motor_params['joint5']['sign']}" offset="${motor_params['joint5']['offset']}" position_scale="${motor_params['joint5'].get('position_scale', 1.0)}" min_position="${motor_params['joint5']['min_position']}" max_position="${motor_params['joint5']['max_position']}" max_velocity="${motor_params['joint5']['max_velocity']}" mit_kp="${motor_params['joint5'].get('mit_kp', mit_kp)}" mit_kd="${motor_params['joint5'].get('mit_kd', mit_kd)}" read_only="${motor_params['joint5'].get('read_only', False)}" initial_positions="${initial_positions}"/>
+            <xacro:y1_6_control_joint joint_name="joint6" motor_type="${motor_params['joint6']['motor_type']}" slave_id="${motor_params['joint6']['slave_id']}" master_id="${motor_params['joint6']['master_id']}" sign="${motor_params['joint6']['sign']}" offset="${motor_params['joint6']['offset']}" position_scale="${motor_params['joint6'].get('position_scale', 1.0)}" min_position="${motor_params['joint6']['min_position']}" max_position="${motor_params['joint6']['max_position']}" max_velocity="${motor_params['joint6']['max_velocity']}" mit_kp="${motor_params['joint6'].get('mit_kp', mit_kp)}" mit_kd="${motor_params['joint6'].get('mit_kd', mit_kd)}" read_only="${motor_params['joint6'].get('read_only', False)}" initial_positions="${initial_positions}"/>
+            <xacro:y1_6_control_joint joint_name="gripper_finger_joint1" motor_type="${motor_params['gripper_finger_joint1']['motor_type']}" slave_id="${motor_params['gripper_finger_joint1']['slave_id']}" master_id="${motor_params['gripper_finger_joint1']['master_id']}" sign="${motor_params['gripper_finger_joint1']['sign']}" offset="${motor_params['gripper_finger_joint1']['offset']}" position_scale="${motor_params['gripper_finger_joint1'].get('position_scale', 1.0)}" min_position="${motor_params['gripper_finger_joint1']['min_position']}" max_position="${motor_params['gripper_finger_joint1']['max_position']}" max_velocity="${motor_params['gripper_finger_joint1']['max_velocity']}" mit_kp="${motor_params['gripper_finger_joint1'].get('mit_kp', mit_kp)}" mit_kd="${motor_params['gripper_finger_joint1'].get('mit_kd', mit_kd)}" read_only="${motor_params['gripper_finger_joint1'].get('read_only', False)}" initial_positions="${initial_positions}"/>
+        </ros2_control>
+    </xacro:macro>
+</robot>

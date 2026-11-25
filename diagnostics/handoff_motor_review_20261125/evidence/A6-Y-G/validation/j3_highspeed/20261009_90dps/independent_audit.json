@@ -1,0 +1,301 @@
+{
+  "csv_final_trials": {
+    "real_kp2500_asr120_v90": {
+      "plan_error_max_deg": 2.7267008245382627,
+      "directions": {
+        "outbound": {
+          "encoder_peak_speed_deg_s": 89.7473697641239
+        },
+        "return": {
+          "encoder_peak_speed_deg_s": 89.44317932645352
+        }
+      }
+    },
+    "real_kp2500_asr120_v90_repeat": {
+      "plan_error_max_deg": 2.741754081907004,
+      "directions": {
+        "outbound": {
+          "encoder_peak_speed_deg_s": 89.77886284370913
+        },
+        "return": {
+          "encoder_peak_speed_deg_s": 89.38451936366742
+        }
+      }
+    }
+  },
+  "all_real_traces": {
+    "real_kp1250_10deg_v5": {
+      "passed": true,
+      "disarm_confirmed": true,
+      "holding_plan_span_rad": {
+        "joint1": 0.0,
+        "joint2": 0.0,
+        "joint4": 0.0,
+        "joint5": 0.0,
+        "joint6": 0.0
+      },
+      "gripper_always_disabled": true,
+      "all_stages_effort_peak_nm": [
+        1.1692307692307722,
+        2.8923076923076962,
+        7.090598290598294,
+        1.7851037851037859,
+        0.2564102564102555,
+        0.2271062271062263
+      ],
+      "maximum_recorded_state_interval_ms": 9.080765
+    },
+    "real_kp1250_v30": {
+      "passed": true,
+      "disarm_confirmed": true,
+      "holding_plan_span_rad": {
+        "joint1": 0.0,
+        "joint2": 0.0,
+        "joint4": 0.0,
+        "joint5": 0.0,
+        "joint6": 0.0
+      },
+      "gripper_always_disabled": true,
+      "all_stages_effort_peak_nm": [
+        0.6769230769230781,
+        5.408547008547007,
+        9.948717948717949,
+        2.097680097680098,
+        0.20757020757020683,
+        0.21245421245421348
+      ],
+      "maximum_recorded_state_interval_ms": 42.528125
+    },
+    "real_kp1250_v60": {
+      "passed": true,
+      "disarm_confirmed": true,
+      "holding_plan_span_rad": {
+        "joint1": 0.0,
+        "joint2": 0.0,
+        "joint4": 0.0,
+        "joint5": 0.0,
+        "joint6": 0.0
+      },
+      "gripper_always_disabled": true,
+      "all_stages_effort_peak_nm": [
+        0.827350427350428,
+        4.464957264957263,
+        9.319658119658115,
+        1.926739926739927,
+        0.2417582417582409,
+        0.192918192918194
+      ],
+      "maximum_recorded_state_interval_ms": 42.280732
+    },
+    "real_kp1600_v60": {
+      "passed": true,
+      "disarm_confirmed": true,
+      "holding_plan_span_rad": {
+        "joint1": 0.0,
+        "joint2": 0.0,
+        "joint4": 0.0,
+        "joint5": 0.0,
+        "joint6": 0.0
+      },
+      "gripper_always_disabled": true,
+      "all_stages_effort_peak_nm": [
+        0.9504273504273506,
+        4.1641025641025635,
+        9.032478632478629,
+        1.8827838827838832,
+        0.2124542124542117,
+        0.20268620268620374
+      ],
+      "maximum_recorded_state_interval_ms": 15.998112
+    },
+    "real_kp1600_v75": {
+      "passed": false,
+      "disarm_confirmed": true,
+      "holding_plan_span_rad": {
+        "joint1": 0.0,
+        "joint2": 0.0,
+        "joint4": 0.0,
+        "joint5": 0.0,
+        "joint6": 0.0
+      },
+      "gripper_always_disabled": true,
+      "all_stages_effort_peak_nm": [
+        0.8410256410256416,
+        3.740170940170941,
+        8.909401709401706,
+        1.492063492063492,
+        0.2124542124542117,
+        0.2075702075702086
+      ],
+      "maximum_recorded_state_interval_ms": 16.022184
+    },
+    "real_kp2000_v60": {
+      "passed": true,
+      "disarm_confirmed": true,
+      "holding_plan_span_rad": {
+        "joint1": 0.0,
+        "joint2": 0.0,
+        "joint4": 0.0,
+        "joint5": 0.0,
+        "joint6": 0.0
+      },
+      "gripper_always_disabled": true,
+      "all_stages_effort_peak_nm": [
+        0.8683760683760688,
+        5.271794871794871,
+        10.194871794871794,
+        2.1318681318681323,
+        0.14407814407814357,
+        0.1636141636141648
+      ],
+      "maximum_recorded_state_interval_ms": 9.088533
+    },
+    "real_kp2000_v75": {
+      "passed": true,
+      "disarm_confirmed": true,
+      "holding_plan_span_rad": {
+        "joint1": 0.0,
+        "joint2": 0.0,
+        "joint4": 0.0,
+        "joint5": 0.0,
+        "joint6": 0.0
+      },
+      "gripper_always_disabled": true,
+      "all_stages_effort_peak_nm": [
+        0.6222222222222236,
+        4.423931623931622,
+        9.128205128205124,
+        1.9902319902319903,
+        0.3003663003662993,
+        0.2075702075702086
+      ],
+      "maximum_recorded_state_interval_ms": 42.278092
+    },
+    "real_kp2500_v75": {
+      "passed": true,
+      "disarm_confirmed": true,
+      "holding_plan_span_rad": {
+        "joint1": 0.0,
+        "joint2": 0.0,
+        "joint4": 0.0,
+        "joint5": 0.0,
+        "joint6": 0.0
+      },
+      "gripper_always_disabled": true,
+      "all_stages_effort_peak_nm": [
+        0.6632478632478644,
+        4.355555555555554,
+        9.11452991452991,
+        1.9755799755799757,
+        0.13431013431013383,
+        0.16849816849816968
+      ],
+      "maximum_recorded_state_interval_ms": 9.037352
+    },
+    "real_kp2500_v85": {
+      "passed": true,
+      "disarm_confirmed": true,
+      "holding_plan_span_rad": {
+        "joint1": 0.0,
+        "joint2": 0.0,
+        "joint4": 0.0,
+        "joint5": 0.0,
+        "joint6": 0.0
+      },
+      "gripper_always_disabled": true,
+      "all_stages_effort_peak_nm": [
+        0.6495726495726508,
+        5.599999999999998,
+        9.770940170940172,
+        2.0146520146520146,
+        0.1245421245421241,
+        0.1538461538461533
+      ],
+      "maximum_recorded_state_interval_ms": 9.11413
+    },
+    "real_kp2500_v90": {
+      "passed": true,
+      "disarm_confirmed": true,
+      "holding_plan_span_rad": {
+        "joint1": 0.0,
+        "joint2": 0.0,
+        "joint4": 0.0,
+        "joint5": 0.0,
+        "joint6": 0.0
+      },
+      "gripper_always_disabled": true,
+      "all_stages_effort_peak_nm": [
+        0.8683760683760688,
+        5.094017094017094,
+        9.811965811965813,
+        2.0586080586080593,
+        0.1098901098901095,
+        0.1782661782661794
+      ],
+      "maximum_recorded_state_interval_ms": 9.101086
+    },
+    "real_kp2500_asr120_v75": {
+      "passed": true,
+      "disarm_confirmed": true,
+      "holding_plan_span_rad": {
+        "joint1": 0.0,
+        "joint2": 0.0,
+        "joint4": 0.0,
+        "joint5": 0.0,
+        "joint6": 0.0
+      },
+      "gripper_always_disabled": true,
+      "all_stages_effort_peak_nm": [
+        0.8136752136752143,
+        5.599999999999998,
+        9.018803418803415,
+        2.141636141636142,
+        0.13431013431013383,
+        0.18315018315018428
+      ],
+      "maximum_recorded_state_interval_ms": 9.086333
+    },
+    "real_kp2500_asr120_v90": {
+      "passed": true,
+      "disarm_confirmed": true,
+      "holding_plan_span_rad": {
+        "joint1": 0.0,
+        "joint2": 0.0,
+        "joint4": 0.0,
+        "joint5": 0.0,
+        "joint6": 0.0
+      },
+      "gripper_always_disabled": true,
+      "all_stages_effort_peak_nm": [
+        0.8410256410256416,
+        5.08034188034188,
+        9.634188034188035,
+        1.9755799755799757,
+        0.12942612942612897,
+        0.16849816849816968
+      ],
+      "maximum_recorded_state_interval_ms": 9.147188
+    },
+    "real_kp2500_asr120_v90_repeat": {
+      "passed": true,
+      "disarm_confirmed": true,
+      "holding_plan_span_rad": {
+        "joint1": 0.0,
+        "joint2": 0.0,
+        "joint4": 0.0,
+        "joint5": 0.0,
+        "joint6": 0.0
+      },
+      "gripper_always_disabled": true,
+      "all_stages_effort_peak_nm": [
+        0.8410256410256416,
+        4.888888888888889,
+        9.72991452991453,
+        2.029304029304029,
+        0.12942612942612897,
+        0.1782661782661794
+      ],
+      "maximum_recorded_state_interval_ms": 9.063364
+    }
+  }
+}

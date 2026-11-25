@@ -1,0 +1,11 @@
+{
+  "result": "FAIL",
+  "roles": [
+    "teaching_left",
+    "teaching_right",
+    "motion_left",
+    "motion_right"
+  ],
+  "physical_devices": 0,
+  "error": "AssertionError('Unrelated arm continuity failed')"
+}

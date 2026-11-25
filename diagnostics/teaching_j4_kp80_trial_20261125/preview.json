@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "trial": "j4_kp80_03",
+  "started_at": "2026-11-25T23:40:24.345+08:00",
+  "status": "offline_preview",
+  "reference_session": "teaching_75eac1124d",
+  "parameter_source_hashes": {
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_following_analysis_20261125_75eac1124d/motion_parameters_1795619762463837085.json": "50fbd1d546d82fbb407f4225740fa479796b99329488df3610cb0ab622f807d3",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_following_analysis_20261125_75eac1124d/analysis.json": "3c4b3607bada366aaf6accc744c196dd9c18b099e30bc880bd18193e3dc5a0f8"
+  },
+  "planned_gains": {
+    "4": {
+      "KP_APR": 80.0
+    }
+  },
+  "storage": "RAM only; lost on motor power cycle",
+  "arms": {},
+  "rates": {
+    "control_hz": 250,
+    "per_axis_command_hz": 250,
+    "target_hz": 100,
+    "can_bitrate": 1000000
+  }
+}

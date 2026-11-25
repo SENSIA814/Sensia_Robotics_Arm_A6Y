@@ -1,0 +1,85 @@
+{
+  "source_report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_fa8f662d93",
+  "physical_session": true,
+  "packets": 0,
+  "first_failure": {
+    "time": 1795598427.8167596,
+    "kind": "home_aborted",
+    "revision": 1,
+    "plan_file": "home_plan_001.json",
+    "message": "Return aborted: zero_settling_timeout revision=1 joint=joint4 value=10.003628 limit=10.000000 elapsed=13.303941 s position=-0.021172 velocity=0.012210 (value=seconds after path end; position tolerance=0.005 rad, velocity tolerance=0.03 rad/s, stable time=0.3 s)",
+    "positions": [
+      0.006675822079804661,
+      0.0005722133211261138,
+      0.004386968795300206,
+      -0.02117189288166621,
+      -0.0001907377737087046,
+      0.008201724269474298,
+      -0.0019201522918623293
+    ],
+    "velocity": [
+      0.0024420024420024333,
+      -0.0024420024420024333,
+      -0.0024420024420024333,
+      0.0366300366300365,
+      0.012210012210012167,
+      0.012210012210012167,
+      0.0002918192918192908
+    ]
+  },
+  "subsequent_failures": [
+    {
+      "time": 1795598438.8463619,
+      "kind": "home_aborted",
+      "revision": 3,
+      "plan_file": "home_plan_002.json",
+      "message": "Return aborted: joint_speed revision=3 joint=joint6 value=0.525031 limit=0.500000 elapsed=9.616005 s position=0.014305 velocity=0.525031",
+      "positions": [
+        0.0001907377737087046,
+        0.0005722133211261138,
+        0.004768444342717615,
+        -0.005912870984969842,
+        -0.03643091477836258,
+        0.04100862134737149,
+        -0.0019201522918623293
+      ],
+      "velocity": [
+        0.0024420024420024333,
+        -0.0024420024420024333,
+        -0.0024420024420024333,
+        0.5982905982905962,
+        -0.08547008547008517,
+        -0.15873015873015817,
+        -0.0008754578754578724
+      ]
+    },
+    {
+      "time": 1795598472.9153533,
+      "kind": "home_aborted",
+      "revision": 5,
+      "plan_file": "home_plan_003.json",
+      "message": "Return aborted: joint_speed revision=5 joint=joint6 value=0.598291 limit=0.500000 elapsed=9.376011 s position=-0.006676 velocity=0.598291",
+      "positions": [
+        0.012397955291065799,
+        -0.0020981155107957505,
+        0.004768444342717615,
+        -0.019264515144579164,
+        0.000953688868543523,
+        0.01201647974364839,
+        -0.0019201522918623293
+      ],
+      "velocity": [
+        0.0024420024420024333,
+        -0.0024420024420024333,
+        -0.0024420024420024333,
+        0.012210012210012167,
+        0.012210012210012167,
+        0.012210012210012167,
+        -0.0008754578754578724
+      ]
+    }
+  ],
+  "finding": "首次为 J4 零位稳定超时；旧流程自动再次回零，J6 超速错误覆盖首次失败。",
+  "implemented": "保留首次故障，异常停止不自动回零，退出故障单独记录；运动端改为参考程序的 POS_VEL。",
+  "remaining": "示教臂 MIT 回零的真实稳定性仍需实测分析，未放宽速度或零位稳定门限。"
+}

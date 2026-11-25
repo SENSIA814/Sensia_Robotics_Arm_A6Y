@@ -1,0 +1,11 @@
+{
+  "result": "FAIL",
+  "roles": [
+    "teaching_left",
+    "teaching_right",
+    "motion_left",
+    "motion_right"
+  ],
+  "physical_devices": 0,
+  "error": "AssertionError('spawner_joint_state_broadcaster 退出（1），见 /home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_feecd9cc10/spawner_joint_state_broadcaster.log /home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_feecd9cc10')"
+}

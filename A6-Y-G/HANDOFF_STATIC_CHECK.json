@@ -1,0 +1,19 @@
+{
+  "generated_date": "2026-10-28",
+  "timezone": "Asia/Shanghai",
+  "inspection": {
+    "source_file_count": 2520,
+    "source_bytes": 5022429513.0,
+    "credential_assignment_candidate_files": [],
+    "active_markdown_files": 24,
+    "checked_local_markdown_links": 371,
+    "preexisting_missing_link_targets": [],
+    "unique_urdf_meshes": 9,
+    "missing_urdf_meshes": [],
+    "file_reparse_points": [],
+    "git_head_available": false
+  },
+  "source_text_credentials_scan": "No high-confidence key markers or quoted credential assignments detected; excluded private configuration directories were not included.",
+  "gzip_payloads_scanned": 3,
+  "scope": "File packaging checks only; no ROS build, motor access, or new hardware acceptance tests."
+}

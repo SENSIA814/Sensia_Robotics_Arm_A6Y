@@ -1,0 +1,81 @@
+# Local read-only override, 2026-11-24. VMAX from actual register reads.
+# Original signs, offsets and position scales remain unverified assumptions.
+joints:
+  joint1:
+    motor_type: DM4340P
+    slave_id: 1
+    master_id: 17
+    sign: -1.0
+    offset: 0.0
+    min_position: -2.62
+    max_position: 2.62
+    max_velocity: 0.5
+    protocol_vmax: 10.0
+    read_only: true
+  joint2:
+    motor_type: DM4340P
+    slave_id: 2
+    master_id: 18
+    sign: 1.0
+    offset: 0.0
+    min_position: 0.0
+    max_position: 3.16
+    max_velocity: 0.5
+    protocol_vmax: 10.0
+    read_only: true
+  joint3:
+    motor_type: DM4340P
+    protocol_vmax: 10.0
+    slave_id: 3
+    master_id: 19
+    sign: 1.0
+    offset: 0.0
+    min_position: 0.0
+    max_position: 3.16
+    max_velocity: 0.5
+    read_only: true
+  joint4:
+    motor_type: DM4310
+    protocol_vmax: 50.0
+    slave_id: 4
+    master_id: 20
+    sign: -1.0
+    offset: 0.0
+    min_position: -1.55
+    max_position: 1.55
+    max_velocity: 0.5
+    read_only: true
+  joint5:
+    motor_type: DM4310
+    protocol_vmax: 50.0
+    slave_id: 5
+    master_id: 21
+    sign: -1.0
+    offset: 0.0
+    min_position: -0.9
+    max_position: 0.9
+    max_velocity: 0.5
+    read_only: true
+  joint6:
+    motor_type: DM4310
+    protocol_vmax: 50.0
+    slave_id: 6
+    master_id: 22
+    sign: -1.0
+    offset: 0.0
+    min_position: -3.14
+    max_position: 3.14
+    max_velocity: 0.5
+    read_only: true
+  gripper_finger_joint1:
+    motor_type: DM3507
+    slave_id: 7
+    master_id: 23
+    sign: 1.0
+    offset: 0.0
+    position_scale: 0.0239
+    min_position: -0.03
+    max_position: 0.0
+    max_velocity: 0.1
+    protocol_vmax: 50.0
+    read_only: true

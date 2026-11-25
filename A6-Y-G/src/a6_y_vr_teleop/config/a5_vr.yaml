@@ -1,0 +1,20 @@
+# Virtual kinematics only. Values do not commission physical hardware.
+domain_id: 84
+udp_port: 15150
+update_rate: 125.0
+input_timeout: 0.15
+max_control_period: 0.04
+compute_budget: 0.004
+position_scale: 0.5
+# raw WebXR: right/up/back -> robot: forward/left/up
+vr_to_base: [[0, 0, -1], [-1, 0, 0], [0, 1, 0]]
+home: [0.0, 1.0, 1.0, 0.0, 0.4, 0.0, -0.015]
+max_velocity: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.1]
+target_linear_speed: 0.15
+target_angular_speed: 0.8
+input_translation_jump: 0.20
+input_rotation_jump: 1.2
+position_tolerance: 0.002
+orientation_tolerance: 0.035
+limited_timeout: 2.0
+orientation_length_scale: 0.15

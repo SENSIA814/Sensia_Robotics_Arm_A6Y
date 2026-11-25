@@ -1,0 +1,13 @@
+read targets:
+joint,motor_type,slave_id,master_id
+joint1,DM4340P,0x01,0x11
+joint2,DM4340P,0x02,0x12
+
+params:
+ESC_ID,MST_ID,CTRL_MODE,PMAX,VMAX,TMAX,KP_APR,KP_ASR,KI_ASR
+
+read result:
+joint,motor_type,slave_id,ESC_ID,MST_ID,CTRL_MODE,PMAX,VMAX,TMAX,KP_APR,KP_ASR,KI_ASR
+joint1,DM4340P,0x01,1,17,2,12.5,10,28,54,0.00384,0.002
+joint2,DM4340P,0x02,2,18,2,12.5,10,28,54,0.00384,0.002
+

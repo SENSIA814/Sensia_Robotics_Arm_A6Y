@@ -1,0 +1,88 @@
+{
+  "result": "PASS",
+  "completed_at": "2026-11-25T18:15:41.374855+08:00",
+  "observed_physical_failure": "teaching_bbb7a54df8",
+  "changes": [
+    "Shared per-motor VMAX feedback bounds in Python sender, native home, native follow",
+    "Startup and protected-exit home use the same bound",
+    "Per-arm register snapshots, bounds, source hashes, and detailed fault values in logs"
+  ],
+  "motor_register_read": {
+    "physical_arms": 4,
+    "motors": 28,
+    "read_frames": 252,
+    "motor_writes": 0,
+    "motion_commands": 0,
+    "source": "motor_registers.json"
+  },
+  "checks": {
+    "python_qt_tests": 72,
+    "cpp_controller_suites": 6,
+    "build": "PASS",
+    "integration": {
+      "four_arm_virtual_serial": {
+        "result": "PASS",
+        "physical_devices": 0,
+        "ports": {
+          "teaching_left": "/dev/pts/2",
+          "motion_left": "/dev/pts/4",
+          "teaching_right": "/dev/pts/5",
+          "motion_right": "/dev/pts/6"
+        },
+        "instantaneous_follower_plant": true,
+        "j1_motor_position_changes": {
+          "motion_left": -0.02253160357940942,
+          "motion_right": 0.013146773795597255
+        },
+        "packets": 130,
+        "actual_hz": 49.590368239185125,
+        "gripper_commands": 0,
+        "zero_or_flash_writes": 0,
+        "all_released": true,
+        "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_243c8747a6"
+      },
+      "feedback_loss": {
+        "result": "PASS",
+        "physical_devices": 0,
+        "feedback_loss": true,
+        "whole_batch_stopped": true,
+        "failed_exit_retains_sessions": true,
+        "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_a244c0b3af"
+      },
+      "nonzero_start_and_exit": {
+        "result": "PASS",
+        "pairs": [
+          [
+            "teaching_left",
+            "motion_left"
+          ]
+        ],
+        "physical_devices": 0,
+        "backend": "actual C++ controller + driver dry_run",
+        "hand_input": "synthetic offset injected before incremental mapping",
+        "movement": {
+          "motion_left": [
+            0.02948969338917018,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "packets": 140,
+        "actual_hz": 49.98714790876203,
+        "missed_periods": 0,
+        "all_homed_released_closed": true,
+        "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_c5b60f558f"
+      }
+    }
+  },
+  "physical_motion_retested": false,
+  "limitations": [
+    "VMAX is feedback protocol mapping range, not commanded speed or MAX_SPD.",
+    "No physical startup/return or loaded tracking trial was run.",
+    "Existing trajectory, settling, torque, tracking-error and communications criteria remain independent."
+  ]
+}

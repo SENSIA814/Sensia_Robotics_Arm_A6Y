@@ -1,0 +1,47 @@
+{
+  "trial": "j4_oscillation_retry_02",
+  "reference_session": "teaching_cc3c0a6bfe",
+  "planned_gains": {
+    "motion_left": {
+      "J4": {
+        "KP_APR": 54.0,
+        "KI_APR": 0.0,
+        "KP_ASR": 0.00372,
+        "KI_ASR": 0.002
+      }
+    },
+    "motion_right": {
+      "J4": {
+        "KP_APR": 54.0,
+        "KI_APR": 0.0,
+        "KP_ASR": 0.00372,
+        "KI_ASR": 0.002
+      }
+    }
+  },
+  "rationale": [
+    "Main growing oscillation is right J4: 13.289 deg peak-to-peak in 3-6.39 s, teacher/raw target constant.",
+    "Left J4 also has overshoot and smaller residual oscillation; use its pre-handoff gain set on both sides.",
+    "KP_APR 220 -> 54; restore previously used velocity gains. This is a machine-specific trial, not a proven stable setting.",
+    "Keep J1-J3/J5-J6 and gripper unchanged to assess J4 first; reevaluate right J3 motion after J4 stabilizes."
+  ],
+  "analysis": "analysis.json",
+  "units_reference": "https://github.com/dmBots/motor-sdk/blob/main/Python%E4%BE%8B%E7%A8%8B/u2can/DM_CAN.py",
+  "write_scope": "RAM only, motor ID 4 on the two USB-bound followers, no actuation or Flash save",
+  "tests": {
+    "passed": 8,
+    "log": "unit.log"
+  },
+  "source_sha256": {
+    "apply_gains.py": "a845d883d680a28bde8059f88682fe944ca57367f6f66e74498be9d577e06297",
+    "test_apply_gains.py": "4ee16578c1df5990aab74d7d58de9dad149139bc7190ea5e8f0f7cf62410993f",
+    "analyze.py": "0d6bc36a64305c091a07ea73f7ca0ca9c73654542b9d8f74777fe2fe47e2bd32",
+    "analysis.json": "04465ea411b362b211f0e3eb774a768bda84b39209d1f8793b70121ef037526e",
+    "preview.json": "861e7dbff785f9da8947f4b08af00b5a12e996b6b2e76c3705e8b4f3481a7aaf"
+  },
+  "next_capture": [
+    "Stationary teacher first; stop immediately if visible oscillation persists or grows.",
+    "Only after stationary hold is stable, make one small movement and hold.",
+    "Compare J4 residual oscillation, right J3 motion and error; do not label stability as verified until a new capture exists."
+  ]
+}

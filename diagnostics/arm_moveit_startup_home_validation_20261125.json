@@ -1,0 +1,109 @@
+{
+  "result": "PASS",
+  "backend": "MoveIt + original 100 Hz JTC + C++ dry_run, no real device",
+  "roles": [
+    {
+      "role": "motion_left",
+      "result": "PASS",
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_left_4m6uvial/session.json",
+      "zero_xyz_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "zero_rpy_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "absolute_xyz_mm": [
+        213.91104316485942,
+        -0.7601263438704168,
+        174.70303587103203
+      ],
+      "gripper": [
+        {
+          "percent": 0.0,
+          "target_m": -0.0007,
+          "feedback_m": -0.0007098481930303391
+        },
+        {
+          "percent": 100.0,
+          "target_m": -0.034300000000000004,
+          "feedback_m": -0.03429019089907641
+        }
+      ],
+      "telemetry_rows": 764,
+      "shutdown_confirmed": true
+    },
+    {
+      "role": "motion_right",
+      "result": "PASS",
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_right_1nau9bkb/session.json",
+      "zero_xyz_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "zero_rpy_deg": [
+        -1.9412565194479477e-19,
+        -0.0,
+        2.9830942010584093e-19
+      ],
+      "absolute_xyz_mm": [
+        213.91418263017343,
+        -0.7592238220207119,
+        174.70113539126646
+      ],
+      "gripper": [],
+      "telemetry_rows": 575,
+      "shutdown_confirmed": true
+    },
+    {
+      "role": "teaching_left",
+      "result": "PASS",
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/teaching_left_ucak3ekv/session.json",
+      "zero_xyz_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "zero_rpy_deg": [
+        1.5530052155583574e-18,
+        1.1647539116687683e-18,
+        4.692712750809044e-19
+      ],
+      "absolute_xyz_mm": [
+        213.9147644411447,
+        -0.7638177199636589,
+        174.69191039054868
+      ],
+      "gripper": [],
+      "telemetry_rows": 567,
+      "shutdown_confirmed": true
+    },
+    {
+      "role": "teaching_right",
+      "result": "PASS",
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/teaching_right_gzebspze/session.json",
+      "zero_xyz_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "zero_rpy_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "absolute_xyz_mm": [
+        213.91472621754178,
+        -0.7255526457643872,
+        174.65899223036456
+      ],
+      "gripper": [],
+      "telemetry_rows": 583,
+      "shutdown_confirmed": true
+    }
+  ]
+}

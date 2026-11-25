@@ -1,0 +1,642 @@
+--- before/README.md
++++ after/README.md
+@@ -23,7 +23,7 @@
+ 
+ ## 功能与控制行为
+ 
+-动力示教入口：`bash scripts/run_arm_teaching.bash`。支持上位机选择 1 对 1 / 2 对 2 配对，默认左对左、右对右；启动不回零，只有示教端重力补偿，运动端默认 50 Hz 直接跟随示教端当前位置；退出各臂同时原生位置回零并核验失能，超时保留窗口处理。详见 [动力示教说明](tools/arm_gravity/TEACHING.md)。
++动力示教入口：`bash scripts/run_arm_teaching.bash`。支持上位机选择 1 对 1 / 2 对 2 配对，默认左对左、右对右；启动不回零，只有示教端重力补偿，运动端目标固定 100 Hz 直接跟随示教端当前位置，底层控制与每轴 CAN 指令为 250 Hz，CAN 保持 1 Mbps；退出各臂同时原生位置回零并核验失能，超时保留窗口处理。详见 [动力示教说明](tools/arm_gravity/TEACHING.md)。
+ 
+ 动力示教界面为暗黑风格，支持实时/历史日志、按臂筛选、复制诊断摘要与导出完整 ZIP 诊断包。运动端采用参考程序的 POS_VEL 模式；首次故障和退出故障分开保留，故障后不自动再次回零。
+ 
+--- before/src/a6_y_ros2_control/include/a6_y_ros2_control/A6_y_damiao_system.hpp
++++ after/src/a6_y_ros2_control/include/a6_y_ros2_control/A6_y_damiao_system.hpp
+@@ -75,6 +75,7 @@
+     double state_enabled{ 0.0 };
+     double state_position_age{ -1.0 }, state_position_valid{ 0.0 }, state_position_rejections{ 0.0 };
+     double state_dry_run{ 1.0 };
++    double command_count{ 0.0 }, feedback_count{ 0.0 };
+     double feedback_position_jump{ 0.2 }, feedback_position_alpha{ 0.4 };
+     AcceptedPosition accepted_position;
+     double command_position{ 0.0 };
+@@ -102,7 +103,7 @@
+   bool switch_control_modes();
+   bool verify_enable_feedback(double now_seconds, const std::string& context) const;
+   bool validate_motor_command(const JointData& joint) const;
+-  bool send_motor_command(const JointData& joint);
++  bool send_motor_command(JointData& joint);
+   bool any_commandable_motor_enabled() const;
+   bool all_commandable_motors_enabled() const;
+   bool request_status_updates(double now_seconds, StatusRequestScope scope);
+@@ -160,6 +161,9 @@
+   double mit_kp_{ 0.0 };
+   double mit_kd_{ 0.5 };
+   double last_read_duration_{-1}, last_write_duration_{-1}, last_bus_cycle_duration_{-1};
++  // Read-only timing diagnostics. No allocation or log I/O in the control loop.
++  double diagnostic_period_{0}, control_time_{0}, control_cycle_count_{0};
++  double control_period_{0}, control_overrun_count_{0};
+ };
+ }  // namespace a6_y_ros2_control
+ 
+--- before/src/a6_y_ros2_control/src/A6_y_damiao_system.cpp
++++ after/src/a6_y_ros2_control/src/A6_y_damiao_system.cpp
+@@ -141,6 +141,16 @@
+   {
+     return hardware_interface::return_type::OK;
+   }
++
++  const double cycle_time = std::chrono::duration<double>(measurement.start.time_since_epoch()).count();
++  if (control_cycle_count_ > 0) {
++    control_period_ = cycle_time - control_time_;
++    // Count delayed cycles, not a motor fault. Allow 50% scheduling jitter.
++    if (diagnostic_period_ > 0 && control_period_ > 1.5 * diagnostic_period_)
++      control_overrun_count_ += 1.0;
++  }
++  control_time_ = cycle_time;
++  control_cycle_count_ += 1.0;
+ 
+   if (!dry_run_)
+   {
+@@ -295,7 +305,7 @@
+           return hardware_interface::return_type::ERROR;
+         }
+       }
+-      for (const auto& joint : joints_)
++      for (auto& joint : joints_)
+       {
+         if (!joint.read_only && !send_motor_command(joint))
+         {
+@@ -350,7 +360,7 @@
+       return hardware_interface::return_type::ERROR;
+     }
+ 
+-    for (const auto& joint : joints_)
++    for (auto& joint : joints_)
+     {
+       if (joint.read_only)
+       {
+@@ -395,6 +405,8 @@
+   receive_timeout_ = parse_double(hardware_parameter("receive_timeout", "0.001"), 0.001);
+   feedback_timeout_ = parse_double(hardware_parameter("feedback_timeout", "0.5"), 0.5);
+   status_request_period_ = parse_double(hardware_parameter("status_request_period", "0.05"), 0.05);
++  const double diagnostic_rate = parse_double(hardware_parameter("diagnostic_update_rate", "0"), 0.0);
++  diagnostic_period_ = std::isfinite(diagnostic_rate) && diagnostic_rate > 0 ? 1.0 / diagnostic_rate : 0.0;
+   initial_feedback_attempts_ = parse_uint(hardware_parameter("initial_feedback_attempts", "20"), 20);
+   mit_kp_ = parse_double(hardware_parameter("mit_kp", "0.0"), 0.0);
+   mit_kd_ = parse_double(hardware_parameter("mit_kd", "0.5"), 0.5);
+@@ -497,6 +509,16 @@
+     state_interfaces.emplace_back(joint.name, "position_rejections", &joint.state_position_rejections);
+     state_interfaces.emplace_back(joint.name, "dry_run", &joint.state_dry_run);
+     state_interfaces.emplace_back(joint.name, "bus_cycle_duration", &last_bus_cycle_duration_);
++    if (diagnostic_period_ > 0) {
++      state_interfaces.emplace_back(joint.name, "control_time", &control_time_);
++      state_interfaces.emplace_back(joint.name, "control_cycle_count", &control_cycle_count_);
++      state_interfaces.emplace_back(joint.name, "control_period", &control_period_);
++      state_interfaces.emplace_back(joint.name, "control_overrun_count", &control_overrun_count_);
++      state_interfaces.emplace_back(joint.name, "read_duration", &last_read_duration_);
++      state_interfaces.emplace_back(joint.name, "write_duration", &last_write_duration_);
++      state_interfaces.emplace_back(joint.name, "command_count", &joint.command_count);
++      state_interfaces.emplace_back(joint.name, "feedback_count", &joint.feedback_count);
++    }
+     state_interfaces.emplace_back(joint.name, "commanded_effort", &joint.command_effort);
+   }
+   return state_interfaces;
+@@ -1053,7 +1075,7 @@
+   return true;
+ }
+ 
+-bool A6YDamiaoSystem::send_motor_command(const JointData& joint)
++bool A6YDamiaoSystem::send_motor_command(JointData& joint)
+ {
+   if (joint.read_only)
+   {
+@@ -1104,6 +1126,8 @@
+     RCLCPP_ERROR(LOGGER, "Failed to send command for %s: %s", joint.name.c_str(), error_message.c_str());
+     return false;
+   }
++  // A complete SLCAN frame accepted by the host serial driver, not a CAN ACK.
++  joint.command_count += 1.0;
+   return true;
+ }
+ 
+@@ -1202,6 +1226,7 @@
+   {
+     return;
+   }
++  joint.feedback_count += 1.0;
+ 
+   const double raw_position = joint.sign * feedback.q * joint.position_scale + joint.offset;
+   joint.last_position = joint.state_position;
+--- before/tools/arm_gravity/README.md
++++ after/tools/arm_gravity/README.md
+@@ -2,7 +2,7 @@
+ 
+ 入口：`A6-Y-G/scripts/run_arm_gravity.bash`。独立 PyQt 实时调参终端，选择运动左臂、运动右臂、示教左臂或示教右臂，支持 RViz、实时力矩曲线、在线调参和分臂参数固定。
+ 
+-配对动力示教可点击“打开动力示教”，或运行 `scripts/run_arm_teaching.bash`。默认 2 对 2 左对左、右对右，支持 1 对 1 与交叉配对，启动不回零，仅示教臂重力补偿，运动臂默认 50 Hz 直接跟随；退出同时回零，有超时和取消处理。详见 [动力示教说明](TEACHING.md)。
++配对动力示教可点击“打开动力示教”，或运行 `scripts/run_arm_teaching.bash`。默认 2 对 2 左对左、右对右，支持 1 对 1 与交叉配对，启动不回零，仅示教臂重力补偿，运动臂目标固定 100 Hz 直接跟随，底层控制与每轴 CAN 指令为 250 Hz，CAN 保持 1 Mbps；退出同时回零，有超时和取消处理。详见 [动力示教说明](TEACHING.md)。
+ 
+ ## 启动与操作
+ 
+--- before/tools/arm_gravity/TEACHING.md
++++ after/tools/arm_gravity/TEACHING.md
+@@ -9,7 +9,7 @@
+ 1. 检查所有选中臂的 USB 身份、反馈与故障状态；未接管前只读。**启动不回零，也不等待零位。**
+ 2. 运动臂从当前位置接管，直接启用原程序的 `position_controllers/JointGroupPositionController`，电机模式为 POS_VEL。运动臂不加载重力补偿控制器、不读取重力档案、不计算或发送重力力矩。
+ 3. 仅示教臂使用 MIT 重力补偿，保留各示教臂此前验证的补偿参数。模式与反馈确认后，开启原程序目标发布；运动臂直接跟随对应示教臂的当前关节角度，不保留启动时两臂的角度偏差。
+-4. 默认 50 Hz，可选 10～100 Hz。保留原程序 alpha=1、0.1 秒软启动、关闭预测、最大单步 0.35 rad、首三轴 7.5 rad/s／后三轴 5 rad/s 的目标限制；上位机不另写跟随算法。
++4. 当前目标发布固定 **100 Hz**，所有选中臂的底层控制循环为 **250 Hz（4 ms）**，每轴控制指令随底层循环发送；独立 CAN 总线保持 **1 Mbps**。夹爪只读查询间隔仍为 0.05 秒（约 20 Hz）。保留原程序 alpha=1、0.1 秒软启动、关闭预测、最大单步 0.35 rad、首三轴 7.5 rad/s／后三轴 5 rad/s 的目标限制；上位机不另写跟随算法。
+ 
+ 电机从 POS_VEL 切 MIT、或从 MIT 切 POS_VEL 时，先发送失能并核验实际反馈，再写 CTRL_MODE 并核验应答，预载完整指令后使能。同为位置模式的两个标准控制器之间保持连续接管。模式不确认时禁止使能。不会写入电机零点、闪存、MAX_SPD、ACC、DEC 等参数。
+ 
+@@ -35,7 +35,18 @@
+ 
+ - 配对、USB 绑定、电机量程、软件源码 SHA256 和每对实际 teleop YAML。
+ - 原程序 raw/safe 目标及两端反馈：`references.csv`。
++- `session.json` 和诊断摘要保存配置频率；`frequency.csv` 每约 0.2 秒保存四臂底层周期、累计循环/每轴命令/反馈计数、据此计算的实际频率、读写耗时和反馈年龄。
+ - `*_mapper.log`、原程序状态变化、每臂 `native_home.log`、驱动日志与模式切换确认。
+ - 各臂反馈/力矩 CSV（运动臂重力列为空）、首次故障、退出故障、失能确认；日志磁盘错误不会阻止停止操作。
+ 
+ 原始参考文件和源码校验和位于 `diagnostics/teaching_upstream_port_20261125/`；本次直接启动的修改前备份与验证记录位于 `diagnostics/teaching_direct_start_20261125/`。PTY 测试运行真实 ROS 节点和 C++ 驱动，但用立即响应的位置模拟电机，只能验证软件链路、协议与退出流程，不能代表真机动力学或实际跟踪性能。
++
++### 250 Hz 频率核验
++
++`frequency.csv` 目前采集正常 following 阶段。`control_hz` 用驱动单调时钟与累计循环数的差计算；每轴 `command_hz_j1`～`j6` 是完整命令交给主机串口驱动的频率，不等同于 CAN 总线 ACK 或电机执行确认。`feedback_hz_j1`～`j7` 是底层实际解析的反馈帧频率，包含查询和使能反馈，不能逐条与命令配对。夹爪 `command_hz_j7` 应为 0。dry_run 模式不产生串口帧，CAN 收发频率列留空。
++
++`control_period_ms` 是最近两次底层 read 入口的间隔；`control_overrun_count` 累计超过 6 ms（标称 4 ms 的 1.5 倍）的周期，仅用于诊断，不新增停机条件。`overruns_since_previous` 可排除进入跟随前的模式切换影响。`read_ms` / `write_ms` 是最近完成调用的耗时，`bus_cycle_ms` 是上一完整读写对的总耗时，均不等于 CAN 线上延迟。`feedback_age_ms_j*` 是驱动记录的反馈年龄；`diagnostic_age_s` 是上位机接到最近诊断消息后经过的时间。CSV 低频采样不能给出逐周期耗时的精确 P99，也不能观察 USB 适配器内部排队。
++
++首次采样、消息未更新或驱动计数重置时，频率列留空；不要按 CSV 写盘间隔推算 CAN 频率。四臂独立运行时仍需真机日志确认调度能力。本轮保持原版目标算法、电机位置/速度环、速度字段、重力补偿参数及退出回零流程不变；独立重力补偿入口仍为 125 Hz。
++
++250 Hz 离线验证另发现并修正退出监控竞争条件：原生回零工具可能在两次进程检查之间成功退出，被常驻进程监控误报为“退出（0）”。现在由原生回零客户端路径独立检查其退出码和实际零位，常驻控制器的退出监控继续生效。回零失败仍保留窗口和位置保持，不会把非零退出码当成功。
+--- before/tools/arm_gravity/teaching_logs.py
++++ after/tools/arm_gravity/teaching_logs.py
+@@ -44,6 +44,7 @@
+ def software_manifest(root):
+     files = list((root/'tools/arm_gravity').glob('*.py'))
+     files += [root/'tools/arm_gravity/motor_limits.json']
++    files += [root/'tools/arm_moveit/native_stack.py']
+     files += list((root/'src/a6_y_controllers/src').glob('*.cpp'))
+     files += list((root/'src/a6_y_ros2_control/src').glob('*.cpp'))
+     files += list((root/'src/a6_y_controllers/include').rglob('*.hpp'))
+@@ -76,6 +77,10 @@
+              f"阶段：{state.get('phase')} / {state.get('status')}", f"首次故障：{state.get('error') or '无'}",
+              f"退出故障：{state.get('close_error') or '无'}", f"日志：{state.get('directory') or '尚未开始'}"]
+     if state.get('log_error'):lines.append(state['log_error'])
++    rates=state.get('configured_rates')
++    if rates:
++        lines.append(f"配置：底层 {rates['control_hz']} Hz / 每轴 CAN 指令 {rates['per_axis_command_hz']} Hz / "
++                     f"目标 {rates['target_hz']} Hz / CAN {rates['can_bitrate']/1e6:g} Mbps")
+     for role,arm in state.get('arms',{}).items():
+         lines.append(f"{role} [{arm.get('backend','—')}] {arm.get('status','')}；失能确认={arm.get('release_confirmed')}；"
+                      f"{arm.get('error') or arm.get('notice','')}")
+--- before/tools/arm_gravity/teaching_port.py
++++ after/tools/arm_gravity/teaching_port.py
+@@ -10,9 +10,10 @@
+ import numpy as np
+ 
+ from gravity_config import ROOT
+-from teaching import TeachingCoordinator as LifecycleCoordinator
++from teaching import TeachingCoordinator as LifecycleCoordinator, DEFAULT_PAIRS
+ from teaching_logs import SessionLog, software_manifest, write_json
+-from teaching_port_config import port_parameters, write_mapper_config
++from teaching_port_config import port_parameters, write_mapper_config, CONTROL_HZ, TARGET_HZ, CAN_BITRATE
++from teaching_frequency_log import FrequencyLog
+ from teaching_port_session import PortArmSession
+ from native_stack import NativeStack
+ 
+@@ -107,6 +108,11 @@
+ 
+     def _parameters_for_role(self, role):return port_parameters(role,self.roles)
+ 
++    def start(self, pairs=DEFAULT_PAIRS, frequency=TARGET_HZ, mock=True, with_rviz=False):
++        if frequency != TARGET_HZ:
++            raise ValueError(f'当前动力示教目标发送频率固定为 {TARGET_HZ} Hz')
++        return super().start(pairs,frequency,mock,with_rviz)
++
+     def _close_sessions(self):
+         self.update(running=True,phase='closing',status='停止跟随；各臂同时使用原生位置模式回零并核验失能',
+                     close_failed=False,close_error='')
+@@ -178,20 +184,27 @@
+         return q
+ 
+     def _run(self,pairs,frequency,mock,with_rviz,parameters):
+-        folder=None;failed=False;runtime=None
++        folder=None;failed=False;runtime=None;timing=None
+         try:
+             folder=self.report_dir/('teaching_'+uuid.uuid4().hex[:10]);folder.mkdir(parents=True)
+             self.update(directory=str(folder))
+             self.log=SessionLog(folder)
++            rates=dict(control_hz=CONTROL_HZ,per_axis_command_hz=CONTROL_HZ,
++                       target_hz=TARGET_HZ,can_bitrate=CAN_BITRATE)
++            self.update(configured_rates=rates)
+             self._event('session_started',pairs=pairs,frequency=frequency,mock=mock,
++                configured_rates=rates,
+                 implementation='archive_teleop_direct_start',startup_home=False,exit_home=True,home_backend='pos_vel',
+                 leader_backend='mit_gravity',follower_backend='stock_direct_position')
+             write_json(folder/'software.json',software_manifest(ROOT))
+             write_json(folder/'motor_limits.json',self.limit_records)
+             write_json(folder/'session.json',dict(pairs=pairs,frequency=frequency,mock=mock,
++                configured_rates=rates,
+                 roles={r:self.roles[r] for r in self.sessions},startup_home=False,exit_home=True,home_backend='pos_vel',
+                 leader_backend='mit_gravity',follower_backend='stock_direct_position',
+                 application_log=os.environ.get('A6Y_TEACHING_APP_LOG')))
++            try:timing=FrequencyLog(folder)
++            except OSError as exc:self._log_failure(exc)
+             for role,s in self.sessions.items():
+                 if self.stop_requested.is_set():raise InterruptedError()
+                 s.start(role,mock,with_rviz,parameters[role])
+@@ -228,6 +241,13 @@
+                         raise RuntimeError(follower+' 原程序目标发布超时')
+                 if now-last_flush>.2:
+                     runtime.file.flush()
++                    if timing:
++                        try:timing.sample(self.sessions,'following')
++                        except Exception as exc:
++                            self._log_failure(exc)
++                            try:timing.close()
++                            except Exception:pass
++                            timing=None
+                     self.update(packets=min(runtime.count.values()),actual_hz=min(runtime.count.values())/max(.02,now-started))
+                     last_flush=now
+         except InterruptedError:self._event('cancelled')
+@@ -266,3 +286,6 @@
+                     status='整组已停止，未自动重试回零；可导出日志、回零退出或托住后立即失能')
+             else:self._close_sessions()
+             self._save()
++            if timing:
++                try:timing.close()
++                except Exception as exc:self._log_failure(exc)
+--- before/tools/arm_gravity/teaching_port_config.py
++++ after/tools/arm_gravity/teaching_port_config.py
+@@ -7,6 +7,12 @@
+ 
+ HOME = 'arm_controller'
+ FOLLOW = 'direct_position_controller'
++CONTROL_HZ = 250
++TARGET_HZ = 100
++CAN_BITRATE = 1000000
++TIMING_INTERFACES = ('control_time', 'control_cycle_count', 'control_period',
++                     'control_overrun_count', 'read_duration', 'write_duration',
++                     'command_count', 'feedback_count')
+ VELOCITIES = [7.5, 7.5, 7.5, 5.0, 5.0, 5.0]
+ HOME_TOLERANCE = .03  # move_to_group_state.py's original goal tolerance
+ HOME_TIMEOUT = 55.  # Includes the original client's discovery and result waits.
+@@ -22,11 +28,18 @@
+     path = write_config(model, parameters, folder, namespace, manager, mock, output, initial, disarm_only)
+     data = yaml.safe_load(path.read_text())
+     cm = data[namespace+'/'+manager]['ros__parameters']
++    cm['update_rate'] = CONTROL_HZ
+     robot = ET.fromstring(cm['robot_description'])
+     hardware = robot.find('ros2_control/hardware')
+     teacher = model['role'].startswith('teaching_')
+     hardware.find("param[@name='control_mode']").text = 'mit' if teacher else 'pos_vel'
++    hardware.find("param[@name='can_bitrate']").text = str(CAN_BITRATE)
++    # Diagnostic threshold only; never changes watchdogs or motor control.
++    ET.SubElement(hardware, 'param', name='diagnostic_update_rate').text = str(CONTROL_HZ)
+     ET.SubElement(hardware, 'param', name='controller_mode_switching').text = 'true'
++    for joint in robot.findall('ros2_control/joint'):
++        for name in TIMING_INTERFACES:
++            ET.SubElement(joint, 'state_interface', name=name)
+     for joint, speed in zip(robot.findall('ros2_control/joint')[:6], VELOCITIES):
+         joint.find("param[@name='max_velocity']").text = str(speed)
+     cm['robot_description'] = ET.tostring(robot, encoding='unicode')
+@@ -49,7 +62,9 @@
+     return path
+ 
+ 
+-def write_mapper_config(folder, leader, follower, frequency):
++def write_mapper_config(folder, leader, follower, frequency=TARGET_HZ):
++    if frequency != TARGET_HZ:
++        raise ValueError(f'当前动力示教目标发送频率固定为 {TARGET_HZ} Hz')
+     source = ROOT/'src/a6_y_teleop/config/teleop.yaml'
+     config = yaml.safe_load(source.read_text())
+     ns = follower.namespace+'/upstream_teleop'
+--- before/tools/arm_gravity/teaching_port_session.py
++++ after/tools/arm_gravity/teaching_port_session.py
+@@ -12,6 +12,10 @@
+ 
+ 
+ class PortStack(GravityStack):
++    # NativeHome.execute checks the exit code AND the measured final pose.
++    # Exclude it before polling; it may exit between any two polls.
++    separately_supervised_children = ('native_home',)
++
+     def start_control(self, enabled, initial=None, disarm_only=False):
+         self.manager_name = 'controller_manager_'+str(self.control_generation)
+         self.control_generation += 1
+@@ -28,12 +32,6 @@
+                     '--controller-manager-timeout','25','--param-file',str(self.path)]
+             if name != 'joint_state_broadcaster':args += ['--inactive']
+             self.spawn('spawner_'+name,'controller_manager','spawner',args,control=True)
+-
+-    def check(self):
+-        # This finite tool's exit status is handled by NativeHome.execute.
+-        self.children = [(n,p) for n,p in self.children if n != 'native_home' or p.poll() is None]
+-        super().check()
+-
+ 
+ class NativeHome:
+     def __init__(self, session):
+--- before/tools/arm_gravity/teaching_view.py
++++ after/tools/arm_gravity/teaching_view.py
+@@ -18,7 +18,7 @@
+ from teaching import DEFAULT_PAIRS, validate_pairs
+ from teaching_port import TeachingCoordinator
+ from gravity_config import load_roles, load_model
+-from teaching_port_config import port_parameters
++from teaching_port_config import port_parameters, CONTROL_HZ, TARGET_HZ, CAN_BITRATE
+ from arm_view import STYLE
+ from teaching_logs import LogTail,export_report,summary_text
+ 
+@@ -55,10 +55,11 @@
+             self.configuration.extend((check,source,target))
+         settings=QHBoxLayout();box.addLayout(settings)
+         self.mode=QComboBox();self.mode.addItem('离线模拟',True);self.mode.addItem('真机动力示教',False)
+-        self.frequency=QDoubleSpinBox();self.frequency.setRange(10,100);self.frequency.setDecimals(0);self.frequency.setValue(50);self.frequency.setSuffix(' Hz')
++        self.frequency=QDoubleSpinBox();self.frequency.setRange(TARGET_HZ,TARGET_HZ);self.frequency.setDecimals(0);self.frequency.setValue(TARGET_HZ);self.frequency.setSuffix(' Hz（固定）')
+         self.rviz=QCheckBox('打开所选臂 RViz')
+         settings.addWidget(self.mode);settings.addWidget(QLabel('目标发送频率'));settings.addWidget(self.frequency);settings.addWidget(self.rviz);settings.addStretch()
+         self.configuration.extend((self.mode,self.frequency,self.rviz))
++        box.addWidget(QLabel(f'底层控制 {CONTROL_HZ} Hz · 每轴 CAN 指令 {CONTROL_HZ} Hz · CAN {CAN_BITRATE/1e6:g} Mbps（配置值）'))
+         self.status=QLabel('选择配对后启动');self.status.setObjectName('status');self.status.setWordWrap(True);box.addWidget(self.status)
+         self.error=QLabel();self.error.setObjectName('error');self.error.setWordWrap(True)
+         self.error.setTextInteractionFlags(Qt.TextSelectableByMouse);box.addWidget(self.error)
+@@ -203,7 +204,7 @@
+                     '已确认' if arm.get('release_confirmed') is True else '未确认' if arm else '—']
+             for col,text in enumerate(values):
+                 item=QTableWidgetItem(text);item.setToolTip(text);self.table.setItem(row,col,item)
+-        self.metrics.setText(f"每组观测目标：{state.get('packets',0)}　发布平均：{state.get('actual_hz',0):.1f} Hz\n日志：{state.get('directory') or '尚未开始'}")
++        self.metrics.setText(f"每组观测目标：{state.get('packets',0)}　目标观测平均：{state.get('actual_hz',0):.1f} Hz\n日志：{state.get('directory') or '尚未开始'}")
+         self.refresh_logs(state)
+         if self.close_pending:
+             if state['close_failed'] or (not state['running'] and state['phase']=='error'):
+--- before/tools/arm_gravity/test_teaching_port.py
++++ after/tools/arm_gravity/test_teaching_port.py
+@@ -1,7 +1,7 @@
+ import hashlib
+ from pathlib import Path
+ from types import SimpleNamespace
+-from unittest.mock import patch
++from unittest.mock import Mock, patch
+ import tempfile
+ import threading
+ import unittest
+@@ -12,11 +12,28 @@
+ from teaching_port_config import HOME, FOLLOW, write_port_control, write_mapper_config
+ from a6_y_teleop.leader_follower_teleop import load_config
+ from teaching_port import TeachingCoordinator
+-from teaching_port_session import PortArmSession
++from teaching_port_session import PortArmSession, PortStack
+ from teaching_port_config import port_parameters
+ 
+ 
+ class ArchivePortTests(unittest.TestCase):
++    def test_home_exit_between_polls_is_not_a_persistent_process_failure(self):
++        stack=PortStack.__new__(PortStack)
++        stack.directory=Path('/tmp')
++        home=SimpleNamespace(poll=Mock(side_effect=[None,0]))
++        stack.children=[('native_home',home)]
++        stack.check()
++        home.poll.assert_not_called()  # NativeHome owns this child's result.
++        stack.children.append(('controller_manager',SimpleNamespace(poll=lambda:1)))
++        with self.assertRaisesRegex(RuntimeError,'controller_manager'):
++            stack.check()
++
++    def test_fixed_target_rate_rejected_before_starting_hardware(self):
++        c=TeachingCoordinator()
++        with self.assertRaisesRegex(ValueError,'100 Hz'):
++            c.start(frequency=50.)
++        self.assertEqual(c.sessions,{})
++
+     def test_motion_arm_rejects_gravity_before_any_ros_call(self):
+         arm=PortArmSession();arm.model={'role':'motion_left'}
+         with self.assertRaisesRegex(ValueError,'禁止开启重力补偿'):arm._select(CONTROLLER)
+@@ -80,9 +97,10 @@
+ 
+     def test_native_home_and_follow_cannot_use_the_old_torque_planner(self):
+         with tempfile.TemporaryDirectory() as temp:
+-            for role in ('teaching_left','motion_right'):
++            for role in ('teaching_left','motion_left','teaching_right','motion_right'):
+                 path=write_port_control(load_model(role),load_profile(role),temp,'/test','cm',False,True)
+                 data=yaml.safe_load(path.read_text())
++                self.assertEqual(data['/test/cm']['ros__parameters']['update_rate'],250)
+                 teacher=role.startswith('teaching_')
+                 if teacher:
+                     gravity=data['/test/'+CONTROLLER]['ros__parameters']
+@@ -95,6 +113,8 @@
+                 self.assertEqual(data['/test/'+FOLLOW]['ros__parameters']['joints'],list(JOINTS[:6]))
+                 robot=ET.fromstring(data['/test/cm']['ros__parameters']['robot_description'])
+                 hardware=robot.find('ros2_control/hardware')
++                self.assertEqual(hardware.find("param[@name='can_bitrate']").text,'1000000')
++                self.assertEqual(hardware.find("param[@name='diagnostic_update_rate']").text,'250')
+                 self.assertEqual(hardware.find("param[@name='control_mode']").text,'mit' if teacher else 'pos_vel')
+                 self.assertEqual(hardware.find("param[@name='defer_enable_until_controller_ready']").text,'true')
+                 self.assertEqual(robot.findall('ros2_control/joint')[-1].find("param[@name='read_only']").text,'true')
+--- before/tools/arm_gravity/verify_teaching_port.py
++++ after/tools/arm_gravity/verify_teaching_port.py
+@@ -1,12 +1,13 @@
+ #!/usr/bin/env python3
+ """Real ROS controllers and native driver on PTYs; no physical ports or dynamics."""
+ import argparse
++import csv
+ import json
+ from pathlib import Path
+ import time
+ import numpy as np
+ 
+-from gravity_config import ROOT, CONTROLLER, load_roles
++from gravity_config import ROOT, CONTROLLER, JOINTS, load_roles
+ from teaching import DEFAULT_PAIRS
+ from teaching_port import TeachingCoordinator
+ from verify_multi import ProcessMotorEmulator, cleanup
+@@ -99,6 +100,7 @@
+             assert state['error'] and state['close_failed']
+             return dict(result='PASS',case='feedback_loss_group_hold',physical_devices=0,pairs=pairs,
+                         follower_hold_latency_s=hold_latency,report=state['directory'])
++        rate_start={r:s.feedback.snapshot()['rows']['joint1'] for r,s in c.sessions.items()}
+         for k in range(51):
+             for index,(leader,_) in enumerate(pairs):
+                 emulators[leader].snapshot(('set_q',[(.18 if index==0 else -.12)*k/50,.06,.08,0.,0.,0.,-.01]))
+@@ -109,6 +111,19 @@
+         assert abs(moved[pairs[0][1]]-.18)<.01,moved
+         if len(pairs)==2:assert abs(moved[pairs[1][1]]+.12)<.01,moved
+         print('PASS: upstream mapper follows distinct targets beyond old 0.15-rad abort threshold',flush=True)
++        rates={}
++        for role,arm in c.sessions.items():
++            rows=arm.feedback.snapshot()['rows'];before=rate_start[role];after=rows['joint1']
++            dt=after['control_time']-before['control_time']
++            rates[role]={k:(after[k]-before[k])/dt for k in ('control_cycle_count','command_count','feedback_count')}
++            assert all(225 < hz < 275 for hz in rates[role].values()),(role,rates[role])
++            assert rows[JOINTS[-1]]['command_count']==0
++        with Path(state['directory'],'frequency.csv').open() as stream:
++            timing=list(csv.DictReader(stream))
++        assert set(row['role'] for row in timing)==set(selected)
++        assert all(any(row['role']==r and row['command_hz_j1'] for row in timing) for r in selected)
++        assert state['frequency']==100 and 85 < state['actual_hz'] < 115,state['actual_hz']
++        print('PASS: native loop, command and feedback counters near 250 Hz; mapper near 100 Hz; frequency.csv present',flush=True)
+         if exit_failure:
+             emulators[selected[0]].snapshot('freeze_motion')
+             c.stop()
+@@ -142,6 +157,7 @@
+         result=dict(result='PASS',physical_devices=0,case='protected_exit_retry' if exit_failure else 'normal',
+             pairs=pairs,report=state['directory'],exit_elapsed_s=exit_elapsed,movement=moved,packets=state['packets'],actual_hz=state['actual_hz'],
+             audit=audits,plant='instantaneous encoder response; no physical dynamics verification')
++        result['native_rates_hz']=rates
+         Path(state['directory'],'verification_port.json').write_text(json.dumps(result,ensure_ascii=False,indent=2))
+         return result
+     finally:
+--- before/tools/arm_gravity/verify_teaching_ui.py
++++ after/tools/arm_gravity/verify_teaching_ui.py
+@@ -40,7 +40,9 @@
+                 em.snapshot(('set_q',[.1,.1,.1,0.,0.,0.,-.01] if role.startswith('teaching_') else [0.,.03,.03,0.,0.,0.,-.01]));roles[role]=dict(roles[role],port=em.port)
+         assert all(a['port'].startswith('/dev/pts/') for a in roles.values())
+         c=TeachingCoordinator(roles=roles,report_dir=ROOT.parent/'diagnostics/arm_teaching_test_reports');window=TeachingWindow(c);window.show();app.processEvents()
+-        c.start(mock=False);wait(lambda:c.snapshot()['phase']=='following')
++        assert window.frequency.value()==window.frequency.minimum()==window.frequency.maximum()==100
++        window.mode.setCurrentIndex(window.mode.findData(False))
++        window.start_button.click();wait(lambda:c.snapshot()['phase']=='following')
+         for k in range(60):
+             emulators['teaching_left'].snapshot(('set_q',[.024*k/60]+[0.]*6))
+             emulators['teaching_right'].snapshot(('set_q',[-.018*k/60]+[0.]*6));pause(.02)
+@@ -59,6 +61,8 @@
+                 assert 'arms/'+role+'/events.jsonl' in archive.namelist()
+                 assert 'arms/'+role+'/controller_manager.log' in archive.namelist()
+             assert 'references.csv' in archive.namelist()
++            assert 'frequency.csv' in archive.namelist()
++            assert json.loads(archive.read('session.json'))['configured_rates']['control_hz']==250
+         screenshot=directory/'ui_live.png';window.grab().save(str(screenshot))
+         exit_started=time.monotonic();window.close()
+         wait(lambda:c.snapshot()['phase']=='closing',10)
+--- before/tools/arm_moveit/native_stack.py
++++ after/tools/arm_moveit/native_stack.py
+@@ -171,6 +171,9 @@
+ 
+     def check(self):
+         for name, child in self.children:
++            # Finite action clients have their own result/exit supervision.
++            if name in getattr(self, 'separately_supervised_children', ()):
++                continue
+             code = child.poll()
+             if code is None or (name.startswith('spawner_') and code == 0):
+                 continue
+--- /dev/null
++++ after/tools/arm_gravity/teaching_frequency_log.py
+@@ -0,0 +1,72 @@
++"""Low-rate disk logging of cumulative native-driver counters, outside RT control."""
++import csv
++import math
++from pathlib import Path
++import time
++
++from gravity_config import JOINTS
++
++
++class FrequencyLog:
++    def __init__(self, folder):
++        self.previous = {}
++        self.file = (Path(folder)/'frequency.csv').open('w', newline='')
++        self.fields = ['wall_time', 'phase', 'role', 'manager', 'dry_run', 'diagnostic_age_s',
++                       'control_time', 'control_cycle_count', 'control_period_ms', 'control_hz',
++                       'control_overrun_count', 'overruns_since_previous',
++                       'read_ms', 'write_ms', 'bus_cycle_ms']
++        self.fields += [f'{kind}_j{i}' for kind in
++                        ('command_count', 'feedback_count', 'command_hz', 'feedback_hz', 'feedback_age_ms')
++                        for i in range(1, 8)]
++        self.writer = csv.DictWriter(self.file, fieldnames=self.fields)
++        self.writer.writeheader()
++
++    def sample(self, sessions, phase):
++        for role, session in sessions.items():
++            sample = session.feedback.snapshot()
++            rows = [sample.get('rows', {}).get(name, {}) for name in JOINTS]
++            first = rows[0]
++            stamp = first.get('control_time')
++            manager = session.stack.manager_name
++            record = dict(wall_time=time.time(), phase=phase, role=role, manager=manager,
++                          dry_run=first.get('dry_run'), control_time=stamp,
++                          control_cycle_count=first.get('control_cycle_count'),
++                          control_overrun_count=first.get('control_overrun_count'))
++            received = sample.get('diagnostic_time')
++            record['diagnostic_age_s'] = max(0., time.monotonic()-received) if received else None
++            for output, source in (('control_period_ms','control_period'), ('read_ms','read_duration'),
++                                   ('write_ms','write_duration'), ('bus_cycle_ms','bus_cycle_duration')):
++                value = first.get(source)
++                record[output] = value*1000 if value is not None and value >= 0 else None
++            for i, row in enumerate(rows, 1):
++                for kind in ('command_count', 'feedback_count'):
++                    record[f'{kind}_j{i}'] = row.get(kind)
++                age = row.get('feedback_age')
++                record[f'feedback_age_ms_j{i}'] = age*1000 if age is not None and age >= 0 else None
++
++            # Driver monotonic time and counters share one dynamic-state message.
++            # Do not use observer callback/wall-clock spacing as a CAN frequency.
++            previous = self.previous.get(role)
++            valid = stamp is not None and math.isfinite(stamp) and stamp > 0
++            if valid and previous and manager == previous['manager'] and stamp > previous['control_time']:
++                dt = stamp-previous['control_time']
++                def delta(key):
++                    a, b = record.get(key), previous.get(key)
++                    return a-b if a is not None and b is not None and a >= b else None
++                cycles = delta('control_cycle_count')
++                if cycles is not None:
++                    record['control_hz'] = cycles/dt
++                    record['overruns_since_previous'] = delta('control_overrun_count')
++                    # dry_run does not transmit or receive physical/SLCAN frames.
++                    if first.get('dry_run') == 0:
++                        for kind in ('command', 'feedback'):
++                            for i in range(1, 8):
++                                count = delta(f'{kind}_count_j{i}')
++                                record[f'{kind}_hz_j{i}'] = count/dt if count is not None else None
++            if valid:
++                self.previous[role] = record
++            self.writer.writerow(record)
++        self.file.flush()
++
++    def close(self):
++        self.file.close()
+--- /dev/null
++++ after/tools/arm_gravity/test_teaching_frequency_log.py
+@@ -0,0 +1,43 @@
++import csv
++from pathlib import Path
++import tempfile
++from types import SimpleNamespace
++import unittest
++
++from gravity_config import JOINTS
++from teaching_frequency_log import FrequencyLog
++
++
++class FrequencyLogTests(unittest.TestCase):
++    def test_driver_counts_survive_observer_gaps_and_reset_without_false_rates(self):
++        sample={'rows':{}}
++        session=SimpleNamespace(stack=SimpleNamespace(manager_name='cm1'),
++                                feedback=SimpleNamespace(snapshot=lambda:sample))
++        def update(t, count, dry_run=0):
++            sample['rows']={name:dict(control_time=t,control_cycle_count=count,
++                control_overrun_count=2,control_period=.004,read_duration=.0002,
++                write_duration=.0001,bus_cycle_duration=.0003,dry_run=dry_run,
++                command_count=count if i<6 else 0,feedback_count=count,
++                feedback_age=.004) for i,name in enumerate(JOINTS)}
++        with tempfile.TemporaryDirectory() as temp:
++            log=FrequencyLog(temp)
++            update(100.,1000);log.sample({'arm':session},'following')
++            # 250 intervening cycles, despite no intermediate observer samples.
++            update(101.,1250);log.sample({'arm':session},'following')
++            log.sample({'arm':session},'following')  # unchanged stale state
++            update(102.,10);log.sample({'arm':session},'following')  # reset
++            session.stack.manager_name='cm2'
++            update(103.,300);log.sample({'arm':session},'following')
++            update(104.,550,dry_run=1);log.sample({'arm':session},'following')
++            log.close()
++            with (Path(temp)/'frequency.csv').open() as stream:rows=list(csv.DictReader(stream))
++        self.assertEqual(float(rows[1]['control_hz']),250.)
++        self.assertEqual(float(rows[1]['command_hz_j1']),250.)
++        self.assertEqual(float(rows[1]['command_hz_j7']),0.)
++        self.assertEqual(float(rows[1]['feedback_hz_j6']),250.)
++        self.assertEqual(float(rows[1]['feedback_age_ms_j1']),4.)
++        for i in (0,2,3,4):self.assertEqual(rows[i]['control_hz'],'')
++        self.assertEqual(rows[5]['command_hz_j1'],'')
++
++
++if __name__=='__main__':unittest.main()

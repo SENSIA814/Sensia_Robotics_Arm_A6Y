@@ -1,0 +1,50 @@
+{
+  "trial": "j4_oscillation_retry_02",
+  "status": "capture_analyzed_stationary_improved_dynamic_lag",
+  "applied_at": "2026-11-25T23:08:36.412+08:00",
+  "result": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_oscillation_trial_20261125/1795619266101254063_apply/result.json",
+  "result_sha256": "9a8c0e581b94d95bdcba2f3562208b5512ec82c4d0c05e8d7b19399c9297f86e",
+  "baseline_session": "teaching_cc3c0a6bfe",
+  "planned_gains": {
+    "4": {
+      "KP_APR": 54.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.00372,
+      "KI_ASR": 0.002
+    }
+  },
+  "roles": [
+    "motion_left",
+    "motion_right"
+  ],
+  "storage": "RAM only; lost on motor power cycle",
+  "rates": {
+    "control_hz": 250,
+    "per_axis_command_hz": 250,
+    "target_hz": 100,
+    "can_bitrate": 1000000
+  },
+  "frames": {
+    "0xcc": 76,
+    "0x33": 746,
+    "0x55": 6
+  },
+  "next_log_session": "teaching_75eac1124d",
+  "validation": {
+    "gain_writes": 6,
+    "writes_acknowledged": 6,
+    "independent_readbacks_per_write": 2,
+    "all_14_motors_disabled": true,
+    "only_j4_3_registers_changed_per_motion_arm": true,
+    "teachers_not_accessed": true,
+    "motion_or_flash_commands": 0,
+    "unit_tests_passed": 8
+  },
+  "analysis": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_oscillation_trial_20261125/analysis.json",
+  "plot": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_oscillation_trial_20261125/j4_oscillation.png",
+  "latest_analysis": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_following_analysis_20261125_75eac1124d/analysis.json",
+  "latest_analysis_sha256": "3c4b3607bada366aaf6accc744c196dd9c18b099e30bc880bd18193e3dc5a0f8",
+  "latest_plot": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_following_analysis_20261125_75eac1124d/j4_retry_comparison.png",
+  "latest_review": "Post-run gains verified unchanged by read-only scan. No new parameter write. Stationary J4 oscillation improved; dynamic lag and left J4 coupled-motion ripple remain.",
+  "superseded_by": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_j4_kp80_trial_20261125/trial.json"
+}

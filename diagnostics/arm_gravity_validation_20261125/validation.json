@@ -1,0 +1,155 @@
+{
+  "result": "PASS",
+  "scope": "Offline only; physical gravity compensation deliberately not run at user request",
+  "observed_at": "2026-11-25T04:48:57.285127+08:00",
+  "physical_devices": 0,
+  "new_python_tests": 10,
+  "cpp_test_suites": [
+    {
+      "name": "test_a5_gravity_controller.gtest",
+      "tests": 5
+    },
+    {
+      "name": "test_haptic_effort_composer.gtest",
+      "tests": 6
+    },
+    {
+      "name": "test_safe_zero_effort_command.gtest",
+      "tests": 4
+    },
+    {
+      "name": "test_smooth_friction_compensation.gtest",
+      "tests": 6
+    }
+  ],
+  "cpp_test_cases": 21,
+  "driver_test_suites": 6,
+  "pty_and_ui_records": [
+    {
+      "result": "PASS",
+      "role": "motion_left",
+      "physical_devices": 0,
+      "transport": "/dev/pts/2",
+      "frames": 487,
+      "mit_commands": 228,
+      "readonly_close": false,
+      "feedback_loss": false,
+      "cancel_enable": false,
+      "all_children_exited": true,
+      "release_confirmed": true,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/motion_left_af807f8be3"
+    },
+    {
+      "result": "PASS",
+      "role": "motion_right",
+      "physical_devices": 0,
+      "transport": "/dev/pts/2",
+      "frames": 538,
+      "mit_commands": 264,
+      "readonly_close": false,
+      "feedback_loss": false,
+      "cancel_enable": false,
+      "all_children_exited": true,
+      "release_confirmed": true,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/motion_right_6ec9738da4"
+    },
+    {
+      "result": "PASS",
+      "role": "teaching_left",
+      "physical_devices": 0,
+      "transport": "/dev/pts/2",
+      "frames": 487,
+      "mit_commands": 234,
+      "readonly_close": false,
+      "feedback_loss": false,
+      "cancel_enable": false,
+      "all_children_exited": true,
+      "release_confirmed": true,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_2379b6157c"
+    },
+    {
+      "result": "PASS",
+      "role": "teaching_right",
+      "physical_devices": 0,
+      "transport": "/dev/pts/2",
+      "frames": 486,
+      "mit_commands": 234,
+      "readonly_close": false,
+      "feedback_loss": false,
+      "cancel_enable": false,
+      "all_children_exited": true,
+      "release_confirmed": true,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_cc7a2e877c"
+    },
+    {
+      "result": "PASS",
+      "role": "teaching_left",
+      "physical_devices": 0,
+      "transport": "/dev/pts/2",
+      "frames": 743,
+      "mit_commands": 546,
+      "readonly_close": false,
+      "feedback_loss": true,
+      "cancel_enable": false,
+      "all_children_exited": true,
+      "release_confirmed": false,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_94e0730225"
+    },
+    {
+      "result": "PASS",
+      "role": "motion_left",
+      "physical_devices": 0,
+      "transport": "/dev/pts/2",
+      "frames": 63,
+      "mit_commands": 0,
+      "readonly_close": true,
+      "feedback_loss": false,
+      "cancel_enable": false,
+      "all_children_exited": true,
+      "release_confirmed": null,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/motion_left_fc1300157d"
+    },
+    {
+      "result": "PASS",
+      "role": "teaching_right",
+      "physical_devices": 0,
+      "transport": "/dev/pts/2",
+      "frames": 456,
+      "mit_commands": 192,
+      "readonly_close": false,
+      "feedback_loss": false,
+      "cancel_enable": true,
+      "all_children_exited": true,
+      "release_confirmed": true,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_9de2ee8773"
+    },
+    {
+      "result": "PASS",
+      "physical_devices": 0,
+      "qt_role_buttons": 4,
+      "rviz": false,
+      "mock_enable_release_reenable_close": true,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_a3076010ac"
+    }
+  ],
+  "rviz_ui": {
+    "result": "PASS",
+    "physical_devices": 0,
+    "qt_role_buttons": 4,
+    "rviz": true,
+    "mock_enable_release_reenable_close": true,
+    "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_057c31d745"
+  },
+  "source_sha256": {
+    "A6-Y-G/tools/arm_gravity/test_gravity.py": "d686068327e3d7c5b50cffcf79e22f7f5dd4fc1e50e00446f2b16a78de79ab1b",
+    "A6-Y-G/tools/arm_gravity/verify_gravity.py": "cf8fe75705f94a8a71acd7d848ed7d167af8f4e53d7eafeecde1f5fb859d8af7",
+    "A6-Y-G/tools/arm_gravity/gravity_config.py": "9a4242f474474a9e4033bcd9ad0dba9ce31ca02d9123e3523f3a201d25c2dd20",
+    "A6-Y-G/tools/arm_gravity/verify_ui.py": "5873bb71a951c5025281375dd5403fcce616b42da9606b0412ef3458b9b650f8",
+    "A6-Y-G/tools/arm_gravity/gravity_view.py": "f7a2176191992c9dfb0e4f8b5fd7c5a1b8774a5918d7c792c40d4e95f579a84a",
+    "A6-Y-G/tools/arm_gravity/gravity_session.py": "57c980afaf71605d129190b8b7e4032a979de7e9087dd225e75d590d6944a3be",
+    "A6-Y-G/src/a6_y_ros2_control/src/A6_y_damiao_system.cpp": "8525d6ebaaac2f9c9f740bf23e751df8c59e0eddb4e3f00c7a784ce1e8aa37ea",
+    "A6-Y-G/scripts/run_arm_gravity.bash": "0f0a9f92dd3358a452c1b6f7a2c84ee5164e12bd8b8381e300dad95c69204fb5",
+    "A6-Y-G/scripts/build_gravity_stack.bash": "d1806064de15cfb6ca578fb7c876ed46617ee92dcb660b60e88d40cc33129f36",
+    "A6-Y-G/scripts/test_arm_gravity.bash": "405b19e313153114effec481dc166b438e1779e4428c77471ce404189844bae9"
+  }
+}

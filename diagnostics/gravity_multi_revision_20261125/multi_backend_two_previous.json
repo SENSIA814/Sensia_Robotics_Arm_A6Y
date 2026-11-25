@@ -1,0 +1,35 @@
+{
+  "result": "PASS",
+  "physical_devices": 0,
+  "roles": [
+    "teaching_left",
+    "teaching_right"
+  ],
+  "stages": [
+    "parallel_feedback_readonly",
+    "parallel_explicit_enable",
+    "duplicate_usb_rejected",
+    "tuning_isolated",
+    "release_disconnect_reconnect_isolated",
+    "feedback_fault_isolated"
+  ],
+  "peer_monitor_samples": 174,
+  "no_peer_enable_disable_during_other_arm_operations": true,
+  "transport": {
+    "teaching_left": "/dev/pts/4",
+    "teaching_right": "/dev/pts/5"
+  },
+  "reports": [
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_51df97f69d",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_dfc8ae3113",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_152206ab1a",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_48274958b4"
+  ],
+  "fault_error": "补偿期间电机反馈超时或报告故障，正在停止输出；停止核验：控制器启停失败",
+  "all_children_exited": true,
+  "elapsed_seconds": 6.275,
+  "mit_commands": {
+    "teaching_left": 852,
+    "teaching_right": 3066
+  }
+}

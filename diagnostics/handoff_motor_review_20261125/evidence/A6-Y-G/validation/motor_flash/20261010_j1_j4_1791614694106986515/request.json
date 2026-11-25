@@ -1,0 +1,11 @@
+{
+  "requested_joints": [
+    "joint1",
+    "joint2",
+    "joint3",
+    "joint4"
+  ],
+  "operator_observation": "现在的在40°每秒已经稳定运动",
+  "scope": "Record current parameters and save current full motor RAM parameters to Flash; no motion trial.",
+  "power_cycle_verified": false
+}

@@ -1,0 +1,20 @@
+{
+  "run": "validation/j4_highspeed/1791614454298610983_real",
+  "note": "Latest completed 40 deg/s run; motor gain snapshot at run time unavailable; no claim of exact parameter linkage.",
+  "planned_peak_speed_deg_s": 40.0,
+  "passed": true,
+  "disarm_confirmed": true,
+  "tracking_error_rad": 0.25,
+  "direction_metrics": {
+    "outbound": {
+      "encoder_peak_deg_s": 40.86974638456644,
+      "deviation_percent": 2.1743659614160915,
+      "peak_within_5_percent": true
+    },
+    "return": {
+      "encoder_peak_deg_s": 42.22540716552487,
+      "deviation_percent": 5.563517913812177,
+      "peak_within_5_percent": false
+    }
+  }
+}

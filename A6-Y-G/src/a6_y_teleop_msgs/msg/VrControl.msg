@@ -1,0 +1,12 @@
+uint8 PREPARE=1
+uint8 ARM=2
+uint8 PAUSE=3
+uint8 DISARM=4
+uint8 CAPTURE=5
+uint64 controller_epoch
+uint64 request_id
+uint64 generated_monotonic_ns
+uint64 producer_id
+uint64 session_id
+uint64 clutch_epoch
+uint8 action

@@ -1,0 +1,18 @@
+[
+  {
+    "time": "2026-11-24T13:59:28.908078+08:00",
+    "channel": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209D3982534B-if00",
+    "device": "/dev/ttyACM0",
+    "returncode": 1,
+    "stdout": "scan targets:\njoint,motor_type,slave_id,master_id\njoint1,DM4340P,0x01,0x11\njoint2,DM4340P,0x02,0x12\njoint3,DM4340P,0x03,0x13\njoint4,DM4310,0x04,0x14\njoint5,DM4310,0x05,0x15\njoint6,DM4310,0x06,0x16\ngripper_finger_joint1,DM3507,0x07,0x17\n\nscan result:\nstatus,joint,motor_type,slave_id,hits,passes,q,dq,tau,err\nFOUND,joint1,DM4340P,0x01,5,5,0.111582,-0.002442,-0.020513,0x0\nFOUND,joint2,DM4340P,0x02,5,5,-0.000191,-0.002442,0.047863,0x0\nMISS,joint3,DM4340P,0x03,0,5,0.000000,0.000000,0.000000,0x0\nMISS,joint4,DM4310,0x04,0,5,0.000000,0.000000,0.000000,0x0\nMISS,joint5,DM4310,0x05,0,5,0.000000,0.000000,0.000000,0x0\nMISS,joint6,DM4310,0x06,0,5,0.000000,0.000000,0.000000,0x0\nMISS,gripper_finger_joint1,DM3507,0x07,0,5,0.000000,0.000000,0.000000,0x0\n",
+    "stderr": "\nmissing ids: 0x03, 0x04, 0x05, 0x06, 0x07\n"
+  },
+  {
+    "time": "2026-11-24T13:59:31.197814+08:00",
+    "channel": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_304C33733036-if00",
+    "device": "/dev/ttyACM3",
+    "returncode": 0,
+    "stdout": "scan targets:\njoint,motor_type,slave_id,master_id\njoint1,DM4340P,0x01,0x11\njoint2,DM4340P,0x02,0x12\njoint3,DM4340P,0x03,0x13\njoint4,DM4310,0x04,0x14\njoint5,DM4310,0x05,0x15\njoint6,DM4310,0x06,0x16\ngripper_finger_joint1,DM3507,0x07,0x17\n\nscan result:\nstatus,joint,motor_type,slave_id,hits,passes,q,dq,tau,err\nFOUND,joint1,DM4340P,0x01,5,5,0.001717,-0.002442,-0.006838,0x0\nFOUND,joint2,DM4340P,0x02,5,5,0.001717,-0.002442,-0.020513,0x0\nFOUND,joint3,DM4340P,0x03,5,5,0.002098,-0.004884,-0.006838,0x0\nFOUND,joint4,DM4310,0x04,5,5,0.238231,-0.012210,0.002442,0x0\nFOUND,joint5,DM4310,0x05,5,5,-0.100519,-0.012210,-0.007326,0x0\nFOUND,joint6,DM4310,0x06,5,5,-0.034142,-0.012210,-0.007326,0x0\nFOUND,gripper_finger_joint1,DM3507,0x07,5,5,8.983055,0.012210,-0.003663,0x0\n",
+    "stderr": ""
+  }
+]

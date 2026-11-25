@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>a5_description</name>
+  <version>0.2.0</version>
+  <description>A5 six-axis arm with DM3507 parallel gripper.</description>
+  <maintainer email="maintainer@example.invalid">A6-Y robot team</maintainer>
+  <license>BSD</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <export>
+    <build_type>ament_cmake</build_type>
+    <architecture_independent />
+  </export>
+</package>

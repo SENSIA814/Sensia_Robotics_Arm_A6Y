@@ -1,0 +1,35 @@
+/arm6/controller_manager:
+  ros__parameters:
+    update_rate: 125
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+    a6_y_joint_impedance_controller:
+      type: a6_y_controllers/A6YJointImpedanceController
+
+/arm6/a6_y_joint_impedance_controller:
+  ros__parameters:
+    joints: [joint1, joint2, joint3, joint4, joint5, joint6, gripper_finger_joint1]
+    enable_output: true
+    # Six ARM joints, not XYZ/rotation axes. Targets are captured on activation.
+    # Simulation-checked trial gains; hardware friction is not identified. Stiffness: Nm/rad; damping: Nms/rad.
+    joint_stiffness: [54.0, 50.0, 54.0, 45.0, 38.5, 5.2]
+    # rad: clamp ONLY the spring input. Zero disables a cap. Fixed target / integral keep full error.
+    spring_error_limits: [0.20, 0.12, 0.10, 0.12, 0.22, 0.10]
+    # Lower damping restores more immediate spring effort; spring caps limit large-deflection demand.
+    joint_damping: [6.0, 4.5, 3.6, 1.8, 1.8, 0.52]
+    # Optional bounded return correction (Nm/(rad*s)); set all six to 0 for pure PD.
+    # Bias and PD share the impedance budget below; imported total torque caps still apply.
+    joint_integral_gains: [4.0, 4.0, 8.0, 0.8, 1.2, 1.0]
+    integral_torque_limits: [1.5, 2.2, 3.0, 0.4, 0.4, 0.35]
+    integral_deadband: 0.005          # rad, approximately 0.29 degrees
+    integral_error_window: 0.35      # rad; clip integration input, do NOT freeze at large errors
+    integral_velocity_threshold: 0.15 # rad/s; accumulate below this speed, freeze accumulation above it
+    # Additional torque INCLUDING integral and both damping terms; Nm, independent bounds.
+    impedance_torque_limits: [2.4, 2.8, 3.6, 0.6, 0.6, 0.6]
+    impedance_ramp_duration: 2.0
+    max_control_period: 0.1
+    max_feedback_age: 0.1
+    # The launch imports torque_scales, effort_signs, damping_gains and
+    # torque_limits from gravity_parameters_file. Imported damping_gains are
+    # added to joint_damping. No motion-direction friction assist is used.
+    # Gripper position contributes to the model; its effort remains zero.

@@ -1,0 +1,23 @@
+{
+  "result": "PASS",
+  "date": "2026-11-25",
+  "python_tests": 28,
+  "hardware": "Original C++ dry_run only; no real serial ports opened",
+  "native_integration": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_left_00_f118i/verification.json",
+  "telemetry_rows": 828,
+  "execute_rows": 497,
+  "median_active_interval_s": 0.05009932100074366,
+  "target_sample_hz": 20,
+  "measured_session_hz": 19.42733600856025,
+  "max_interval_s": 1.0524161620051018,
+  "note": "The largest sampling gap occurred during final ROS cleanup; timestamps preserve actual spacing, and plot gaps are not joined.",
+  "archived_plans": 6,
+  "has_ros_original_logs": true,
+  "has_application_results": true,
+  "screenshots": [
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_telemetry_preview.png",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_motor_preview.png",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_log_preview.png"
+  ],
+  "source_urdf_sha256": "df598e1549c4b9f405c5e6001d642f644f55790e8f47eb3394cb27ad8dfb6899"
+}

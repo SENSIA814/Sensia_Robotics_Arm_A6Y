@@ -1,0 +1,51 @@
+teleop:
+  control_hz: 50.0
+  leader_joint_state_topic: /leader/joint_states
+  follower_joint_state_topic: /follower/joint_states
+  command_topic: /follower/direct_position_controller/commands
+  command_type: position_array
+  enable_topic: /teleop/enable
+  emergency_stop_topic: /teleop/emergency_stop
+  raw_action_topic: /teleop/raw_action
+  safe_action_topic: /teleop/safe_action
+  status_topic: /teleop/status
+  require_enable: true
+  publish_commands: true
+  hold_when_disabled: true
+
+joints:
+  names: [joint1, joint2, joint3, joint4, joint5, joint6, gripper_finger_joint1]
+  leader_names: [joint1, joint2, joint3, joint4, joint5, joint6, gripper_finger_joint1]
+  leader_joint_index: [0, 1, 2, 3, 4, 5, 6]
+  sign: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+  scale: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+  offset: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+limits:
+  min_position: [-2.62, 0.0, -2.97, -1.55, -0.9, -3.14, 0.0]
+  max_position: [2.62, 3.14, 0.0, 1.55, 0.9, 3.14, 0.035]
+  max_velocity: [7.5, 7.5, 7.5, 5.0, 5.0, 5.0, 1.0]
+  max_joint_step: 0.35
+  limit_margin: [0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.0]
+
+smoothing:
+  alpha: 1.0
+  soft_start_duration: 0.1
+  command_time_from_start: 0.03
+
+prediction:
+  enabled: false
+  lead_time: [0.12, 0.15, 0.15, 0.0, 0.0, 0.0, 0.0]
+  max_lead_delta: [0.35, 0.45, 0.45, 0.0, 0.0, 0.0, 0.0]
+  velocity_alpha: 0.5
+
+feedback:
+  timeout: 0.5
+  require_follower_feedback: true
+  require_leader_feedback: true
+  status_period: 0.5
+
+recording:
+  action_space: joint_position_7d
+  save_raw_action: true
+  save_safe_action: true

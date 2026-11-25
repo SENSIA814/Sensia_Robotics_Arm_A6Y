@@ -1,0 +1,47 @@
+{
+  "result": "PASS",
+  "physical_devices": 0,
+  "roles": [
+    "teaching_left",
+    "teaching_right",
+    "motion_left",
+    "motion_right"
+  ],
+  "stages": [
+    "parallel_feedback_readonly",
+    "parallel_explicit_enable",
+    "duplicate_usb_rejected",
+    "tuning_isolated",
+    "release_disconnect_reconnect_isolated",
+    "feedback_fault_isolated"
+  ],
+  "virtual_hardware": "one independent process per PTY adapter",
+  "cyclonedds_config": "file:///home/taoqiu/文档/ChatGPT/A6Y远程遥操作/A6-Y-G/scripts/gravity_dds.xml",
+  "peer_monitor_samples": 137,
+  "observer_resyncs": 0,
+  "max_observer_resync_seconds": 0.0,
+  "no_peer_enable_disable_during_other_arm_operations": true,
+  "transport": {
+    "teaching_left": "/dev/pts/2",
+    "teaching_right": "/dev/pts/4",
+    "motion_left": "/dev/pts/5",
+    "motion_right": "/dev/pts/6"
+  },
+  "reports": [
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_60df94dca9",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_41a3c2f37a",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/motion_left_5e17081561",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/motion_right_8fa0b12d95",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_057bb20119",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_f9f40dedc4"
+  ],
+  "fault_error": "补偿期间电机反馈超时或报告故障，正在停止输出；停止核验：控制器启停失败",
+  "all_children_exited": true,
+  "elapsed_seconds": 13.889,
+  "mit_commands": {
+    "teaching_left": 1098,
+    "teaching_right": 5034,
+    "motion_left": 5070,
+    "motion_right": 5052
+  }
+}

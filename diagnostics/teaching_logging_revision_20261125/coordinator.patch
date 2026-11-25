@@ -1,0 +1,277 @@
+--- before/teaching.py
+
++++ after/teaching.py
+
+@@ -3,15 +3,18 @@
+
+ import csv
+ import json
+ import math
++import os
+ from pathlib import Path
+ import threading
+ import time
++import traceback
+ import uuid
+ 
+ import numpy as np
+ 
+ from gravity_config import ROOT, JOINTS, load_roles, load_profile
+ from teaching_session import TeachingArmSession
++from teaching_logs import SessionLog, software_manifest, write_json
+ 
+ DEFAULT_PAIRS=(('teaching_left','motion_left'),('teaching_right','motion_right'))
+ 
+@@ -65,13 +68,25 @@
+
+     def __init__(self, roles=None, session_factory=TeachingArmSession, report_dir=None):
+         self.roles=roles or load_roles();self.session_factory=session_factory
+         self.report_dir=Path(report_dir or ROOT.parent/'diagnostics/arm_teaching_reports')
+-        self.sessions={};self.worker=None;self.lock=threading.Lock()
++        self.sessions={};self.worker=None;self.lock=threading.Lock();self.log=None;self.sample_meta={}
+         self.stop_requested=threading.Event();self.emergency=threading.Event()
++        self.close_after_release=threading.Event()
+         self.state=dict(running=False,phase='idle',status='选择配对后启动',error='',directory=None,
+-                        packets=0,missed_periods=0,actual_hz=0.,close_failed=False)
++                        packets=0,missed_periods=0,actual_hz=0.,close_failed=False,close_error='')
+ 
+     def update(self,**values):
+-        with self.lock:self.state.update(values)
++        with self.lock:
++            changes={k:v for k,v in values.items() if k in ('phase','status','error','close_error','close_failed') and self.state.get(k)!=v}
++            self.state.update(values)
++        if self.log and changes:
++            self.log.event('state',level='ERROR' if changes.get('error') or changes.get('close_error') else 'INFO',**changes)
++            self._save()
++
++    def _event(self,kind,**values):
++        if self.log:self.log.event(kind,**values)
++
++    def _save(self):
++        if self.log:self.log.snapshot(self.snapshot())
+ 
+     def snapshot(self):
+         with self.lock:state=deepcopy(self.state)
+@@ -88,22 +103,29 @@
+
+         # Validate every profile before starting even the first session.
+         selected=list(dict.fromkeys(r for pair in pairs for r in pair))
+         parameters={r:load_profile(r,self.roles) for r in selected}
++        self.log=None
++        self.sample_meta={}
+         self.sessions={r:self.session_factory(roles=self.roles,report_dir=self.report_dir/'arms') for r in selected}
+-        self.stop_requested.clear();self.emergency.clear()
+-        self.update(running=True,phase='connecting',status='建立所选机械臂反馈',error='',close_failed=False,
++        self.stop_requested.clear();self.emergency.clear();self.close_after_release.clear()
++        self.update(running=True,phase='connecting',status='建立所选机械臂反馈',error='',close_error='',close_failed=False,directory=None,
+                     packets=0,missed_periods=0,actual_hz=0.,pairs=pairs,frequency=frequency,mock=mock)
+         self.worker=threading.Thread(target=self._run,args=(pairs,frequency,mock,with_rviz,parameters),daemon=False)
+         self.worker.start()
+ 
+     def stop(self):
++        self._event('stop_requested')
++        if self.emergency.is_set():self.close_after_release.set()
+         self.stop_requested.set()
+         if not (self.worker and self.worker.is_alive()) and self.alive():
+-            self.update(running=True,phase='closing',error='',close_failed=False)
++            self.update(running=True,phase='closing',close_error='',close_failed=False)
+             self.worker=threading.Thread(target=self._retry_close,daemon=False);self.worker.start()
+ 
+     def release(self):
++        self._event('immediate_release_requested',level='WARNING')
+         self.emergency.set();self.stop_requested.set()
+         for s in list(self.sessions.values()):s.release()
++        if not (self.worker and self.worker.is_alive()):
++            self.worker=threading.Thread(target=self._finish_release,daemon=False);self.worker.start()
+ 
+     def _check(self,cancel=True):
+         if cancel and self.stop_requested.is_set(): raise InterruptedError('已请求停止示教')
+@@ -124,9 +146,14 @@
+
+         self._check(cancel)
+ 
+     def _operation(self,session,operation,timeout=150.):
++        role=session.snapshot().get('role')
++        self._event('operation_started',role=role,operation=operation)
+         future=session.submit(operation)
+         self._await(future.done,timeout)
+-        future.result()
++        try:future.result()
++        except Exception as exc:raise RuntimeError(self.roles[role]['name']+' / '+operation+'：'+str(exc)) from exc
++        self._event('operation_completed',role=role,operation=operation)
++        self._save()
+ 
+     def _sample(self,session):
+         state=session.control_state(feedback=True) if hasattr(session,'control_state') else session.snapshot()
+@@ -151,20 +178,29 @@
+
+             raise RuntimeError(self.roles[state['role']]['name']+'：反馈过期或电机状态异常，停止整组跟随'
+                 +f"（位置年龄 {detail['position_age']} s，状态年龄 {detail['diagnostic_age']} s，有效状态 {healthy}）")
+         q=IncrementalTarget.vector(hw['q'][:6]);v=IncrementalTarget.vector(hw['velocity'][:6])
+-        if np.max(np.abs(v))>.5:raise RuntimeError('机械臂反馈速度超过 0.5 rad/s')
++        if np.max(np.abs(v))>.5:
++            joint=int(np.argmax(np.abs(v)))
++            raise RuntimeError(f"{state['role']} / J{joint+1} 反馈速度 {v[joint]:.6f} rad/s 超过 0.5 rad/s")
++        self.sample_meta[state['role']]=dict(velocity=v.tolist(),position_age=now-stamp,diagnostic_age=now-diagnostic)
+         return q
+ 
+     def _run(self,pairs,frequency,mock,with_rviz,parameters):
+-        folder=None
++        folder=None;failed=False
+         try:
+             folder=self.report_dir/('teaching_'+uuid.uuid4().hex[:10]);folder.mkdir(parents=True)
+             self.update(directory=str(folder))
++            self.log=SessionLog(folder)
++            self._event('session_started',pairs=pairs,frequency=frequency,mock=mock,
++                        leader_backend='mit_gravity',follower_backend='pos_vel')
++            write_json(folder/'software.json',software_manifest(ROOT))
+             (folder/'session.json').write_text(json.dumps(dict(pairs=pairs,frequency=frequency,mock=mock,
+-                roles={r:self.roles[r] for r in self.sessions}),ensure_ascii=False,indent=2))
++                roles={r:self.roles[r] for r in self.sessions},leader_backend='mit_gravity',
++                follower_backend='pos_vel',application_log=os.environ.get('A6Y_TEACHING_APP_LOG')),ensure_ascii=False,indent=2))
+             for role,s in self.sessions.items():
+                 if self.stop_requested.is_set():raise InterruptedError()
+                 s.start(role,mock,with_rviz,parameters[role])
+             self._await(lambda:all(s.snapshot()['ready'] for s in self.sessions.values()),45.)
++            self._save()
+             # Refuse the complete batch before acquiring output on any arm.
+             for s in self.sessions.values():
+                 reason=s.enable_block_reason()
+@@ -200,20 +236,33 @@
+
+             self.update(phase='following',status='动力示教运行中：拖动示教臂，运动臂增量跟随')
+             self._stream(pairs,trackers,frequency,sequence,folder)
+         except InterruptedError:
+-            pass
++            self._event('cancelled')
+         except Exception as exc:
+-            self.update(error=str(exc),status='跟随已停止；正在处理退出保护')
++            failed=True
++            self._event('first_failure',level='ERROR',message=str(exc),traceback=traceback.format_exc(),phase=self.snapshot()['phase'])
++            if folder:write_json(folder/'first_failure.json',dict(message=str(exc),traceback=traceback.format_exc(),state=self.snapshot()))
++            self.update(error=str(exc),status='操作失败，停止整组跟随；保留反馈等待处理')
+         finally:
+             if self.emergency.is_set():
+-                self.update(phase='released',status='已请求全部立即失能；请查看各臂的失能核验结果',running=False)
++                self._finish_release()
++            elif failed:
++                # A failed startup home is not permission to start another home.
++                # Keep support/hold and the first fault; Stop/close explicitly
++                # invokes the existing protected return when the user is ready.
++                self._hold_sessions()
++                for s in self.sessions.values():
++                    if s.snapshot()['running'] and not s.snapshot()['active'] and not s.snapshot()['busy']:s.stop()
++                self.update(running=False,phase='error',close_failed=True,
++                    status='整组已停止；未自动再次回零。可查看/导出日志，处理后点击回零退出或托住后立即失能')
+             else:self._close_sessions()
+-            if folder:(folder/'result.json').write_text(json.dumps(self.snapshot(),ensure_ascii=False,indent=2,default=str))
++            self._save()
+ 
+     def _stream(self,pairs,trackers,frequency,sequence,folder):
+         period=1./frequency;deadline=started=time.monotonic();sent=missed=0
+         with (folder/'references.csv').open('w',newline='') as f:
+             writer=csv.writer(f);writer.writerow(['wall_time','sequence','leader','follower']+
+-                [f'delta_j{i}' for i in range(1,7)]+[f'target_j{i}' for i in range(1,7)])
++                [f'{kind}_j{i}' for kind in ('delta','target','leader_q','follower_q','tracking_error','leader_v','follower_v') for i in range(1,7)]+
++                ['leader_position_age_s','leader_diagnostic_age_s','follower_position_age_s','follower_diagnostic_age_s','loop_lateness_s'])
+             while not self.stop_requested.is_set():
+                 delay=deadline-time.monotonic()
+                 if delay>0 and self.stop_requested.wait(delay):break
+@@ -222,21 +271,25 @@
+
+                 sequence+=1;stamp=time.time_ns();batch=[]
+                 for leader,follower in pairs:
+                     measured=self._sample(self.sessions[follower])
+-                    delta,target=trackers[follower].step(self._sample(self.sessions[leader]))
+-                    if np.max(np.abs(target-measured))>.15:raise RuntimeError('运动臂与累计目标偏差超过 0.15 rad')
+-                    batch.append((leader,follower,delta,target))
++                    source=self._sample(self.sessions[leader]);delta,target=trackers[follower].step(source)
++                    if np.max(np.abs(target-measured))>.15:
++                        joint=int(np.argmax(np.abs(target-measured)))
++                        raise RuntimeError(f'{follower} / J{joint+1} 累计目标与反馈偏差 {target[joint]-measured[joint]:.6f} rad 超过 0.15 rad')
++                    batch.append((leader,follower,delta,target,source,measured))
+                 # Validate both pairs before publishing either pair's new target.
+-                for leader,follower,delta,target in batch:
++                for leader,follower,delta,target,source,measured in batch:
+                     self.sessions[follower].publish_reference(target,sequence,stamp)
+-                    writer.writerow([stamp/1e9,sequence,leader,follower,*delta,*target])
++                    source_meta=self.sample_meta[leader];target_meta=self.sample_meta[follower]
++                    writer.writerow([stamp/1e9,sequence,leader,follower,*delta,*target,*source,*measured,*(target-measured),
++                        *source_meta['velocity'],*target_meta['velocity'],source_meta['position_age'],source_meta['diagnostic_age'],
++                        target_meta['position_age'],target_meta['diagnostic_age'],now-deadline])
+                 sent+=1;deadline+=period
+                 if deadline<time.monotonic():
+                     skip=int((time.monotonic()-deadline)/period)+1;missed+=skip;deadline+=skip*period
+                 if sent%max(1,int(frequency/5))==0:
+                     f.flush();self.update(packets=sent,missed_periods=missed,actual_hz=(sent-1)/max(period,now-started))
+ 
+-    def _close_sessions(self):
+-        self.update(phase='closing',status='停止发送目标；各臂依次回零、核验到位并失能',close_failed=False)
++    def _hold_sessions(self):
+         # Freeze every follower before the first potentially long home operation.
+         for s in self.sessions.values():
+             state=s.snapshot()
+@@ -245,30 +298,56 @@
+
+                     future=s.submit('hold');deadline=time.monotonic()+2
+                     while not future.done() and time.monotonic()<deadline:time.sleep(.01)
+                     if future.done():future.result()
+-                except Exception:pass # Native 250 ms watchdog also latches hold.
++                    else:raise TimeoutError('保持命令确认超时')
++                    self._event('hold_confirmed',role=state.get('role'))
++                except Exception as exc:
++                    self._event('hold_unverified',level='ERROR',role=state.get('role'),message=str(exc))
++                    # Native 250 ms watchdog also latches hold.
++
++    def _close_sessions(self):
++        self.update(phase='closing',status='停止发送目标；各臂依次回零、核验到位并失能',close_failed=False,close_error='')
++        self._hold_sessions()
+         for role,s in self.sessions.items():
+             if self.emergency.is_set():
+-                self.update(running=False,phase='released',status='已请求全部立即失能');return
++                self._finish_release();return
+             state=s.snapshot()
+             if not state['running']:
+                 if state.get('release_confirmed') is False:
+                     self.update(running=False,phase='error',close_failed=True,status='失能未确认，请保留窗口处理',
+-                                error=state.get('error') or state.get('notice','失能未确认'));return
++                                close_error=state.get('error') or state.get('notice','失能未确认'));return
+                 continue
+             s.stop();deadline=time.monotonic()+180.
+             while s.snapshot()['running']:
+                 state=s.snapshot()
+                 if self.emergency.is_set():
+-                    self.update(running=False,phase='released',status='已请求全部立即失能');return
++                    self._finish_release();return
+                 if state.get('close_failed') or time.monotonic()>deadline:
+                     self.update(running=False,phase='error',close_failed=True,status='回零或失能失败，退出已取消',
+-                        error=self.roles[role]['name']+'：'+(state.get('notice') or state.get('error') or '退出等待超时'));return
++                        close_error=self.roles[role]['name']+'：'+(state.get('notice') or state.get('error') or '退出等待超时'));return
+                 time.sleep(.02)
+             if s.worker:s.worker.join(2.)
+             if s.snapshot().get('release_confirmed') is not True:
+-                self.update(running=False,phase='error',close_failed=True,status='失能未确认，退出已取消',error=self.roles[role]['name']+'：失能未确认');return
++                self.update(running=False,phase='error',close_failed=True,status='失能未确认，退出已取消',close_error=self.roles[role]['name']+'：失能未确认');return
++            self._event('arm_closed',role=role,release_confirmed=True)
+         self.update(running=False,phase='stopped',status='示教会话已安全结束，已连接机械臂均确认失能')
+ 
+     def _retry_close(self):
+         self.emergency.clear()
+         self._close_sessions()
++        self._save()
++
++    def _finish_release(self):
++        self.update(running=True,phase='releasing',status='正在核验全部机械臂失能')
++        deadline=time.monotonic()+12
++        while time.monotonic()<deadline:
++            states=[s.snapshot() for s in self.sessions.values()]
++            if all(s.get('release_confirmed') is True and not s.get('active') and not s.get('busy') for s in states):break
++            time.sleep(.02)
++        unverified=[role for role,s in self.sessions.items() if s.snapshot().get('release_confirmed') is not True or s.snapshot().get('active')]
++        self.update(running=False,phase='error' if unverified else 'released',close_failed=bool(unverified),
++                    close_error='失能未确认：'+', '.join(unverified) if unverified else '',
++                    status='失能核验未完成，请保留窗口处理' if unverified else '全部失能已确认；反馈与日志仍可查看')
++        self._event('release_result',unverified=unverified)
++        self._save()
++        if not unverified and self.close_after_release.is_set():
++            self.emergency.clear();self._close_sessions();self._save()

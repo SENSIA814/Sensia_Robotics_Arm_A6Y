@@ -1,0 +1,264 @@
+{
+  "schema_version": 1,
+  "operation": "scan",
+  "started_at": "2026-11-25T05:51:34.116+08:00",
+  "status_requests_only": true,
+  "selected_roles": [
+    "teaching_right"
+  ],
+  "passes": 3,
+  "timeout_s": 0.1,
+  "can_bitrate": 1000000,
+  "tty_baudrate": 115200,
+  "position_scale_error": null,
+  "position_note": "电机轴角度，使用之前读取的 PMAX；每台电机独立采样，结束后保留最后一次反馈。未作关节零位/方向校准，夹爪角度不是开口宽度。",
+  "note": "仅确认本轮通信；不能证明所有接线、供电或机械条件完好，也不能排除重复 ID。",
+  "arms": [
+    {
+      "role": "teaching_right",
+      "name": "示教端右臂",
+      "usb_serial": "209D3982534B",
+      "port": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209D3982534B-if00",
+      "motors": [
+        {
+          "id": 1,
+          "joint": "J1",
+          "feedback_can_id": 17,
+          "attempts": 3,
+          "hits": 0,
+          "frames": 0,
+          "states": [],
+          "last": null,
+          "result": "missing",
+          "position_scale": {
+            "pmax_rad": 12.5,
+            "measured_at": "2026-11-24T17:37:37.358193+08:00",
+            "source": "diagnostics/all_arms_20261124_1737.json"
+          }
+        },
+        {
+          "id": 2,
+          "joint": "J2",
+          "feedback_can_id": 18,
+          "attempts": 3,
+          "hits": 0,
+          "frames": 0,
+          "states": [],
+          "last": null,
+          "result": "missing",
+          "position_scale": {
+            "pmax_rad": 12.5,
+            "measured_at": "2026-11-24T17:37:37.358193+08:00",
+            "source": "diagnostics/all_arms_20261124_1737.json"
+          }
+        },
+        {
+          "id": 3,
+          "joint": "J3",
+          "feedback_can_id": 19,
+          "attempts": 3,
+          "hits": 0,
+          "frames": 0,
+          "states": [],
+          "last": null,
+          "result": "missing",
+          "position_scale": {
+            "pmax_rad": 12.5,
+            "measured_at": "2026-11-24T17:37:37.358193+08:00",
+            "source": "diagnostics/all_arms_20261124_1737.json"
+          }
+        },
+        {
+          "id": 4,
+          "joint": "J4",
+          "feedback_can_id": 20,
+          "attempts": 3,
+          "hits": 0,
+          "frames": 0,
+          "states": [],
+          "last": null,
+          "result": "missing",
+          "position_scale": {
+            "pmax_rad": 12.5,
+            "measured_at": "2026-11-24T17:37:37.358193+08:00",
+            "source": "diagnostics/all_arms_20261124_1737.json"
+          }
+        },
+        {
+          "id": 5,
+          "joint": "J5",
+          "feedback_can_id": 21,
+          "attempts": 3,
+          "hits": 0,
+          "frames": 0,
+          "states": [],
+          "last": null,
+          "result": "missing",
+          "position_scale": {
+            "pmax_rad": 12.5,
+            "measured_at": "2026-11-24T17:37:37.358193+08:00",
+            "source": "diagnostics/all_arms_20261124_1737.json"
+          }
+        },
+        {
+          "id": 6,
+          "joint": "J6",
+          "feedback_can_id": 22,
+          "attempts": 3,
+          "hits": 0,
+          "frames": 0,
+          "states": [],
+          "last": null,
+          "result": "missing",
+          "position_scale": {
+            "pmax_rad": 12.5,
+            "measured_at": "2026-11-24T17:37:37.358193+08:00",
+            "source": "diagnostics/all_arms_20261124_1737.json"
+          }
+        },
+        {
+          "id": 7,
+          "joint": "夹爪",
+          "feedback_can_id": 23,
+          "attempts": 3,
+          "hits": 0,
+          "frames": 0,
+          "states": [],
+          "last": null,
+          "result": "missing",
+          "position_scale": {
+            "pmax_rad": 12.565999984741211,
+            "measured_at": "2026-11-24T17:37:37.358193+08:00",
+            "source": "diagnostics/all_arms_20261124_1737.json"
+          }
+        }
+      ],
+      "tx": [
+        {
+          "can_id": 2047,
+          "data": "0100cc0000000000",
+          "at": "2026-11-25T05:51:36.212+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0200cc0000000000",
+          "at": "2026-11-25T05:51:36.313+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0300cc0000000000",
+          "at": "2026-11-25T05:51:36.415+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0400cc0000000000",
+          "at": "2026-11-25T05:51:36.517+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0500cc0000000000",
+          "at": "2026-11-25T05:51:36.619+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0600cc0000000000",
+          "at": "2026-11-25T05:51:36.721+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0700cc0000000000",
+          "at": "2026-11-25T05:51:36.823+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0100cc0000000000",
+          "at": "2026-11-25T05:51:36.946+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0200cc0000000000",
+          "at": "2026-11-25T05:51:37.047+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0300cc0000000000",
+          "at": "2026-11-25T05:51:37.149+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0400cc0000000000",
+          "at": "2026-11-25T05:51:37.251+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0500cc0000000000",
+          "at": "2026-11-25T05:51:37.354+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0600cc0000000000",
+          "at": "2026-11-25T05:51:37.456+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0700cc0000000000",
+          "at": "2026-11-25T05:51:37.559+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0100cc0000000000",
+          "at": "2026-11-25T05:51:37.681+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0200cc0000000000",
+          "at": "2026-11-25T05:51:37.783+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0300cc0000000000",
+          "at": "2026-11-25T05:51:37.885+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0400cc0000000000",
+          "at": "2026-11-25T05:51:37.987+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0500cc0000000000",
+          "at": "2026-11-25T05:51:38.088+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0600cc0000000000",
+          "at": "2026-11-25T05:51:38.191+08:00"
+        },
+        {
+          "can_id": 2047,
+          "data": "0700cc0000000000",
+          "at": "2026-11-25T05:51:38.292+08:00"
+        }
+      ],
+      "error": null,
+      "cancelled": false,
+      "unexpected_frames": 0,
+      "device": "/dev/ttyACM2",
+      "responding": 0,
+      "missing_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "communication_ok": false,
+      "ok": false
+    }
+  ],
+  "finished_at": "2026-11-25T05:51:38.448+08:00",
+  "cancelled": false,
+  "ok": false
+}

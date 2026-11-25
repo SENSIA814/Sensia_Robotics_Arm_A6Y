@@ -1,0 +1,8 @@
+{
+  "src/a6_y_ros2_control/tools/save_motor_params_flash.py": "278870cd354c3c6a010d98204aad08efb9688a300336b67164bc6cf8f0d221b7",
+  "src/a6_y_ros2_control/tools/damiao_set_id.py": "b61b1164011a3a2ee98c9105e01c2bfe0d4fca567e6ee0bcfc7b8315ec73224c",
+  "tools/read_motor_position_params.py": "c272c0950e8e78b5ec2fc03ef276aadc3235098dd7441bc17ad45a5a7e66c4a6",
+  "tools/test_j4_highspeed.py": "863cd4291f9decb106ef315bf9f4e9db4cc922c18831bb11e06d9df4f444fa20",
+  "src/a6_y_controllers/config/a5_vr_position_full_controllers.yaml": "103e40d51df4ab94b233ed04e32d7dd46df166b513be3130feda25fdb89d6d8c",
+  "src/a6_y_controllers/config/a5_vr_position_full_motors.yaml": "981885ed8b8c4cd6c906cb42473e7c7a4397274b2480268ffcd7eef1ee0197aa"
+}

@@ -1,0 +1,61 @@
+{
+  "selected_runs": [
+    "real_kp2500_asr190_ki80_v90",
+    "real_kp2500_asr190_ki80_v90_repeat"
+  ],
+  "selected_native_parameters": {
+    "KP_APR": 2500.0,
+    "KI_APR": 0.0,
+    "KP_ASR": 0.007296000141650438,
+    "KI_ASR": 0.0015999999595806003,
+    "Deta": 4.0,
+    "V_BW": 40.0,
+    "ACC": 2.0,
+    "DEC": -2.0
+  },
+  "target_peak_deg_s": 90,
+  "range_deg": [
+    0,
+    90
+  ],
+  "one_way_seconds": 1.875,
+  "numeric_and_operator_accepted": true,
+  "ram_only": true,
+  "flash_saved": false,
+  "csv_independent_crosscheck": {
+    "real_kp2500_asr190_ki80_v90": {
+      "plan_error_max_deg": 2.7343618487080974,
+      "directions": {
+        "outbound": {
+          "encoder_peak_speed_deg_s": 89.74570744998843
+        },
+        "return": {
+          "encoder_peak_speed_deg_s": 89.50689976533113
+        }
+      }
+    },
+    "real_kp2500_asr190_ki80_v90_repeat": {
+      "plan_error_max_deg": 2.7308438837724225,
+      "directions": {
+        "outbound": {
+          "encoder_peak_speed_deg_s": 89.45654533241452
+        },
+        "return": {
+          "encoder_peak_speed_deg_s": 89.72007690205582
+        }
+      }
+    }
+  },
+  "all_seven_disabled": true,
+  "source_sha256": {
+    "tools/test_j2_highspeed.py": "ee80ab6b96951e0db4055de3d41005c170cab9f6a5f31e5560c19c1a4f517b9e",
+    "tools/analyze_j2_highspeed.py": "26ad405b433cb3e524cc727fa199d0e2ceb5a5c14e4015091c20b1c31fb5b648",
+    "scripts/run_j2_highspeed_test.bash": "1618ceaf97f7d226ac0927deece6c57c1a6a60d03e847d3e35d1cf5d08052313",
+    "tools/test_j1_highspeed.py": "50b916d1dc45543f6e726c4816798c6881390ca35c13787271ca8acc90a7e75e",
+    "src/a6_y_vr_teleop/test/test_j2_highspeed_experiment.py": "6c310f250ac23953cd34edd0a3686beca23701cde11626c645ef9defce8a14d5",
+    "src/a6_y_vr_teleop/test/test_j2_highspeed_analysis.py": "6b55bfc17ec2b3ec25be02200fd7d116c2be3f5432d39bb4f1e9663aafffd349"
+  },
+  "scope": "Only J2 at the confirmed previous home, five other arm axes hold, gripper read-only. Production VR speed ceilings not changed.",
+  "trial_count": 25,
+  "completed_trials": 20
+}

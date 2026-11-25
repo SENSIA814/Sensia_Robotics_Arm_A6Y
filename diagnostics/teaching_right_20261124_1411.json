@@ -1,0 +1,182 @@
+{
+  "time": "2026-11-24T14:11:40.546987+08:00",
+  "readonly": true,
+  "motor_writes_sent": false,
+  "adapters": [
+    {
+      "port": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209D3982534B-if00",
+      "device": "/dev/ttyACM0",
+      "motors": [
+        {
+          "requested_id": 1,
+          "found": true,
+          "feedback_id": 17,
+          "parameters": {
+            "ESC_ID": 1,
+            "MST_ID": 17,
+            "CTRL_MODE": 2,
+            "PMAX": 12.5,
+            "VMAX": 10.0,
+            "TMAX": 28.0,
+            "KP_ASR": 0.0038399999029934406,
+            "KI_ASR": 0.0020000000949949026,
+            "KP_APR": 54.0
+          },
+          "feedback": {
+            "raw_hex": "0181247ff7ff1c1b",
+            "q_motor_rad": 0.11158159761959219,
+            "dq_motor_rad_s": -0.0024420024420024333,
+            "tau_motor_Nm": -0.006837606837606813,
+            "state": 0
+          }
+        },
+        {
+          "requested_id": 2,
+          "found": true,
+          "feedback_id": 18,
+          "parameters": {
+            "ESC_ID": 2,
+            "MST_ID": 18,
+            "CTRL_MODE": 2,
+            "PMAX": 12.5,
+            "VMAX": 10.0,
+            "TMAX": 28.0,
+            "KP_ASR": 0.0038399999029934406,
+            "KI_ASR": 0.0020000000949949026,
+            "KP_APR": 54.0
+          },
+          "feedback": {
+            "raw_hex": "027fff7ff8021d1b",
+            "q_motor_rad": -0.0001907377737087046,
+            "dq_motor_rad_s": -0.0024420024420024333,
+            "tau_motor_Nm": 0.03418803418803407,
+            "state": 0
+          }
+        },
+        {
+          "requested_id": 3,
+          "found": false
+        },
+        {
+          "requested_id": 4,
+          "found": false
+        },
+        {
+          "requested_id": 5,
+          "found": false
+        },
+        {
+          "requested_id": 6,
+          "found": false
+        },
+        {
+          "requested_id": 7,
+          "found": false
+        }
+      ],
+      "tx": [
+        {
+          "id": 2047,
+          "data": "0100330800000000"
+        },
+        {
+          "id": 2047,
+          "data": "0100330700000000"
+        },
+        {
+          "id": 2047,
+          "data": "0100330a00000000"
+        },
+        {
+          "id": 2047,
+          "data": "0100331500000000"
+        },
+        {
+          "id": 2047,
+          "data": "0100331600000000"
+        },
+        {
+          "id": 2047,
+          "data": "0100331700000000"
+        },
+        {
+          "id": 2047,
+          "data": "0100331900000000"
+        },
+        {
+          "id": 2047,
+          "data": "0100331a00000000"
+        },
+        {
+          "id": 2047,
+          "data": "0100331b00000000"
+        },
+        {
+          "id": 2047,
+          "data": "0100cc0000000000"
+        },
+        {
+          "id": 2047,
+          "data": "0200330800000000"
+        },
+        {
+          "id": 2047,
+          "data": "0200330700000000"
+        },
+        {
+          "id": 2047,
+          "data": "0200330a00000000"
+        },
+        {
+          "id": 2047,
+          "data": "0200331500000000"
+        },
+        {
+          "id": 2047,
+          "data": "0200331600000000"
+        },
+        {
+          "id": 2047,
+          "data": "0200331700000000"
+        },
+        {
+          "id": 2047,
+          "data": "0200331900000000"
+        },
+        {
+          "id": 2047,
+          "data": "0200331a00000000"
+        },
+        {
+          "id": 2047,
+          "data": "0200331b00000000"
+        },
+        {
+          "id": 2047,
+          "data": "0200cc0000000000"
+        },
+        {
+          "id": 2047,
+          "data": "0300330800000000"
+        },
+        {
+          "id": 2047,
+          "data": "0400330800000000"
+        },
+        {
+          "id": 2047,
+          "data": "0500330800000000"
+        },
+        {
+          "id": 2047,
+          "data": "0600330800000000"
+        },
+        {
+          "id": 2047,
+          "data": "0700330800000000"
+        }
+      ],
+      "complete_7": false
+    }
+  ]
+}

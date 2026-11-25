@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="6" failures="0" disabled="0" errors="0" time="0.11" timestamp="2026-11-25T05:04:00" name="AllTests">
+  <testsuite name="A5GravityControllerTest" tests="6" failures="0" disabled="0" errors="0" time="0.11" timestamp="2026-11-25T05:04:00">
+    <testcase name="UsesCompletePayloadAndMeasuredOpeningAndDisablesOnInvalidState" status="run" result="completed" time="0.008" timestamp="2026-11-25T05:04:00" classname="a6_y_controllers.A5GravityControllerTest" />
+    <testcase name="RejectsMissingGripperState" status="run" result="completed" time="0.004" timestamp="2026-11-25T05:04:00" classname="a6_y_controllers.A5GravityControllerTest" />
+    <testcase name="ContinuousFrictionRespectsCompositionAndLifecycle" status="run" result="completed" time="0.005" timestamp="2026-11-25T05:04:00" classname="a6_y_controllers.A5GravityControllerTest" />
+    <testcase name="DisabledOutputCannotProduceFrictionOrEnableMotor" status="run" result="completed" time="0.006" timestamp="2026-11-25T05:04:00" classname="a6_y_controllers.A5GravityControllerTest" />
+    <testcase name="RejectsInvalidContinuousFrictionConfiguration" status="run" result="completed" time="0.077" timestamp="2026-11-25T05:04:00" classname="a6_y_controllers.A5GravityControllerTest" />
+    <testcase name="LiveTuningRampsAtomicallyRejectsInvalidAndPreloadsOnReactivation" status="run" result="completed" time="0.01" timestamp="2026-11-25T05:04:00" classname="a6_y_controllers.A5GravityControllerTest" />
+  </testsuite>
+</testsuites>

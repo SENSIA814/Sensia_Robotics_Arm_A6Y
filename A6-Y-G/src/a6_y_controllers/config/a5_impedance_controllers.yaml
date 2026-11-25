@@ -1,0 +1,27 @@
+/arm6/controller_manager:
+  ros__parameters:
+    update_rate: 125
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+    a6_y_cartesian_impedance_controller:
+      type: a6_y_controllers/A6YCartesianImpedanceController
+
+/arm6/a6_y_cartesian_impedance_controller:
+  ros__parameters:
+    joints: [joint1, joint2, joint3, joint4, joint5, joint6, gripper_finger_joint1]
+    tcp_frame: tool_tcp
+    enable_output: true
+    # The impedance launch imports torque_scales, effort_signs, damping_gains,
+    # and torque_limits from gravity_parameters_file (the existing gravity YAML).
+    # No motion-direction friction assist is applied in impedance mode.
+    # XYZ stiffness: N/m; rotation stiffness: Nm/rad, all expressed in base axes.
+    cartesian_stiffness: [230.0, 230.0, 270.0, 18.0, 18.0, 18.0]
+    # Translational damping: N*s/m; rotational damping: Nm*s/rad.
+    cartesian_damping: [28.0, 28.0, 28.0, 0.6, 0.6, 0.6]
+    # Per-component TCP limits: N, N, N, Nm, Nm, Nm.
+    wrench_limits: [25.0, 25.0, 25.0, 0.75, 0.75, 0.75]
+    # Extra torque including joint damping, in Nm; gravity is not ramped.
+    impedance_torque_limits: [1.8, 1.8, 1.8, 0.6, 0.6, 0.6]
+    impedance_ramp_duration: 2.0
+    max_control_period: 0.1
+    max_feedback_age: 0.1

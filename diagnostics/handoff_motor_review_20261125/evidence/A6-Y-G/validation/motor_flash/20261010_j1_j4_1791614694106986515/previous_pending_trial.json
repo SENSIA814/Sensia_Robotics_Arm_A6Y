@@ -1,0 +1,80 @@
+{
+  "status": "DISARM confirmation fixed and validated (69 offline checks, mock, 3 real confirmations). KI 0.0006 rejected for severe near-endpoint shaking and tracking stop; restored baseline smooth again. KP 62 completed but arrival wobble rejected. All original parameters restored, all motors independently disabled, no further motion scheduled.",
+  "active_run": null,
+  "previous_complete_runs": [
+    "real_kp54_asr200_ki60_v10_20261010",
+    "real_kp54_asr200_ki40_v10_20261010",
+    "real_kp54_asr200_ki25_v10_20261010",
+    "real_kp54_asr220_ki25_v10_20261010",
+    "real_kp60_asr220_ki25_v20_limit100_20261010",
+    "real_kp60_asr200_ki25_v20_limit100_20261010",
+    "real_kp60_asr180_ki25_v20_limit100_20261010",
+    "real_kp60_asr180_ki25_v20_repeat_ki30_20261010",
+    "real_kp62_asr180_ki25_v20_ki30_20261010"
+  ],
+  "operator_acceptance": false,
+  "current_ram": {
+    "KP_APR": 60.0,
+    "KI_APR": 0.0,
+    "KP_ASR": 0.006696000229567289,
+    "KI_ASR": 0.0005000000237487257,
+    "ACC": 2.0,
+    "DEC": -2.0
+  },
+  "flash_saved": false,
+  "current_target_peak_deg_s": 20,
+  "travel_deg": 90,
+  "hold_seconds": 8,
+  "last_run": "real_kp62_asr180_ki25_v20_ki30_20261010",
+  "last_trial_complete": true,
+  "disabled_evidence": "ki30_20261010_final_status.jsonl",
+  "serial_free_evidence": "ki30_20261010_final_host_status.json",
+  "current_ram_evidence": "ki30_20261010_final_parameters.json",
+  "next_run": null,
+  "next_parameter_change": null,
+  "resume_date": "2026-10-10",
+  "last_complete_run": "real_kp62_asr180_ki25_v20_ki30_20261010",
+  "next_diagnostic": "No further monotonic gain increase selected: KI 0.0006 worsened near-endpoint shaking; KP 62 introduced arrival wobble. Operator reports J4 and downstream assembly moving together. Aligned encoder windows and J6 deviation do not identify causation; investigate coupled/transient motion before choosing further loop or profile changes.",
+  "diagnostic_logging_validation": "ki30_20261010_disarm_tests.log",
+  "speed_feedback_calibration": {
+    "date": "2026-10-10",
+    "report": "validation/j4_speed_calibration/20261010/report.json",
+    "profile": "validation/j4_speed_calibration/20261010/calibration.json",
+    "applied_to_runtime": false,
+    "protocol_vmax": 50.0,
+    "model_bias_rad_s": 0.01221001221001221,
+    "gain": 1.0,
+    "full_roundtrips_checked": 11,
+    "max_integral_error_percent": 1.0336670707182838,
+    "parameters_changed": false,
+    "new_motion": false
+  },
+  "j4_actual_speed_floor_rad_s": 1.0,
+  "feedback_limit_change": {
+    "date": "2026-10-10",
+    "user_request": "将门限改为1rad/s",
+    "previous_rad_s": 0.55,
+    "current_rad_s": 1.0,
+    "hardware_accessed": true,
+    "real_motion_validated": true,
+    "offline_validation": {
+      "passed": 49,
+      "log": "postcal_20261010_limit100_tests.log"
+    },
+    "first_real_run": "real_kp54_asr220_ki25_v20_limit100_20261010",
+    "validation_scope": "1.0 rad/s configuration used in six real trials; three completed, but none met numeric performance criteria.",
+    "performance_target_met": false
+  },
+  "candidate_run": "real_kp60_asr180_ki25_v20_repeat_ki30_20261010",
+  "candidate_operator_acceptable": true,
+  "candidate_performance_target_met": false,
+  "last_operator_acceptance": false,
+  "audit": "ki30_20261010_audit.json",
+  "disarm_fix": {
+    "tests_passed": 69,
+    "mock_passed": true,
+    "real_disarm_confirmations": 3,
+    "real_overeffort_during_disarm_observed": false,
+    "evidence": "ki30_20261010_audit.json"
+  }
+}

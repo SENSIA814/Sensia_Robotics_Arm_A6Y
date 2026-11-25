@@ -1,0 +1,257 @@
+{
+  "result": "PASS",
+  "physical_devices": 0,
+  "qt_role_buttons": 4,
+  "rviz": false,
+  "parallel_dry_run_arms": 4,
+  "batch_feedback_and_explicit_enable": true,
+  "live_tuning_and_save_reload": true,
+  "per_arm_draft_and_plot_isolation": true,
+  "mock_enable_release_reenable_close": true,
+  "sequential_return_order": [
+    "motion_left",
+    "motion_right",
+    "teaching_left",
+    "teaching_right"
+  ],
+  "all_four_disable_confirmed": true,
+  "cyclonedds_config": "file:///home/taoqiu/文档/ChatGPT/A6Y远程遥操作/A6-Y-G/scripts/gravity_dds.xml",
+  "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_73982d0464",
+  "reports": {
+    "motion_left": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/motion_left_afe45882e0",
+    "motion_right": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/motion_right_4440676c9f",
+    "teaching_left": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_9d58222e68",
+    "teaching_right": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_73982d0464"
+  },
+  "verified_at": "2026-11-25T08:41:15.650633+08:00",
+  "verification_file": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/multi_gravity_ui_20261125/verification.json",
+  "screenshots": {
+    "gravity-live.png": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/multi_gravity_ui_20261125/gravity-live.png",
+    "gravity-parameters.png": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/multi_gravity_ui_20261125/gravity-parameters.png"
+  },
+  "ui_unit_tests_passed": 10,
+  "existing_compatibility_unit_tests_passed": 23,
+  "exit_events": {
+    "motion_left": [
+      {
+        "time": 1795567131.2053316,
+        "kind": "home_planning"
+      },
+      {
+        "time": 1795567146.3105178,
+        "kind": "home_executing",
+        "revision": 1,
+        "duration": 14.512802095169121,
+        "plan_file": "home_plan_001.json",
+        "peak_velocity": [
+          5.330138217346647e-07,
+          0.09989979174187733,
+          0.09990009990009993,
+          3.236137754297159e-08,
+          4.0139594651780124e-07,
+          1.562948990925184e-07
+        ],
+        "peak_acceleration": [
+          1.0649042642450466e-06,
+          0.19958903481517123,
+          0.19958965048214286,
+          6.46545502895265e-08,
+          8.019459114710018e-07,
+          3.122603912628696e-07
+        ]
+      },
+      {
+        "time": 1795567161.1873434,
+        "kind": "home_reached",
+        "positions": [
+          -6.4025400485843415e-06,
+          7.820827215958404e-06,
+          4.119243354119378e-06,
+          -3.8872353266924534e-07,
+          4.821551558561624e-06,
+          1.8774078832939271e-06,
+          -0.01
+        ],
+        "tolerance_rad": 0.005
+      },
+      {
+        "time": 1795567161.2820446,
+        "kind": "released",
+        "confirmed": true
+      },
+      {
+        "time": 1795567164.391881,
+        "kind": "closed",
+        "release_confirmed": true,
+        "result_file": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/motion_left_afe45882e0/result.json"
+      }
+    ],
+    "motion_right": [
+      {
+        "time": 1795567164.4334219,
+        "kind": "home_planning"
+      },
+      {
+        "time": 1795567178.9737327,
+        "kind": "home_executing",
+        "revision": 1,
+        "duration": 14.513204012066128,
+        "plan_file": "home_plan_001.json",
+        "peak_velocity": [
+          7.435869598726386e-08,
+          0.09990009990009993,
+          0.09990008489778579,
+          7.348290759351854e-07,
+          1.570667195997424e-07,
+          4.295329159383183e-07
+        ],
+        "peak_acceleration": [
+          1.4854982419479e-07,
+          0.19957507430937974,
+          0.19957504433855916,
+          1.4680022100196968e-06,
+          3.137794883789675e-07,
+          8.580978768031822e-07
+        ]
+      },
+      {
+        "time": 1795567193.830567,
+        "kind": "home_reached",
+        "positions": [
+          8.931895019486549e-07,
+          9.611657615787363e-06,
+          9.791863970494842e-06,
+          8.826696160249413e-06,
+          -1.8866703240200887e-06,
+          -5.159508059732617e-06,
+          -0.01
+        ],
+        "tolerance_rad": 0.005
+      },
+      {
+        "time": 1795567193.8648932,
+        "kind": "released",
+        "confirmed": true
+      },
+      {
+        "time": 1795567196.9905856,
+        "kind": "closed",
+        "release_confirmed": true,
+        "result_file": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/motion_right_4440676c9f/result.json"
+      }
+    ],
+    "teaching_left": [
+      {
+        "time": 1795567197.051744,
+        "kind": "home_planning"
+      },
+      {
+        "time": 1795567213.2816412,
+        "kind": "home_executing",
+        "revision": 1,
+        "duration": 14.512708289160644,
+        "plan_file": "home_plan_001.json",
+        "peak_velocity": [
+          5.626389522110059e-07,
+          0.0999000999000999,
+          0.09989976276811678,
+          3.0517232585714794e-07,
+          2.1908940208752086e-07,
+          4.5956226221024444e-08
+        ],
+        "peak_acceleration": [
+          1.1241112544844138e-06,
+          0.19959305373451022,
+          0.19959238016959813,
+          6.097118670952265e-07,
+          4.377245152631806e-07,
+          9.181716073092884e-08
+        ]
+      },
+      {
+        "time": 1795567228.1331584,
+        "kind": "home_reached",
+        "positions": [
+          6.758403102867306e-06,
+          2.8393192542716865e-06,
+          6.888939049094916e-06,
+          -3.6657213047146803e-06,
+          2.631695671007038e-06,
+          5.520248832181098e-07,
+          -0.01
+        ],
+        "tolerance_rad": 0.005
+      },
+      {
+        "time": 1795567228.1576614,
+        "kind": "released",
+        "confirmed": true
+      },
+      {
+        "time": 1795567231.262937,
+        "kind": "closed",
+        "release_confirmed": true,
+        "result_file": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_9d58222e68/result.json"
+      }
+    ],
+    "teaching_right": [
+      {
+        "time": 1795567231.3021019,
+        "kind": "home_planning"
+      },
+      {
+        "time": 1795567245.2700408,
+        "kind": "home_executing",
+        "revision": 1,
+        "duration": 14.512695945791108,
+        "plan_file": "home_plan_001.json",
+        "peak_velocity": [
+          5.297748675795156e-07,
+          0.09990009990009992,
+          0.09989954807726,
+          1.7855503765433168e-07,
+          7.834498523467742e-07,
+          1.1623188584102104e-07
+        ],
+        "peak_acceleration": [
+          1.058453589228984e-06,
+          0.19959349862467,
+          0.19959239612075486,
+          3.567406308715294e-07,
+          1.565278685238651e-06,
+          2.3222327875492196e-07
+        ]
+      },
+      {
+        "time": 1795567260.1612544,
+        "kind": "home_reached",
+        "positions": [
+          6.3636415451765045e-06,
+          2.6709531900026073e-06,
+          9.299434390898811e-06,
+          2.1447983384132385e-06,
+          9.41077867988497e-06,
+          -1.3961743051186208e-06,
+          -0.01
+        ],
+        "tolerance_rad": 0.005
+      },
+      {
+        "time": 1795567260.1914096,
+        "kind": "released",
+        "confirmed": true
+      },
+      {
+        "time": 1795567263.3162436,
+        "kind": "closed",
+        "release_confirmed": true,
+        "result_file": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_73982d0464/result.json"
+      }
+    ]
+  },
+  "source_sha256": {
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/A6-Y-G/tools/arm_gravity/gravity_view.py": "d69e97ce77ea993835d5d04dfc9f542e86a1532770a746c7b640149dbc0d6006",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/A6-Y-G/tools/arm_gravity/verify_ui.py": "9dabb9db045a38e47a687a05b8f790c5fca5ec4fd113760f09531b232e2515ce",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/A6-Y-G/tools/arm_gravity/test_multi_gravity_ui.py": "9573d03d353cf49572aef618cd0b4d04ed38dce026ce03f68a733b752a7659ee"
+  }
+}

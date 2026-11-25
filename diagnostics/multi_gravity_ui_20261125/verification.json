@@ -1,0 +1,26 @@
+{
+  "result": "PASS",
+  "physical_devices": 0,
+  "qt_role_buttons": 4,
+  "rviz": false,
+  "parallel_dry_run_arms": 4,
+  "batch_feedback_and_explicit_enable": true,
+  "live_tuning_and_save_reload": true,
+  "per_arm_draft_and_plot_isolation": true,
+  "mock_enable_release_reenable_close": true,
+  "sequential_return_order": [
+    "motion_left",
+    "motion_right",
+    "teaching_left",
+    "teaching_right"
+  ],
+  "all_four_disable_confirmed": true,
+  "cyclonedds_config": "file:///home/taoqiu/\u6587\u6863/ChatGPT/A6Y\u8fdc\u7a0b\u9065\u64cd\u4f5c/A6-Y-G/scripts/gravity_dds.xml",
+  "report": "/home/taoqiu/\u6587\u6863/ChatGPT/A6Y\u8fdc\u7a0b\u9065\u64cd\u4f5c/diagnostics/arm_gravity_reports/teaching_right_73982d0464",
+  "reports": {
+    "motion_left": "/home/taoqiu/\u6587\u6863/ChatGPT/A6Y\u8fdc\u7a0b\u9065\u64cd\u4f5c/diagnostics/arm_gravity_reports/motion_left_afe45882e0",
+    "motion_right": "/home/taoqiu/\u6587\u6863/ChatGPT/A6Y\u8fdc\u7a0b\u9065\u64cd\u4f5c/diagnostics/arm_gravity_reports/motion_right_4440676c9f",
+    "teaching_left": "/home/taoqiu/\u6587\u6863/ChatGPT/A6Y\u8fdc\u7a0b\u9065\u64cd\u4f5c/diagnostics/arm_gravity_reports/teaching_left_9d58222e68",
+    "teaching_right": "/home/taoqiu/\u6587\u6863/ChatGPT/A6Y\u8fdc\u7a0b\u9065\u64cd\u4f5c/diagnostics/arm_gravity_reports/teaching_right_73982d0464"
+  }
+}

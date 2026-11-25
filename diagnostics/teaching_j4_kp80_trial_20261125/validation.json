@@ -1,0 +1,50 @@
+{
+  "trial": "j4_kp80_03",
+  "status": "applied_verified",
+  "reference_session": "teaching_75eac1124d",
+  "requested_change": {
+    "motion_left": {
+      "motor": 4,
+      "parameter": "KP_APR",
+      "before": 54.0,
+      "after": 80.0
+    },
+    "motion_right": {
+      "motor": 4,
+      "parameter": "KP_APR",
+      "before": 54.0,
+      "after": 80.0
+    }
+  },
+  "unchanged_j4_gains": {
+    "KI_APR": 0.0,
+    "KP_ASR": 0.00372,
+    "KI_ASR": 0.002
+  },
+  "storage": "RAM only",
+  "tests": {
+    "passed": 8,
+    "log": "unit.log"
+  },
+  "parameter_source_hashes": {
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_following_analysis_20261125_75eac1124d/motion_parameters_1795619762463837085.json": "50fbd1d546d82fbb407f4225740fa479796b99329488df3610cb0ab622f807d3",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_following_analysis_20261125_75eac1124d/analysis.json": "3c4b3607bada366aaf6accc744c196dd9c18b099e30bc880bd18193e3dc5a0f8"
+  },
+  "source_sha256": {
+    "apply_gains.py": "0bd1fed4e16a0546abaea8f6af6f395f23feed5342267f6db8ac205abded2daf",
+    "test_apply_gains.py": "21c96335d34f68c5380040490e0b1fd880134022a8433e9caa40385645579857",
+    "unit.log": "50bce169cd7cb784040eabb107b5e282294993559aaa910542fffad0a33c31fd",
+    "preview.json": "201a9fef97980667e0478bfa55daba52dfba445f36a02f689f1122d75e175f17"
+  },
+  "result": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_j4_kp80_trial_20261125/1795621242294344529_apply/result.json",
+  "hardware_verification": {
+    "gain_writes": 2,
+    "writes_acknowledged": 2,
+    "independent_readbacks_per_write": 2,
+    "all_14_motors_disabled": true,
+    "only_j4_kp_apr_changed_per_motion_arm": true,
+    "teachers_not_accessed": true,
+    "motion_or_flash_commands": 0,
+    "unit_tests_passed": 8
+  }
+}

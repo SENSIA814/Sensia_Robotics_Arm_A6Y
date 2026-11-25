@@ -1,0 +1,10 @@
+# 0=status, 1=start stream, 2=hold measured pose, 3=return to gravity
+uint8 command
+uint64 revision
+---
+bool success
+string message
+uint64 revision
+uint64 applied_revision
+# 0=gravity, 1=streaming, 2=hold, 3=latched fault hold
+uint8 phase

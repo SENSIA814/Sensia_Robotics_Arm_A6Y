@@ -1,0 +1,161 @@
+# Dedicated VR trial profile. Does not commission or enable physical hardware.
+/arm6/controller_manager:
+  ros__parameters:
+    update_rate: 125
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+    a6_y_joint_impedance_controller:
+      type: a6_y_controllers/A6YJointImpedanceController
+/arm6/a6_y_joint_impedance_controller:
+  ros__parameters:
+    joints:
+    - joint1
+    - joint2
+    - joint3
+    - joint4
+    - joint5
+    - joint6
+    - gripper_finger_joint1
+    enable_output: true
+    joint_stiffness:
+    - 54.0
+    - 50.0
+    - 54.0
+    - 30.0
+    - 38.5
+    - 15.2
+    spring_error_limits:
+    - 0.2
+    - 0.12
+    - 0.1
+    - 0.12
+    - 0.22
+    - 0.1
+    joint_damping:
+    - 6.0
+    - 4.5
+    - 3.6
+    - 1.8
+    - 1.8
+    - 0.52
+    joint_integral_gains:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    integral_torque_limits:
+    - 1.5
+    - 2.2
+    - 3.0
+    - 0.4
+    - 0.4
+    - 0.35
+    integral_deadband: 0.005
+    integral_error_window: 0.35
+    integral_velocity_threshold: 0.15
+    impedance_torque_limits:
+    - 2.4
+    - 2.8
+    - 3.6
+    - 0.6
+    - 0.6
+    - 0.6
+    impedance_ramp_duration: 2.0
+    max_control_period: 0.04
+    max_feedback_age: 0.05
+    torque_scales:
+    - 1.3
+    - 1.1
+    - 1.0
+    - 1.1
+    - 1.3
+    - 1.3
+    - 0.0
+    torque_limits:
+    - 10.0
+    - 20.0
+    - 20.0
+    - 3.0
+    - 4.0
+    - 4.0
+    - 30.0
+    effort_signs:
+    - 1.0
+    - 1.0
+    - 1.0
+    - 1.0
+    - 1.0
+    - 1.0
+    - 1.0
+    damping_gains:
+    - 0.01
+    - 0.01
+    - 0.01
+    - 0.01
+    - 0.01
+    - 0.03
+    - 0.0
+    reference_mode: external_vr
+    vr_allow_prepare: false
+    vr_allow_test_input: false
+    # PREPARE remains supported through stiffness (2 s) and gravity (5 s) ramps.
+    vr_ramp_gravity_on_prepare: true
+    vr_gravity_ramp_duration: 5.0
+    vr_lower:
+    - -2.62
+    - 0.0
+    - 0.0
+    - -1.55
+    - -0.9
+    - -3.14
+    vr_upper:
+    - 2.62
+    - 3.16
+    - 3.16
+    - 1.55
+    - 0.9
+    - 3.14
+    vr_reference_velocity:
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    vr_reference_acceleration:
+    - 0.3
+    - 0.3
+    - 0.3
+    - 0.3
+    - 0.3
+    - 0.3
+    vr_actual_velocity:
+    - 0.25
+    - 0.25
+    - 0.25
+    - 0.25
+    - 0.25
+    - 0.25
+    vr_impedance_slew:
+    - 3.0
+    - 3.0
+    - 3.0
+    - 1.0
+    - 1.0
+    - 1.0
+    vr_tracking_error: 0.05
+    # Same zero-endpoint feedback tolerances as a5_motion_limits.yaml.
+    # First six: +/-2 deg in rad; last: +/-2 motor deg * 0.0239 m/rad.
+    vr_zero_tolerance: [0.03490658503988659, 0.03490658503988659, 0.03490658503988659, 0.03490658503988659, 0.03490658503988659, 0.03490658503988659, 0.0008342673824532896]
+    vr_gripper_lower: -0.03
+    vr_gripper_upper: 0.0
+    vr_feedback_tolerance: 0.0
+    vr_input_timeout: 0.15
+    vr_reference_timeout: 0.05
+    vr_settle_speed: 0.03
+    vr_settle_error: 0.02
+    vr_settle_duration: 0.15
+    vr_stop_timeout: 2.0
+    vr_saturation_timeout: 0.5

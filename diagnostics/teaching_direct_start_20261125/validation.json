@@ -1,0 +1,121 @@
+{
+  "result": "PASS",
+  "physical_devices": 0,
+  "python_tests": 78,
+  "archive_teleop_files_unchanged": 11,
+  "latest_real_session_reviewed": "diagnostics/arm_teaching_reports/teaching_11ad685a9b",
+  "behavior": {
+    "startup_home": false,
+    "teacher": "MIT gravity only",
+    "follower": "POS_VEL stock position controller; no gravity controller/profile/calculation",
+    "exit": "concurrent native position home; bounded waits; retry and immediate release"
+  },
+  "cases": {
+    "four_arm_direct_start": {
+      "log": "normal_four.log",
+      "result": "PASS",
+      "physical_devices": 0,
+      "case": "normal",
+      "pairs": [
+        [
+          "teaching_left",
+          "motion_left"
+        ],
+        [
+          "teaching_right",
+          "motion_right"
+        ]
+      ],
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_9edcbb1e9b",
+      "exit_elapsed_s": 24.496804570000677,
+      "movement": {
+        "motion_left": 0.17986571788787842,
+        "motion_right": -0.1199740618467331
+      },
+      "packets": 204,
+      "actual_hz": 50.86361998606779,
+      "plant": "instantaneous encoder response; no physical dynamics verification"
+    },
+    "four_arm_ui_final": {
+      "log": "ui_final.log",
+      "result": "PASS",
+      "physical_devices": 0,
+      "four_arm_ui_refresh": true,
+      "live_export": true,
+      "packets_before_export": 206,
+      "packets": 316,
+      "actual_hz": 49.8571751364652,
+      "protected_window_close": true,
+      "exit_ui_responsive": true,
+      "exit_elapsed_s": 30.59487239200098,
+      "bundle": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_224dacbc92_live.zip",
+      "screenshot": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_224dacbc92/ui_live.png",
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_224dacbc92"
+    },
+    "home_failure_hold_retry_final": {
+      "log": "exit_failure_final.log",
+      "result": "PASS",
+      "physical_devices": 0,
+      "case": "protected_exit_retry",
+      "pairs": [
+        [
+          "teaching_left",
+          "motion_left"
+        ]
+      ],
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_4915664159",
+      "exit_elapsed_s": 22.977673415996833,
+      "movement": {
+        "motion_left": 0.17986571788787842
+      },
+      "packets": 155,
+      "actual_hz": 49.68586155703743,
+      "plant": "instantaneous encoder response; no physical dynamics verification"
+    },
+    "feedback_loss": {
+      "log": "feedback_loss.log",
+      "result": "PASS",
+      "case": "feedback_loss_group_hold",
+      "physical_devices": 0,
+      "pairs": [
+        [
+          "teaching_left",
+          "motion_left"
+        ],
+        [
+          "teaching_right",
+          "motion_right"
+        ]
+      ],
+      "follower_hold_latency_s": 0.8184470420019352,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_f7f98cfe70"
+    },
+    "mode_switch_failure": {
+      "log": "mode_failure.log",
+      "result": "PASS",
+      "case": "hot_mode_ack_failure_no_reenable",
+      "physical_devices": 0,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_55b180f210"
+    },
+    "cancel_home_final": {
+      "log": "cancel_home_final.log",
+      "result": "PASS",
+      "case": "release_during_exit_home",
+      "release_time_s": 0.15202726799907396,
+      "physical_devices": 0,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_c2183543bd"
+    }
+  },
+  "changed_python_sha256": {
+    "tools/arm_gravity/teaching_port_config.py": "a37681a7f3e6ef64642e860dd99e740c08274a72b8ea1aa1100f7ad9a1edd82e",
+    "tools/arm_gravity/teaching_port_session.py": "91c33635546c7d6b80e56e18f2d973338922199076ca59fc6e2b530db34c64a8",
+    "tools/arm_gravity/teaching_view.py": "15e017f48cb741562d754b0df1e1737f541bc701720c0d8c8488b52dd9aedea2",
+    "tools/arm_gravity/test_teaching_port.py": "1aafadafcbaf3c1c495a0b2e0f663da34ddd0e9b80053b50d68335b512825e74",
+    "tools/arm_gravity/verify_teaching_port.py": "af8bc7b55765ba41a495f89ba0f18a015a48a257926a26b9cab0f42a8f964008",
+    "tools/arm_gravity/verify_teaching_ui.py": "d555bef90532818a22d1199865f0beb39e129dfec4b8ad8afc44481f66552113",
+    "tools/arm_gravity/gravity_session.py": "127e3b02cd7324522634af6e290fd4768cf99ea49278c6a03713551ed0240412",
+    "tools/arm_gravity/teaching.py": "62cbf4cb1c6edeeb0c4c0d9ea8820a86c3ba8f177e1679d3f336684b839ed332",
+    "tools/arm_gravity/teaching_port.py": "8b2d0466e04b37bdca2b940f8c1c05cab116f374892b01763fcaa67cda5d63ed"
+  },
+  "limits": "PTY encoders respond instantly; real dynamics, load and physical following have not been validated"
+}

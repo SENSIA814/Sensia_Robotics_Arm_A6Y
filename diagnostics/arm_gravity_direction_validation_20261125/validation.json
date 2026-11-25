@@ -1,0 +1,235 @@
+{
+  "result": "PASS",
+  "physical_devices": 0,
+  "python_tests": 11,
+  "cpp_tests": 22,
+  "cpp_suites": [
+    {
+      "name": "test_a5_gravity_controller",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "name": "test_smooth_friction_compensation",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "name": "test_haptic_effort_composer",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "name": "test_safe_zero_effort_command",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0
+    }
+  ],
+  "pty": [
+    {
+      "result": "PASS",
+      "role": "motion_left",
+      "physical_devices": 0,
+      "transport": "/dev/pts/2",
+      "torque_scales": [
+        1.3,
+        1.1,
+        1.0,
+        1.1,
+        1.3,
+        1.3,
+        0.0
+      ],
+      "friction_compensation_enabled": true,
+      "live_tuning": true,
+      "live_direction_reversal": true,
+      "final_effort_signs": [
+        1.0,
+        -1.0,
+        1.0,
+        -1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "cancel_tuning": false,
+      "frames": 776,
+      "mit_commands": 510,
+      "readonly_close": false,
+      "feedback_loss": false,
+      "cancel_enable": false,
+      "all_children_exited": true,
+      "release_confirmed": true,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/motion_left_ba69d51bcc"
+    },
+    {
+      "result": "PASS",
+      "role": "motion_right",
+      "physical_devices": 0,
+      "transport": "/dev/pts/2",
+      "torque_scales": [
+        1.3,
+        1.1,
+        1.0,
+        1.1,
+        1.3,
+        1.3,
+        0.0
+      ],
+      "friction_compensation_enabled": true,
+      "live_tuning": true,
+      "live_direction_reversal": true,
+      "final_effort_signs": [
+        1.0,
+        -1.0,
+        1.0,
+        -1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "cancel_tuning": false,
+      "frames": 783,
+      "mit_commands": 510,
+      "readonly_close": false,
+      "feedback_loss": false,
+      "cancel_enable": false,
+      "all_children_exited": true,
+      "release_confirmed": true,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/motion_right_f1b4593fea"
+    },
+    {
+      "result": "PASS",
+      "role": "teaching_left",
+      "physical_devices": 0,
+      "transport": "/dev/pts/2",
+      "torque_scales": [
+        1.3,
+        1.1,
+        1.0,
+        1.1,
+        1.3,
+        1.3,
+        0.0
+      ],
+      "friction_compensation_enabled": true,
+      "live_tuning": true,
+      "live_direction_reversal": true,
+      "final_effort_signs": [
+        1.0,
+        -1.0,
+        1.0,
+        -1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "cancel_tuning": false,
+      "frames": 797,
+      "mit_commands": 516,
+      "readonly_close": false,
+      "feedback_loss": false,
+      "cancel_enable": false,
+      "all_children_exited": true,
+      "release_confirmed": true,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_6c6f37ed57"
+    },
+    {
+      "result": "PASS",
+      "role": "teaching_right",
+      "physical_devices": 0,
+      "transport": "/dev/pts/2",
+      "torque_scales": [
+        1.3,
+        1.1,
+        1.0,
+        1.1,
+        1.3,
+        1.3,
+        0.0
+      ],
+      "friction_compensation_enabled": true,
+      "live_tuning": true,
+      "live_direction_reversal": true,
+      "final_effort_signs": [
+        1.0,
+        -1.0,
+        1.0,
+        -1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "cancel_tuning": false,
+      "frames": 795,
+      "mit_commands": 528,
+      "readonly_close": false,
+      "feedback_loss": false,
+      "cancel_enable": false,
+      "all_children_exited": true,
+      "release_confirmed": true,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_cdf422d5cc"
+    },
+    {
+      "result": "PASS",
+      "role": "teaching_right",
+      "physical_devices": 0,
+      "transport": "/dev/pts/2",
+      "torque_scales": [
+        1.3,
+        1.1,
+        1.0,
+        1.1,
+        1.3,
+        1.3,
+        0.0
+      ],
+      "friction_compensation_enabled": true,
+      "live_tuning": false,
+      "live_direction_reversal": true,
+      "final_effort_signs": [
+        1.0,
+        1.0,
+        -1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "cancel_tuning": true,
+      "frames": 568,
+      "mit_commands": 270,
+      "readonly_close": false,
+      "feedback_loss": false,
+      "cancel_enable": false,
+      "all_children_exited": true,
+      "release_confirmed": true,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_2ae9743c00"
+    }
+  ],
+  "ui": {
+    "result": "PASS",
+    "physical_devices": 0,
+    "qt_role_buttons": 4,
+    "rviz": true,
+    "live_tuning_and_save_reload": true,
+    "live_direction_reversal": true,
+    "mock_enable_release_reenable_close": true,
+    "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_73829c3556"
+  },
+  "checks": [
+    "signed gain ramps through zero",
+    "direction does not invert damping or friction",
+    "mid-ramp replacement is continuous",
+    "zero magnitude and reactivation",
+    "invalid sign batch rejected atomically",
+    "four arm live direction changes without reconnect",
+    "stop during direction transition and reenable",
+    "Qt apply, confirmed direction, per-arm save and reload"
+  ],
+  "actual_arm_hand_feel": "not tested; user operates real hardware from GUI"
+}

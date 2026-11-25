@@ -1,0 +1,16 @@
+<library path="a6_y_gravity_comp_controller">
+  <class name="a6_y_controllers/A6YGravityCompController" type="a6_y_controllers::A6YGravityCompController" base_class_type="controller_interface::ControllerInterface">
+    <description>
+      Pinocchio-based A6_Y gravity compensation controller with disabled output by default.
+    </description>
+  </class>
+  <class name="a6_y_controllers/A6YCartesianImpedanceController" type="a6_y_controllers::A6YCartesianImpedanceController" base_class_type="controller_interface::ControllerInterface">
+    <description>Fixed TCP pose impedance with continuously updated gravity and zero-force gripper.</description>
+  </class>
+  <class name="a6_y_controllers/A6YJointImpedanceController" type="a6_y_controllers::A6YJointImpedanceController" base_class_type="controller_interface::ControllerInterface">
+    <description>Fixed six-joint impedance with bounded implicit torque calculation, live gravity and zero-force gripper.</description>
+  </class>
+  <class name="a6_y_controllers/A6YVRPositionController" type="a6_y_controllers::A6YVRPositionController" base_class_type="controller_interface::ControllerInterface">
+    <description>VR-gated native motor position targets, zero feedforward effort and read-only gripper.</description>
+  </class>
+</library>

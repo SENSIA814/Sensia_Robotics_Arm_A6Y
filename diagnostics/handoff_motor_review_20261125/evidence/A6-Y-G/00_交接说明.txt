@@ -1,0 +1,113 @@
+A6-Y-G 项目交接说明
+整理日期：2026-10-28（Asia/Shanghai）
+源目录：U:\Work\Learning-Code\A6-Y-G
+
+一、从这里开始
+
+本包是上述目录当前文件的交接快照，包含源码、A5 模型、配置、启动脚本、测试工具、中文文档和原始实验记录。原有文件按字节保留，未改写源码或历史结果。源目录没有可读取的 .git/HEAD，因此不包含 Git 提交历史，也不声明对应某个提交版本。
+
+建议阅读顺序：
+1. 本说明：迁移步骤、当前状态和待办。
+2. README.md：项目概况、依赖、构建、控制模式和电机映射。
+3. docs/README.md：中文文档导航。
+4. docs/电机调试/J1_J4_FLASH_SAVE_20261010.md：J1～J4 当前参数与最近保存记录。
+5. 按工作方向阅读 docs/VR遥操作/实机控制/VR_REAL_ROBOT_USAGE.md、docs/阻抗控制/、docs/标定与验证/。
+
+二、目录与内容
+
+src/A5/：A5 URDF、9 个 STL 网格、CAD 参数及模型约定；ROS 包名为 a5_description。
+src/a6_y_ros2_control/：电机通信、ros2_control 硬件驱动、ID 设置及参数读写工具。
+src/a6_y_controllers/：重力补偿、笛卡尔阻抗、关节阻抗、原生位置控制相关配置与测试。
+src/a6_y_teleop_msgs/：VR 控制消息。
+src/a6_y_vr_teleop/：VR 映射、逆运动学、虚拟/实机桥接、标定及测试。
+vr_gateway/：Quest/Vuer 网关、依赖声明、锁定版本和第三方说明。
+scripts/：环境、启动、证书生成及实验入口。
+tools/：模型验证、标定、调参、诊断、回放和结果分析工具。
+docs/：使用说明、设计、调参记录、验证边界和图片。
+validation/：模型检查、测试报告、参数快照、实机原始采样、故障诊断和回放数据。
+
+保留 validation 中的 JSONL、CSV、测试日志和历史快照，便于接手者复核调参结论及故障。该目录约 4.62 GiB，是压缩包主要体积来源。validation 下名称含 backup 的目录及 sources 子目录都是历史备份/证据，不是当前源码入口；开发以根目录 src/、scripts/、tools/ 为准。
+
+三、新机器恢复
+
+目标运行环境来自项目说明：Ubuntu 22.04、ROS 2 Humble、ros2_control、Pinocchio >= 4.0。CMake 明确要求 Pinocchio 4.0；若软件源版本较低，须先解决版本依赖。依赖安装命令详见 README.md。
+
+将 A6-Y-G/ 解压至新的 Linux 工作目录，以下命令都在该目录执行。文档里的 /home/alce/Code/A6-Y-G 和历史局域网 IP 是原机器环境，请替换为实际位置和地址。
+
+首次构建全部源码：
+  source scripts/environment.bash
+  export MAKEFLAGS='-j2 -l2'
+  colcon build --base-paths src --symlink-install --executor sequential --cmake-args -DCMAKE_BUILD_TYPE=Release
+  a6y_load_install
+
+根目录保留 COLCON_IGNORE，构建必须显式带 --base-paths src。内存不足时按 README 将 MAKEFLAGS 降为 '-j1 -l1'。
+本包不含旧机器的 build/、install/，因此文档中“已构建/已安装”的描述属于历史状态，新机器必须重新构建。
+ZIP 记录了脚本可执行位；如果解压工具不恢复权限，Bash 入口可通过 bash scripts/xxx.bash 执行。
+
+先进行无硬件检查（完整列表与判定边界见 docs/标定与验证/VALIDATION.md）：
+  source scripts/environment.bash
+  a6y_load_install
+  export ROS_DOMAIN_ID=193 ROS_LOCALHOST_ONLY=1
+  export ROS_LOG_DIR="$PWD/validation/ros_logs"
+  mkdir -p "$ROS_LOG_DIR"
+  ctest --test-dir build/a6_y_ros2_control --output-on-failure
+  ctest --test-dir build/a6_y_controllers --output-on-failure
+  /usr/bin/python3 tools/validate_bundle.py
+  /usr/bin/python3 tools/test_s0.py
+  /usr/bin/python3 tools/verify_s0.py
+  /usr/bin/python3 tools/verify_dry_run.py
+
+无硬件 RViz 示例：
+  ros2 launch a6_y_controllers a5_gravity_comp.launch.py dry_run:=true auto_enable:=false use_rviz:=true
+
+这些验证脚本可能更新 validation 下同名报告；需要比较历史证据时，先留存原压缩包，在另一份解压目录运行。
+
+VR 网关环境需要重建：
+  python3 -m venv .venv-vr
+  .venv-vr/bin/python -m pip install -r vr_gateway/requirements.lock
+
+系统需提供 Python venv 和 OpenSSL。旧主机的 TLS 证书/私钥未打包，按新主机局域网 IPv4 重新生成：
+  bash scripts/create_vr_certificate.bash <新主机局域网IPv4地址>
+
+虚拟 VR 入口为 scripts/run_vr_rviz.bash；网关为 scripts/run_vr_gateway.bash。端口、Quest 浏览器、证书信任、录制与回放详见 docs/VR遥操作/虚拟机械臂/VR_RVIZ_USAGE.md。
+实机模式和完整原生位控另有专用入口，按 docs/VR遥操作/实机控制/VR_REAL_ROBOT_USAGE.md 操作。
+
+四、交接时需要知道的当前状态
+
+项目名为 A6-Y-G，实际模型为 A5；六轴机械臂加夹爪共七台电机、七个独立坐标，第二手指使用 mimic。
+
+最新参数依据为 2026-10-10 的 Flash 保存文档及 validation/motor_flash/20261010_j1_j4_1791614694106986515/ 下的实读 JSON：
+  关节   KP_APR   KP_ASR      KI_ASR
+  J1     2500     0.00384     0.002
+  J2     2500     0.007296    0.0016
+  J3     2500     0.004608    0.002
+  J4      220     0.001096    0.0005
+以上四轴当次 KI_APR=0、ACC/DEC=2/-2、CTRL_MODE=2。精确值和原始寄存器位模式以 JSON 快照为准。
+
+当次 J1～J4 保存应答和保存前后读回一致，但尚未完成电机电源断电重启后的保持验证。接手后先只读核对，再考虑参数写入或运动。J5、J6、夹爪未参加该次 Flash 保存。
+
+J4 在 40°/s 规划下有现场平稳反馈；该结论不等于全部数值指标通过，更不代表 90°/s 已验收。最新文档记录回程峰值仍略超此前 ±5% 条件；历史试验没有增益快照，不能把最新参数倒推为历史试验已核实的参数。
+
+src/a6_y_controllers/config/a5_calibration.yaml 中：基座方向、电机对应及方向属于操作员确认；零点/角度比例测试标记为 skipped_by_user，夹爪开度和 FK 实测仍 pending。
+
+完整 VR 位控关闭 CAD 网格碰撞硬检查。当前 a5_vr_position_full_controllers.yaml 中 vr_tracking_error=0.25 rad、vr_tracking_governor=true；旧记录有不同门限，不要混用不同阶段的结论。完整配置的软件上限及模拟通过不能代替实机跟随、停止距离和工作空间验收。
+
+文档中的一处明确不一致：README.md“末端位姿阻抗控制”示例注释写“无硬件运行”，实际参数却为 dry_run:=false、auto_enable:=true。无硬件检查应显式使用 dry_run:=true、auto_enable:=false，或相应 verify_*_dry_run.py 工具。原 README 在包中保持原样，避免无记录修改原项目。
+
+五、建议交接待办
+
+1. 在接手机器安装依赖、完整构建并复跑无硬件检查，保存新报告。
+2. 对照 2026-10-10 参数快照完成掉电后只读复核。
+3. 补齐当前仍 pending/跳过的标定与需要的实机验收记录。
+4. 梳理 README 和长篇 VR 文档中的历史阶段描述，以实际源码、配置及带日期的证据判定当前行为。
+
+六、打包范围与校验
+
+未包含：build/、install/、log/、.venv-vr/、__pycache__/、.pytest_cache/、各 ros_logs/、.git/、.aws/、.codex/、.agents/ 及 validation/vr_rviz/tls/。
+这些目录属于可重建环境、运行缓存、本机配置、仓库元数据或本机证书。完整逐目录列表见 HANDOFF_EXCLUDED.csv。实机实验目录中的采样、报告和诊断日志保留。
+
+HANDOFF_MANIFEST.csv 记录包内原始项目文件及新增说明文件的相对路径、字节数、SHA-256、来源类别和源修改时间。清单不包含自身。
+HANDOFF_STATIC_CHECK.json 记录打包前的文档本地链接、URDF 网格和文件扫描检查。
+压缩包外另有同名 .zip.sha256 和交接校验报告；对压缩包做 SHA-256 校验可确认传输一致性。
+
+本次仅整理和校验文件：没有在此 Windows 环境编译 ROS 工程、运行硬件控制或重新完成机械臂性能验收。validation 中的通过/失败结果均为项目原有记录，不能视作 2026-10-28 的新测试结果。

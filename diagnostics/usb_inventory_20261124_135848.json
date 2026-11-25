@@ -1,0 +1,67 @@
+{
+  "time": "2026-11-24T13:58:48.640759+08:00",
+  "usb": [
+    {
+      "usb_path": "1-7.3",
+      "idVendor": "16d0",
+      "idProduct": "117e",
+      "manufacturer": "Openlight Labs",
+      "product": "CANable2 b158aa7-dirty github.com/normaldotcom/canable2-fw.git",
+      "serial": "209D3982534B",
+      "busnum": "1",
+      "devnum": "17"
+    },
+    {
+      "usb_path": "1-7.4",
+      "idVendor": "16d0",
+      "idProduct": "117e",
+      "manufacturer": "Openlight Labs",
+      "product": "CANable2 b158aa7-dirty github.com/normaldotcom/canable2-fw.git",
+      "serial": "304F33733036",
+      "busnum": "1",
+      "devnum": "8"
+    },
+    {
+      "usb_path": "1-8.2",
+      "idVendor": "16d0",
+      "idProduct": "117e",
+      "manufacturer": "Openlight Labs",
+      "product": "CANable2 b158aa7-dirty github.com/normaldotcom/canable2-fw.git",
+      "serial": "304C33733036",
+      "busnum": "1",
+      "devnum": "18"
+    },
+    {
+      "usb_path": "1-8.3",
+      "idVendor": "16d0",
+      "idProduct": "117e",
+      "manufacturer": "Openlight Labs",
+      "product": "CANable2 b158aa7-dirty github.com/normaldotcom/canable2-fw.git",
+      "serial": "209B3971534B",
+      "busnum": "1",
+      "devnum": "9"
+    }
+  ],
+  "ports": [
+    {
+      "by_id": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209B3971534B-if00",
+      "device": "/dev/ttyACM2",
+      "occupied": ""
+    },
+    {
+      "by_id": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209D3982534B-if00",
+      "device": "/dev/ttyACM0",
+      "occupied": ""
+    },
+    {
+      "by_id": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_304C33733036-if00",
+      "device": "/dev/ttyACM3",
+      "occupied": ""
+    },
+    {
+      "by_id": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_304F33733036-if00",
+      "device": "/dev/ttyACM1",
+      "occupied": ""
+    }
+  ]
+}

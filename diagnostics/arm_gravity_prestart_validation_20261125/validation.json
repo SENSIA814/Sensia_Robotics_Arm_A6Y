@@ -1,0 +1,63 @@
+{
+  "result": "PASS",
+  "source_report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_ffd01884d9",
+  "diagnosis": "Fresh feedback present; motor-reported state is enabled for J1-J6; old enable precondition waited for disabled state then reported generic feedback timeout.",
+  "captured_samples": 81,
+  "fresh_samples": 81,
+  "reported_states": {
+    "joint3": 1.0,
+    "joint1": 1.0,
+    "joint4": 1.0,
+    "joint5": 1.0,
+    "joint6": 1.0,
+    "joint2": 1.0,
+    "gripper_finger_joint1": 0.0
+  },
+  "usb_serial": "209D3982534B",
+  "previous_tty": "/dev/ttyACM2",
+  "current_tty": "/dev/ttyACM0",
+  "stable_by_id_binding_worked": true,
+  "python_tests": 14,
+  "pty_test": {
+    "result": "PASS",
+    "role": "teaching_right",
+    "physical_devices": 0,
+    "transport": "/dev/pts/2",
+    "torque_scales": [
+      1.3,
+      1.1,
+      1.0,
+      1.1,
+      1.3,
+      1.3,
+      0.0
+    ],
+    "friction_compensation_enabled": true,
+    "live_tuning": false,
+    "cancel_tuning": false,
+    "preenabled_start_rejected_without_output": true,
+    "frames": 445,
+    "mit_commands": 174,
+    "readonly_close": false,
+    "feedback_loss": false,
+    "cancel_enable": false,
+    "all_children_exited": true,
+    "release_confirmed": true,
+    "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_4b47fc9350"
+  },
+  "ui_test": {
+    "result": "PASS",
+    "physical_devices": 0,
+    "qt_role_buttons": 4,
+    "rviz": false,
+    "live_tuning_and_save_reload": true,
+    "mock_enable_release_reenable_close": true,
+    "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_1be949c9db"
+  },
+  "physical_motor_commands_sent_this_fix": 0,
+  "changes": [
+    "Separate missing feedback from already-enabled motor status before output acquisition.",
+    "Block and explain startup in UI using reported motor status, not driver-owned enabled flag.",
+    "Keep read-only connection on rejected start; permit start after confirmed disabled feedback."
+  ]
+}

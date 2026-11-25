@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="a6_y_single_motor">
+  <xacro:arg name="hardware_name" default="A6YSingleMotorSystem"/>
+  <xacro:arg name="hardware_plugin" default="a6_y_ros2_control/A6YDamiaoSystem"/>
+  <xacro:arg name="dry_run" default="true"/>
+  <xacro:arg name="can_channel" default="/dev/ttyACM0"/>
+  <xacro:arg name="can_bitrate" default="1000000"/>
+  <xacro:arg name="tty_baudrate" default="115200"/>
+  <xacro:arg name="control_mode" default="pos_vel"/>
+  <xacro:arg name="auto_enable" default="false"/>
+  <xacro:arg name="set_control_mode_on_configure" default="false"/>
+  <xacro:arg name="require_feedback_on_configure" default="true"/>
+  <xacro:arg name="allow_partial_feedback" default="false"/>
+  <xacro:arg name="disable_on_deactivate" default="true"/>
+  <xacro:arg name="command_timeout" default="0.2"/>
+  <xacro:arg name="max_start_delta" default="0.25"/>
+  <xacro:arg name="receive_timeout" default="0.001"/>
+  <xacro:arg name="feedback_timeout" default="0.5"/>
+  <xacro:arg name="status_request_period" default="0.05"/>
+  <xacro:arg name="mit_kp" default="0.0"/>
+  <xacro:arg name="mit_kd" default="0.5"/>
+  <xacro:arg name="joint_name" default="joint1"/>
+  <xacro:arg name="motor_type" default="DM4340P"/>
+  <xacro:arg name="slave_id" default="0x01"/>
+  <xacro:arg name="master_id" default="0x11"/>
+  <xacro:arg name="sign" default="1.0"/>
+  <xacro:arg name="offset" default="0.0"/>
+  <xacro:arg name="initial_position" default="0.0"/>
+  <xacro:arg name="min_position" default="-0.25"/>
+  <xacro:arg name="max_position" default="0.25"/>
+  <xacro:arg name="max_velocity" default="0.1"/>
+
+  <link name="base_link"/>
+  <link name="single_motor_link"/>
+  <joint name="$(arg joint_name)" type="revolute">
+    <parent link="base_link"/>
+    <child link="single_motor_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="$(arg min_position)" upper="$(arg max_position)" effort="10" velocity="$(arg max_velocity)"/>
+  </joint>
+
+  <ros2_control name="$(arg hardware_name)" type="system">
+    <hardware>
+      <plugin>$(arg hardware_plugin)</plugin>
+      <param name="dry_run">$(arg dry_run)</param>
+      <param name="can_channel">$(arg can_channel)</param>
+      <param name="can_bitrate">$(arg can_bitrate)</param>
+      <param name="tty_baudrate">$(arg tty_baudrate)</param>
+      <param name="control_mode">$(arg control_mode)</param>
+      <param name="auto_enable">$(arg auto_enable)</param>
+      <param name="set_control_mode_on_configure">$(arg set_control_mode_on_configure)</param>
+      <param name="require_feedback_on_configure">$(arg require_feedback_on_configure)</param>
+      <param name="allow_partial_feedback">$(arg allow_partial_feedback)</param>
+      <param name="disable_on_deactivate">$(arg disable_on_deactivate)</param>
+      <param name="command_timeout">$(arg command_timeout)</param>
+      <param name="max_start_delta">$(arg max_start_delta)</param>
+      <param name="receive_timeout">$(arg receive_timeout)</param>
+      <param name="feedback_timeout">$(arg feedback_timeout)</param>
+      <param name="status_request_period">$(arg status_request_period)</param>
+      <param name="mit_kp">$(arg mit_kp)</param>
+      <param name="mit_kd">$(arg mit_kd)</param>
+    </hardware>
+    <joint name="$(arg joint_name)">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <command_interface name="effort"/>
+      <state_interface name="position">
+        <param name="initial_value">$(arg initial_position)</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+      <state_interface name="motor_error"/>
+      <state_interface name="fault"/>
+      <state_interface name="has_feedback"/>
+      <state_interface name="feedback_age"/>
+      <state_interface name="enabled"/>
+      <param name="motor_type">$(arg motor_type)</param>
+      <param name="slave_id">$(arg slave_id)</param>
+      <param name="master_id">$(arg master_id)</param>
+      <param name="sign">$(arg sign)</param>
+      <param name="offset">$(arg offset)</param>
+      <param name="min_position">$(arg min_position)</param>
+      <param name="max_position">$(arg max_position)</param>
+      <param name="max_velocity">$(arg max_velocity)</param>
+    </joint>
+  </ros2_control>
+</robot>

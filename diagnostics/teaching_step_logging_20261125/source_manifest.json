@@ -1,0 +1,15 @@
+{
+  "src/a6_y_ros2_control/include/a6_y_ros2_control/A6_y_damiao_system.hpp": "2a23f150d15433e5f8d4b8b06829a5210d23c8c65a1bf8159a20c849357f583e",
+  "src/a6_y_ros2_control/src/A6_y_damiao_system.cpp": "78e98195f5a4d8cf1b42c9de5511a5e04962a29019f769d48947dca710d0da7c",
+  "tools/arm_gravity/TEACHING.md": "2f2085fb9f3d0725b47a2ce60cf894d951d818d9f9a4a5cb6be8c3c50904346f",
+  "tools/arm_gravity/analyze_teaching_step.py": "838eb5515448058f301c105b92362f5558cddcc568019d82104c32b0d9d068b0",
+  "tools/arm_gravity/teaching_port.py": "42542a364a2b26dd8d6ebbaf83587f6283263f3e5cf49d053cc539d6fc888c66",
+  "tools/arm_gravity/teaching_port_config.py": "5c0915bd2713e623870339eb096a2148e3cda497627813aae313cda84a96443c",
+  "tools/arm_gravity/teaching_step_log.py": "6fbce7139d3c8d886ee514f01aeada797c24307d40e38426e7d44a78f7cca151",
+  "tools/arm_gravity/teaching_step_observer.py": "2c6490304bf552152becc50e371a56df62d344c74996a633b02593051aa1fe5a",
+  "tools/arm_gravity/teaching_view.py": "f7a3943ffed233f439c66cd111bbd21c6882df6761155f6e913ecd3fd79c68b8",
+  "tools/arm_gravity/test_teaching_port.py": "c3a9a8f327edca5e890f26a573d8523d78df1842dfd539996f0ced63f02f4ec9",
+  "tools/arm_gravity/test_teaching_step_log.py": "19c60ae524320fb3fb0633c5f3074a5b9b7e7dbd55ca41e9a9ba09ee8e997b1c",
+  "tools/arm_gravity/verify_teaching_port.py": "6ac4a757ca2689d17ca1e4d4e955a698a8d30f88219be2cebad66e0e7c6e433d",
+  "tools/arm_gravity/verify_teaching_ui.py": "cc4246c2dcb60933f5d30decfd347f8668257537ae9822369f45cdbab84b2dfd"
+}

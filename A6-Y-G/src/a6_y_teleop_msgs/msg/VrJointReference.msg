@@ -1,0 +1,19 @@
+# Same Linux boot and CLOCK_MONOTONIC for every timestamp. No motor-space values.
+uint64 clock_id
+uint64 controller_epoch
+uint64 takeover_id
+uint64 producer_id
+uint64 session_id
+uint64 sequence
+uint64 pose_sequence
+uint64 clutch_epoch
+uint64 generated_monotonic_ns
+uint64 pose_monotonic_ns
+uint64 buttons_monotonic_ns
+uint64 feedback_monotonic_ns
+bool valid
+bool squeeze
+bool live
+float64[6] positions
+bool gripper_control
+float64 gripper_position

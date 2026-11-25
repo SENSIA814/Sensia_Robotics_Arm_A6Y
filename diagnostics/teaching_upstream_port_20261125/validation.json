@@ -1,0 +1,122 @@
+{
+  "result": "PASS",
+  "physical_devices_operated": 0,
+  "python_tests": 76,
+  "driver_ctest_targets": 6,
+  "imported_teleop_package_unchanged_files": 11,
+  "archive_sha256": "a093680006ee5e9a6bda3f7dfc9d960e570de9d58ef76d621b94d6f4d3926b0b",
+  "source_sha256": {
+    "A6-Y-G/tools/arm_gravity/teaching_port_config.py": "853c7b15af180f556408a0f215f20ba33bfe1e5f434e481184259a5b6c673b22",
+    "A6-Y-G/tools/arm_gravity/teaching_port_session.py": "31e3e694149d48c6fb728934cf3ed9aec6bf4604e06b4622b50966ca90735e39",
+    "A6-Y-G/tools/arm_gravity/teaching_port.py": "ee99d7170fd1e57b161b7f646738c8719a2b0019ed7ad272b880fe0d8d01472b",
+    "A6-Y-G/tools/arm_gravity/teaching_view.py": "7a177240561bb81d701e2772ef23da3b2b96a43bba749224df903608ee6c1afd",
+    "A6-Y-G/tools/arm_gravity/gravity_session.py": "1a034eb1da63f4d9ca053b9d482d2c17d2444a55dfcec894ec9f37ce3a2789b5",
+    "A6-Y-G/src/a6_y_ros2_control/src/A6_y_damiao_system.cpp": "2d80059a041a47b906644766ee51c2b576684bf3ea5be1a5503ed71aeaff6ddf",
+    "A6-Y-G/src/a6_y_ros2_control/include/a6_y_ros2_control/A6_y_damiao_system.hpp": "29a8d75536af72774f6c9e4a8967579ca3fb00bde58c93ba1edf2ec7c8130227",
+    "A6-Y-G/src/a6_y_ros2_control/tools/move_to_group_state.py": "e1ed0fb411d11b61f95f760f4d337c77c7a1f734676579e6b8231a42b5b4daf2"
+  },
+  "cases": {
+    "pty_port": {
+      "result": "PASS",
+      "physical_devices": 0,
+      "case": "normal",
+      "pairs": [
+        [
+          "teaching_left",
+          "motion_left"
+        ],
+        [
+          "teaching_right",
+          "motion_right"
+        ]
+      ],
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_098c21ea66",
+      "movement": {
+        "motion_left": 0.17986571788787842,
+        "motion_right": -0.1199740618467331
+      },
+      "packets": 146,
+      "actual_hz": 52.77483089882576,
+      "plant": "instantaneous encoder response; no physical dynamics verification"
+    },
+    "exit-failure": {
+      "result": "PASS",
+      "physical_devices": 0,
+      "case": "protected_exit_retry",
+      "pairs": [
+        [
+          "teaching_left",
+          "motion_left"
+        ]
+      ],
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_cc87688173",
+      "movement": {
+        "motion_left": 0.17986571788787842
+      },
+      "packets": 106,
+      "actual_hz": 51.824245691790544,
+      "plant": "instantaneous encoder response; no physical dynamics verification"
+    },
+    "fault": {
+      "result": "PASS",
+      "case": "feedback_loss_group_hold",
+      "physical_devices": 0,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_0e76e0d8f0"
+    },
+    "mode-failure": {
+      "result": "PASS",
+      "case": "hot_mode_ack_failure_no_reenable",
+      "physical_devices": 0,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_ee3d47e49d"
+    },
+    "ui_port": {
+      "result": "PASS",
+      "physical_devices": 0,
+      "four_arm_ui_refresh": true,
+      "live_export": true,
+      "packets_before_export": 190,
+      "packets": 564,
+      "actual_hz": 50.547089110254895,
+      "protected_window_close": true,
+      "bundle": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_1f7a5307a5_live.zip",
+      "screenshot": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_1f7a5307a5/ui_live.png",
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_1f7a5307a5"
+    },
+    "cancel-start": {
+      "result": "PASS",
+      "case": "release_during_native_home",
+      "physical_devices": 0,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_40b9bc4ede"
+    },
+    "fault_four": {
+      "result": "PASS",
+      "case": "feedback_loss_group_hold",
+      "physical_devices": 0,
+      "pairs": [
+        [
+          "teaching_left",
+          "motion_left"
+        ],
+        [
+          "teaching_right",
+          "motion_right"
+        ]
+      ],
+      "follower_hold_latency_s": 0.7982953949976945,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_2997828d9e"
+    }
+  },
+  "verified_scope": "Real ROS nodes and C++ driver on PTYs; instantaneous encoder model, no real robot dynamics validation",
+  "actual_log_findings": [
+    "teaching_3099721339: old torque home waited for 0.005 rad settling; J4 feedback -0.021935 rad",
+    "teaching_168a05b580: old torque home aborted at 0.152009 rad tracking error (limit 0.15)"
+  ],
+  "changes": [
+    "Archive mapper unchanged; current UI uses teaching_port entry",
+    "Native POS_VEL home via original move_to_group_state and stock JTC, then MIT gravity / stock direct position follow",
+    "Mode switches require disabled feedback, CTRL_MODE acknowledgement and command preload",
+    "Current model, USB bindings and verified gravity profiles retained; feedback range uses recorded motor VMAX",
+    "Native return/disable verification, retained failure window, logs and dark UI",
+    "Fixed close request race immediately after release confirmation"
+  ]
+}

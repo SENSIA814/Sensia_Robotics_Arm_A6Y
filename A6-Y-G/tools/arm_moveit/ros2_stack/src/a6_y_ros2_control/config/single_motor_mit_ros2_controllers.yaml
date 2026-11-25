@@ -1,0 +1,32 @@
+# MIT-mode test profile for the default single-motor joint.
+# The wider path tolerance avoids aborting while low-gain MIT control is still
+# catching up, while the goal tolerance still catches a completely non-moving motor.
+controller_manager:
+  ros__parameters:
+    update_rate: 100
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    single_motor_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+single_motor_controller:
+  ros__parameters:
+    joints:
+      - joint1
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    allow_partial_joints_goal: false
+    allow_integration_in_goal_trajectories: false
+    allow_nonzero_velocity_at_trajectory_end: false
+    open_loop_control: false
+    constraints:
+      stopped_velocity_tolerance: 0.05
+      goal_time: 4.0
+      joint1:
+        trajectory: 0.20
+        goal: 0.05

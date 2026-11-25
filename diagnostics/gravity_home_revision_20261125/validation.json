@@ -1,0 +1,130 @@
+{
+  "result": "offline_validation_passed",
+  "physical_device_commands": 0,
+  "source_report": "teaching_right_9dba29f8d1",
+  "diagnosis": {
+    "planning_succeeded": 4,
+    "execution_aborted": 4,
+    "usb_disconnect_in_report": false,
+    "exact_original_abort_branch": "not recoverable from generic error and ~18 Hz telemetry",
+    "observation": "J4 startup velocity fluctuations; no definitive physical cause established",
+    "initial_planner_startup_seconds": 11.8
+  },
+  "limits": {
+    "old_planner_velocity": 0.075,
+    "new_planner_velocity": 0.1,
+    "old_planner_acceleration": 0.15,
+    "new_planner_acceleration": 0.2,
+    "cxx_velocity_guard_unchanged": 0.5,
+    "cxx_trajectory_velocity_unchanged": 0.15,
+    "cxx_trajectory_acceleration_unchanged": 0.3
+  },
+  "changes": [
+    "consistent absolute planning and cubic velocity/acceleration limits",
+    "individual plan and raw MoveIt response archives",
+    "precise latched controller fault with joint/value/threshold/elapsed; Chinese UI explanation",
+    "normalize only near-stationary submillisecond final redundant sample, then recheck cubic limits and collision"
+  ],
+  "tests": {
+    "python_tests": 23,
+    "python_result": "PASS",
+    "cpp": [
+      {
+        "suite": "test_haptic_effort_composer.gtest.xml",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0
+      },
+      {
+        "suite": "test_bounded_joint_impedance.gtest.xml",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0
+      },
+      {
+        "suite": "test_smooth_friction_compensation.gtest.xml",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0
+      },
+      {
+        "suite": "test_a5_gravity_controller.gtest.xml",
+        "tests": 10,
+        "failures": 0,
+        "errors": 0
+      },
+      {
+        "suite": "test_safe_zero_effort_command.gtest.xml",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0
+      }
+    ],
+    "pty": [
+      {
+        "result": "PASS",
+        "role": "teaching_right",
+        "scenario": "normal",
+        "profile": "unit",
+        "pose": "small",
+        "outcome": "home_completed_and_disabled",
+        "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_e6a9525e11",
+        "physical_devices": 0
+      },
+      {
+        "result": "PASS",
+        "role": "teaching_right",
+        "scenario": "model_mismatch",
+        "profile": "reference",
+        "pose": "recorded",
+        "outcome": "home_completed_and_disabled",
+        "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_3b6e823939",
+        "physical_devices": 0
+      },
+      {
+        "result": "PASS",
+        "role": "teaching_right",
+        "scenario": "tracking_failure",
+        "profile": "unit",
+        "pose": "small",
+        "outcome": "controller_aborted_gravity_retained",
+        "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_c1e0f42e13",
+        "physical_devices": 0
+      },
+      {
+        "result": "PASS",
+        "role": "teaching_right",
+        "scenario": "cancel",
+        "profile": "unit",
+        "pose": "small",
+        "outcome": "cancelled_and_disabled",
+        "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_6ddb2f5bd5",
+        "physical_devices": 0
+      }
+    ],
+    "qt": {
+      "result": "PASS",
+      "physical_devices": 0,
+      "qt_role_buttons": 4,
+      "rviz": false,
+      "live_tuning_and_save_reload": true,
+      "mock_enable_release_reenable_close": true,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_940066eb10"
+    }
+  },
+  "limitations": [
+    "No physical arm operated or validated; simulation does not identify actual motor friction, payload or feedback spikes.",
+    "Original hardware abort is not claimed fixed. New fault detail is needed on a real recurrence.",
+    "Existing unrelated joint-impedance test failures from prior revision were not rerun; this validation is scoped to gravity/home.",
+    "Faults already latched before cancel/retry are logged before clearing; simultaneous RT abort during cancellation has a narrow diagnostic race."
+  ],
+  "source_sha256": {
+    "tools/arm_gravity/gravity_home.py": "60c9adfc1fddf77c199a346d30a6d61388166d5cc4e16942f5ede647f56d792a",
+    "tools/arm_gravity/test_gravity.py": "3aa77619a8171df784ec2c90fe9ae2f6906f4bee76523b834c8e4c02e8a6c423",
+    "tools/arm_gravity/verify_home.py": "589be3bd9fc245386ecc7295ad8069eaa91362035a14658a4e47c2190ca2f83a",
+    "tools/arm_gravity/README.md": "78a9df3c78c97695349e6a166eb0f2c5bc85dcce563f159df4957321d8d4356d",
+    "src/a6_y_controllers/src/gravity_home.cpp": "7b2c43b9a659a564927a51152559bcd147c2e3ed87a3e87db5237736ef3b5116",
+    "src/a6_y_controllers/include/a6_y_controllers/A6_y_gravity_comp_controller.hpp": "023032f4e72866eae3d1aee2fdeeb576a805cdf15d42b4e0cfc86eabed63c2c2",
+    "src/a6_y_controllers/test/test_a5_gravity_controller.cpp": "cfe445addad5fcef5f1581c221cf456d6fad57c45114939e9d674e62422c3688"
+  }
+}

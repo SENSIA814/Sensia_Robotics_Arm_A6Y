@@ -1,0 +1,29 @@
+# End-effector target control for A6_Y.
+#
+# Positions are expressed in meters in the world frame.
+# Orientations are expressed as roll/pitch/yaw in radians in the world frame.
+
+float64 x
+float64 y
+float64 z
+float64 roll
+float64 pitch
+float64 yaw
+
+# A value of 0.0 uses the server default.
+float64 velocity_scaling
+float64 acceleration_scaling
+float64 planning_time
+
+# If true, only xyz is constrained and roll/pitch/yaw are ignored.
+bool position_only
+
+bool execute
+---
+bool success
+int32 error_code
+string message
+---
+string stage
+float64 progress
+string message

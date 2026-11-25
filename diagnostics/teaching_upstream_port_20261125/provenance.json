@@ -1,0 +1,22 @@
+{
+  "archive": "/home/taoqiu/文档/xwechat_files/wxid_30td89b7wmgj22_0ea1/msg/file/2026-11/A6_Y-main(1).zip",
+  "archive_sha256": "a093680006ee5e9a6bda3f7dfc9d960e570de9d58ef76d621b94d6f4d3926b0b",
+  "original_files_sha256": {
+    "src/a6_y_teleop/a6_y_teleop/__init__.py": "192462047fc09b862b0f97f5d2c6c512b385bba4ab40a4f9dd95f623d24d1e55",
+    "src/a6_y_teleop/a6_y_teleop/check_teleop_topics.py": "8ba359ad7bb27ee0c2d5a70af2cc219eece6a724429a299a7e042d7ba6705a64",
+    "src/a6_y_teleop/a6_y_teleop/episode_marker.py": "29047ce3d7a63f5d1e0eac37076b390ff0b7e306be323f8a2ce2fb86e58c5bca",
+    "src/a6_y_teleop/a6_y_teleop/leader_follower_teleop.py": "515df7865584ab3f05f7b0074be0e1ac149d41e00f8b79c2771460d4f41b253f",
+    "src/a6_y_teleop/config/teleop.yaml": "b63d65d07e1eca367739dc4bcb7c0340c1f183d8a6669b39acecd67696ecaef3",
+    "src/a6_y_teleop/launch/a6_y_gravity_posvel_teleop.launch.py": "d5f520875a7bb0f5be839364032cb5946b3e8078f96b2b8a40223799f6526757",
+    "src/a6_y_teleop/launch/a6_y_leader_follower_teleop.launch.py": "47f6998335ae83ff95075f8194ef86ef46ec4d713e4e3d435ed10a83d59334c0",
+    "src/a6_y_teleop/package.xml": "4ce485883cb5aa2d7aadcfe241e09dc9321f7464197ff48c05034b47bba9bce2",
+    "src/a6_y_teleop/resource/a6_y_teleop": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "src/a6_y_teleop/setup.cfg": "425b154a5c39ea51a9b065129ad68b1573978587d340a175f8c0cde1e0f07626",
+    "src/a6_y_teleop/setup.py": "169994682183cfc313ab22c85bc2222d877bcbd7815832e3aef50de591b0bed8",
+    "src/a6_y_ros2_control/tools/move_to_group_state.py": "a9920f14eb3567f35c7a6d59348eb5370bd1e08f8994f6af2a1a74324ed60a57",
+    "src/a6_y_ros2_control/config/follower_direct_position_controllers.yaml": "7d4d3d287d958020597a58be266758d8480e43075b8c22629257481bc52f3995",
+    "src/a6_y_ros2_control/config/leader_gravity_comp_controllers.yaml": "ac61a213951dbb4dcc69ebf68462b865930756ac852bc300901fd6dd245e0f7a",
+    "src/A6_Y_Moveitconfig/config/a6_y_follower_damiao_motors.yaml": "f99d5d8d3286fb85f8efd24ccd0b9d8f8fbcb3d977bf5f2a24671fe2c61bbe6d",
+    "src/A6_Y_Moveitconfig/config/a6_y_leader_damiao_motors.yaml": "90bd64cb29d0e9784ce4bbfe16ee9f20d2943415ea2aeefcfc25cabde7c47e8e"
+  }
+}

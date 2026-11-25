@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "physical_devices": 0,
+  "source_snapshot": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_left_bcaiwqdg/live_status.json",
+  "rviz": false,
+  "profiles": {
+    "full": {
+      "start_valid": false,
+      "contacts": [
+        [
+          "link1",
+          "link4"
+        ],
+        [
+          "link1",
+          "link5"
+        ]
+      ],
+      "error": "MoveIt 轨迹未通过规划后复核（-2），本次动作已取消；碰撞连杆：link1 ↔ link4、link1 ↔ link5",
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_left_i68xpu4s/session.json"
+    },
+    "bare": {
+      "start_valid": true,
+      "recorded_goal_planned": true,
+      "arm_and_gripper_dry_run_executed": true,
+      "environment_collision_still_blocks": true,
+      "home_and_release_confirmed": true,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_left_glmfye5l/session.json"
+    }
+  }
+}

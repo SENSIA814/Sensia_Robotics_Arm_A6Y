@@ -1,0 +1,134 @@
+{
+  "result": "PASS",
+  "physical_devices": 0,
+  "python_qt_tests": 69,
+  "cpp_controller_suites": 6,
+  "cpp_driver_suites": 6,
+  "test_logs": [
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_logging_revision_20261125/python_final.log",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_logging_revision_20261125/cpp_final.log",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_logging_revision_20261125/cpp.log",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_logging_revision_20261125/native_final.log",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_logging_revision_20261125/ui_integration_final.log"
+  ],
+  "integration": {
+    "single_dry_run": {
+      "result": "PASS",
+      "pairs": [
+        [
+          "teaching_left",
+          "motion_left"
+        ]
+      ],
+      "physical_devices": 0,
+      "backend": "actual C++ controller + driver dry_run",
+      "hand_input": "synthetic offset injected before incremental mapping",
+      "movement": {
+        "motion_left": [
+          0.029448275532514192,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "packets": 130,
+      "actual_hz": 49.99868912350058,
+      "missed_periods": 0,
+      "all_homed_released_closed": true,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_94e0138611"
+    },
+    "dual_dry_run": {
+      "result": "PASS",
+      "pairs": [
+        [
+          "teaching_left",
+          "motion_left"
+        ],
+        [
+          "teaching_right",
+          "motion_right"
+        ]
+      ],
+      "physical_devices": 0,
+      "backend": "actual C++ controller + driver dry_run",
+      "hand_input": "synthetic offset injected before incremental mapping",
+      "movement": {
+        "motion_left": [
+          0.029545476731507227,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "motion_right": [
+          -0.01477270024771402,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "packets": 150,
+      "actual_hz": 49.618629944820725,
+      "missed_periods": 1,
+      "all_homed_released_closed": true,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_7ed3a13a8a"
+    },
+    "native_pty": {
+      "result": "PASS",
+      "physical_devices": 0,
+      "ports": {
+        "teaching_left": "/dev/pts/2",
+        "motion_left": "/dev/pts/4",
+        "teaching_right": "/dev/pts/5",
+        "motion_right": "/dev/pts/6"
+      },
+      "instantaneous_follower_plant": true,
+      "j1_motor_position_changes": {
+        "motion_left": -0.02286332205403596,
+        "motion_right": 0.013375727343373
+      },
+      "packets": 130,
+      "actual_hz": 49.613728986182814,
+      "gripper_commands": 0,
+      "zero_or_flash_writes": 0,
+      "all_released": true,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_69bd863637"
+    },
+    "feedback_loss": {
+      "result": "PASS",
+      "physical_devices": 0,
+      "feedback_loss": true,
+      "whole_batch_stopped": true,
+      "failed_exit_retains_sessions": true,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_804d1b2630"
+    },
+    "ui_live_export": {
+      "result": "PASS",
+      "physical_devices": 0,
+      "four_arm_ui_refresh": true,
+      "live_export": true,
+      "packets_before_export": 150,
+      "packets": 440,
+      "actual_hz": 48.42798224677045,
+      "protected_window_close": true,
+      "bundle": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_29e9ca930b_live.zip",
+      "screenshot": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_29e9ca930b/ui_live.png",
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_29e9ca930b"
+    }
+  },
+  "observed_real_failure": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_logging_revision_20261125/observed_failure.json",
+  "repaired_validation_failure": "Four-arm source feedback queued beyond 150 ms. Teaching now uses latest-only depth-1 feedback and fewer empty executor polls; original watchdog thresholds retained.",
+  "limitations": [
+    "No physical arm was actuated or tested.",
+    "Actual leader left J4 zero-settling and J6 overspeed from the original run are not claimed resolved.",
+    "PTY follower encoders accept position commands without physical dynamics; dry-run uses ideal following."
+  ]
+}

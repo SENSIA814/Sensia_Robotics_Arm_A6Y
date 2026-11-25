@@ -1,0 +1,8 @@
+{
+  "time": "2026-11-24T14:00:38.519781+08:00",
+  "channel": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209D3982534B-if00",
+  "device": "/dev/ttyACM0",
+  "returncode": 1,
+  "stdout": "scan targets:\njoint,motor_type,slave_id,master_id\njoint1,DM4340P,0x01,0x11\njoint2,DM4340P,0x02,0x12\njoint3,DM4340P,0x03,0x13\njoint4,DM4310,0x04,0x14\njoint5,DM4310,0x05,0x15\njoint6,DM4310,0x06,0x16\ngripper_finger_joint1,DM3507,0x07,0x17\n\nscan result:\nstatus,joint,motor_type,slave_id,hits,passes,q,dq,tau,err\nFOUND,joint1,DM4340P,0x01,10,10,0.111582,-0.002442,-0.020513,0x0\nFOUND,joint2,DM4340P,0x02,10,10,-0.000191,-0.002442,0.047863,0x0\nMISS,joint3,DM4340P,0x03,0,10,0.000000,0.000000,0.000000,0x0\nMISS,joint4,DM4310,0x04,0,10,0.000000,0.000000,0.000000,0x0\nMISS,joint5,DM4310,0x05,0,10,0.000000,0.000000,0.000000,0x0\nMISS,joint6,DM4310,0x06,0,10,0.000000,0.000000,0.000000,0x0\nMISS,gripper_finger_joint1,DM3507,0x07,0,10,0.000000,0.000000,0.000000,0x0\n",
+  "stderr": "\nmissing ids: 0x03, 0x04, 0x05, 0x06, 0x07\n"
+}

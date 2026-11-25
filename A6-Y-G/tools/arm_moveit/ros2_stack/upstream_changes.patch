@@ -1,0 +1,19 @@
+--- upstream/a6_y_ros2_control/src/a6_y_damiao_system.cpp
++++ ported/a6_y_ros2_control/src/a6_y_damiao_system.cpp
+@@ -366,6 +366,16 @@
+     joint.mit_kd = parse_double(joint_parameter(joint_info, "mit_kd", std::to_string(mit_kd_)), mit_kd_);
+     joint.read_only = parse_bool(joint_parameter(joint_info, "read_only", "false"), false);
+     joint.limits = motor_limits_from_type(joint.motor_type);
++    // Port adaptation only: the four calibrated arms have different protocol
++    // ranges (in particular ID 7). Use measured values without writing motors.
++    joint.limits.q_max = parse_double(joint_parameter(joint_info, "protocol_pmax", std::to_string(joint.limits.q_max)), joint.limits.q_max);
++    joint.limits.dq_max = parse_double(joint_parameter(joint_info, "protocol_vmax", std::to_string(joint.limits.dq_max)), joint.limits.dq_max);
++    if (!std::isfinite(joint.limits.q_max) || joint.limits.q_max <= 0.0 ||
++        !std::isfinite(joint.limits.dq_max) || joint.limits.dq_max <= 0.0)
++    {
++      RCLCPP_ERROR(LOGGER, "Invalid calibrated protocol range for %s", joint.name.c_str());
++      return false;
++    }
+ 
+     if (!dry_run_ && (joint.motor_type == "UNKNOWN" || joint.slave_id == 0))
+     {

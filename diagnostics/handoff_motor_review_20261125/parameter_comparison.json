@@ -1,0 +1,181 @@
+{
+  "current_snapshot": "diagnostics/teaching_tuning_20261125/motion_parameters_1795616484295559165.json",
+  "comparison": [
+    {
+      "role": "motion_left",
+      "joint": 1,
+      "differences": {
+        "hw_ver": {
+          "handoff": 1445998643,
+          "current": 1445998644
+        },
+        "sw_ver": {
+          "handoff": 959525173,
+          "current": 942747703
+        },
+        "sub_ver": {
+          "handoff": 53,
+          "current": 54
+        },
+        "KP_APR": {
+          "handoff": 2500.0,
+          "current": 54.0
+        },
+        "VL_c1": {
+          "handoff": 100.0,
+          "current": 500.0
+        }
+      }
+    },
+    {
+      "role": "motion_right",
+      "joint": 1,
+      "differences": {
+        "KP_APR": {
+          "handoff": 2500.0,
+          "current": 120.0
+        }
+      }
+    },
+    {
+      "role": "motion_left",
+      "joint": 2,
+      "differences": {
+        "hw_ver": {
+          "handoff": 1445998643,
+          "current": 1445998644
+        },
+        "sw_ver": {
+          "handoff": 959525173,
+          "current": 942747703
+        },
+        "sub_ver": {
+          "handoff": 53,
+          "current": 54
+        },
+        "KP_ASR": {
+          "handoff": 0.007296000141650438,
+          "current": 0.0038399999029934406
+        },
+        "KI_ASR": {
+          "handoff": 0.0015999999595806003,
+          "current": 0.0020000000949949026
+        },
+        "KP_APR": {
+          "handoff": 2500.0,
+          "current": 54.0
+        },
+        "VL_c1": {
+          "handoff": 100.0,
+          "current": 500.0
+        }
+      }
+    },
+    {
+      "role": "motion_right",
+      "joint": 2,
+      "differences": {
+        "KP_ASR": {
+          "handoff": 0.007296000141650438,
+          "current": 0.0038399999029934406
+        },
+        "KI_ASR": {
+          "handoff": 0.0015999999595806003,
+          "current": 0.0020000000949949026
+        },
+        "KP_APR": {
+          "handoff": 2500.0,
+          "current": 120.0
+        }
+      }
+    },
+    {
+      "role": "motion_left",
+      "joint": 3,
+      "differences": {
+        "sw_ver": {
+          "handoff": 925970742,
+          "current": 959525173
+        },
+        "sub_ver": {
+          "handoff": 52,
+          "current": 53
+        },
+        "KP_ASR": {
+          "handoff": 0.004608000162988901,
+          "current": 0.0038399999029934406
+        },
+        "KP_APR": {
+          "handoff": 2500.0,
+          "current": 54.0
+        },
+        "VMAX": {
+          "handoff": 20.0,
+          "current": 10.0
+        }
+      }
+    },
+    {
+      "role": "motion_right",
+      "joint": 3,
+      "differences": {
+        "KP_ASR": {
+          "handoff": 0.004608000162988901,
+          "current": 0.0038399999029934406
+        },
+        "KP_APR": {
+          "handoff": 2500.0,
+          "current": 120.0
+        },
+        "VMAX": {
+          "handoff": 20.0,
+          "current": 10.0
+        }
+      }
+    },
+    {
+      "role": "motion_left",
+      "joint": 4,
+      "differences": {
+        "hw_ver": {
+          "handoff": 1445998643,
+          "current": 0
+        },
+        "KP_ASR": {
+          "handoff": 0.001095999963581562,
+          "current": 0.003719999920576811
+        },
+        "KI_ASR": {
+          "handoff": 0.0005000000237487257,
+          "current": 0.0020000000949949026
+        },
+        "KP_APR": {
+          "handoff": 220.0,
+          "current": 54.0
+        }
+      }
+    },
+    {
+      "role": "motion_right",
+      "joint": 4,
+      "differences": {
+        "KP_ASR": {
+          "handoff": 0.001095999963581562,
+          "current": 0.003719999920576811
+        },
+        "KI_ASR": {
+          "handoff": 0.0005000000237487257,
+          "current": 0.0020000000949949026
+        },
+        "KP_APR": {
+          "handoff": 220.0,
+          "current": 120.0
+        },
+        "VMAX": {
+          "handoff": 50.0,
+          "current": 30.0
+        }
+      }
+    }
+  ]
+}

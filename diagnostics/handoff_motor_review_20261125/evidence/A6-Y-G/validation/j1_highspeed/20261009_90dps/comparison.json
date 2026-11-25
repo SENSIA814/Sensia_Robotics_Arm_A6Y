@@ -1,0 +1,637 @@
+[
+  {
+    "mode": "real",
+    "passed": false,
+    "disarm_confirmed": true,
+    "error": "command 2 rejected",
+    "start_degrees": -1.103775412150243,
+    "end_degrees": 88.89622458784976,
+    "move_seconds": 8.4375,
+    "planned_peak_speed_deg_s": 20.0,
+    "run": "real_kp250_v20",
+    "kp_apr": 250,
+    "criteria_checks": {
+      "complete_and_disarmed": false,
+      "speed": false,
+      "plan_error": false,
+      "holds": false,
+      "overshoot": false
+    },
+    "performance_target_met": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": -1.103775412150243,
+    "end_degrees": 88.89622458784976,
+    "move_seconds": 8.4375,
+    "planned_peak_speed_deg_s": 20.0,
+    "samples": 2721,
+    "plan_error_max_deg": 16.056905596938595,
+    "plan_error_rms_deg": 8.727771190037522,
+    "motor_error_max_deg": 2.4501511453130354,
+    "tracking_limited_fraction": 0.46821021683204705,
+    "encoder_peak_speed_deg_s": 14.215961834617358,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": 0.006874202667646573
+      },
+      "return_hold": {
+        "span_deg": 0.02185693885446026,
+        "mean_error_deg": 0.01595903471912971
+      }
+    },
+    "effort_peak_nm": 1.141880341880345,
+    "max_other_joint_motion_deg": 0.4152818382347449,
+    "overshoot_deg": 0.006874202667646573,
+    "run": "real_kp250_v20_repeat",
+    "kp_apr": 250,
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": false,
+      "plan_error": false,
+      "holds": true,
+      "overshoot": true
+    },
+    "performance_target_met": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": -1.103775412150243,
+    "end_degrees": 88.89622458784976,
+    "move_seconds": 8.4375,
+    "planned_peak_speed_deg_s": 20.0,
+    "samples": 2685,
+    "plan_error_max_deg": 6.213300047166484,
+    "plan_error_rms_deg": 3.0059393084701393,
+    "motor_error_max_deg": 2.468390599172961,
+    "tracking_limited_fraction": 0.24506517690875232,
+    "encoder_peak_speed_deg_s": 17.704503619319954,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": 0.006874202667646573
+      },
+      "return_hold": {
+        "span_deg": 0.02185693885446026,
+        "mean_error_deg": 0.019234106191925025
+      }
+    },
+    "effort_peak_nm": 1.1282051282051277,
+    "max_other_joint_motion_deg": 0.06557081656338078,
+    "overshoot_deg": 0.006874202667646573,
+    "run": "real_kp315_v20",
+    "kp_apr": 315,
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": false,
+      "plan_error": false,
+      "holds": true,
+      "overshoot": true
+    },
+    "performance_target_met": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": -1.103775412150243,
+    "end_degrees": 88.89622458784976,
+    "move_seconds": 8.4375,
+    "planned_peak_speed_deg_s": 20.0,
+    "samples": 2687,
+    "plan_error_max_deg": 2.2719239943566003,
+    "plan_error_rms_deg": 1.4262985154559567,
+    "motor_error_max_deg": 2.256421675845633,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 20.05824881217104,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": 0.006874202667646573
+      },
+      "return_hold": {
+        "span_deg": 0.02185693885446026,
+        "mean_error_deg": 0.018010117616075252
+      }
+    },
+    "effort_peak_nm": 1.1282051282051313,
+    "max_other_joint_motion_deg": 0.06557081656338078,
+    "overshoot_deg": 0.006874202667646573,
+    "run": "real_kp400_v20",
+    "kp_apr": 400,
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true
+    },
+    "performance_target_met": true
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": -1.103775412150243,
+    "end_degrees": 88.89622458784976,
+    "move_seconds": 4.821428571428571,
+    "planned_peak_speed_deg_s": 35.0,
+    "samples": 1891,
+    "plan_error_max_deg": 21.03493762520146,
+    "plan_error_rms_deg": 12.205756613247049,
+    "motor_error_max_deg": 2.493553272454483,
+    "tracking_limited_fraction": 0.4426229508196721,
+    "encoder_peak_speed_deg_s": 22.189160099255346,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": 0.006874202667646573
+      },
+      "return_hold": {
+        "span_deg": 0.02185693885446026,
+        "mean_error_deg": 0.01591185148604707
+      }
+    },
+    "effort_peak_nm": 1.1282051282051313,
+    "max_other_joint_motion_deg": 0.08742775541784104,
+    "overshoot_deg": 0.006874202667646573,
+    "run": "real_kp400_v35",
+    "kp_apr": 400,
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": false,
+      "plan_error": false,
+      "holds": true,
+      "overshoot": true
+    },
+    "performance_target_met": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": -1.103775412150243,
+    "end_degrees": 88.89622458784976,
+    "move_seconds": 4.821428571428571,
+    "planned_peak_speed_deg_s": 35.0,
+    "samples": 1782,
+    "plan_error_max_deg": 11.156653606156869,
+    "plan_error_rms_deg": 5.666123841396382,
+    "motor_error_max_deg": 2.539274038301142,
+    "tracking_limited_fraction": 0.33108866442199775,
+    "encoder_peak_speed_deg_s": 27.661475270202672,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": 0.006874202667646573
+      },
+      "return_hold": {
+        "span_deg": 0.02185693885446026,
+        "mean_error_deg": 0.01678612904022548
+      }
+    },
+    "effort_peak_nm": 1.0735042735042732,
+    "max_other_joint_motion_deg": 0.06557081656338078,
+    "overshoot_deg": 0.006874202667646573,
+    "run": "real_kp500_v35",
+    "kp_apr": 500,
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": false,
+      "plan_error": false,
+      "holds": true,
+      "overshoot": true
+    },
+    "performance_target_met": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": -1.103775412150243,
+    "end_degrees": 88.89622458784976,
+    "move_seconds": 4.821428571428571,
+    "planned_peak_speed_deg_s": 35.0,
+    "samples": 1782,
+    "plan_error_max_deg": 3.1243431619133752,
+    "plan_error_rms_deg": 1.7824570836218356,
+    "motor_error_max_deg": 2.5812026712602254,
+    "tracking_limited_fraction": 0.09259259259259259,
+    "encoder_peak_speed_deg_s": 33.95034912001374,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": 0.006874202667646573
+      },
+      "return_hold": {
+        "span_deg": 0.02185693885446026,
+        "mean_error_deg": 0.015612099181757327
+      }
+    },
+    "effort_peak_nm": 1.1282051282051277,
+    "max_other_joint_motion_deg": 0.17485551083568207,
+    "overshoot_deg": 0.006874202667646573,
+    "run": "real_kp630_v35",
+    "kp_apr": 630,
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": false,
+      "holds": true,
+      "overshoot": true
+    },
+    "performance_target_met": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": -1.103775412150243,
+    "end_degrees": 88.89622458784976,
+    "move_seconds": 4.821428571428571,
+    "planned_peak_speed_deg_s": 35.0,
+    "samples": 1780,
+    "plan_error_max_deg": 2.2323624551407426,
+    "plan_error_rms_deg": 1.3911574096283081,
+    "motor_error_max_deg": 2.192781484958047,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 34.97836799978817,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": 0.006874202667646573
+      },
+      "return_hold": {
+        "span_deg": 0.02185693885446026,
+        "mean_error_deg": 0.014687862910197292
+      }
+    },
+    "effort_peak_nm": 1.1282051282051277,
+    "max_other_joint_motion_deg": 0.04371387770892052,
+    "overshoot_deg": 0.006874202667646573,
+    "run": "real_kp800_v35",
+    "kp_apr": 800,
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true
+    },
+    "performance_target_met": true
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": -1.103775412150243,
+    "end_degrees": 88.89622458784976,
+    "move_seconds": 2.8125,
+    "planned_peak_speed_deg_s": 60.0,
+    "samples": 1305,
+    "plan_error_max_deg": 16.11362640226147,
+    "plan_error_rms_deg": 8.79710856144536,
+    "motor_error_max_deg": 2.6497565548535174,
+    "tracking_limited_fraction": 0.31340996168582375,
+    "encoder_peak_speed_deg_s": 42.52721431118448,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": 0.006874202667646573
+      },
+      "return_hold": {
+        "span_deg": 0.02185693885446026,
+        "mean_error_deg": 0.018010117616075252
+      }
+    },
+    "effort_peak_nm": 1.1145299145299177,
+    "max_other_joint_motion_deg": 0.06557081656338078,
+    "overshoot_deg": 0.006874202667646573,
+    "run": "real_kp800_v60",
+    "kp_apr": 800,
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": false,
+      "plan_error": false,
+      "holds": true,
+      "overshoot": true
+    },
+    "performance_target_met": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": -1.103775412150243,
+    "end_degrees": 88.89622458784976,
+    "move_seconds": 2.8125,
+    "planned_peak_speed_deg_s": 60.0,
+    "samples": 1278,
+    "plan_error_max_deg": 7.809754246041049,
+    "plan_error_rms_deg": 3.7392782901516735,
+    "motor_error_max_deg": 2.727225528958306,
+    "tracking_limited_fraction": 0.20657276995305165,
+    "encoder_peak_speed_deg_s": 51.90289883867529,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": 0.006874202667646573
+      },
+      "return_hold": {
+        "span_deg": 0.02185693885446026,
+        "mean_error_deg": 0.016479438025188288
+      }
+    },
+    "effort_peak_nm": 1.0735042735042768,
+    "max_other_joint_motion_deg": 0.06557081656338078,
+    "overshoot_deg": 0.006874202667646573,
+    "run": "real_kp1000_v60",
+    "kp_apr": 1000,
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": false,
+      "plan_error": false,
+      "holds": true,
+      "overshoot": true
+    },
+    "performance_target_met": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": -1.103775412150243,
+    "end_degrees": 88.89622458784976,
+    "move_seconds": 2.8125,
+    "planned_peak_speed_deg_s": 60.0,
+    "samples": 1281,
+    "plan_error_max_deg": 2.7847331241668245,
+    "plan_error_rms_deg": 1.7235510847823101,
+    "motor_error_max_deg": 2.7441286526148927,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 59.7847452169654,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": 0.006874202667646573
+      },
+      "return_hold": {
+        "span_deg": 0.02185693885446026,
+        "mean_error_deg": 0.014163296377690248
+      }
+    },
+    "effort_peak_nm": 1.1692307692307686,
+    "max_other_joint_motion_deg": 0.04371387770892052,
+    "overshoot_deg": 0.006874202667646573,
+    "run": "real_kp1250_v60",
+    "kp_apr": 1250,
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true
+    },
+    "performance_target_met": true
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": -1.103775412150243,
+    "end_degrees": 88.89622458784976,
+    "move_seconds": 2.25,
+    "planned_peak_speed_deg_s": 75.0,
+    "samples": 1138,
+    "plan_error_max_deg": 9.245975811100957,
+    "plan_error_rms_deg": 4.656746529303472,
+    "motor_error_max_deg": 2.815253468477612,
+    "tracking_limited_fraction": 0.2047451669595782,
+    "encoder_peak_speed_deg_s": 62.14999922181761,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": 0.006874202667646573
+      },
+      "return_hold": {
+        "span_deg": 0.02185693885446026,
+        "mean_error_deg": 0.014918228107012555
+      }
+    },
+    "effort_peak_nm": 1.141880341880345,
+    "max_other_joint_motion_deg": 0.06557081656338078,
+    "overshoot_deg": 0.006874202667646573,
+    "run": "real_kp1250_v75",
+    "kp_apr": 1250,
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": false,
+      "plan_error": false,
+      "holds": true,
+      "overshoot": true
+    },
+    "performance_target_met": false
+  },
+  {
+    "mode": "real",
+    "passed": false,
+    "disarm_confirmed": true,
+    "error": "controller state=4 reason=11 feedback=True",
+    "start_degrees": -1.103775412150243,
+    "end_degrees": 88.89622458784976,
+    "move_seconds": 2.25,
+    "planned_peak_speed_deg_s": 75.0,
+    "samples": 132,
+    "plan_error_max_deg": 2.9253616371584314,
+    "plan_error_rms_deg": 1.7268419124576946,
+    "motor_error_max_deg": 2.860859307971437,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 69.34013480737906,
+    "holds": {},
+    "effort_peak_nm": 1.264957264957264,
+    "max_other_joint_motion_deg": 0.04371387770892052,
+    "overshoot_deg": 3.417920522252744e-05,
+    "run": "real_kp1600_v75",
+    "kp_apr": 1600,
+    "criteria_checks": {
+      "complete_and_disarmed": false,
+      "speed": false,
+      "plan_error": true,
+      "holds": false,
+      "overshoot": true
+    },
+    "performance_target_met": false
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": -1.103775412150243,
+    "end_degrees": 88.89622458784976,
+    "move_seconds": 2.25,
+    "planned_peak_speed_deg_s": 75.0,
+    "samples": 1139,
+    "plan_error_max_deg": 2.6158277514389208,
+    "plan_error_rms_deg": 1.5895479806207424,
+    "motor_error_max_deg": 2.5052566609348896,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 74.74369743939133,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": 0.006874202667646573
+      },
+      "return_hold": {
+        "span_deg": 0.02185693885446026,
+        "mean_error_deg": 0.015387284953540022
+      }
+    },
+    "effort_peak_nm": 1.2923076923076913,
+    "max_other_joint_motion_deg": 0.17485551083568207,
+    "overshoot_deg": 0.006874202667646573,
+    "run": "real_kp2000_v75",
+    "kp_apr": 2000,
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true
+    },
+    "performance_target_met": true
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": -1.103775412150243,
+    "end_degrees": 88.89622458784976,
+    "move_seconds": 2.25,
+    "planned_peak_speed_deg_s": 75.0,
+    "samples": 1139,
+    "plan_error_max_deg": 2.261758117595333,
+    "plan_error_rms_deg": 1.4043406686958193,
+    "motor_error_max_deg": 2.2155362053815164,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 74.75875274546459,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": 0.006874202667646573
+      },
+      "return_hold": {
+        "span_deg": 0.02185693885446026,
+        "mean_error_deg": 0.01578556695044352
+      }
+    },
+    "effort_peak_nm": 1.2239316239316267,
+    "max_other_joint_motion_deg": 0.04371387770892052,
+    "overshoot_deg": 0.006874202667646573,
+    "run": "real_kp2500_v75",
+    "kp_apr": 2500,
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true
+    },
+    "performance_target_met": true
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": -1.103775412150243,
+    "end_degrees": 88.89622458784976,
+    "move_seconds": 1.875,
+    "planned_peak_speed_deg_s": 90.0,
+    "samples": 1045,
+    "plan_error_max_deg": 2.745045314719773,
+    "plan_error_rms_deg": 1.6756568686044817,
+    "motor_error_max_deg": 2.67320684503675,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 89.94693374418124,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": 0.006874202667646573
+      },
+      "return_hold": {
+        "span_deg": 0.02185693885446026,
+        "mean_error_deg": 0.015037573931868659
+      }
+    },
+    "effort_peak_nm": 1.4153846153846175,
+    "max_other_joint_motion_deg": 0.06557081656338078,
+    "overshoot_deg": 0.006874202667646573,
+    "run": "real_kp2500_v90",
+    "kp_apr": 2500,
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true
+    },
+    "performance_target_met": true
+  },
+  {
+    "mode": "real",
+    "passed": true,
+    "disarm_confirmed": true,
+    "error": null,
+    "start_degrees": -1.103775412150243,
+    "end_degrees": 88.89622458784976,
+    "move_seconds": 1.875,
+    "planned_peak_speed_deg_s": 90.0,
+    "samples": 1046,
+    "plan_error_max_deg": 2.675788840928236,
+    "plan_error_rms_deg": 1.6782597210597645,
+    "motor_error_max_deg": 2.65991092334877,
+    "tracking_limited_fraction": 0.0,
+    "encoder_peak_speed_deg_s": 89.45825463120092,
+    "holds": {
+      "outbound_hold": {
+        "span_deg": 0.0,
+        "mean_error_deg": 0.006874202667646573
+      },
+      "return_hold": {
+        "span_deg": 0.02185693885446026,
+        "mean_error_deg": 0.015212429442704338
+      }
+    },
+    "effort_peak_nm": 1.360683760683763,
+    "max_other_joint_motion_deg": 0.06557081656338078,
+    "overshoot_deg": 0.02185693885446026,
+    "run": "real_kp2500_v90_repeat",
+    "kp_apr": 2500,
+    "criteria_checks": {
+      "complete_and_disarmed": true,
+      "speed": true,
+      "plan_error": true,
+      "holds": true,
+      "overshoot": true
+    },
+    "performance_target_met": true
+  }
+]

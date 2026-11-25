@@ -1,0 +1,46 @@
+# Local tools and credentials
+/.agents/
+/.aws/
+/.codex/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+**/tls/
+
+# Generated ROS / CMake / Python outputs
+build/
+build_*/
+install/
+install_*/
+log/
+log_*/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+.venv-*/
+venv/
+*.ikcache
+*.log
+*.bag
+*.db3
+*.mcap
+
+# Runtime data remains on the local machine; keep source and curated evidence.
+/A6-Y-G/validation/
+/diagnostics/*_logs/
+/diagnostics/*_reports/
+/diagnostics/**/before/
+/diagnostics/**/*.zip
+
+# Editor / desktop files
+.idea/
+.vscode/
+.DS_Store
+*~
+*.swp

@@ -1,0 +1,12 @@
+{
+  "motion_left": {
+    "4": {
+      "KP_APR": 54.0
+    }
+  },
+  "motion_right": {
+    "4": {
+      "KP_APR": 54.0
+    }
+  }
+}

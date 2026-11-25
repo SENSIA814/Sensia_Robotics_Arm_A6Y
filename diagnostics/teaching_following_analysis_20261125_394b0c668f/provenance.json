@@ -1,0 +1,14 @@
+{
+  "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_394b0c668f/step_quality.json": "d05d3c25bbf8972c5c84b3386d14925294302961b8a2debf49df705aa4442167",
+  "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_394b0c668f/session.json": "145c52bd99b61f96048591eef935cd99d275b83c150cba8d1a4cbf944b1df2d6",
+  "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_394b0c668f/result.json": "e86aab758a1f37e835a9b881e9f8ace8ccc40971f44e52d910c67f4de607638c",
+  "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_394b0c668f/step_summary.json": "d9106febb5da277019a5f3b3e0cecaaf4239926062b5af2486cf53b9ab0548b2",
+  "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_394b0c668f/software.json": "d6eb4c410fb112709e5f677116b19c6e6928a1ad78f530454da66c2a5b2a119c",
+  "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/A6-Y-G/src/a6_y_teleop/a6_y_teleop/leader_follower_teleop.py": "515df7865584ab3f05f7b0074be0e1ac149d41e00f8b79c2771460d4f41b253f",
+  "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_394b0c668f/motion_left_teleop.yaml": "d119a5806556902ad0aaeb6619c0eae69481fc64f9406ded579fa648c0b25dd5",
+  "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_394b0c668f/motion_right_teleop.yaml": "9fcee4e631d0675737900e9a58f5cd6102a1e31b2661d46d2a61fe47c4532879",
+  "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_step_logging_20261125/motor_parameters.json": "eaf8cd46ecf05e0c0edbae3082798b814042d60534a57006914785dd0fc06173",
+  "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_394b0c668f/step_arms.csv": "c5d00083fcb5c50ef883a89113483c5dbc673ba98dbab1469e083cfbedfc2e73",
+  "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_394b0c668f/step_targets.csv": "bb313ae0decc1df3c2b6d00e8d57eb226ae9113ca99f4d31da55a893a55922e1",
+  "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_394b0c668f/step_tracking.csv": "b2cddb4269711408262ddc87ff7b482d903bd3b4486b7094a1622f3109743643"
+}

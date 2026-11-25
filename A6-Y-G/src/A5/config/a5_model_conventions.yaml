@@ -1,0 +1,20 @@
+schema_version: 1
+model: urdf/A5.urdf
+base_frame: base_link
+wrist_frame: link6
+tcp_frame: tool_tcp
+tcp_joint: tool_tcp_joint
+tcp_definition: paired_finger_visual_aabb_center_in_link6
+tcp_axes: inherit_link6
+units: {length: m, angle: rad, arm_effort: Nm, gripper_effort: N}
+independent_joints: [joint1, joint2, joint3, joint4, joint5, joint6, gripper_finger_joint1]
+mimic: {joint: gripper_finger_joint2, source: gripper_finger_joint1, multiplier: -1.0, offset: 0.0}
+# Current Pinocchio model convention, NOT a measurement of the installation.
+model_gravity_in_base_m_s2: [0.0, 0.0, -9.81]
+payload: {includes_gripper: true, grasped_object_mass_kg: 0.0}
+gripper:
+  independent_coordinate: gripper_finger_joint1
+  open_fraction_zero_q_m: 0.0
+  open_fraction_one_q_m: -0.03
+  gap_change_per_abs_joint_displacement: 2.0
+  # Physical closed gap is measured in a5_calibration.yaml, not inferred from STL bounds.

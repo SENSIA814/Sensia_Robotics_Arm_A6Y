@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "trial": "j4_oscillation_retry_02",
+  "started_at": "2026-11-25T23:07:12.134+08:00",
+  "status": "offline_preview",
+  "reference_session": "teaching_cc3c0a6bfe",
+  "parameter_source_hashes": {
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_oscillation_trial_20261125/motion_parameters_1795619145890042556.json": "70bbf6241e505ac3a191b502ce996bc0afab17012a94b753630685f9915c1561",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_tuning_20261125/motion_parameters_1795616484295559165.json": "0eb0204fc15da789ce98ecbffbdc8f4e714e459e06cef6a578d1a29ce63c88af"
+  },
+  "planned_gains": {
+    "4": {
+      "KP_APR": 54.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.00372,
+      "KI_ASR": 0.002
+    }
+  },
+  "storage": "RAM only; lost on motor power cycle",
+  "arms": {},
+  "rates": {
+    "control_hz": 250,
+    "per_axis_command_hz": 250,
+    "target_hz": 100,
+    "can_bitrate": 1000000
+  }
+}

@@ -1,0 +1,38 @@
+schema_version: 1
+# Operator statements and skipped tests are distinct from measured verification.
+# No motor zeroing or real-device access is performed by S0 tools.
+operator_confirmation:
+  date: '2026-10-08'
+  source: user_message
+  statement: '1.基座方向Z 轴竖直向上；2.关节对应正确；3.正负方向正确；4.零点和角度比例不用进行测试'
+base_installation:
+  status: operator_confirmed
+  description: '用户确认基座 Z 轴竖直向上；重力沿基座 -Z 方向'
+  # Direction inferred from the confirmed orientation, not an accelerometer measurement.
+  gravity_direction_in_base: [0.0, 0.0, -1.0]
+  measured_gravity_in_base_m_s2: null
+  max_gravity_error_m_s2: null
+joint_mapping:
+  # Each sample: {motor_position: ..., reference_model_position: ...}; rad for arm, m for model finger.
+  # motor_position is always motor radians, BEFORE sign/scale/offset conversion.
+  # ID/direction confirmations below come from the user statement above.
+  # Zero/scale samples are intentionally absent; retain existing offsets and scales.
+  joint1: {status: operator_confirmed, motor_id_verified: true, direction_verified: true, zero_scale_test: skipped_by_user, max_error: null, samples: []}
+  joint2: {status: operator_confirmed, motor_id_verified: true, direction_verified: true, zero_scale_test: skipped_by_user, max_error: null, samples: []}
+  joint3: {status: operator_confirmed, motor_id_verified: true, direction_verified: true, zero_scale_test: skipped_by_user, max_error: null, samples: []}
+  joint4: {status: operator_confirmed, motor_id_verified: true, direction_verified: true, zero_scale_test: skipped_by_user, max_error: null, samples: []}
+  joint5: {status: operator_confirmed, motor_id_verified: true, direction_verified: true, zero_scale_test: skipped_by_user, max_error: null, samples: []}
+  joint6: {status: operator_confirmed, motor_id_verified: true, direction_verified: true, zero_scale_test: skipped_by_user, max_error: null, samples: []}
+  gripper_finger_joint1: {status: operator_confirmed, motor_id_verified: true, direction_verified: true, zero_scale_test: skipped_by_user, max_error: null, samples: []}
+gripper_gap:
+  status: pending
+  closed_gap_m: null
+  max_error_m: null
+  # At least three distinct measured openings: {motor_position_rad: ..., measured_gap_m: ...}
+  samples: []
+fk_spot_checks:
+  status: pending
+  max_position_error_m: null
+  max_orientation_error_rad: null
+  # At least three distinct poses: {q: [seven independent coordinates], measured_tcp_xyz_m: [x,y,z], measured_tcp_rpy_rad: [r,p,y]}
+  samples: []

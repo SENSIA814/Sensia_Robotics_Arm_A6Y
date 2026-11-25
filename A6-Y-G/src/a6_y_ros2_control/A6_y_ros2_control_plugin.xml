@@ -1,0 +1,12 @@
+<library path="a6_y_damiao_system">
+  <class
+    name="a6_y_ros2_control/A6YDamiaoSystem"
+    type="a6_y_ros2_control::A6YDamiaoSystem"
+    base_class_type="hardware_interface::SystemInterface">
+    <description>
+      A6_Y ros2_control SystemInterface for Damiao motors. The initial implementation
+      provides safe dry-run behavior and interface validation; the real CAN backend
+      is wired in a later hardware-integration step.
+    </description>
+  </class>
+</library>

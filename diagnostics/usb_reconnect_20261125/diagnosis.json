@@ -1,0 +1,26 @@
+{
+  "checked_at": "2026-11-25T05:51:38.448+08:00",
+  "role": "teaching_right",
+  "usb_serial": "209D3982534B",
+  "stable_port": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209D3982534B-if00",
+  "resolved_device": "/dev/ttyACM2",
+  "motor_power": "user confirms power on and indicator lit",
+  "findings": [
+    "The gravity driver uses the USB by-id path, not last_device or a fixed ttyACM number.",
+    "Kernel logs show USB hub port disable, disconnection, DFU enumeration, then return to normal CANable serial mode.",
+    "Earlier live gravity session recorded serial write Input/output error at USB disconnection.",
+    "Latest gravity startup waited 60 initial-feedback attempts; every motor ID 1-7 was missing; controller_manager exited 134.",
+    "Independent status-only scan: 0/7 responding across 3 passes; specific CAN-side or adapter cause remains unconfirmed."
+  ],
+  "status_only_scan": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/usb_reconnect_20261125/arm_scan_20261125_055138_448644.json",
+  "tx_status_queries": 21,
+  "motor_response_count": 0,
+  "identity_regression_tests_passed": 10,
+  "source_code_changed": false,
+  "enabled_motors": false,
+  "evidence": [
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/usb_reconnect_20261125/kernel-usb.log",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_a2f515afbf/controller_manager.log",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_1afe73cc74/controller_manager.log"
+  ]
+}

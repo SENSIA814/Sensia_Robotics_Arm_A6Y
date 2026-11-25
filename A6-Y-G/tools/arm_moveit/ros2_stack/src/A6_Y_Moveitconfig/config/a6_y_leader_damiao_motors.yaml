@@ -1,0 +1,33 @@
+a6_y_damiao_system:
+  ros__parameters:
+    can:
+      interface: slcan
+      channel: /dev/ttyACM0
+      can_bitrate: 1000000
+      tty_baudrate: 115200
+
+    defaults:
+      dry_run: true
+      control_mode: pos_vel
+      auto_enable: false
+      set_control_mode_on_configure: false
+      require_feedback_on_configure: true
+      allow_partial_feedback: false
+      disable_on_deactivate: true
+      command_timeout: 0.2
+      max_start_delta: 0.25
+      receive_timeout: 0.001
+      feedback_timeout: 0.5
+      status_request_period: 0.05
+      initial_feedback_attempts: 60
+      mit_kp: 0.0
+      mit_kd: 0.3
+
+    joints:
+      joint1: {motor_type: DM4340P, slave_id: 0x01, master_id: 0x11, sign: -1.0, offset: 0.0, min_position: -2.62, max_position: 2.62, max_velocity: 0.5}
+      joint2: {motor_type: DM4340P, slave_id: 0x02, master_id: 0x12, sign: 1.0, offset: 0.0, min_position: 0.0, max_position: 3.14, max_velocity: 0.5}
+      joint3: {motor_type: DM4340P, slave_id: 0x03, master_id: 0x13, sign: -1.0, offset: 0.0, min_position: -2.97, max_position: 0.0, max_velocity: 0.5}
+      joint4: {motor_type: DM4310, slave_id: 0x04, master_id: 0x14, sign: -1.0, offset: 0.0, min_position: -1.55, max_position: 1.55, max_velocity: 0.5}
+      joint5: {motor_type: DM4310, slave_id: 0x05, master_id: 0x15, sign: -1.0, offset: 0.0, min_position: -0.9, max_position: 0.9, max_velocity: 0.5}
+      joint6: {motor_type: DM4310, slave_id: 0x06, master_id: 0x16, sign: -1.0, offset: 0.0, min_position: -3.14, max_position: 3.14, max_velocity: 0.5}
+      gripper_finger_joint1: {motor_type: DM3507, slave_id: 0x07, master_id: 0x17, sign: -1.0, offset: 0.0, position_scale: 0.0239, min_position: 0.0, max_position: 0.03, max_velocity: 0.1, mit_kp: 0.0, mit_kd: 0.0, read_only: false}

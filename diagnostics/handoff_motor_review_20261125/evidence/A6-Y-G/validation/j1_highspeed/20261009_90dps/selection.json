@@ -1,0 +1,54 @@
+{
+  "joint": "joint1",
+  "initial_kp_apr": 250,
+  "selected_kp_apr": 2500,
+  "flash_saved": false,
+  "native_parameters_changed": [
+    "KP_APR"
+  ],
+  "selected_runs": [
+    "real_kp2500_v90",
+    "real_kp2500_v90_repeat"
+  ],
+  "peak_speed_target_deg_s": 90.0,
+  "travel_deg": 90.0,
+  "one_way_seconds": 1.875,
+  "criteria": {
+    "peak_speed_fraction": [
+      0.95,
+      1.05
+    ],
+    "plan_error_max_deg": 3.0,
+    "hold_last_second_span_deg": 0.2,
+    "hold_mean_error_deg": 0.2,
+    "overshoot_deg": 0.5,
+    "complete_and_disarmed": true
+  },
+  "completed_real_trials": 15,
+  "attempted_real_trials": 17,
+  "production_vr_speed_config_changed": false,
+  "final_all_motors_disabled": true,
+  "physical_scope": "operator-confirmed initial pose and positive 90-degree J1 sweep; other five arm axes hold; gripper read-only",
+  "software_tests": "52 passed",
+  "final_mock_passed": true,
+  "csv_crosscheck": [
+    {
+      "run": "real_kp2500_v90",
+      "csv_independent_max_error_deg": 2.745045314719775
+    },
+    {
+      "run": "real_kp2500_v90_repeat",
+      "csv_independent_max_error_deg": 2.6757888409282344
+    }
+  ],
+  "failed_trials": [
+    {
+      "run": "real_kp250_v20",
+      "error": "command 2 rejected"
+    },
+    {
+      "run": "real_kp1600_v75",
+      "error": "controller state=4 reason=11 feedback=True"
+    }
+  ]
+}

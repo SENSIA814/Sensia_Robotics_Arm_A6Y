@@ -1,0 +1,287 @@
+{
+  "source": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_9dba29f8d1",
+  "physical_device_commands": 0,
+  "role": "teaching_right",
+  "ready_mock": false,
+  "stable_serial_port": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209D3982534B-if00",
+  "controller_rate_hz": 125,
+  "home_attempts": [
+    {
+      "revision": 1,
+      "start_local": "2026-11-25T07:45:42.490+08:00",
+      "failure_local": "2026-11-25T07:45:45.103+08:00",
+      "planned_duration_s": 17.721212016509998,
+      "elapsed_until_failure_s": 2.6131787300109863,
+      "planning_and_preview_s": 13.051192998886108,
+      "sample_count": 47,
+      "all_sampled_feedback_fresh": true,
+      "max_csv_interval_s": 0.060920000076293945,
+      "median_csv_frequency_hz": 17.887149394209487,
+      "start_positions_rad": [
+        -0.005149919890135024,
+        0.9466315709163045,
+        1.1404211490043483,
+        0.06427862973983345,
+        0.1741435873960473,
+        0.1661326009002817
+      ],
+      "last_sampled_positions_rad": [
+        -0.005149919890135024,
+        0.9447241931792174,
+        1.1404211490043483,
+        0.05359731441214599,
+        0.1741435873960473,
+        0.1661326009002817
+      ],
+      "sampled_peak_velocities": [
+        {
+          "joint": 1,
+          "velocity_rad_s": 0.0073260073260073,
+          "seconds_after_execute_event": 0.19836020469665527
+        },
+        {
+          "joint": 2,
+          "velocity_rad_s": -0.0805860805860803,
+          "seconds_after_execute_event": 2.59128737449646
+        },
+        {
+          "joint": 3,
+          "velocity_rad_s": -0.012210012210012167,
+          "seconds_after_execute_event": 2.5335986614227295
+        },
+        {
+          "joint": 4,
+          "velocity_rad_s": -0.1538461538461533,
+          "seconds_after_execute_event": 2.5335986614227295
+        },
+        {
+          "joint": 5,
+          "velocity_rad_s": 0.0219780219780219,
+          "seconds_after_execute_event": 0.14324450492858887
+        },
+        {
+          "joint": 6,
+          "velocity_rad_s": 0.0219780219780219,
+          "seconds_after_execute_event": 0.08655405044555664
+        }
+      ],
+      "reported_error": "回零控制器中止：Return aborted: start mismatch, tracking, timing or heartbeat"
+    },
+    {
+      "revision": 3,
+      "start_local": "2026-11-25T07:45:56.385+08:00",
+      "failure_local": "2026-11-25T07:46:03.070+08:00",
+      "planned_duration_s": 17.706014131807997,
+      "elapsed_until_failure_s": 6.685824394226074,
+      "planning_and_preview_s": 1.2649664878845215,
+      "sample_count": 120,
+      "all_sampled_feedback_fresh": true,
+      "max_csv_interval_s": 0.06255888938903809,
+      "median_csv_frequency_hz": 17.940553233898942,
+      "start_positions_rad": [
+        -0.005149919890135024,
+        0.9435797665369652,
+        1.139276722362096,
+        0.026894026092927348,
+        0.1741435873960473,
+        0.1661326009002817
+      ],
+      "last_sampled_positions_rad": [
+        -0.005149919890135024,
+        0.6662470435645087,
+        0.8096818493934546,
+        0.017357137407492118,
+        0.13218127718013228,
+        0.1661326009002817
+      ],
+      "sampled_peak_velocities": [
+        {
+          "joint": 1,
+          "velocity_rad_s": 0.0073260073260073,
+          "seconds_after_execute_event": 1.6403889656066895
+        },
+        {
+          "joint": 2,
+          "velocity_rad_s": -0.2857142857142865,
+          "seconds_after_execute_event": 4.398379802703857
+        },
+        {
+          "joint": 3,
+          "velocity_rad_s": -0.30525030525030594,
+          "seconds_after_execute_event": 3.849207639694214
+        },
+        {
+          "joint": 4,
+          "velocity_rad_s": 0.2857142857142847,
+          "seconds_after_execute_event": 3.849207639694214
+        },
+        {
+          "joint": 5,
+          "velocity_rad_s": -0.4175824175824161,
+          "seconds_after_execute_event": 5.687835454940796
+        },
+        {
+          "joint": 6,
+          "velocity_rad_s": 0.0366300366300365,
+          "seconds_after_execute_event": 1.97446870803833
+        }
+      ],
+      "reported_error": "回零控制器中止：Return aborted: start mismatch, tracking, timing or heartbeat"
+    },
+    {
+      "revision": 5,
+      "start_local": "2026-11-25T07:46:13.192+08:00",
+      "failure_local": "2026-11-25T07:46:15.807+08:00",
+      "planned_duration_s": 3.954189854617,
+      "elapsed_until_failure_s": 2.615206003189087,
+      "planning_and_preview_s": 1.1044974327087402,
+      "sample_count": 47,
+      "all_sampled_feedback_fresh": true,
+      "max_csv_interval_s": 0.06363439559936523,
+      "median_csv_frequency_hz": 18.09312929351753,
+      "start_positions_rad": [
+        -0.005149919890135024,
+        -0.000953688868543523,
+        0.005149919890135024,
+        0.10891126878767032,
+        0.027275501640344757,
+        -0.014686808575570254
+      ],
+      "last_sampled_positions_rad": [
+        -0.005149919890135024,
+        -0.000953688868543523,
+        0.005149919890135024,
+        0.09822995345998287,
+        0.026894026092927348,
+        -0.015068284122987663
+      ],
+      "sampled_peak_velocities": [
+        {
+          "joint": 1,
+          "velocity_rad_s": 0.0073260073260073,
+          "seconds_after_execute_event": 1.3049368858337402
+        },
+        {
+          "joint": 2,
+          "velocity_rad_s": -0.0073260073260073,
+          "seconds_after_execute_event": 2.564129114151001
+        },
+        {
+          "joint": 3,
+          "velocity_rad_s": -0.0073260073260073,
+          "seconds_after_execute_event": 0.4889988899230957
+        },
+        {
+          "joint": 4,
+          "velocity_rad_s": 0.1831501831501825,
+          "seconds_after_execute_event": 2.564129114151001
+        },
+        {
+          "joint": 5,
+          "velocity_rad_s": 0.0219780219780219,
+          "seconds_after_execute_event": 0.08712053298950195
+        },
+        {
+          "joint": 6,
+          "velocity_rad_s": 0.0366300366300365,
+          "seconds_after_execute_event": 2.0626072883605957
+        }
+      ],
+      "reported_error": "回零控制器中止：Return aborted: start mismatch, tracking, timing or heartbeat"
+    },
+    {
+      "revision": 7,
+      "start_local": "2026-11-25T07:46:20.642+08:00",
+      "failure_local": "2026-11-25T07:46:23.462+08:00",
+      "planned_duration_s": 3.5469094841199995,
+      "elapsed_until_failure_s": 2.820587635040283,
+      "planning_and_preview_s": 1.0833899974822998,
+      "sample_count": 50,
+      "all_sampled_feedback_fresh": true,
+      "max_csv_interval_s": 0.06269717216491699,
+      "median_csv_frequency_hz": 18.03257149736023,
+      "start_positions_rad": [
+        -0.005149919890135024,
+        -0.000953688868543523,
+        0.005149919890135024,
+        0.07839322499427759,
+        0.027275501640344757,
+        -0.015068284122987663
+      ],
+      "last_sampled_positions_rad": [
+        -0.005149919890135024,
+        -0.000953688868543523,
+        0.005149919890135024,
+        0.051308461127641536,
+        0.027275501640344757,
+        -0.015068284122987663
+      ],
+      "sampled_peak_velocities": [
+        {
+          "joint": 1,
+          "velocity_rad_s": 0.0073260073260073,
+          "seconds_after_execute_event": 0.2132093906402588
+        },
+        {
+          "joint": 2,
+          "velocity_rad_s": -0.0024420024420024333,
+          "seconds_after_execute_event": 0.04786348342895508
+        },
+        {
+          "joint": 3,
+          "velocity_rad_s": -0.0073260073260073,
+          "seconds_after_execute_event": 0.5513362884521484
+        },
+        {
+          "joint": 4,
+          "velocity_rad_s": -0.3882783882783869,
+          "seconds_after_execute_event": 2.721289873123169
+        },
+        {
+          "joint": 5,
+          "velocity_rad_s": 0.0219780219780219,
+          "seconds_after_execute_event": 0.15799641609191895
+        },
+        {
+          "joint": 6,
+          "velocity_rad_s": 0.0219780219780219,
+          "seconds_after_execute_event": 0.04786348342895508
+        }
+      ],
+      "reported_error": "回零控制器中止：Return aborted: start mismatch, tracking, timing or heartbeat",
+      "approx_sampled_max_tracking_errors_rad": [
+        0.00258901223028711,
+        0.0009572947860214616,
+        0.0025800668000384433,
+        0.020806091715026592,
+        0.013685302205933237,
+        0.0075637751648469104
+      ],
+      "tracking_error_time_alignment": "Approximate: aligned to Python home_executing event, not exact RT start."
+    }
+  ],
+  "home_reached_events": 0,
+  "release_events": [
+    {
+      "time": 1795563984.2520595,
+      "kind": "released",
+      "confirmed": true
+    }
+  ],
+  "final_release_confirmed": true,
+  "observations": [
+    "All four plans reached execution; aborts occurred in the C++ return controller.",
+    "Every CSV sample during the four execution windows reports fresh feedback.",
+    "The saved final attempt has sampled tracking error below 0.021 rad; the protection threshold was 0.15 rad.",
+    "No sampled velocity during execution exceeds the 0.5 rad/s protection threshold.",
+    "J4 motion begins shortly before several aborts; sampled velocity alternates sign during net negative motion.",
+    "No home_reached event exists; the later explicit release was confirmed."
+  ],
+  "inferences_and_limits": [
+    "Not a MoveIt planning failure; these events do not indicate a serial disconnect.",
+    "Velocity transients, control-period/heartbeat gaps or solver failure remain possible; the old generic error does not identify which branch fired.",
+    "The 125 Hz controller can see transients omitted by approximately 18 Hz CSV sampling. Do not infer an exact failure code from this report.",
+    "The first three trajectories were overwritten, so their exact reference errors cannot be reconstructed.",
+    "Alternating J4 velocity could reflect real oscillation or feedback spikes; low-rate telemetry cannot distinguish these."
+  ]
+}

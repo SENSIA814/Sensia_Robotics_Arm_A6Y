@@ -1,0 +1,53 @@
+[
+  {
+    "session": "teaching_right_10182c8862",
+    "revision": 1,
+    "joint": "joint4",
+    "failure_message": "Return aborted: joint_speed revision=1 joint=joint4 value=0.564103 limit=0.500000 elapsed=2.495981 s position=0.462921 velocity=-0.564103",
+    "planned_peak_speed": 0.03756278697253644,
+    "failure_elapsed_s": 2.495981,
+    "fault_q": 0.462921,
+    "fault_velocity": -0.564103,
+    "reference_q_at_fault": 0.46696705240634784,
+    "reference_velocity_at_fault": -0.0329074779156325,
+    "tracking_error_at_fault": 0.004046052406347811,
+    "position_difference_peak_speed_50ms": 0.3208819602450088,
+    "position_difference_stationary_fraction_abs_lt_0p01": 0.6,
+    "motion_sample_count": 11,
+    "source_plan": "home_plan_001.json"
+  },
+  {
+    "session": "teaching_right_10182c8862",
+    "revision": 3,
+    "joint": "joint4",
+    "failure_message": "Return aborted: joint_speed revision=3 joint=joint4 value=0.593407 limit=0.500000 elapsed=2.632021 s position=0.223354 velocity=-0.593407",
+    "planned_peak_speed": 0.020067273641524188,
+    "failure_elapsed_s": 2.632021,
+    "fault_q": 0.223354,
+    "fault_velocity": -0.593407,
+    "reference_q_at_fault": 0.2398784098133419,
+    "reference_velocity_at_fault": -0.02006727364151363,
+    "tracking_error_at_fault": 0.01652440981334191,
+    "position_difference_peak_speed_50ms": 0.2462651192166895,
+    "position_difference_stationary_fraction_abs_lt_0p01": 0.6666666666666666,
+    "motion_sample_count": 13,
+    "source_plan": "home_plan_002.json"
+  },
+  {
+    "session": "teaching_left_fc457bbc64",
+    "revision": 1,
+    "joint": "joint4",
+    "failure_message": "Return aborted: joint_speed revision=1 joint=joint4 value=0.622711 limit=0.500000 elapsed=5.687998 s position=0.133707 velocity=-0.622711",
+    "planned_peak_speed": 0.09990009990009992,
+    "failure_elapsed_s": 5.687998,
+    "fault_q": 0.133707,
+    "fault_velocity": -0.622711,
+    "reference_q_at_fault": 0.1172019840714376,
+    "reference_velocity_at_fault": -0.0995893470638665,
+    "tracking_error_at_fault": -0.01650501592856239,
+    "position_difference_peak_speed_50ms": 0.2574769528332735,
+    "position_difference_stationary_fraction_abs_lt_0p01": 0.19696969696969696,
+    "motion_sample_count": 67,
+    "source_plan": "home_plan_001.json"
+  }
+]

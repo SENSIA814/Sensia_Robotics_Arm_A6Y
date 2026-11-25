@@ -1,0 +1,24 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>四臂跟随曲线与结论</title><style>body{font:16px/1.75 system-ui,sans-serif;color:#243447;background:#f7f9fc;max-width:1250px;margin:28px auto;padding:0 22px 40px}h1{font-size:29px}h2{margin-top:32px}img{width:100%;background:white;border:1px solid #d7e0e8;border-radius:7px}table{border-collapse:collapse;width:100%;background:white}td,th{padding:9px;border:1px solid #d7e0e8;text-align:left}a{color:#0871b2}.conclusion{border-left:5px solid #0871b2;background:#eaf4fb;padding:15px 20px}.muted{color:#5b6c7d}code{background:#e7edf4;padding:2px 5px}</style>
+<h1>先保持 250 / 100 Hz，转查位置跟随响应与限步逻辑</h1>
+<p class="muted">真机会话 teaching_394b0c668f · 2026-11-25 21:14:20 起 · 约 31.96 秒 · 本次仅离线分析，没有修改程序、频率或参数。</p>
+<div class="conclusion"><b>结论：通信不是当前数秒滞后的主要来源。原始目标能及时反映示教位置；原程序以运动臂当前位置为中心限步，产生缓慢斜坡。电机在这个小误差下的响应又决定斜坡推进速度，左臂 J2/J3 明显比右臂慢。</b></div>
+<img src="overview_J2.png" alt="左右臂J2目标形成和实际跟随对比">
+<h2>两个阶段必须分开看</h2>
+<p>第一组图同时显示示教实际角、原程序原始目标和最终下发目标。示教实际角与原始目标基本重合；原始目标到下发目标的大差距来自目标处理。第二组图使用底层实际交给串口的目标对比运动臂实际角，直接观察执行端响应。</p>
+<p>原版 <code>apply_safety()</code> 对前三轴设置 <code>min(0.35, 7.5 / 100 × 1.5) = 0.1125 rad</code> 的超前量，后三轴为 <code>0.075 rad</code>，参考量是运动臂当前反馈。因而运动臂慢，下一次目标也随它缓慢前进；它没有直接收到完整的示教阶跃。</p>
+<h2>通信与采样证据</h2>
+<p>四臂各记录 7,977 个原生周期，累计计数对应约 250 Hz；队列丢弃、周期缺失和新增超过 6 ms 的周期均为 0。每侧 raw/safe 各 3,191 条，上位机目标约 99.89 Hz。</p>
+<table><tr><th>臂</th><th>主机侧链路</th><th>中位 / ms</th><th>P95 / ms</th><th>变化目标匹配数</th></tr><tr><td>左臂</td><td>示教快照 → 原始目标发布</td><td>3.58</td><td>3.78</td><td>1453/1453</td></tr><tr><td>左臂</td><td>限步目标发布 → 底层串口接受</td><td>2.23</td><td>4.16</td><td>2401/2401</td></tr><tr><td>右臂</td><td>示教快照 → 原始目标发布</td><td>1.68</td><td>3.24</td><td>1716/1716</td></tr><tr><td>右臂</td><td>限步目标发布 → 底层串口接受</td><td>2.16</td><td>4.17</td><td>1848/1848</td></tr></table>
+<p class="muted">仅对变化的六轴目标向量做时间匹配；相同量化值可能重复，因此示教源年龄是近似估计。时间精度受 4 ms 原生采样与 10 ms 目标周期限制。这些数值不是 CAN ACK、物理往返时间或电机采样时刻，不能声称通信延迟为零；但不支持以通信解释本次持续数秒的追赶。</p>
+<h2>运动端响应：左侧明显更慢</h2>
+<table><tr><th>关节</th><th>受限追赶速度中位 / rad·s⁻¹</th><th>目标−实际误差中位 / rad</th><th>示教进入保持带后到位 / s</th><th>首段保持末期误差 / rad</th></tr><tr><td>左臂 J2</td><td>0.149</td><td>0.111</td><td>8.72</td><td>0.0011</td></tr><tr><td>左臂 J3</td><td>0.149</td><td>0.111</td><td>8.25</td><td>0.0004</td></tr><tr><td>右臂 J2</td><td>0.320</td><td>0.109</td><td>2.40</td><td>0.0000</td></tr><tr><td>右臂 J3</td><td>0.320</td><td>0.109</td><td>2.81</td><td>0.0008</td></tr></table>
+<p>首段长保持在约 3～16 秒；到位带为 ±max(0.01 rad, 2%首段平台幅值)，须持续保持到该段结束。上述到位耗时包含限步形成的目标斜坡，不能当作固定目标阶跃的电机固有稳定时间。相近约 0.11 rad 误差下，左 J2/J3 约 0.15 rad/s，右约 0.32 rad/s，右侧约快一倍；保持足够时间后误差很小，主要表现为追赶缓慢，未见持续明显振荡。</p>
+<p>20:58 的已授权只读扫描显示：左运动臂 J1～J6 的 KP_APR=54，右侧=120；相应位置积分和速度环参数相同。这与左右响应差异方向一致，是优先复核位置环的依据；多轴负载和限步耦合仍存在，不能认定某个增益是唯一原因，更不能直接确定新参数。</p>
+<h2>全部关节曲线</h2>
+<p><a href="01_teacher_vs_target.png">下载图 1 PNG</a> · <a href="01_teacher_vs_target.svg">图 1 SVG</a> · <a href="02_target_vs_actual.png">下载图 2 PNG</a> · <a href="02_target_vs_actual.svg">图 2 SVG</a></p>
+<img src="01_teacher_vs_target.png" alt="全部J1到J6示教实际和目标时间曲线">
+<img src="02_target_vs_actual.png" alt="全部J1到J6下发目标和实际时间曲线">
+<h2>记录边界与下一步</h2>
+<p>本次包含初始移动、长保持和返回。自动单阶跃报告因没有初始静止段或有再次移动而拒绝给出统一阶跃拟合；本次分析选取首段保持进行比较。原报告每轴的一个初始对齐空值来自数据流起始相位，并不是原生周期缺失。J2/J3 返回时下发目标最低约 0.02 rad，来自关节下限加原版 limit_margin；不要把示教 0 与实际约 0.02 的差距当成电机静差。夹爪只读，不作位置闭环评价。</p>
+<p><b>建议：暂不继续提频。优先检查运动臂位置闭环，重点是左 J2/J3；同时把原版限步的影响纳入后续调参验证。</b>本轮先给结论，不修改增益或限步。</p>
+<p class="muted">完整指标：<a href="analysis.json">analysis.json</a> · <a href="per_joint_metrics.csv">逐轴指标 CSV</a> · <a href="pipeline_metrics.csv">链路指标 CSV</a> · <a href="provenance.json">来源 SHA256</a> · <a href="analyze.py">可复现分析脚本</a>。绘图采用各流原始主机时间戳，无平滑、无为了重合而移动曲线。</p></html>

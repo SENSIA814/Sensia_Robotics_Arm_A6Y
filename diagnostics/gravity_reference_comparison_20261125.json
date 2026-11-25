@@ -1,0 +1,147 @@
+{
+  "created_at": "2026-11-25T05:05:21.651220+08:00",
+  "archive": "/home/taoqiu/文档/xwechat_files/wxid_30td89b7wmgj22_0ea1/msg/file/2026-11/A6-Y-G_项目交接_2026-10-28.zip",
+  "reference_files": [
+    {
+      "path": "A6-Y-G/src/a6_y_controllers/config/a5_gravity_controllers.yaml",
+      "identical": true,
+      "reference_sha256": "7e12474394128660bcf37610688f776532ae41e608799f7c6da4f03f7be18dce",
+      "current_sha256": "7e12474394128660bcf37610688f776532ae41e608799f7c6da4f03f7be18dce"
+    },
+    {
+      "path": "A6-Y-G/src/a6_y_controllers/config/a5_motors.yaml",
+      "identical": true,
+      "reference_sha256": "6bab84164df0cc1980e93d687639ce4665c8738298e67d7f4f478d58049f8d63",
+      "current_sha256": "6bab84164df0cc1980e93d687639ce4665c8738298e67d7f4f478d58049f8d63"
+    },
+    {
+      "path": "A6-Y-G/src/A5/urdf/A5.urdf",
+      "identical": true,
+      "reference_sha256": "df598e1549c4b9f405c5e6001d642f644f55790e8f47eb3394cb27ad8dfb6899",
+      "current_sha256": "df598e1549c4b9f405c5e6001d642f644f55790e8f47eb3394cb27ad8dfb6899"
+    },
+    {
+      "path": "A6-Y-G/src/A5/config/a5_model_conventions.yaml",
+      "identical": true,
+      "reference_sha256": "e968cf25602b5c7ea28da33521199a9134c678775cc598f3ee117a117f5b6cce",
+      "current_sha256": "e968cf25602b5c7ea28da33521199a9134c678775cc598f3ee117a117f5b6cce"
+    }
+  ],
+  "original_real_run": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_7733a3cdf4",
+  "original_runtime_parameter_differences": {
+    "torque_limits": {
+      "reference": [
+        10.0,
+        20.0,
+        20.0,
+        3.0,
+        4.0,
+        4.0,
+        30.0
+      ],
+      "runtime": [
+        10.0,
+        20.0,
+        20.0,
+        3.0,
+        4.0,
+        4.0,
+        0.0
+      ]
+    }
+  },
+  "observed_statistics": {
+    "joint1": {
+      "command_range_nm": [
+        -0.00051282051282047,
+        0.0001221001221001446
+      ],
+      "gravity_range_nm": [
+        -2.1826984664130577e-16,
+        1.6653345369377348e-16
+      ],
+      "configured_limit_nm": 10.0,
+      "at_limit_samples": 0,
+      "median_reported_effort_error_nm": 0.020488400488400404
+    },
+    "joint2": {
+      "command_range_nm": [
+        -2.172425794574906,
+        1.024993672798186
+      ],
+      "gravity_range_nm": [
+        -1.9781644951940123,
+        0.9378219213072415
+      ],
+      "configured_limit_nm": 20.0,
+      "at_limit_samples": 0,
+      "median_reported_effort_error_nm": 0.02637729918912702
+    },
+    "joint3": {
+      "command_range_nm": [
+        2.921591687793417,
+        6.460149244281757
+      ],
+      "gravity_range_nm": [
+        3.5921679212014825,
+        5.754343706540245
+      ],
+      "configured_limit_nm": 20.0,
+      "at_limit_samples": 0,
+      "median_reported_effort_error_nm": 0.018124572436281294
+    },
+    "joint4": {
+      "command_range_nm": [
+        1.508807511892202,
+        1.7984021352458823
+      ],
+      "gravity_range_nm": [
+        1.3752320035188164,
+        1.6345709227288576
+      ],
+      "configured_limit_nm": 3.0,
+      "at_limit_samples": 0,
+      "median_reported_effort_error_nm": 0.006595574624698397
+    },
+    "joint5": {
+      "command_range_nm": [
+        -0.09638972730396778,
+        0.006206374126062072
+      ],
+      "gravity_range_nm": [
+        -0.06717123322548402,
+        -0.0017137719249513221
+      ],
+      "configured_limit_nm": 4.0,
+      "at_limit_samples": 0,
+      "median_reported_effort_error_nm": 0.006786256741181016
+    },
+    "joint6": {
+      "command_range_nm": [
+        -0.04689040406822565,
+        0.027197149758886912
+      ],
+      "gravity_range_nm": [
+        -0.0067285296368963955,
+        -0.00039841849143429885
+      ],
+      "configured_limit_nm": 4.0,
+      "at_limit_samples": 0,
+      "median_reported_effort_error_nm": 0.0070600220793024865
+    }
+  },
+  "user_observation": "示教右臂 J2/J3/J4 明显下垂",
+  "interpretation": "基准参数及模型没有遗漏；指令未触及限幅，协议反馈大体跟随指令。这些数据不能辨识实际平衡力矩或证明负载模型准确。",
+  "trial": {
+    "automatic_apply": false,
+    "automatic_save": false,
+    "torque_scales_j2_j3_j4": [
+      1.2,
+      1.1,
+      1.2
+    ],
+    "friction_compensation_enabled": false,
+    "status": "未标定、小步试调起点，需用户复测后固定"
+  },
+  "scope": "本次仅离线检查与软件测试，没有连接或使能实体机械臂。"
+}

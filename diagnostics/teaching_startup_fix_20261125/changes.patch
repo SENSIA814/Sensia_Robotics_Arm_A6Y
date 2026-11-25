@@ -1,0 +1,373 @@
+--- before/tools/arm_gravity/gravity_session.py
++++ after/tools/arm_gravity/gravity_session.py
+@@ -373,6 +373,13 @@
+                     '确认失能后再手动开启补偿。')
+         return ''
+ 
++    def _validate_enable_positions(self, positions):
++        for q,n in zip(positions,JOINTS):
++            entry = self.model['joints'][n]
++            tolerance = .01 if n != JOINTS[6] else .001
++            if q < entry['lower']-tolerance or q > entry['upper']+tolerance:
++                raise ValueError(n+' 反馈超出模型范围，请复核零位或姿态')
++
+     def _enable(self):
+         if self.close_event.is_set(): raise InterruptedError('退出期间不能开启补偿')
+         self._wait(lambda:self._fresh(),timeout=2,
+@@ -383,11 +390,7 @@
+         s = self.feedback.snapshot()
+         if not self.snapshot()['mock']:
+             verify_usb_identity(self.model['arm'])
+-        for q,n in zip(s['q'],JOINTS):
+-            entry = self.model['joints'][n]
+-            tolerance = .01 if n != JOINTS[6] else .001
+-            if q < entry['lower']-tolerance or q > entry['upper']+tolerance:
+-                raise ValueError(n+' 反馈超出模型范围，请复核零位或姿态')
++        self._validate_enable_positions(s['q'])
+         self.update(release_confirmed=False)
+         if not self.output_started:
+             # Retire the read-only manager's client while motors are disabled.
+--- before/tools/arm_gravity/teaching_port_config.py
++++ after/tools/arm_gravity/teaching_port_config.py
+@@ -1,9 +1,10 @@
+ """Archive teleop configuration adapted only for this rig's roles and six axes."""
+ from pathlib import Path
++import math
+ import xml.etree.ElementTree as ET
+ import yaml
+ 
+-from gravity_config import ROOT, JOINTS, CONTROLLER, write_config, load_profile, base_parameters
++from gravity_config import ROOT, JOINTS, CONTROLLER, write_config, load_profile, base_parameters, protocol_ranges
+ 
+ HOME = 'arm_controller'
+ FOLLOW = 'direct_position_controller'
+@@ -18,6 +19,25 @@
+ VELOCITIES = [7.5, 7.5, 7.5, 5.0, 5.0, 5.0]
+ HOME_TOLERANCE = .03  # move_to_group_state.py's original goal tolerance
+ HOME_TIMEOUT = 55.  # Includes the original client's discovery and result waits.
++POSITION_LIMIT_POLICY = 'scanned_motor_PMAX_in_joint_coordinates'
++
++
++def position_bounds(model):
++    """Power teaching uses the scanned motor ranges requested by the operator.
++
++    Match native to_motor_position exactly; URDF limits remain model/planning
++    metadata. Never move or re-zero an encoder to fit that model at startup.
++    """
++    ranges = protocol_ranges(model)
++    bounds = {}
++    for name in JOINTS:
++        entry = model['joints'][name]
++        scale,offset,sign = (float(entry[k]) for k in ('position_scale','offset','sign'))
++        if not all(math.isfinite(v) for v in (scale,offset,sign)) or scale <= 0 or sign not in (-1.,1.):
++            raise ValueError(name+' 电机坐标换算无效')
++        radius = ranges[entry['motor_id']]['PMAX'] * scale
++        bounds[name] = (offset-radius,offset+radius)
++    return bounds
+ 
+ 
+ def port_parameters(role, roles=None):
+@@ -39,7 +59,11 @@
+     # Diagnostic threshold only; never changes watchdogs or motor control.
+     ET.SubElement(hardware, 'param', name='diagnostic_update_rate').text = str(CONTROL_HZ)
+     ET.SubElement(hardware, 'param', name='controller_mode_switching').text = 'true'
++    bounds = position_bounds(model)
+     for joint in robot.findall('ros2_control/joint'):
++        low,high = bounds[joint.get('name')]
++        joint.find("param[@name='min_position']").text = str(low)
++        joint.find("param[@name='max_position']").text = str(high)
+         for name in TIMING_INTERFACES:
+             ET.SubElement(joint, 'state_interface', name=name)
+     for joint, speed in zip(robot.findall('ros2_control/joint')[:6], VELOCITIES):
+@@ -78,9 +102,11 @@
+             ('enable_topic','enable'),('emergency_stop_topic','emergency_stop'),
+             ('raw_action_topic','raw_action'),('safe_action_topic','safe_action'),('status_topic','status'))})
+     config['joints'] = {k:v[:6] for k,v in config['joints'].items()}
++    bounds = position_bounds(follower.model)
+     config['limits'].update(
+-        min_position=[follower.model['joints'][n]['lower'] for n in JOINTS[:6]],
+-        max_position=[follower.model['joints'][n]['upper'] for n in JOINTS[:6]])
++        min_position=[bounds[n][0] for n in JOINTS[:6]],
++        max_position=[bounds[n][1] for n in JOINTS[:6]],
++        limit_margin=[0.]*6)
+     for section in ('limits','prediction'):
+         for key,value in config[section].items():
+             if isinstance(value,list):config[section][key] = value[:6]
+--- before/tools/arm_gravity/teaching_port_session.py
++++ after/tools/arm_gravity/teaching_port_session.py
+@@ -8,7 +8,7 @@
+ 
+ from gravity_config import JOINTS, CONTROLLER
+ from gravity_session import GravitySession, GravityStack
+-from teaching_port_config import HOME, FOLLOW, HOME_TOLERANCE, HOME_TIMEOUT, write_port_control, port_parameters
++from teaching_port_config import HOME, FOLLOW, HOME_TOLERANCE, HOME_TIMEOUT, write_port_control, port_parameters, position_bounds
+ 
+ 
+ class PortStack(GravityStack):
+@@ -131,6 +131,15 @@
+     def _startup_controller(self):
+         return CONTROLLER if self.model['role'].startswith('teaching_') else FOLLOW
+ 
++    def _validate_enable_positions(self, positions):
++        if positions is None or len(positions) != len(JOINTS):
++            raise ValueError('启动需要完整的七轴实际反馈')
++        bounds = position_bounds(self.model)
++        for name,q in zip(JOINTS,positions):
++            low,high = bounds[name]
++            if not np.isfinite(q) or not low <= q <= high:
++                raise ValueError(f'{name} 实际位置 {q} 超出电机 PMAX 换算范围 [{low}, {high}]')
++
+     def _ready_status(self):
+         return '反馈就绪，等待示教臂 MIT 重力补偿' if self.model['role'].startswith('teaching_') else '反馈就绪，等待运动臂 POS_VEL 跟随'
+ 
+--- before/tools/arm_gravity/teaching_port.py
++++ after/tools/arm_gravity/teaching_port.py
+@@ -9,10 +9,10 @@
+ import uuid
+ import numpy as np
+ 
+-from gravity_config import ROOT
++from gravity_config import ROOT, load_model
+ from teaching import TeachingCoordinator as LifecycleCoordinator, DEFAULT_PAIRS
+ from teaching_logs import SessionLog, software_manifest, write_json
+-from teaching_port_config import port_parameters, write_mapper_config, CONTROL_HZ, TARGET_HZ, CAN_BITRATE
++from teaching_port_config import port_parameters, write_mapper_config, CONTROL_HZ, TARGET_HZ, CAN_BITRATE, POSITION_LIMIT_POLICY, position_bounds
+ from teaching_frequency_log import FrequencyLog
+ from teaching_step_observer import StepObserverProcess
+ from teaching_port_session import PortArmSession
+@@ -199,6 +199,20 @@
+             raise RuntimeError(state['role']+'：反馈无效或超过该电机 VMAX 协议范围')
+         return q
+ 
++    def _preflight_start(self):
++        # Validate the whole group while every arm is still read-only. Each
++        # _enable rechecks fresh feedback again immediately before takeover.
++        positions={}
++        for role,session in self.sessions.items():
++            reason=session.enable_block_reason()
++            if reason:raise RuntimeError(self.roles[role]['name']+'：'+reason)
++            sample=session.feedback.snapshot()
++            try:session._validate_enable_positions(sample['q'])
++            except ValueError as exc:raise ValueError(self.roles[role]['name']+'：'+str(exc)) from exc
++            positions[role]=dict(position=sample['q'],source_time=sample.get('sample_source_time'))
++        self._event('startup_positions_checked',startup_home=False,position_limit_policy=POSITION_LIMIT_POLICY,
++            positions=positions)
++
+     def _run(self,pairs,frequency,mock,with_rviz,parameters):
+         folder=None;failed=False;runtime=None;timing=None
+         try:
+@@ -211,12 +225,15 @@
+             self._event('session_started',pairs=pairs,frequency=frequency,mock=mock,
+                 configured_rates=rates,
+                 implementation='archive_teleop_direct_start',startup_home=False,exit_home=True,home_backend='pos_vel',
++                position_limit_policy=POSITION_LIMIT_POLICY,
+                 leader_backend='mit_gravity',follower_backend='stock_direct_position')
+             write_json(folder/'software.json',software_manifest(ROOT))
+             write_json(folder/'motor_limits.json',self.limit_records)
+             write_json(folder/'session.json',dict(pairs=pairs,frequency=frequency,mock=mock,
+                 configured_rates=rates,
+                 roles={r:self.roles[r] for r in self.sessions},startup_home=False,exit_home=True,home_backend='pos_vel',
++                position_limit_policy=POSITION_LIMIT_POLICY,
++                position_bounds={r:position_bounds(load_model(r,self.roles)) for r in self.sessions},
+                 leader_backend='mit_gravity',follower_backend='stock_direct_position',
+                 application_log=os.environ.get('A6Y_TEACHING_APP_LOG')))
+             try:timing=FrequencyLog(folder)
+@@ -226,9 +243,7 @@
+                 s.start(role,mock,with_rviz,parameters[role])
+             self._await(lambda:all(s.snapshot()['ready'] for s in self.sessions.values()),45.)
+             self._save()
+-            for s in self.sessions.values():
+-                reason=s.enable_block_reason()
+-                if reason:raise RuntimeError(reason)
++            self._preflight_start()
+             self.update(phase='preparing',status='启动不回零：运动臂准备位置跟随，示教臂准备重力补偿')
+             # The mapper first holds disabled; only enable after ALL modes are ready.
+             for _,follower in pairs:self._operation(self.sessions[follower],'follow')
+@@ -241,6 +256,10 @@
+                 self._check();runtime.pump()
+                 if time.monotonic()>deadline:raise TimeoutError('原程序跟随进程未就绪，见 mapper 日志')
+             runtime.count={r:0 for r in runtime.count}
++            self._event('startup_follow_reference',startup_home=False,
++                references=[dict(leader=leader,follower=follower,
++                    teacher_position=self.sessions[leader].feedback.snapshot()['q'][:6],
++                    follower_position=self.sessions[follower].feedback.snapshot()['q'][:6]) for leader,follower in pairs])
+             runtime.enable(True)
+             started=time.monotonic();last_flush=started
+             self.update(phase='following',status='示教臂：MIT 重力补偿；运动臂：POS_VEL 跟随示教臂当前位置')
+--- before/tools/arm_gravity/test_teaching_port.py
++++ after/tools/arm_gravity/test_teaching_port.py
+@@ -1,4 +1,5 @@
+ import hashlib
++from copy import deepcopy
+ from pathlib import Path
+ from types import SimpleNamespace
+ from unittest.mock import Mock, patch
+@@ -10,13 +11,65 @@
+ 
+ from gravity_config import ROOT, CONTROLLER, JOINTS, load_model, load_profile
+ from teaching_port_config import HOME, FOLLOW, write_port_control, write_mapper_config
+-from a6_y_teleop.leader_follower_teleop import load_config
++from a6_y_teleop.leader_follower_teleop import load_config, LeaderFollowerTeleop
+ from teaching_port import TeachingCoordinator
+ from teaching_port_session import PortArmSession, PortStack
+-from teaching_port_config import port_parameters
++from teaching_port_config import port_parameters, position_bounds
++from gravity_session import GravitySession
+ 
+ 
+ class ArchivePortTests(unittest.TestCase):
++    def test_recorded_negative_j2_is_not_a_zero_pose_requirement(self):
++        arm=PortArmSession();arm.model=load_model('motion_right')
++        q=[-.091363394,-.011635004,.00171664,-.353437095,.061226825,.031090257,-.000114568]
++        original=list(q)
++        arm._validate_enable_positions(q)
++        self.assertEqual(q,original)
++        # The change is scoped to power teaching, not standalone gravity/MoveIt.
++        standalone=GravitySession();standalone.model=arm.model
++        with self.assertRaisesRegex(ValueError,'模型范围'):standalone._validate_enable_positions(q)
++        for bad in (float('nan'),float('inf'),12.6):
++            q[1]=bad
++            with self.assertRaisesRegex(ValueError,'joint2'):arm._validate_enable_positions(q)
++        with self.assertRaises(ValueError):arm._validate_enable_positions([0.]*6)
++
++    def test_protocol_position_bounds_follow_encoder_scale_and_offset(self):
++        model=deepcopy(load_model('motion_right'))
++        model['joints']['joint2'].update(sign=-1.,position_scale=.5,offset=.2)
++        bounds=position_bounds(model)
++        self.assertAlmostEqual(bounds['joint2'][0],-6.05)
++        self.assertAlmostEqual(bounds['joint2'][1],6.45)
++
++    def test_native_and_mapper_keep_negative_and_zero_teacher_targets(self):
++        with tempfile.TemporaryDirectory() as temp:
++            follower=SimpleNamespace(namespace='/follower',model=load_model('motion_right'))
++            path,_=write_mapper_config(temp,SimpleNamespace(namespace='/teacher'),follower)
++            config=load_config(str(path))
++            # Exercise the unchanged original mapper's real clamp, not a copy.
++            mapper=LeaderFollowerTeleop.__new__(LeaderFollowerTeleop)
++            mapper.config=config;mapper.last_safe=None
++            for j2 in (-.002479591,0.,.000572213):
++                teacher=[-.077630274,j2,.00171664,.001335164,.001335164,.060463874]
++                self.assertEqual(mapper.apply_safety(teacher,teacher),teacher)
++            path=write_port_control(follower.model,port_parameters('motion_right'),temp,'/follower','cm',False,True)
++            data=yaml.safe_load(path.read_text())
++            robot=ET.fromstring(data['/follower/cm']['ros__parameters']['robot_description'])
++            for i,joint in enumerate(robot.findall('ros2_control/joint')[:6]):
++                self.assertEqual(float(joint.find("param[@name='min_position']").text),config.min_position[i])
++                self.assertEqual(float(joint.find("param[@name='max_position']").text),config.max_position[i])
++                self.assertEqual(config.limit_margin[i],0.)
++
++    def test_all_poses_checked_before_any_arm_enable(self):
++        c=TeachingCoordinator();c._event=Mock()
++        left=SimpleNamespace(enable_block_reason=lambda:'',feedback=SimpleNamespace(snapshot=lambda:{'q':[.1]*7}),
++            _validate_enable_positions=Mock())
++        right=SimpleNamespace(enable_block_reason=lambda:'',feedback=SimpleNamespace(snapshot=lambda:{'q':[float('nan')]*7}),
++            _validate_enable_positions=Mock(side_effect=ValueError('joint2 无效')))
++        c.sessions={'motion_left':left,'motion_right':right}
++        with self.assertRaisesRegex(ValueError,'joint2'):c._preflight_start()
++        left._validate_enable_positions.assert_called_once()
++        self.assertNotIn('startup_positions_checked',[x.args[0] for x in c._event.call_args_list])
++
+     def test_home_exit_between_polls_is_not_a_persistent_process_failure(self):
+         stack=PortStack.__new__(PortStack)
+         stack.directory=Path('/tmp')
+--- before/tools/arm_gravity/verify_teaching_port.py
++++ after/tools/arm_gravity/verify_teaching_port.py
+@@ -25,15 +25,27 @@
+     raise AssertionError('Timeout: '+json.dumps(state,ensure_ascii=False))
+ 
+ 
+-def verify(single=False, fault=False, exit_failure=False, mode_failure=False, cancel_home=False, step=False):
++# First feedback from teaching_fdcc2ed1ee; includes J2 just outside the URDF lower bound.
++RECORDED_START = {
++    'teaching_left': [-.0070573,.000572213,.002479591,-.100900282,.157740139,-.097467002,-.000756146],
++    'motion_left': [.059700923,-.000190738,.002861067,-.253490501,-.006294347,-.155832761,-.003853358],
++    'teaching_right': [-.077630274,-.002479591,.00171664,.001335164,.001335164,.060463874,-.000242883],
++    'motion_right': [-.091363394,-.011635004,.00171664,-.353437095,.061226825,.031090257,-.000114568],
++}
++
++
++def verify(single=False, fault=False, exit_failure=False, mode_failure=False, cancel_home=False, step=False,
++           recorded_start=False):
+     pairs=DEFAULT_PAIRS[:1] if single else DEFAULT_PAIRS
+     selected=[r for pair in pairs for r in pair]
+-    emulators={};c=None
++    emulators={};c=None;initial={}
+     try:
+         roles=load_roles()
+         for index,role in enumerate(selected):
+             emulators[role]=ProcessMotorEmulator(role,native_port=True)
+             q=[.26,.18,.17,.15,-.14,.16,-.01] if role.startswith('teaching_') else [-.12,.04,.05,-.05,.04,-.06,-.01]
++            if recorded_start:q=RECORDED_START[role]
++            initial[role]=list(q)
+             emulators[role].snapshot(('set_q',q))
+             roles[role]=dict(roles[role],port=emulators[role].port)
+         assert all(roles[r]['port'].startswith('/dev/pts/') for r in selected)
+@@ -54,9 +66,19 @@
+                 assert arm.snapshot()['gravity']==[None]*7
+                 assert not list(Path(arm.snapshot()['directory']).glob('spawner_'+CONTROLLER+'*'))
+                 assert not data['last_torque']
++        startup_audit={r:em.snapshot() for r,em in emulators.items()}
+         for leader,follower in pairs:
+-            np.testing.assert_allclose(emulators[leader].snapshot()['q'][:6],[.26,.18,.17,.15,-.14,.16],atol=.001)
++            np.testing.assert_allclose(emulators[leader].snapshot()['q'][:6],initial[leader][:6],atol=.001)
+             np.testing.assert_allclose(emulators[follower].snapshot()['q'][:6],emulators[leader].snapshot()['q'][:6],atol=.003)
++            # Includes the pre-enable preload and every native POS_VEL command:
++            # first hold the measured follower pose, then move only toward the teacher.
++            commands=startup_audit[follower]['position_commands']
++            assert set(commands)==set(range(1,7)),commands
++            for i,values in commands.items():
++                begin,target=initial[follower][i-1],initial[leader][i-1]
++                assert abs(values['first']-begin)<.001,(follower,i,values)
++                assert values['min']>=min(begin,target)-.001,(follower,i,values)
++                assert values['max']<=max(begin,target)+.001,(follower,i,values)
+         print('PASS: no startup home, nonzero teacher pose preserved, follower converges directly; no follower gravity',flush=True)
+         if cancel_home:
+             c.stop()
+@@ -159,6 +181,7 @@
+             pairs=pairs,report=state['directory'],exit_elapsed_s=exit_elapsed,movement=moved,packets=state['packets'],actual_hz=state['actual_hz'],
+             audit=audits,plant='instantaneous encoder response; no physical dynamics verification')
+         result['native_rates_hz']=rates
++        result.update(recorded_start=recorded_start,initial_positions=initial,startup_audit=startup_audit)
+         if step:
+             folder=Path(state['directory'])
+             quality=json.loads((folder/'step_quality.json').read_text())
+@@ -202,5 +225,6 @@
+     parser.add_argument('--mode-failure',action='store_true')
+     parser.add_argument('--cancel-home',action='store_true')
+     parser.add_argument('--step',action='store_true')
++    parser.add_argument('--recorded-start',action='store_true')
+     args=parser.parse_args()
+-    print(json.dumps(verify(args.single,args.fault,args.exit_failure,args.mode_failure,args.cancel_home,args.step),ensure_ascii=False,indent=2))
++    print(json.dumps(verify(args.single,args.fault,args.exit_failure,args.mode_failure,args.cancel_home,args.step,args.recorded_start),ensure_ascii=False,indent=2))
+--- before/tools/arm_gravity/verify_multi.py
++++ after/tools/arm_gravity/verify_multi.py
+@@ -5,6 +5,7 @@
+ import json
+ import multiprocessing
+ import os
++import struct
+ from pathlib import Path
+ import threading
+ import time
+@@ -23,7 +24,7 @@
+         emulator = MotorEmulator(role,position_mode=position_mode,native_port=native_port)
+         cursor = 0
+         audit = dict(frames=0, enables=0, disables=0, nonqueries=0,
+-                     gripper_commands=0, zero_commands=0)
++                     gripper_commands=0, zero_commands=0, position_commands={})
+ 
+         def snapshot():
+             nonlocal cursor
+@@ -35,6 +36,12 @@
+                 audit['nonqueries'] += not (cid == 0x7ff and data[2] == 0xcc)
+                 audit['gripper_commands'] += cid in (7,0x107)
+                 audit['zero_commands'] += data == b'\xff' * 7 + b'\xfe'
++                if 0x101 <= cid <= 0x106:
++                    i = cid - 0x100
++                    entry = emulator.model['joints']['joint'+str(i)]
++                    q = entry['sign'] * struct.unpack('<ff', data)[0] * entry['position_scale'] + entry['offset']
++                    values = audit['position_commands'].setdefault(i, dict(first=q, min=q, max=q, count=0))
++                    values.update(min=min(values['min'], q), max=max(values['max'], q), count=values['count']+1)
+             audit['frames'] = cursor
+             return dict(audit, port=emulator.port, enabled=sorted(emulator.enabled),
+                         commands=len(emulator.commands),

@@ -1,0 +1,18 @@
+schema_version: 1
+# Display conversion only. These historical values have NOT been verified on
+# all four current arms. No automatic zero offsets, clamping or mirroring.
+# q_urdf = sign * position_scale * q_motor_rad + offset
+source: src/a6_y_controllers/config/a5_motors.yaml
+defaults:
+  joint1: {motor_id: 1, sign: -1.0, position_scale: 1.0, offset: 0.0}
+  joint2: {motor_id: 2, sign: 1.0, position_scale: 1.0, offset: 0.0}
+  joint3: {motor_id: 3, sign: 1.0, position_scale: 1.0, offset: 0.0}
+  joint4: {motor_id: 4, sign: -1.0, position_scale: 1.0, offset: 0.0}
+  joint5: {motor_id: 5, sign: -1.0, position_scale: 1.0, offset: 0.0}
+  joint6: {motor_id: 6, sign: -1.0, position_scale: 1.0, offset: 0.0}
+  gripper_finger_joint1: {motor_id: 7, sign: 1.0, position_scale: 0.0239, offset: 0.0}
+roles:
+  motion_left: {usb_serial: '304C33733036', overrides: {}}
+  motion_right: {usb_serial: '209B3971534B', overrides: {}}
+  teaching_left: {usb_serial: '304F33733036', overrides: {}}
+  teaching_right: {usb_serial: '209D3982534B', overrides: {}}

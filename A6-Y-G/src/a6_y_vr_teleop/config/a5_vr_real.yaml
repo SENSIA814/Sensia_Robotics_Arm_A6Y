@@ -1,0 +1,36 @@
+# Proposed low-speed values; physical commissioning remains pending.
+update_rate: 125.0
+input_timeout: 0.15
+feedback_timeout: 0.05
+max_control_period: 0.04
+compute_budget: 0.008
+position_scale: 1.0
+rotation_enabled: false
+vr_to_base: [[0, 0, -1], [-1, 0, 0], [0, 1, 0]]
+max_velocity: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+# Full native-position mode overrides these speeds in position_profile.py.
+target_linear_speed: 0.02
+target_angular_speed: 0.15
+max_joint_lead: 0.03
+local_workspace_radius: 0.03
+input_translation_jump: 0.10
+input_rotation_jump: 0.6
+orientation_length_scale: 0.15
+position_tolerance: 0.002
+orientation_tolerance: 0.035
+limited_timeout: 0.5
+# CAD's closest non-adjacent wrist parts are ~1.5 mm apart. This margin is
+# for software tests only; execute requires measured clearance/stopping evidence.
+mesh_clearance_m: 0.0005
+path_joint_step_rad: 0.0002
+reach_bound_m: 1.5
+floor_z_m: null
+workspace_lower: null
+workspace_upper: null
+# Operator-confirmed real gaps in the folded pose; activate only explicitly in
+# the restricted operator trial. These pairs remain unverified model geometry.
+zero_pose_collision_tolerance:
+  enabled: false
+  zero_band_rad: 0.03490658503988659  # J2/J3 around numerical zero
+  anchor_band_rad: 0.03490658503988659  # all arm axes around first PREPARE origin
+  pairs: [[link1, link4], [link1, link5], [link2, link4]]

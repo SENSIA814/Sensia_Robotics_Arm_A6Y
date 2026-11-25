@@ -1,0 +1,38 @@
+{
+  "selected_runs": [
+    "real_kp2500_asr120_v90",
+    "real_kp2500_asr120_v90_repeat"
+  ],
+  "selected_native_parameters": {
+    "KP_APR": 2500.0,
+    "KI_APR": 0.0,
+    "KP_ASR": 0.004608000162988901,
+    "KI_ASR": 0.0020000000949949026,
+    "Deta": 4.0,
+    "V_BW": 40.0,
+    "ACC": 2.0,
+    "DEC": -2.0,
+    "VMAX": 20.0
+  },
+  "target_peak_deg_s": 90,
+  "range_deg": [
+    0.31690295648685834,
+    85.31690295648686
+  ],
+  "one_way_seconds": 1.7708333333333333,
+  "home_model_rad": [
+    -0.039101,
+    1.112573,
+    0.005531,
+    -0.228695,
+    -0.051308,
+    -0.104715
+  ],
+  "numeric_and_operator_accepted": true,
+  "ram_only": true,
+  "flash_saved": false,
+  "all_seven_disabled": true,
+  "trial_count": 13,
+  "completed_trials": 12,
+  "scope": "J3 only at the previously confirmed home with the other five arm axes held, gripper read-only. Production VR speed ceilings unchanged."
+}

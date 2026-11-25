@@ -1,0 +1,9 @@
+{
+  "hardware_used_by_tests": false,
+  "tests_passed": 8,
+  "test_command": "/usr/bin/python3 -m unittest discover -s diagnostics/handoff_motor_trial_20261125 -p test_apply_gains.py -v",
+  "sources": {
+    "apply_gains.py": "9f1b5c4bb32c1cffd8b2be088befecc326e882e05a77c335ff45101527289011",
+    "test_apply_gains.py": "df1012f1a52f826a265b201a03c6e6d2dbd47809a0d34001a7d6ce4a03f79296"
+  }
+}

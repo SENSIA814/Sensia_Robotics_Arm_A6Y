@@ -1,0 +1,131 @@
+{
+  "result": "PASS",
+  "date": "2026-11-25",
+  "physical_devices": 0,
+  "python_tests": 60,
+  "cpp_controller_suites": 6,
+  "driver_suites": 6,
+  "all_four_homed_before_teaching": true,
+  "single": {
+    "result": "PASS",
+    "pairs": [
+      [
+        "teaching_left",
+        "motion_left"
+      ]
+    ],
+    "physical_devices": 0,
+    "backend": "actual C++ controller + driver dry_run",
+    "hand_input": "synthetic offset injected before incremental mapping",
+    "movement": {
+      "motion_left": [
+        0.02949477559313627,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "packets": 140,
+    "actual_hz": 50.34936342562856,
+    "missed_periods": 0,
+    "all_homed_released_closed": true,
+    "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_13d6c9a9c9"
+  },
+  "dual": {
+    "result": "PASS",
+    "pairs": [
+      [
+        "teaching_left",
+        "motion_left"
+      ],
+      [
+        "teaching_right",
+        "motion_right"
+      ]
+    ],
+    "physical_devices": 0,
+    "backend": "actual C++ controller + driver dry_run",
+    "hand_input": "synthetic offset injected before incremental mapping",
+    "movement": {
+      "motion_left": [
+        0.029552697970970956,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "motion_right": [
+        -0.014763065096723703,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "packets": 150,
+    "actual_hz": 48.939405068283754,
+    "missed_periods": 3,
+    "all_homed_released_closed": true,
+    "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_bda7f95a5e"
+  },
+  "pty": {
+    "result": "PASS",
+    "physical_devices": 0,
+    "ports": {
+      "teaching_left": "/dev/pts/2",
+      "motion_left": "/dev/pts/4",
+      "teaching_right": "/dev/pts/5",
+      "motion_right": "/dev/pts/6"
+    },
+    "held_encoder_plant": true,
+    "j1_motor_torque_changes": {
+      "motion_left": -0.5743589743589759,
+      "motion_right": 0.32820512820512704
+    },
+    "packets": 140,
+    "actual_hz": 49.90408284496575,
+    "gripper_commands": 0,
+    "zero_or_flash_writes": 0,
+    "all_released": true,
+    "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_d80160e34f"
+  },
+  "feedback_loss": {
+    "result": "PASS",
+    "physical_devices": 0,
+    "feedback_loss": true,
+    "whole_batch_stopped": true,
+    "failed_exit_retains_sessions": true,
+    "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_3be88f0560"
+  },
+  "source_sha256": {
+    "A6-Y-G/tools/arm_gravity/teaching.py": "393b00593a6c6a256d73d9b661f4af1f11782e801fd3c7b38df96a8675067cb5",
+    "A6-Y-G/tools/arm_gravity/teaching_session.py": "6fb2d8ce22e307ace5bbecce0bdffd4108abd57b361a03f35fc46b5ddd14bd3d",
+    "A6-Y-G/tools/arm_gravity/teaching_view.py": "134ccad35c2e95955577cc11e97adc2edd19d1cd7aecbaed59597fc210374936",
+    "A6-Y-G/tools/arm_gravity/gravity_session.py": "cc7ca19908f0849a0003bcee0b42382815a505b910654b93fca4e79e41a16ba3",
+    "A6-Y-G/tools/arm_gravity/gravity_view.py": "fdbe44c3464a8abf9b0682474217fba4af1eeba4cdc558b72023517938f26ee9",
+    "A6-Y-G/src/a6_y_controllers/src/gravity_follow.cpp": "ef4d80a5287d0a901e8b40bc5392c48238cb4391547011ed94e468e6c9984215",
+    "A6-Y-G/src/a6_y_controllers/src/gravity_home.cpp": "734bfc46bbef4400264cf50df163a18258957bf1bf20e8397d8fddf855042a63",
+    "A6-Y-G/src/a6_y_controllers/src/A6_y_gravity_comp_controller.cpp": "21ad45ef650e11e9bfbb5aa3d7d3b6c19622d2d8ee26f8f42c2c0e35f9f0ea54",
+    "A6-Y-G/src/a6_y_controllers/include/a6_y_controllers/A6_y_gravity_comp_controller.hpp": "61d254ad48936ab910e99663581d63ad6a7231f1b0f9deaa2cc054e3eb07cff9",
+    "A6-Y-G/src/a6_y_teleop_msgs/msg/TeachingReference.msg": "f4f585a17039968f9d9a6107dd40bb5a70c2be3259ee463add4d57cbbc44ef48",
+    "A6-Y-G/src/a6_y_teleop_msgs/srv/TeachingControl.srv": "88f71bee0265ddac3e590da8cd6f51c4db8cdd19fada38d40ff3bf4dcb4e1d10"
+  },
+  "limitations": [
+    "未进行实体机械臂试验",
+    "模拟驱动非真实动力学；虚拟串口测试固定运动臂编码器",
+    "发送线程为固定周期尽力调度，过期周期跳过，非硬实时；界面显示实际频率",
+    "夹爪只读；连续跟随无跨臂或环境碰撞检测"
+  ],
+  "resolved_failures": [
+    "已在零位时 MoveIt 单点轨迹：改为持续核验零位与速度",
+    "诊断流迟于位置流导致过早停止：分开检查并保留原诊断门限",
+    "同进程虚拟 USB 线程受 ROS 资源销毁停顿影响：改为独立虚拟 USB 进程"
+  ]
+}

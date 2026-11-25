@@ -1,0 +1,28 @@
+{
+  "result": "PASS",
+  "python_tests": 20,
+  "source_urdf_unchanged": true,
+  "source_urdf_sha256": "df598e1549c4b9f405c5e6001d642f644f55790e8f47eb3394cb27ad8dfb6899",
+  "added_self_collision_exclusions": [
+    [
+      "link1",
+      "link4"
+    ],
+    [
+      "link1",
+      "link5"
+    ]
+  ],
+  "exclusion_scope": "Whole link pairs; motor/structure contacts within these pairs are also ignored",
+  "physical_devices_used_in_tests": 0,
+  "native_replay_report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_bare_collision_20261125.json",
+  "selector_full_profile_restoration": true,
+  "selector_locked_during_session": true,
+  "rviz_bare_policy_visible": true,
+  "rviz_readonly_close": true,
+  "rviz_session": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_left_xh2lm3wb/session.json",
+  "screenshots": [
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_bare_selector.png",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_bare_rviz.png"
+  ]
+}

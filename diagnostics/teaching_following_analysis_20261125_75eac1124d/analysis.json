@@ -1,0 +1,1275 @@
+{
+  "session": "teaching_75eac1124d",
+  "mock": false,
+  "following_duration_s": 44.323760504004895,
+  "previous_session": "teaching_cc3c0a6bfe",
+  "quality": {
+    "schema": 1,
+    "pairs": [
+      [
+        "teaching_left",
+        "motion_left"
+      ],
+      [
+        "teaching_right",
+        "motion_right"
+      ]
+    ],
+    "devices": {
+      "teaching_left": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_304F33733036-if00",
+      "motion_left": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_304C33733036-if00",
+      "teaching_right": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209D3982534B-if00",
+      "motion_right": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209B3971534B-if00"
+    },
+    "nominal_arm_hz": 250,
+    "nominal_target_hz": 100,
+    "units": {
+      "angle": "rad",
+      "velocity": "rad/s",
+      "time": "s",
+      "error": "sent_position - position"
+    },
+    "timebases": {
+      "control_time": "host steady clock at native read start",
+      "send_begin_time": "host steady clock before serial write",
+      "send_complete_time": "host steady clock after serial accepted frame; NOT CAN ACK",
+      "feedback_receive_time": "host steady clock when decoded; NOT motor sampling time",
+      "source_ros_time": "publisher ROS clock, system clock in this local deployment",
+      "receive_monotonic": "observer callback time; NOT source time"
+    },
+    "notes": [
+      "One latest native snapshot per observed control cycle, not every CAN frame.",
+      "J1-J6 position control on followers; J7 gripper is read-only.",
+      "Teacher MIT gravity has no servo position target; empty values are intentional.",
+      "Positive error means target exceeds actual in calibrated joint coordinates.",
+      "Only following phase is captured. Exit homing is excluded.",
+      "Queue drops and skipped native cycles invalidate precise latency estimates."
+    ],
+    "following_start_monotonic": 61941.143670002,
+    "following_stop_monotonic": 61985.467430506,
+    "complete": true,
+    "received": {
+      "arm:teaching_left": 11071,
+      "arm:motion_right": 11070,
+      "arm:motion_left": 11070,
+      "arm:teaching_right": 11070,
+      "raw:motion_left": 4428,
+      "safe:motion_left": 4428,
+      "raw:motion_right": 4428,
+      "safe:motion_right": 4428
+    },
+    "analysis_complete": true,
+    "written": {
+      "arm:teaching_left": 11071,
+      "arm:motion_right": 11070,
+      "arm:motion_left": 11070,
+      "arm:teaching_right": 11070,
+      "raw:motion_left": 4428,
+      "safe:motion_left": 4428,
+      "raw:motion_right": 4428,
+      "safe:motion_right": 4428
+    },
+    "queue_dropped": {},
+    "cycles": {
+      "teaching_left": {
+        "first": 725.0,
+        "last": 11795.0,
+        "skipped": 0,
+        "duplicates": 0,
+        "resets": 0
+      },
+      "motion_right": {
+        "first": 1132.0,
+        "last": 12201.0,
+        "skipped": 0,
+        "duplicates": 0,
+        "resets": 0
+      },
+      "motion_left": {
+        "first": 1570.0,
+        "last": 12639.0,
+        "skipped": 0,
+        "duplicates": 0,
+        "resets": 0
+      },
+      "teaching_right": {
+        "first": 247.0,
+        "last": 11316.0,
+        "skipped": 0,
+        "duplicates": 0,
+        "resets": 0
+      }
+    },
+    "error": null
+  },
+  "rates": [
+    {
+      "role": "motion_left",
+      "samples": 11070,
+      "loop_hz": 249.99996528593678,
+      "command_hz": 249.99996528593678,
+      "overruns": 0
+    },
+    {
+      "role": "motion_right",
+      "samples": 11070,
+      "loop_hz": 249.99996110759494,
+      "command_hz": 249.99996110759494,
+      "overruns": 0
+    },
+    {
+      "role": "teaching_left",
+      "samples": 11071,
+      "loop_hz": 249.9999809789985,
+      "command_hz": 249.9999809789985,
+      "overruns": 0
+    },
+    {
+      "role": "teaching_right",
+      "samples": 11070,
+      "loop_hz": 249.99993291516097,
+      "command_hz": 249.99993291516097,
+      "overruns": 0
+    }
+  ],
+  "metrics": [
+    {
+      "role": "motion_left",
+      "joint": 1,
+      "phase": "startup_hold",
+      "window_s": [
+        2.0,
+        3.0
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 0.0,
+      "actual_ptp_deg": 0.04371392957106518,
+      "sent_error_rms_deg": 0.020363338256768976,
+      "sent_error_abs_p95_deg": 0.04371387227528567,
+      "teacher_error_rms_deg": 0.020363372941731885,
+      "teacher_error_abs_peak_deg": 0.04371392957106519,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 2.0987465235080474,
+      "torque_abs_peak_nm": 0.417094017
+    },
+    {
+      "role": "motion_left",
+      "joint": 1,
+      "phase": "moving",
+      "window_s": [
+        4.0,
+        39.0
+      ],
+      "samples": 8750,
+      "teacher_ptp_deg": 55.3417691760052,
+      "actual_ptp_deg": 55.363626140790736,
+      "sent_error_rms_deg": 0.3268488698969604,
+      "sent_error_abs_p95_deg": 0.21857108024981373,
+      "teacher_error_rms_deg": 0.5120636248142932,
+      "teacher_error_abs_peak_deg": 4.04353367247805,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 140.05634989540312,
+      "torque_abs_peak_nm": 3.275213675
+    },
+    {
+      "role": "motion_left",
+      "joint": 1,
+      "phase": "coupled_motion",
+      "window_s": [
+        23.5,
+        24.5
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 0.0,
+      "actual_ptp_deg": 0.06557077976503897,
+      "sent_error_rms_deg": 0.02673340004582068,
+      "sent_error_abs_p95_deg": 0.043713757683726644,
+      "teacher_error_rms_deg": 0.026733454010312414,
+      "teacher_error_abs_peak_deg": 0.04371387227528567,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 4.057576581557809,
+      "torque_abs_peak_nm": 1.073504274
+    },
+    {
+      "role": "motion_left",
+      "joint": 1,
+      "phase": "final_hold",
+      "window_s": [
+        40.0,
+        44.3
+      ],
+      "samples": 1075,
+      "teacher_ptp_deg": 0.021856964785532566,
+      "actual_ptp_deg": 0.04371392957106518,
+      "sent_error_rms_deg": 0.01651843311826688,
+      "sent_error_abs_p95_deg": 0.021856964785532593,
+      "teacher_error_rms_deg": 0.01669242335693762,
+      "teacher_error_abs_peak_deg": 0.04371392957106519,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 2.6584122134538513,
+      "torque_abs_peak_nm": 0.458119658
+    },
+    {
+      "role": "motion_left",
+      "joint": 2,
+      "phase": "startup_hold",
+      "window_s": [
+        2.0,
+        3.0
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 0.0,
+      "actual_ptp_deg": 0.0,
+      "sent_error_rms_deg": 0.0,
+      "sent_error_abs_p95_deg": 0.0,
+      "teacher_error_rms_deg": 0.0,
+      "teacher_error_abs_peak_deg": 0.0,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 0.13991640816250606,
+      "torque_abs_peak_nm": 0.157264957
+    },
+    {
+      "role": "motion_left",
+      "joint": 2,
+      "phase": "moving",
+      "window_s": [
+        4.0,
+        39.0
+      ],
+      "samples": 8750,
+      "teacher_ptp_deg": 86.66276258600828,
+      "actual_ptp_deg": 86.48790709690714,
+      "sent_error_rms_deg": 0.37555979734574896,
+      "sent_error_abs_p95_deg": 1.0272729961703668,
+      "teacher_error_rms_deg": 0.5834266053849464,
+      "teacher_error_abs_peak_deg": 2.64468964507735,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 92.20492965216334,
+      "torque_abs_peak_nm": 13.052991453
+    },
+    {
+      "role": "motion_left",
+      "joint": 2,
+      "phase": "coupled_motion",
+      "window_s": [
+        23.5,
+        24.5
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 0.021856907489751044,
+      "actual_ptp_deg": 0.19671245388666794,
+      "sent_error_rms_deg": 0.06306025809518519,
+      "sent_error_abs_p95_deg": 0.10928511040656053,
+      "teacher_error_rms_deg": 0.06336249970651442,
+      "teacher_error_abs_peak_deg": 0.131141616825857,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 4.897075145124405,
+      "torque_abs_peak_nm": 8.061538462
+    },
+    {
+      "role": "motion_left",
+      "joint": 2,
+      "phase": "final_hold",
+      "window_s": [
+        40.0,
+        44.3
+      ],
+      "samples": 1075,
+      "teacher_ptp_deg": 0.0,
+      "actual_ptp_deg": 0.02185690748975308,
+      "sent_error_rms_deg": 0.015901592327869505,
+      "sent_error_abs_p95_deg": 0.02185690748975308,
+      "teacher_error_rms_deg": 0.015901592327869505,
+      "teacher_error_abs_peak_deg": 0.02185690748975308,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 0.13991640816250606,
+      "torque_abs_peak_nm": 0.499145299
+    },
+    {
+      "role": "motion_left",
+      "joint": 3,
+      "phase": "startup_hold",
+      "window_s": [
+        2.0,
+        3.0
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 0.0,
+      "actual_ptp_deg": 0.021856964785532614,
+      "sent_error_rms_deg": 0.015016227933412491,
+      "sent_error_abs_p95_deg": 0.021856964785532593,
+      "teacher_error_rms_deg": 0.015016227933412491,
+      "teacher_error_abs_peak_deg": 0.021856964785532593,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 0.4197492817832977,
+      "torque_abs_peak_nm": 4.396581197
+    },
+    {
+      "role": "motion_left",
+      "joint": 3,
+      "phase": "moving",
+      "window_s": [
+        4.0,
+        39.0
+      ],
+      "samples": 8750,
+      "teacher_ptp_deg": 101.0227713759609,
+      "actual_ptp_deg": 100.89162975913504,
+      "sent_error_rms_deg": 0.509574534974695,
+      "sent_error_abs_p95_deg": 1.2677033330368936,
+      "teacher_error_rms_deg": 0.7933168156851074,
+      "teacher_error_abs_peak_deg": 3.8905350908666607,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 131.94119678958327,
+      "torque_abs_peak_nm": 17.360683761
+    },
+    {
+      "role": "motion_left",
+      "joint": 3,
+      "phase": "coupled_motion",
+      "window_s": [
+        23.5,
+        24.5
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 1.3988440846964776,
+      "actual_ptp_deg": 0.9179914323725562,
+      "sent_error_rms_deg": 0.06686948214102409,
+      "sent_error_abs_p95_deg": 0.14316306491424757,
+      "teacher_error_rms_deg": 0.10481307768884131,
+      "teacher_error_abs_peak_deg": 0.5245665245992075,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 13.012228308240022,
+      "torque_abs_peak_nm": 11.630769231
+    },
+    {
+      "role": "motion_left",
+      "joint": 3,
+      "phase": "final_hold",
+      "window_s": [
+        40.0,
+        44.3
+      ],
+      "samples": 1075,
+      "teacher_ptp_deg": 0.0,
+      "actual_ptp_deg": 0.02185690748975308,
+      "sent_error_rms_deg": 0.014771521401785778,
+      "sent_error_abs_p95_deg": 0.02185690748975308,
+      "teacher_error_rms_deg": 0.014771521401785778,
+      "teacher_error_abs_peak_deg": 0.02185690748975308,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 0.4197492817832977,
+      "torque_abs_peak_nm": 2.905982906
+    },
+    {
+      "role": "motion_left",
+      "joint": 4,
+      "phase": "startup_hold",
+      "window_s": [
+        2.0,
+        3.0
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 0.02185690748975343,
+      "actual_ptp_deg": 0.04371387227528634,
+      "sent_error_rms_deg": 0.01900427070680668,
+      "sent_error_abs_p95_deg": 0.0437139868668447,
+      "teacher_error_rms_deg": 0.019352946666057923,
+      "teacher_error_abs_peak_deg": 0.04371387227528567,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 2.0987465235080474,
+      "torque_abs_peak_nm": 2.126984127
+    },
+    {
+      "role": "motion_left",
+      "joint": 4,
+      "phase": "moving",
+      "window_s": [
+        4.0,
+        39.0
+      ],
+      "samples": 8750,
+      "teacher_ptp_deg": 36.719657294902326,
+      "actual_ptp_deg": 33.681542799347405,
+      "sent_error_rms_deg": 2.028796066339198,
+      "sent_error_abs_p95_deg": 4.144184939165564,
+      "teacher_error_rms_deg": 4.670830478251271,
+      "teacher_error_abs_peak_deg": 23.714778660075122,
+      "target_limited_fraction": 0.1745142857142857,
+      "velocity_abs_peak_deg_s": 67.85947022011226,
+      "torque_abs_peak_nm": 4.534798535
+    },
+    {
+      "role": "motion_left",
+      "joint": 4,
+      "phase": "coupled_motion",
+      "window_s": [
+        23.5,
+        24.5
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 0.0874277445505719,
+      "actual_ptp_deg": 1.333273304931441,
+      "sent_error_rms_deg": 0.43163108892815116,
+      "sent_error_abs_p95_deg": 0.6338511766395319,
+      "teacher_error_rms_deg": 0.43184355510389644,
+      "teacher_error_abs_peak_deg": 0.7431359432714154,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 25.88454020831754,
+      "torque_abs_peak_nm": 3.084249084
+    },
+    {
+      "role": "motion_left",
+      "joint": 4,
+      "phase": "final_hold",
+      "window_s": [
+        40.0,
+        44.3
+      ],
+      "samples": 1075,
+      "teacher_ptp_deg": 0.0,
+      "actual_ptp_deg": 0.1967123965908964,
+      "sent_error_rms_deg": 0.04884182255860129,
+      "sent_error_abs_p95_deg": 0.06557089435659778,
+      "teacher_error_rms_deg": 0.04884174699761318,
+      "teacher_error_abs_peak_deg": 0.131141616825857,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 3.4979108343162264,
+      "torque_abs_peak_nm": 2.048840049
+    },
+    {
+      "role": "motion_left",
+      "joint": 5,
+      "phase": "startup_hold",
+      "window_s": [
+        2.0,
+        3.0
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 0.02185690748975308,
+      "actual_ptp_deg": 0.021856964785532614,
+      "sent_error_rms_deg": 0.01770278628727747,
+      "sent_error_abs_p95_deg": 0.021856964785532593,
+      "teacher_error_rms_deg": 0.018391040250246144,
+      "teacher_error_abs_peak_deg": 0.04371387227528567,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 2.0987465235080474,
+      "torque_abs_peak_nm": 0.168498168
+    },
+    {
+      "role": "motion_left",
+      "joint": 5,
+      "phase": "moving",
+      "window_s": [
+        4.0,
+        39.0
+      ],
+      "samples": 8750,
+      "teacher_ptp_deg": 35.27709928063478,
+      "actual_ptp_deg": 23.53992317097398,
+      "sent_error_rms_deg": 1.0462538376718094,
+      "sent_error_abs_p95_deg": 3.3878255625656646,
+      "teacher_error_rms_deg": 2.1176294992953757,
+      "teacher_error_abs_peak_deg": 17.50740805213942,
+      "target_limited_fraction": 0.04354285714285714,
+      "velocity_abs_peak_deg_s": 35.67869055586213,
+      "torque_abs_peak_nm": 0.735042735
+    },
+    {
+      "role": "motion_left",
+      "joint": 5,
+      "phase": "coupled_motion",
+      "window_s": [
+        23.5,
+        24.5
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 2.010838353846261,
+      "actual_ptp_deg": 1.7048412479192583,
+      "sent_error_rms_deg": 0.5908637082628919,
+      "sent_error_abs_p95_deg": 1.4982928676706184,
+      "teacher_error_rms_deg": 0.6229035845601637,
+      "teacher_error_abs_peak_deg": 1.7266981554090122,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 17.48955417158113,
+      "torque_abs_peak_nm": 0.417582418
+    },
+    {
+      "role": "motion_left",
+      "joint": 5,
+      "phase": "final_hold",
+      "window_s": [
+        40.0,
+        44.3
+      ],
+      "samples": 1075,
+      "teacher_ptp_deg": 0.021856907489752633,
+      "actual_ptp_deg": 0.021856964785533707,
+      "sent_error_rms_deg": 0.009637547617419502,
+      "sent_error_abs_p95_deg": 0.021857365855989182,
+      "teacher_error_rms_deg": 0.00956795698205102,
+      "teacher_error_abs_peak_deg": 0.021856964785532593,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 2.0987465235080474,
+      "torque_abs_peak_nm": 0.139194139
+    },
+    {
+      "role": "motion_left",
+      "joint": 6,
+      "phase": "startup_hold",
+      "window_s": [
+        2.0,
+        3.0
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 0.0,
+      "actual_ptp_deg": 0.02185690748975343,
+      "sent_error_rms_deg": 0.01925378683721854,
+      "sent_error_abs_p95_deg": 0.02185673560241454,
+      "teacher_error_rms_deg": 0.019253938254085175,
+      "teacher_error_abs_peak_deg": 0.02185690748975308,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 2.0987465235080474,
+      "torque_abs_peak_nm": 0.192918193
+    },
+    {
+      "role": "motion_left",
+      "joint": 6,
+      "phase": "moving",
+      "window_s": [
+        4.0,
+        39.0
+      ],
+      "samples": 8750,
+      "teacher_ptp_deg": 16.042993130382122,
+      "actual_ptp_deg": 11.97760249311854,
+      "sent_error_rms_deg": 0.966293530218839,
+      "sent_error_abs_p95_deg": 2.382406354129856,
+      "teacher_error_rms_deg": 1.203662691257028,
+      "teacher_error_abs_peak_deg": 9.704480848324788,
+      "target_limited_fraction": 0.0192,
+      "velocity_abs_peak_deg_s": 30.08203319803786,
+      "torque_abs_peak_nm": 0.358974359
+    },
+    {
+      "role": "motion_left",
+      "joint": 6,
+      "phase": "coupled_motion",
+      "window_s": [
+        23.5,
+        24.5
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 8.043353472680815,
+      "actual_ptp_deg": 6.622652480494582,
+      "sent_error_rms_deg": 2.058497682661009,
+      "sent_error_abs_p95_deg": 4.100471009594499,
+      "teacher_error_rms_deg": 2.416475324771012,
+      "teacher_error_abs_peak_deg": 5.617233303571453,
+      "target_limited_fraction": 0.14,
+      "velocity_abs_peak_deg_s": 27.283704519125717,
+      "torque_abs_peak_nm": 0.354090354
+    },
+    {
+      "role": "motion_left",
+      "joint": 6,
+      "phase": "final_hold",
+      "window_s": [
+        40.0,
+        44.3
+      ],
+      "samples": 1075,
+      "teacher_ptp_deg": 0.0,
+      "actual_ptp_deg": 0.02185690748975343,
+      "sent_error_rms_deg": 0.02025291823627682,
+      "sent_error_abs_p95_deg": 0.021857022081312107,
+      "teacher_error_rms_deg": 0.020252812054635565,
+      "teacher_error_abs_peak_deg": 0.02185690748975308,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 2.0987465235080474,
+      "torque_abs_peak_nm": 0.163614164
+    },
+    {
+      "role": "motion_right",
+      "joint": 1,
+      "phase": "startup_hold",
+      "window_s": [
+        2.0,
+        3.0
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 0.021856964785532913,
+      "actual_ptp_deg": 0.0,
+      "sent_error_rms_deg": 0.011810853382209078,
+      "sent_error_abs_p95_deg": 0.021856964785532593,
+      "teacher_error_rms_deg": 0.011971552651632265,
+      "teacher_error_abs_peak_deg": 0.021856964785532593,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 0.4197492817832977,
+      "torque_abs_peak_nm": 0.266666667
+    },
+    {
+      "role": "motion_right",
+      "joint": 1,
+      "phase": "moving",
+      "window_s": [
+        4.0,
+        39.0
+      ],
+      "samples": 8750,
+      "teacher_ptp_deg": 48.87211527712201,
+      "actual_ptp_deg": 48.89397218461176,
+      "sent_error_rms_deg": 0.407135993917874,
+      "sent_error_abs_p95_deg": 0.9617054507520815,
+      "teacher_error_rms_deg": 0.5572159824520373,
+      "teacher_error_abs_peak_deg": 3.3003977865024146,
+      "target_limited_fraction": 0.00045714285714285713,
+      "velocity_abs_peak_deg_s": 130.54203242147932,
+      "torque_abs_peak_nm": 4.095726496
+    },
+    {
+      "role": "motion_right",
+      "joint": 1,
+      "phase": "coupled_motion",
+      "window_s": [
+        23.5,
+        24.5
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 0.24042632616196383,
+      "actual_ptp_deg": 0.32785407071253014,
+      "sent_error_rms_deg": 0.026590185601079164,
+      "sent_error_abs_p95_deg": 0.043714273345742266,
+      "teacher_error_rms_deg": 0.03028586225313043,
+      "teacher_error_abs_peak_deg": 0.10928470933610393,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 6.016406639607571,
+      "torque_abs_peak_nm": 1.757264957
+    },
+    {
+      "role": "motion_right",
+      "joint": 1,
+      "phase": "final_hold",
+      "window_s": [
+        40.0,
+        44.3
+      ],
+      "samples": 1075,
+      "teacher_ptp_deg": 0.02185690748975343,
+      "actual_ptp_deg": 0.043713872275285545,
+      "sent_error_rms_deg": 0.012183024514233321,
+      "sent_error_abs_p95_deg": 0.02185673560241454,
+      "teacher_error_rms_deg": 0.012237693378763554,
+      "teacher_error_abs_peak_deg": 0.021856964785532593,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 0.979415029024881,
+      "torque_abs_peak_nm": 0.294017094
+    },
+    {
+      "role": "motion_right",
+      "joint": 2,
+      "phase": "startup_hold",
+      "window_s": [
+        2.0,
+        3.0
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 0.0,
+      "actual_ptp_deg": 0.02185696478553259,
+      "sent_error_rms_deg": 0.013330956844300277,
+      "sent_error_abs_p95_deg": 0.021856964785532593,
+      "teacher_error_rms_deg": 0.013330956844300277,
+      "teacher_error_abs_peak_deg": 0.021856964785532593,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 0.4197492817832977,
+      "torque_abs_peak_nm": 1.429059829
+    },
+    {
+      "role": "motion_right",
+      "joint": 2,
+      "phase": "moving",
+      "window_s": [
+        4.0,
+        39.0
+      ],
+      "samples": 8750,
+      "teacher_ptp_deg": 99.88621058221192,
+      "actual_ptp_deg": 99.84249670993663,
+      "sent_error_rms_deg": 0.47476714301113465,
+      "sent_error_abs_p95_deg": 1.2458438472370625,
+      "teacher_error_rms_deg": 0.6467086256046922,
+      "teacher_error_abs_peak_deg": 3.125542240105492,
+      "target_limited_fraction": 0.0005714285714285715,
+      "velocity_abs_peak_deg_s": 122.14704644203869,
+      "torque_abs_peak_nm": 21.381196581
+    },
+    {
+      "role": "motion_right",
+      "joint": 2,
+      "phase": "coupled_motion",
+      "window_s": [
+        23.5,
+        24.5
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 0.0,
+      "actual_ptp_deg": 0.06557077976503739,
+      "sent_error_rms_deg": 0.020781828905075843,
+      "sent_error_abs_p95_deg": 0.043714731711978365,
+      "teacher_error_rms_deg": 0.02078134439201446,
+      "teacher_error_abs_peak_deg": 0.04371387227528567,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 2.938245087074643,
+      "torque_abs_peak_nm": 7.500854701
+    },
+    {
+      "role": "motion_right",
+      "joint": 2,
+      "phase": "final_hold",
+      "window_s": [
+        40.0,
+        44.3
+      ],
+      "samples": 1075,
+      "teacher_ptp_deg": 0.0,
+      "actual_ptp_deg": 0.02185696478553259,
+      "sent_error_rms_deg": 0.013983373523825813,
+      "sent_error_abs_p95_deg": 0.021856964785532593,
+      "teacher_error_rms_deg": 0.013983373523825813,
+      "teacher_error_abs_peak_deg": 0.021856964785532593,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 0.4197492817832977,
+      "torque_abs_peak_nm": 1.21025641
+    },
+    {
+      "role": "motion_right",
+      "joint": 3,
+      "phase": "startup_hold",
+      "window_s": [
+        2.0,
+        3.0
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 0.0,
+      "actual_ptp_deg": 0.02185690748975308,
+      "sent_error_rms_deg": 0.02078131040464302,
+      "sent_error_abs_p95_deg": 0.02185690748975308,
+      "teacher_error_rms_deg": 0.02078131040464302,
+      "teacher_error_abs_peak_deg": 0.02185690748975308,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 0.4197492817832977,
+      "torque_abs_peak_nm": 7.952136752
+    },
+    {
+      "role": "motion_right",
+      "joint": 3,
+      "phase": "moving",
+      "window_s": [
+        4.0,
+        39.0
+      ],
+      "samples": 8750,
+      "teacher_ptp_deg": 146.37591950520405,
+      "actual_ptp_deg": 146.22292092359268,
+      "sent_error_rms_deg": 0.7100645691248058,
+      "sent_error_abs_p95_deg": 1.6829845180464227,
+      "teacher_error_rms_deg": 0.9759869506387195,
+      "teacher_error_abs_peak_deg": 4.371387800486362,
+      "target_limited_fraction": 0.0006857142857142857,
+      "velocity_abs_peak_deg_s": 172.7967953641906,
+      "torque_abs_peak_nm": 16.895726496
+    },
+    {
+      "role": "motion_right",
+      "joint": 3,
+      "phase": "coupled_motion",
+      "window_s": [
+        23.5,
+        24.5
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 0.021856964785535296,
+      "actual_ptp_deg": 0.10928470933610798,
+      "sent_error_rms_deg": 0.026155802315859726,
+      "sent_error_abs_p95_deg": 0.0437153046697735,
+      "teacher_error_rms_deg": 0.026228328330812414,
+      "teacher_error_abs_peak_deg": 0.04371387227528567,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 3.4979108343162264,
+      "torque_abs_peak_nm": 10.468376068
+    },
+    {
+      "role": "motion_right",
+      "joint": 3,
+      "phase": "final_hold",
+      "window_s": [
+        40.0,
+        44.3
+      ],
+      "samples": 1075,
+      "teacher_ptp_deg": 0.0,
+      "actual_ptp_deg": 0.02185690748975308,
+      "sent_error_rms_deg": 0.011054798447955852,
+      "sent_error_abs_p95_deg": 0.02185690748975308,
+      "teacher_error_rms_deg": 0.011054798447955852,
+      "teacher_error_abs_peak_deg": 0.02185690748975308,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 0.4197492817832977,
+      "torque_abs_peak_nm": 7.104273504
+    },
+    {
+      "role": "motion_right",
+      "joint": 4,
+      "phase": "startup_hold",
+      "window_s": [
+        2.0,
+        3.0
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 0.0,
+      "actual_ptp_deg": 0.10928465204032432,
+      "sent_error_rms_deg": 0.038557516846117725,
+      "sent_error_abs_p95_deg": 0.06557083706081826,
+      "teacher_error_rms_deg": 0.03855751372811166,
+      "teacher_error_abs_peak_deg": 0.06557077976503875,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 2.0987465235080474,
+      "torque_abs_peak_nm": 2.107448107
+    },
+    {
+      "role": "motion_right",
+      "joint": 4,
+      "phase": "moving",
+      "window_s": [
+        4.0,
+        39.0
+      ],
+      "samples": 8750,
+      "teacher_ptp_deg": 66.70737734267819,
+      "actual_ptp_deg": 47.34212957559967,
+      "sent_error_rms_deg": 2.5440085259730605,
+      "sent_error_abs_p95_deg": 4.18789875414507,
+      "teacher_error_rms_deg": 6.83656548933592,
+      "teacher_error_abs_peak_deg": 25.834901723257484,
+      "target_limited_fraction": 0.2976,
+      "velocity_abs_peak_deg_s": 68.41913596735384,
+      "torque_abs_peak_nm": 3.865689866
+    },
+    {
+      "role": "motion_right",
+      "joint": 4,
+      "phase": "coupled_motion",
+      "window_s": [
+        23.5,
+        24.5
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 2.4916910634659604,
+      "actual_ptp_deg": 1.9671244815709732,
+      "sent_error_rms_deg": 0.6550842167938297,
+      "sent_error_abs_p95_deg": 1.420701023698912,
+      "teacher_error_rms_deg": 0.6787176048747687,
+      "teacher_error_abs_peak_deg": 1.5081287940325838,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 23.086211529405404,
+      "torque_abs_peak_nm": 2.547008547
+    },
+    {
+      "role": "motion_right",
+      "joint": 4,
+      "phase": "final_hold",
+      "window_s": [
+        40.0,
+        44.3
+      ],
+      "samples": 1075,
+      "teacher_ptp_deg": 0.0,
+      "actual_ptp_deg": 0.06557077976503878,
+      "sent_error_rms_deg": 0.012346173291736103,
+      "sent_error_abs_p95_deg": 0.021856964785532593,
+      "teacher_error_rms_deg": 0.012346173291736103,
+      "teacher_error_abs_peak_deg": 0.04371387227528567,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 2.0987465235080474,
+      "torque_abs_peak_nm": 2.068376068
+    },
+    {
+      "role": "motion_right",
+      "joint": 5,
+      "phase": "startup_hold",
+      "window_s": [
+        2.0,
+        3.0
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 0.02185690748975308,
+      "actual_ptp_deg": 0.02185696478553259,
+      "sent_error_rms_deg": 0.014365845050036243,
+      "sent_error_abs_p95_deg": 0.021856964785532593,
+      "teacher_error_rms_deg": 0.01600190339467636,
+      "teacher_error_abs_peak_deg": 0.04371387227528567,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 2.0987465235080474,
+      "torque_abs_peak_nm": 0.036630037
+    },
+    {
+      "role": "motion_right",
+      "joint": 5,
+      "phase": "moving",
+      "window_s": [
+        4.0,
+        39.0
+      ],
+      "samples": 8750,
+      "teacher_ptp_deg": 48.019694624514486,
+      "actual_ptp_deg": 39.93262727955839,
+      "sent_error_rms_deg": 1.2027726751588523,
+      "sent_error_abs_p95_deg": 3.409682438542739,
+      "teacher_error_rms_deg": 1.8718425501100786,
+      "teacher_error_abs_peak_deg": 16.436417980859698,
+      "target_limited_fraction": 0.035314285714285715,
+      "velocity_abs_peak_deg_s": 55.82665694089712,
+      "torque_abs_peak_nm": 0.642246642
+    },
+    {
+      "role": "motion_right",
+      "joint": 5,
+      "phase": "coupled_motion",
+      "window_s": [
+        23.5,
+        24.5
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 1.639270410858441,
+      "actual_ptp_deg": 1.223988538299558,
+      "sent_error_rms_deg": 0.19532326292618182,
+      "sent_error_abs_p95_deg": 0.43713881156131495,
+      "teacher_error_rms_deg": 0.21238377020561244,
+      "teacher_error_abs_peak_deg": 0.6557081414250646,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 13.8517269291024,
+      "torque_abs_peak_nm": 0.285714286
+    },
+    {
+      "role": "motion_right",
+      "joint": 5,
+      "phase": "final_hold",
+      "window_s": [
+        40.0,
+        44.3
+      ],
+      "samples": 1075,
+      "teacher_ptp_deg": 0.021856907489752633,
+      "actual_ptp_deg": 0.04371387227528634,
+      "sent_error_rms_deg": 0.011623270785664405,
+      "sent_error_abs_p95_deg": 0.021857365855989182,
+      "teacher_error_rms_deg": 0.011507834394752338,
+      "teacher_error_abs_peak_deg": 0.04371387227528567,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 2.0987465235080474,
+      "torque_abs_peak_nm": 0.065934066
+    },
+    {
+      "role": "motion_right",
+      "joint": 6,
+      "phase": "startup_hold",
+      "window_s": [
+        2.0,
+        3.0
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 0.021856964785532514,
+      "actual_ptp_deg": 0.02185690748975303,
+      "sent_error_rms_deg": 0.01737593987873883,
+      "sent_error_abs_p95_deg": 0.021856964785532593,
+      "teacher_error_rms_deg": 0.017594473125940886,
+      "teacher_error_abs_peak_deg": 0.04371387227528567,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 1.2592479026456727,
+      "torque_abs_peak_nm": 0.017094017
+    },
+    {
+      "role": "motion_right",
+      "joint": 6,
+      "phase": "moving",
+      "window_s": [
+        4.0,
+        39.0
+      ],
+      "samples": 8750,
+      "teacher_ptp_deg": 23.233926007751197,
+      "actual_ptp_deg": 22.818644192488097,
+      "sent_error_rms_deg": 0.8922327792827184,
+      "sent_error_abs_p95_deg": 2.2294077725184667,
+      "teacher_error_rms_deg": 0.9935333136798148,
+      "teacher_error_abs_peak_deg": 6.513367828454258,
+      "target_limited_fraction": 0.0038857142857142857,
+      "velocity_abs_peak_deg_s": 50.78966533031442,
+      "torque_abs_peak_nm": 0.290598291
+    },
+    {
+      "role": "motion_right",
+      "joint": 6,
+      "phase": "coupled_motion",
+      "window_s": [
+        23.5,
+        24.5
+      ],
+      "samples": 250,
+      "teacher_ptp_deg": 9.311055940551437,
+      "actual_ptp_deg": 9.048772649603945,
+      "sent_error_rms_deg": 1.195697221722175,
+      "sent_error_abs_p95_deg": 2.481855455095571,
+      "teacher_error_rms_deg": 1.3017989850621732,
+      "teacher_error_abs_peak_deg": 3.1036853326157394,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 41.555180730011415,
+      "torque_abs_peak_nm": 0.192918193
+    },
+    {
+      "role": "motion_right",
+      "joint": 6,
+      "phase": "final_hold",
+      "window_s": [
+        40.0,
+        44.3
+      ],
+      "samples": 1075,
+      "teacher_ptp_deg": 0.0,
+      "actual_ptp_deg": 0.04371387227528634,
+      "sent_error_rms_deg": 0.01032749782679551,
+      "sent_error_abs_p95_deg": 0.02185730856020967,
+      "teacher_error_rms_deg": 0.010327400361371673,
+      "teacher_error_abs_peak_deg": 0.021856964785532593,
+      "target_limited_fraction": 0.0,
+      "velocity_abs_peak_deg_s": 2.0987465235080474,
+      "torque_abs_peak_nm": 0.11965812
+    }
+  ],
+  "parameters_after_capture": {
+    "motion_left": {
+      "J1": {
+        "KP_APR": 2500.0,
+        "KI_APR": 0.0,
+        "KP_ASR": 0.0038399999029934406,
+        "KI_ASR": 0.0020000000949949026
+      },
+      "J2": {
+        "KP_APR": 2500.0,
+        "KI_APR": 0.0,
+        "KP_ASR": 0.007296000141650438,
+        "KI_ASR": 0.0015999999595806003
+      },
+      "J3": {
+        "KP_APR": 2500.0,
+        "KI_APR": 0.0,
+        "KP_ASR": 0.004608000162988901,
+        "KI_ASR": 0.0020000000949949026
+      },
+      "J4": {
+        "KP_APR": 54.0,
+        "KI_APR": 0.0,
+        "KP_ASR": 0.003719999920576811,
+        "KI_ASR": 0.0020000000949949026
+      },
+      "J5": {
+        "KP_APR": 54.0,
+        "KI_APR": 0.0,
+        "KP_ASR": 0.003719999920576811,
+        "KI_ASR": 0.0020000000949949026
+      },
+      "J6": {
+        "KP_APR": 54.0,
+        "KI_APR": 0.0,
+        "KP_ASR": 0.003719999920576811,
+        "KI_ASR": 0.0020000000949949026
+      },
+      "J7": {
+        "KP_APR": 80.0,
+        "KI_APR": 0.0,
+        "KP_ASR": 0.006500000134110451,
+        "KI_ASR": 0.0020000000949949026
+      }
+    },
+    "motion_right": {
+      "J1": {
+        "KP_APR": 2500.0,
+        "KI_APR": 0.0,
+        "KP_ASR": 0.0038399999029934406,
+        "KI_ASR": 0.0020000000949949026
+      },
+      "J2": {
+        "KP_APR": 2500.0,
+        "KI_APR": 0.0,
+        "KP_ASR": 0.007296000141650438,
+        "KI_ASR": 0.0015999999595806003
+      },
+      "J3": {
+        "KP_APR": 2500.0,
+        "KI_APR": 0.0,
+        "KP_ASR": 0.004608000162988901,
+        "KI_ASR": 0.0020000000949949026
+      },
+      "J4": {
+        "KP_APR": 54.0,
+        "KI_APR": 0.0,
+        "KP_ASR": 0.003719999920576811,
+        "KI_ASR": 0.0020000000949949026
+      },
+      "J5": {
+        "KP_APR": 120.0,
+        "KI_APR": 0.0,
+        "KP_ASR": 0.003719999920576811,
+        "KI_ASR": 0.0020000000949949026
+      },
+      "J6": {
+        "KP_APR": 120.0,
+        "KI_APR": 0.0,
+        "KP_ASR": 0.003719999920576811,
+        "KI_ASR": 0.0020000000949949026
+      },
+      "J7": {
+        "KP_APR": 120.0,
+        "KI_APR": 0.009999999776482582,
+        "KP_ASR": 0.002300000051036477,
+        "KI_ASR": 0.0020000000949949026
+      }
+    }
+  },
+  "parameter_verification": {
+    "scan": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_following_analysis_20261125_75eac1124d/motion_parameters_1795619762463837085.json",
+    "all_14_disabled": true,
+    "all_24_registers_per_motor_match_last_write": true,
+    "note": "Post-run readback matches prior write; this is not a register capture during motion.",
+    "motor_writes_sent": 0
+  },
+  "interpretation": [
+    "No growing J4 oscillation in observed stationary sections; final holds are stable over this capture.",
+    "J4 still has greater dynamic error than J1-J3. The original follower-dependent step limiter also clips fast targets.",
+    "Left J4 actual motion spans 1.333 deg during 23.5-24.5 s while its raw target spans 0.087 deg; other joints are moving, so this is not a whole-arm stationary stability test.",
+    "Right J3 stationary residual shrank without changing its gains; consistent with J4 coupling, not proof of causation.",
+    "This capture contains multiple movements/reversals and is unsuitable for fitting one step response or exact settling time."
+  ],
+  "flagged_summary_rows": [
+    {
+      "leader": "teaching_right",
+      "follower": "motion_right",
+      "joint": 1,
+      "status": "reversal_or_multiple_movements",
+      "flags": [
+        "sample_gaps_or_invalid_feedback"
+      ],
+      "invalid_samples": 1,
+      "max_sample_gap_s": 0.0041511370000080206,
+      "median_sample_interval_s": 0.003999735003162641,
+      "teacher_amplitude_rad": -0.03967345700000001,
+      "teacher_excursion_rad": 0.7415884650000001,
+      "analysis_band_rad": 0.01,
+      "input_onset_s": 7.716002499000751,
+      "parameter_fit_allowed": false
+    },
+    {
+      "leader": "teaching_right",
+      "follower": "motion_right",
+      "joint": 2,
+      "status": "returned_or_multiple_movements",
+      "flags": [
+        "sample_gaps_or_invalid_feedback"
+      ],
+      "invalid_samples": 1,
+      "max_sample_gap_s": 0.004151866996835452,
+      "median_sample_interval_s": 0.003999730495706899,
+      "teacher_amplitude_rad": 0.0,
+      "teacher_excursion_rad": 1.741435874,
+      "parameter_fit_allowed": false
+    },
+    {
+      "leader": "teaching_right",
+      "follower": "motion_right",
+      "joint": 3,
+      "status": "returned_or_multiple_movements",
+      "flags": [
+        "sample_gaps_or_invalid_feedback"
+      ],
+      "invalid_samples": 1,
+      "max_sample_gap_s": 0.004152226996666286,
+      "median_sample_interval_s": 0.003999735501565738,
+      "teacher_amplitude_rad": -0.0019073779999999995,
+      "teacher_excursion_rad": 2.549782559,
+      "parameter_fit_allowed": false
+    },
+    {
+      "leader": "teaching_right",
+      "follower": "motion_right",
+      "joint": 4,
+      "status": "returned_or_multiple_movements",
+      "flags": [
+        "sample_gaps_or_invalid_feedback"
+      ],
+      "invalid_samples": 1,
+      "max_sample_gap_s": 0.004152339999563992,
+      "median_sample_interval_s": 0.003999739499704447,
+      "teacher_amplitude_rad": -0.001144427,
+      "teacher_excursion_rad": 0.898374914,
+      "parameter_fit_allowed": false
+    },
+    {
+      "leader": "teaching_right",
+      "follower": "motion_right",
+      "joint": 5,
+      "status": "reversal_or_multiple_movements",
+      "flags": [
+        "sample_gaps_or_invalid_feedback"
+      ],
+      "invalid_samples": 1,
+      "max_sample_gap_s": 0.004152599998633377,
+      "median_sample_interval_s": 0.003999741496954812,
+      "teacher_amplitude_rad": -0.183489738,
+      "teacher_excursion_rad": 0.439078355,
+      "analysis_band_rad": 0.01,
+      "input_onset_s": 5.912001030999818,
+      "parameter_fit_allowed": false
+    },
+    {
+      "leader": "teaching_right",
+      "follower": "motion_right",
+      "joint": 6,
+      "status": "reversal_or_multiple_movements",
+      "flags": [
+        "sample_gaps_or_invalid_feedback"
+      ],
+      "invalid_samples": 1,
+      "max_sample_gap_s": 0.004152905996306799,
+      "median_sample_interval_s": 0.003999743999884231,
+      "teacher_amplitude_rad": -0.23231860899999998,
+      "teacher_excursion_rad": 0.289921416,
+      "analysis_band_rad": 0.01,
+      "input_onset_s": 5.588021312003548,
+      "parameter_fit_allowed": false
+    }
+  ],
+  "alignment_note": "Six initial right-arm rows have no aligned teacher sample. Windows used for metrics begin at 2 s; native cycles have no gaps.",
+  "proposed_next_test": {
+    "joint": "J4",
+    "roles": [
+      "motion_left",
+      "motion_right"
+    ],
+    "KP_APR": 80.0,
+    "KI_APR": 0.0,
+    "KP_ASR": 0.00372,
+    "KI_ASR": 0.002,
+    "applied": false,
+    "rationale": "Modest position gain increase from 54 with velocity gains fixed; no stability guarantee."
+  },
+  "source_sha256": {
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_75eac1124d/step_arms.csv": "6cf4b1c42e9b629421a526bde2bfacf2cd431bb1bfff9cbb6ded48ee570c9901",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_75eac1124d/step_tracking.csv": "fbdcce53f7e5bbb3b25e40a510ceb5a85ab0308b68300391c477f45975a2ce76",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_75eac1124d/step_quality.json": "2fbf7042026293304d5d04df701eab528c17f735120d5990213602e9b710acb2",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_75eac1124d/session.log": "d1c7957d9717a7cb8994cb48243d3b52cf9c80dc917ecdadc9c846a9f82d3690",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_cc3c0a6bfe/step_tracking.csv": "bc5052513c9133c4cbb246dd8b4d9e0c99d4c8181b53b588bce0c7ab1c3cb04b",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_reports/teaching_cc3c0a6bfe/step_quality.json": "fd16786d99347267a97789bdeac658f1f5503412202bcb41d06cdfac03849291",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_following_analysis_20261125_75eac1124d/motion_parameters_1795619762463837085.json": "50fbd1d546d82fbb407f4225740fa479796b99329488df3610cb0ab622f807d3",
+    "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_oscillation_trial_20261125/1795619266101254063_apply/result.json": "9a8c0e581b94d95bdcba2f3562208b5512ec82c4d0c05e8d7b19399c9297f86e"
+  }
+}

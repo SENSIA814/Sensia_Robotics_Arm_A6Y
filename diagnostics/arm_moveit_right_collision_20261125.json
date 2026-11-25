@@ -1,0 +1,45 @@
+{
+  "result": "PASS",
+  "physical_devices": 0,
+  "source_events": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_right_9tzfeso0/events.jsonl",
+  "initial": [
+    -0.07648584725719054,
+    -0.005912870984969842,
+    0.000953688868543523,
+    -0.3534370934771186,
+    0.005531395697843465,
+    -0.021171892621205307,
+    4.582700115986516e-06
+  ],
+  "variants": {
+    "previous_bare": {
+      "session": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_right_rw12yn5q",
+      "start_contacts": [
+        [
+          "link2",
+          "link4"
+        ]
+      ],
+      "start_valid": false,
+      "error": "MoveIt 轨迹未通过规划后复核（-2），本次动作已取消；碰撞连杆：link2 ↔ link4",
+      "readonly_close": true
+    },
+    "right_bare": {
+      "session": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_right_zii7zdcg",
+      "start_contacts": [],
+      "start_valid": true,
+      "target_1": {
+        "planned": true,
+        "duration_s": 3.095000234,
+        "points": 32
+      },
+      "target_2": {
+        "planned": true,
+        "duration_s": 1.8406536930000001,
+        "points": 20
+      },
+      "environment_still_blocks": true,
+      "readonly_close": true
+    }
+  }
+}

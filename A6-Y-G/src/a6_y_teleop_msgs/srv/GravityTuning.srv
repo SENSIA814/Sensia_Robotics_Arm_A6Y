@@ -1,0 +1,16 @@
+# apply=false reads the accepted target and the control-loop acknowledgement.
+# Directions, model, total torque limits and gripper output are not live-tunable.
+bool apply
+float64[] torque_scales
+float64[] damping_gains
+float64[] friction_compensations
+bool friction_compensation_enabled
+---
+bool success
+string message
+uint64 revision
+uint64 applied_revision
+float64[] torque_scales
+float64[] damping_gains
+float64[] friction_compensations
+bool friction_compensation_enabled

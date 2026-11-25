@@ -1,0 +1,148 @@
+observed_at: '2026-11-24T17:37:37.358193+08:00'
+expected_motors_per_arm: 7
+motor_writes_sent: false
+adapters:
+- serial: 209D3982534B
+  label: A
+  usb_path: 1-7.3
+  by_id: /dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209D3982534B-if00
+  current_device: /dev/ttyACM2
+  responding_ids:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  missing_expected_ids: []
+  physical_role_confirmed_this_session: true
+  historical_label: R1（旧项目标签；本次单 USB 指认已确认是示教端右臂）
+  present_at_last_identity_check: true
+  role: teaching
+  side: right
+  role_name: 示教端右臂
+  role_key: teaching_right
+  identity_confirmed_at: '2026-11-24T14:11:40.546987+08:00'
+  identity_method: user identified arm; exactly one CANable2 enumerated
+  feedback_observed_at: '2026-11-24T17:37:37.358193+08:00'
+  feedback_evidence: /home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/all_arms_20261124_1737.json
+  reported_connection_issue:
+    reported_by: user
+    reported_at: '2026-11-24T14:31:52.393458+08:00'
+    description: 用户已定位到有线松了；稍后再复检。
+    recheck_status: passed
+    last_feedback_preserved: true
+    rechecked_at: '2026-11-24T17:37:37.358193+08:00'
+    recheck_evidence: /home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/all_arms_20261124_1737.json
+    result: ID 1–7 均取得新鲜反馈；此前无响应的 ID 3–7 已恢复通信。
+  motor_states:
+    1: 0
+    2: 0
+    3: 0
+    4: 0
+    5: 0
+    6: 0
+    7: 0
+- serial: 304F33733036
+  label: B
+  usb_path: 1-7.4
+  by_id: /dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_304F33733036-if00
+  current_device: /dev/ttyACM3
+  responding_ids:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  missing_expected_ids: []
+  physical_role_confirmed_this_session: true
+  historical_label: null
+  present_at_last_identity_check: true
+  role: teaching
+  side: left
+  role_name: 示教端左臂
+  role_key: teaching_left
+  identity_confirmed_at: '2026-11-24T14:31:52.393458+08:00'
+  identity_method: user identified arm; exactly one CANable2 enumerated
+  feedback_observed_at: '2026-11-24T17:37:37.358193+08:00'
+  feedback_evidence: /home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/all_arms_20261124_1737.json
+  motor_states:
+    1: 0
+    2: 0
+    3: 0
+    4: 0
+    5: 0
+    6: 0
+    7: 0
+- serial: 304C33733036
+  label: D
+  usb_path: 1-8.2
+  by_id: /dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_304C33733036-if00
+  current_device: /dev/ttyACM0
+  responding_ids:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  missing_expected_ids: []
+  physical_role_confirmed_this_session: true
+  historical_label: null
+  present_at_last_identity_check: true
+  role: motion
+  side: left
+  role_name: 运动端左臂
+  role_key: motion_left
+  identity_confirmed_at: '2026-11-24T14:37:53.477108+08:00'
+  identity_method: user identified arm; exactly one CANable2 enumerated
+  feedback_observed_at: '2026-11-24T17:37:37.358193+08:00'
+  feedback_evidence: /home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/all_arms_20261124_1737.json
+  motor_states:
+    1: 0
+    2: 0
+    3: 0
+    4: 0
+    5: 0
+    6: 0
+    7: 0
+- serial: 209B3971534B
+  label: C
+  usb_path: 1-8.3
+  by_id: /dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209B3971534B-if00
+  current_device: /dev/ttyACM1
+  responding_ids:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  missing_expected_ids: []
+  physical_role_confirmed_this_session: true
+  historical_label: R2（旧项目标签；本次单 USB 指认已确认是运动端右臂）
+  present_at_last_identity_check: true
+  role: motion
+  side: right
+  role_name: 运动端右臂
+  role_key: motion_right
+  identity_confirmed_at: '2026-11-24T14:39:46.132346+08:00'
+  identity_method: user identified arm; exactly one CANable2 enumerated
+  feedback_observed_at: '2026-11-24T17:37:37.358193+08:00'
+  feedback_evidence: /home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/all_arms_20261124_1737.json
+  motor_states:
+    1: 0
+    2: 0
+    3: 0
+    4: 0
+    5: 0
+    6: 0
+    7: 0
+last_identity_check_at: '2026-11-24T17:38:56.171949+08:00'
+total_responding_motors: 28
+total_expected_motors: 28

@@ -1,0 +1,167 @@
+{
+  "result": "PASS",
+  "physical_devices": 0,
+  "configured_rates": {
+    "control_hz": 250,
+    "per_axis_command_hz": 250,
+    "target_hz": 100,
+    "can_bitrate": 1000000
+  },
+  "python_tests": 81,
+  "driver_tests": 6,
+  "integration": {
+    "four_arm_pty": {
+      "result": "PASS",
+      "case": "normal",
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_967e91e0a0",
+      "actual_hz": 99.79236770008706,
+      "exit_elapsed_s": 25.909131398999307,
+      "native_rates_hz": {
+        "teaching_left": {
+          "control_cycle_count": 249.999010014596,
+          "command_count": 249.999010014596,
+          "feedback_count": 249.999010014596
+        },
+        "motion_left": {
+          "control_cycle_count": 249.99899675218086,
+          "command_count": 249.99899675218086,
+          "feedback_count": 249.99899675218086
+        },
+        "teaching_right": {
+          "control_cycle_count": 249.99895555361613,
+          "command_count": 249.99895555361613,
+          "feedback_count": 249.99895555361613
+        },
+        "motion_right": {
+          "control_cycle_count": 249.99890886684807,
+          "command_count": 249.99890886684807,
+          "feedback_count": 249.99890886684807
+        }
+      }
+    },
+    "ui_pty": {
+      "result": "PASS",
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_f584f01c65",
+      "actual_hz": 97.90182103638021,
+      "exit_elapsed_s": 24.715059210000618,
+      "bundle": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_f584f01c65_live.zip",
+      "screenshot": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_f584f01c65/ui_live.png"
+    },
+    "exit_failure_pty": {
+      "result": "PASS",
+      "case": "protected_exit_retry",
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_16d3f3c4aa",
+      "actual_hz": 99.88353549099979,
+      "exit_elapsed_s": 22.990278564997425,
+      "native_rates_hz": {
+        "teaching_left": {
+          "control_cycle_count": 250.00121086946766,
+          "command_count": 250.00121086946766,
+          "feedback_count": 250.00121086946766
+        },
+        "motion_left": {
+          "control_cycle_count": 250.00203967121806,
+          "command_count": 250.00203967121806,
+          "feedback_count": 250.00203967121806
+        }
+      }
+    }
+  },
+  "measured_virtual_rates": {
+    "motion_right": {
+      "command": [
+        250.0,
+        250.0,
+        250.0,
+        250.0,
+        250.0,
+        250.0,
+        0.0
+      ],
+      "feedback": [
+        250.0,
+        250.0,
+        250.0,
+        250.0,
+        250.0,
+        250.0,
+        19.382
+      ],
+      "control_hz": 250.0,
+      "overruns_over_6ms": 0
+    },
+    "motion_left": {
+      "command": [
+        250.001,
+        250.001,
+        250.001,
+        250.001,
+        250.001,
+        250.001,
+        0.0
+      ],
+      "feedback": [
+        250.001,
+        250.001,
+        250.001,
+        250.001,
+        250.001,
+        250.001,
+        19.339
+      ],
+      "control_hz": 250.001,
+      "overruns_over_6ms": 0
+    },
+    "teaching_left": {
+      "command": [
+        250.0,
+        250.0,
+        250.0,
+        250.0,
+        250.0,
+        250.0,
+        0.0
+      ],
+      "feedback": [
+        250.0,
+        250.0,
+        250.0,
+        250.0,
+        250.0,
+        250.0,
+        19.36
+      ],
+      "control_hz": 250.0,
+      "overruns_over_6ms": 0
+    },
+    "teaching_right": {
+      "command": [
+        250.0,
+        250.0,
+        250.0,
+        250.0,
+        250.0,
+        250.0,
+        0.0
+      ],
+      "feedback": [
+        250.0,
+        250.0,
+        250.0,
+        250.0,
+        250.0,
+        250.0,
+        19.058
+      ],
+      "control_hz": 250.0,
+      "overruns_over_6ms": 0
+    }
+  },
+  "limitations": [
+    "PTY 模拟电机立即响应；未验证实体 CAN 链路或机械动力学。",
+    "frequency.csv 的发送计数表示主机串口接受完整命令，不是 CAN ACK。"
+  ],
+  "exit_race_fix": "原生回零工具由 NativeHome 独立检查退出码和实际零位；避免两次进程轮询之间成功退出被误报。",
+  "failed_exit_before_fix_report": "diagnostics/arm_teaching_test_reports/teaching_be1e601623",
+  "user_mapper_sha256": "515df7865584ab3f05f7b0074be0e1ac149d41e00f8b79c2771460d4f41b253f"
+}

@@ -1,0 +1,61 @@
+{
+  "trial": "handoff_gains_01",
+  "status": "capture_analyzed_j4_oscillation_superseded",
+  "applied_at": "2026-11-25T22:34:19.735+08:00",
+  "result": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/handoff_motor_trial_20261125/1795617202740232923_apply/result.json",
+  "result_sha256": "7adab69544067f5be514682b5d97015a19209a47f8f6dd8470c6c44ff7a226bf",
+  "baseline_session": "teaching_394b0c668f",
+  "planned_gains": {
+    "1": {
+      "KP_APR": 2500.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.00384,
+      "KI_ASR": 0.002
+    },
+    "2": {
+      "KP_APR": 2500.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.007296,
+      "KI_ASR": 0.0016
+    },
+    "3": {
+      "KP_APR": 2500.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.004608,
+      "KI_ASR": 0.002
+    },
+    "4": {
+      "KP_APR": 220.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.001096,
+      "KI_ASR": 0.0005
+    }
+  },
+  "roles": [
+    "motion_left",
+    "motion_right"
+  ],
+  "storage": "RAM only; lost on motor power cycle",
+  "rates": {
+    "control_hz": 250,
+    "per_axis_command_hz": 250,
+    "target_hz": 100,
+    "can_bitrate": 1000000
+  },
+  "frames": {
+    "0xcc": 88,
+    "0x33": 782,
+    "0x55": 18
+  },
+  "next_log_session": "teaching_cc3c0a6bfe",
+  "validation": {
+    "writes_acknowledged": 18,
+    "independent_readbacks_per_write": 2,
+    "all_14_motors_disabled": true,
+    "non_gain_registers_unchanged": true,
+    "teachers_not_accessed": true,
+    "motion_or_flash_commands": 0
+  },
+  "superseded_by": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_oscillation_trial_20261125/trial.json",
+  "analysis": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_oscillation_trial_20261125/analysis.json"
+}

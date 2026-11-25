@@ -1,0 +1,66 @@
+{
+  "README.md": {
+    "before": "efb7684b770ab98129113ce03d155dbc2f8ab48aec1a729aefa3d151a75dafbd",
+    "after": "657d16b4bd6d7552060d6bc5b0cd7e9960487e601b8ab5f599521693c642a19d"
+  },
+  "src/a6_y_ros2_control/include/a6_y_ros2_control/A6_y_damiao_system.hpp": {
+    "before": "29a8d75536af72774f6c9e4a8967579ca3fb00bde58c93ba1edf2ec7c8130227",
+    "after": "603877be129a594b529f73764fbefc21199693f18ac76a463c36b363379991bd"
+  },
+  "src/a6_y_ros2_control/src/A6_y_damiao_system.cpp": {
+    "before": "2d80059a041a47b906644766ee51c2b576684bf3ea5be1a5503ed71aeaff6ddf",
+    "after": "869039ef00ea59bed191ed6d4dc21df182f772980ee94401c809d31eb860bf6f"
+  },
+  "tools/arm_gravity/README.md": {
+    "before": "b91c6ce409f0b8bc9e6fdf62e204e7c45adbd9da3b5f7c23ef6a7c053a8774a2",
+    "after": "23a02985de74d7a868e05a058cee2e0e16c823ee11d64ff4422e83aabf06bfa4"
+  },
+  "tools/arm_gravity/TEACHING.md": {
+    "before": "1d2514fd36045a6a57976be4873c5d0578f37f0b383ced3693700048c3141251",
+    "after": "ef95fdb1f6ad492a92331e1d5ad65838bebd0387b6b118f11e888713151a5b88"
+  },
+  "tools/arm_gravity/teaching_logs.py": {
+    "before": "77ccd4fdd7f10478b82c28ead84ef08773943101c2bceeb5e64e6e6794d28db3",
+    "after": "cd2cee2d494e91d67b24cad34b5b488332dc84dad7747227977ab3f550c5486f"
+  },
+  "tools/arm_gravity/teaching_port.py": {
+    "before": "8b2d0466e04b37bdca2b940f8c1c05cab116f374892b01763fcaa67cda5d63ed",
+    "after": "31a3ee75bc99e4d7f279102277cd8e8de0c02cbd1cf75eeab632a3b966640576"
+  },
+  "tools/arm_gravity/teaching_port_config.py": {
+    "before": "a37681a7f3e6ef64642e860dd99e740c08274a72b8ea1aa1100f7ad9a1edd82e",
+    "after": "1d80b2fe5a9193cd1a1be2bc1206d6b4b44e5cd05656f504eabb63c34ec62f66"
+  },
+  "tools/arm_gravity/teaching_port_session.py": {
+    "before": "91c33635546c7d6b80e56e18f2d973338922199076ca59fc6e2b530db34c64a8",
+    "after": "dc77ab7b8077389b1c5177aa2e10825991aab370cf8e79b15402b9a4a0633aac"
+  },
+  "tools/arm_gravity/teaching_view.py": {
+    "before": "15e017f48cb741562d754b0df1e1737f541bc701720c0d8c8488b52dd9aedea2",
+    "after": "d89f9b9c9cd7d55b67d5990f5eb0b22edbec6ac9764abb4dff20252d6b07fcb4"
+  },
+  "tools/arm_gravity/test_teaching_port.py": {
+    "before": "1aafadafcbaf3c1c495a0b2e0f663da34ddd0e9b80053b50d68335b512825e74",
+    "after": "c3a9a8f327edca5e890f26a573d8523d78df1842dfd539996f0ced63f02f4ec9"
+  },
+  "tools/arm_gravity/verify_teaching_port.py": {
+    "before": "af8bc7b55765ba41a495f89ba0f18a015a48a257926a26b9cab0f42a8f964008",
+    "after": "53776078cecf16b3bc31d4594283888d057c47b4df56147320278eb30bc393a6"
+  },
+  "tools/arm_gravity/verify_teaching_ui.py": {
+    "before": "d555bef90532818a22d1199865f0beb39e129dfec4b8ad8afc44481f66552113",
+    "after": "ed77c509167068662dbdafc73701fb1f22fcb76ca1818e887a15d6049a7abb1b"
+  },
+  "tools/arm_moveit/native_stack.py": {
+    "before": "0e4a6aa324064f502de1745aad9c493ac2011aefdc9cab2e2d607436f65dd202",
+    "after": "72e2b6682f78b4c21aa4ed6fb29d0a85a320ab7cce3156b82c97fdb21f3979df"
+  },
+  "tools/arm_gravity/teaching_frequency_log.py": {
+    "before": null,
+    "after": "387b15dfc7ec931681e405d020da2309d850f222529fb7622aa287d9d42faca7"
+  },
+  "tools/arm_gravity/test_teaching_frequency_log.py": {
+    "before": null,
+    "after": "fe761bba5b70854bbf7c0f637e82b701699d65ffc0f5d357624f704867814ae2"
+  }
+}

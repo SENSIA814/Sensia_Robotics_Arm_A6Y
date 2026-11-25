@@ -1,0 +1,16 @@
+{
+  "result": "PASS",
+  "date": "2026-11-25",
+  "test_count": 20,
+  "session": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_left_9j97vhpg",
+  "mock_only": true,
+  "gripper_execution_targets": [
+    0.0,
+    100.0,
+    30.0
+  ],
+  "sample_rows": 829,
+  "separate_target_and_feedback": true,
+  "opening_and_closing_feedback": true,
+  "screenshot": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_gripper_curve_preview.png"
+}

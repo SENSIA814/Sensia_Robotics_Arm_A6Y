@@ -1,0 +1,473 @@
+{
+  "status": "fixed_offline_verified_awaiting_user_hardware_start",
+  "physical_devices_opened": 0,
+  "failure_sessions": [
+    "teaching_1db565f046",
+    "teaching_fdcc2ed1ee"
+  ],
+  "cause": {
+    "role": "motion_right",
+    "joint": "joint2",
+    "position_rad": -0.011635004,
+    "old_model_lower_rad": 0.0,
+    "old_tolerance_rad": 0.01,
+    "stage": "before_original_mapper_started",
+    "startup_home_observed": false,
+    "additional_target_clamp": "native model lower=0; mapper model lower+margin=0.02"
+  },
+  "changes": [
+    "Teaching startup, native position bounds and original mapper config share scanned motor PMAX in joint coordinates",
+    "URDF planning/model bounds and standalone gravity behavior retained",
+    "Whole group feedback/position preflight before any enable; each arm rechecks before takeover",
+    "Keep measured follower position for preload; original mapper follows teacher with original soft start/step bounds",
+    "Log startup checked poses, PMAX policy and teacher/follower reference poses",
+    "No motor parameter writes or physical motion during this correction"
+  ],
+  "tests": {
+    "unit": {
+      "passed": 99,
+      "log": "unit_all.log"
+    },
+    "before_recorded_pty": {
+      "result": "FAIL_AS_EXPECTED",
+      "error": "运动端右臂 / follow：joint2 反馈超出模型范围，请复核零位或姿态",
+      "log": "before_recorded_pty.log"
+    },
+    "after_recorded_pty": {
+      "result": "PASS",
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_1557a317f1",
+      "exit_elapsed_s": 29.20942570099578,
+      "actual_hz": 99.7517196071067,
+      "recorded_start": true,
+      "initial_positions": {
+        "teaching_left": [
+          -0.0070573,
+          0.000572213,
+          0.002479591,
+          -0.100900282,
+          0.157740139,
+          -0.097467002,
+          -0.000756146
+        ],
+        "motion_left": [
+          0.059700923,
+          -0.000190738,
+          0.002861067,
+          -0.253490501,
+          -0.006294347,
+          -0.155832761,
+          -0.003853358
+        ],
+        "teaching_right": [
+          -0.077630274,
+          -0.002479591,
+          0.00171664,
+          0.001335164,
+          0.001335164,
+          0.060463874,
+          -0.000242883
+        ],
+        "motion_right": [
+          -0.091363394,
+          -0.011635004,
+          0.00171664,
+          -0.353437095,
+          0.061226825,
+          0.031090257,
+          -0.000114568
+        ]
+      },
+      "startup_audit": {
+        "teaching_left": {
+          "frames": 6090,
+          "enables": 6,
+          "disables": 0,
+          "nonqueries": 5454,
+          "gripper_commands": 0,
+          "zero_commands": 0,
+          "position_commands": {},
+          "port": "/dev/pts/2",
+          "enabled": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "commands": 5442,
+          "last_torque": {
+            "1": -0.006837606837606813,
+            "2": -0.07521367521367495,
+            "3": 5.5589743589743605,
+            "4": -1.81929181929182,
+            "5": -0.012210012210012167,
+            "6": -0.0024420024420024333
+          },
+          "last_position": {},
+          "mode_writes": [
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              4,
+              1
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              6,
+              1
+            ]
+          ],
+          "max_speed": {},
+          "q": [
+            -0.0070573,
+            0.000572213,
+            0.002479591,
+            -0.100900282,
+            0.157740139,
+            -0.097467002,
+            -0.000756146
+          ],
+          "failure": null
+        },
+        "motion_left": {
+          "frames": 11032,
+          "enables": 6,
+          "disables": 0,
+          "nonqueries": 10686,
+          "gripper_commands": 0,
+          "zero_commands": 0,
+          "position_commands": {
+            "1": {
+              "first": 0.05970092490315437,
+              "min": -0.007057297509163618,
+              "max": 0.05970092490315437,
+              "count": 1779
+            },
+            "2": {
+              "first": -0.00019073777366429567,
+              "min": -0.00019073777366429567,
+              "max": 0.000572213320992887,
+              "count": 1779
+            },
+            "3": {
+              "first": 0.002861066721379757,
+              "min": 0.0024795911740511656,
+              "max": 0.002861066721379757,
+              "count": 1779
+            },
+            "4": {
+              "first": -0.25349050760269165,
+              "min": -0.25349050760269165,
+              "max": -0.10090028494596481,
+              "count": 1779
+            },
+            "5": {
+              "first": -0.006294346414506435,
+              "min": -0.006294346414506435,
+              "max": 0.15774014592170715,
+              "count": 1779
+            },
+            "6": {
+              "first": -0.15583276748657227,
+              "min": -0.15583276748657227,
+              "max": -0.09746700525283813,
+              "count": 1779
+            }
+          },
+          "port": "/dev/pts/4",
+          "enabled": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "commands": 10674,
+          "last_torque": {},
+          "last_position": {
+            "1": 0.007057297509163618,
+            "2": 0.000572213320992887,
+            "3": 0.0024795911740511656,
+            "4": 0.10090028494596481,
+            "5": -0.15774014592170715,
+            "6": 0.09746700525283813
+          },
+          "mode_writes": [
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              5,
+              2
+            ],
+            [
+              6,
+              2
+            ]
+          ],
+          "max_speed": {
+            "1": 7.5,
+            "2": 7.5,
+            "3": 7.5,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0
+          },
+          "q": [
+            -0.007057297509163618,
+            0.000572213320992887,
+            0.0024795911740511656,
+            -0.10090028494596481,
+            0.15774014592170715,
+            -0.09746700525283813,
+            -0.003853358
+          ],
+          "failure": null
+        },
+        "teaching_right": {
+          "frames": 2937,
+          "enables": 6,
+          "disables": 0,
+          "nonqueries": 2064,
+          "gripper_commands": 0,
+          "zero_commands": 0,
+          "position_commands": {},
+          "port": "/dev/pts/5",
+          "enabled": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "commands": 2052,
+          "last_torque": {
+            "1": -0.006837606837606813,
+            "2": -0.07521367521367495,
+            "3": 6.105982905982906,
+            "4": -1.6483516483516478,
+            "5": -0.0024420024420024333,
+            "6": 0.0024420024420024333
+          },
+          "last_position": {},
+          "mode_writes": [
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              4,
+              1
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              6,
+              1
+            ]
+          ],
+          "max_speed": {},
+          "q": [
+            -0.077630274,
+            -0.002479591,
+            0.00171664,
+            0.001335164,
+            0.001335164,
+            0.060463874,
+            -0.000242883
+          ],
+          "failure": null
+        },
+        "motion_right": {
+          "frames": 9203,
+          "enables": 6,
+          "disables": 0,
+          "nonqueries": 8700,
+          "gripper_commands": 0,
+          "zero_commands": 0,
+          "position_commands": {
+            "1": {
+              "first": -0.09136339277029037,
+              "min": -0.09136339277029037,
+              "max": -0.07763027399778366,
+              "count": 1448
+            },
+            "2": {
+              "first": -0.011635004542768002,
+              "min": -0.011635004542768002,
+              "max": -0.0024795911740511656,
+              "count": 1448
+            },
+            "3": {
+              "first": 0.001716639962978661,
+              "min": 0.001716639962978661,
+              "max": 0.001716639962978661,
+              "count": 1448
+            },
+            "4": {
+              "first": -0.3534370958805084,
+              "min": -0.3534370958805084,
+              "max": 0.0013351644156500697,
+              "count": 1448
+            },
+            "5": {
+              "first": 0.061226826161146164,
+              "min": 0.0013351644156500697,
+              "max": 0.061226826161146164,
+              "count": 1448
+            },
+            "6": {
+              "first": 0.031090257689356804,
+              "min": 0.031090257689356804,
+              "max": 0.06046387553215027,
+              "count": 1448
+            }
+          },
+          "port": "/dev/pts/6",
+          "enabled": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "commands": 8688,
+          "last_torque": {},
+          "last_position": {
+            "1": 0.07763027399778366,
+            "2": -0.0024795911740511656,
+            "3": 0.001716639962978661,
+            "4": -0.0013351644156500697,
+            "5": -0.0013351644156500697,
+            "6": -0.06046387553215027
+          },
+          "mode_writes": [
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              5,
+              2
+            ],
+            [
+              6,
+              2
+            ]
+          ],
+          "max_speed": {
+            "1": 7.5,
+            "2": 7.5,
+            "3": 7.5,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0
+          },
+          "q": [
+            -0.07763027399778366,
+            -0.0024795911740511656,
+            0.001716639962978661,
+            0.0013351644156500697,
+            0.0013351644156500697,
+            0.06046387553215027,
+            -0.000114568
+          ],
+          "failure": null
+        }
+      },
+      "native_rates_hz": {
+        "teaching_left": {
+          "control_cycle_count": 250.00039355156554,
+          "command_count": 250.00039355156554,
+          "feedback_count": 250.00039355156554
+        },
+        "motion_left": {
+          "control_cycle_count": 250.00059370158692,
+          "command_count": 250.00059370158692,
+          "feedback_count": 250.00059370158692
+        },
+        "teaching_right": {
+          "control_cycle_count": 250.0003359875368,
+          "command_count": 250.0003359875368,
+          "feedback_count": 250.0003359875368
+        },
+        "motion_right": {
+          "control_cycle_count": 249.99953040336553,
+          "command_count": 249.99953040336553,
+          "feedback_count": 249.99953040336553
+        }
+      }
+    },
+    "nonzero_start_and_release_during_home": {
+      "result": "PASS",
+      "case": "release_during_exit_home",
+      "release_time_s": 0.14944649800600018,
+      "physical_devices": 0,
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_teaching_test_reports/teaching_46274750f9"
+    }
+  },
+  "motor_gain_trial_unchanged": true,
+  "original_mapper_sha256": "515df7865584ab3f05f7b0074be0e1ac149d41e00f8b79c2771460d4f41b253f",
+  "source_sha256": {
+    "tools/arm_gravity/gravity_session.py": "493770000f1ddf4f751c1b3aebe0662a885cde74a6d1ebc6ec433c2f185daf47",
+    "tools/arm_gravity/teaching_port_config.py": "ca5ec135b088f63e1da6573094c653d0571f08cffbed3bd43961e44cd8bbc343",
+    "tools/arm_gravity/teaching_port_session.py": "04252315f64d217bf2d71fba072c3b9cc20ea64cf0392296414f4f389f354009",
+    "tools/arm_gravity/teaching_port.py": "32173dbbc794cc8e6e6905b9138fc9ac5f08c13dcc4cb9c6f74bec3dd08c3558",
+    "tools/arm_gravity/test_teaching_port.py": "431508600e560e37621749d989c6145036efb2e443385ea40fa9ae84488746b7",
+    "tools/arm_gravity/verify_teaching_port.py": "7ab1a1bd915c476aa67c67d436b86907f17236a12a9bdc158b0be73b73b6891c",
+    "tools/arm_gravity/verify_multi.py": "1663b399803995101f5ecccfa5e82a4a64546a89a1db4b28bb7ff470beb973f7"
+  },
+  "limitation": "Virtual motor response is instantaneous; no real hardware motion or closed-loop performance verification."
+}

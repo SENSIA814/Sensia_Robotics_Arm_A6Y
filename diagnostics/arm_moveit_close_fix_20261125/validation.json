@@ -1,0 +1,17 @@
+{
+  "result": "PASS",
+  "python_checks": 15,
+  "qt_close_cases": 5,
+  "checks": {
+    "normal_home_and_rviz_close": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_left_dvjv6lf_/verification.json",
+    "collision_and_stop_cancel_close": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_left_2g7zk92d/interaction_verification.json",
+    "backend_death_cleanup": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_left_x4ifxvbe/shutdown_verification.json",
+    "virtual_serial_home_disable": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_left_u_gvgomh/serial_verification.json"
+  },
+  "onsite_recovery": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_moveit_native_reports/motion_left_kigx5tg9/orphan_recovery.json",
+  "physical_motion_commands_sent_by_this_task": 0,
+  "remaining_limitations": [
+    "The recorded link1/link5 collision still blocks that return path; checks remain enabled.",
+    "The existing system MoveIt shutdown destructor crash is not patched; native process cleanup is now bounded."
+  ]
+}

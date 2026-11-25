@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="a5">
+  <xacro:arg name="model_file" default="$(find a5_description)/urdf/A5.urdf"/>
+  <xacro:arg name="motor_config_file" default="$(find a6_y_controllers)/config/a5_motors.yaml"/>
+  <xacro:arg name="dry_run" default="true"/>
+  <xacro:arg name="auto_enable" default="false"/>
+  <xacro:arg name="can_channel" default="/dev/ttyACM0"/>
+  <xacro:arg name="can_bitrate" default="1000000"/>
+  <xacro:arg name="tty_baudrate" default="115200"/>
+  <xacro:arg name="command_timeout" default="0.2"/>
+  <xacro:arg name="feedback_timeout" default="0.5"/>
+  <xacro:arg name="control_mode" default="mit"/>
+
+  <xacro:include filename="$(arg model_file)"/>
+  <xacro:property name="motors" value="${xacro.load_yaml('$(arg motor_config_file)')['joints']}"/>
+  <xacro:macro name="arm6_joint" params="name">
+    <xacro:property name="motor" value="${motors[name]}"/>
+    <joint name="${name}">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <command_interface name="effort"/>
+      <command_interface name="motor_enable"/>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+      <state_interface name="motor_error"/>
+      <state_interface name="fault"/>
+      <state_interface name="has_feedback"/>
+      <state_interface name="feedback_age"/>
+      <state_interface name="enabled"/>
+      <state_interface name="position_age"/>
+      <state_interface name="position_valid"/>
+      <state_interface name="position_rejections"/>
+      <state_interface name="dry_run"/>
+      <state_interface name="bus_cycle_duration"/>
+      <param name="feedback_position_jump">${motor.get('feedback_position_jump', 0.0)}</param>
+      <param name="feedback_position_alpha">${motor.get('feedback_position_alpha', 1.0)}</param>
+      <param name="motor_type">${motor['motor_type']}</param>
+      <param name="slave_id">${motor['slave_id']}</param>
+      <param name="master_id">${motor['master_id']}</param>
+      <param name="sign">${motor['sign']}</param>
+      <param name="offset">${motor['offset']}</param>
+      <param name="position_scale">${motor.get('position_scale', 1.0)}</param>
+      <param name="min_position">${motor['min_position']}</param>
+      <param name="max_position">${motor['max_position']}</param>
+      <param name="max_velocity">${motor['max_velocity']}</param>
+      <xacro:if value="${'protocol_vmax' in motor}">
+        <param name="protocol_vmax">${motor['protocol_vmax']}</param>
+      </xacro:if>
+      <param name="read_only">${motor.get('read_only', False)}</param>
+    </joint>
+  </xacro:macro>
+
+  <ros2_control name="A5GripperSystem" type="system">
+    <hardware>
+      <plugin>a6_y_ros2_control/A6YDamiaoSystem</plugin>
+      <param name="dry_run">$(arg dry_run)</param>
+      <param name="auto_enable">$(arg auto_enable)</param>
+      <param name="can_channel">$(arg can_channel)</param>
+      <param name="can_bitrate">$(arg can_bitrate)</param>
+      <param name="tty_baudrate">$(arg tty_baudrate)</param>
+      <param name="control_mode">$(arg control_mode)</param>
+      <param name="mit_kp">0.0</param>
+      <param name="mit_kd">0.0</param>
+      <param name="defer_enable_until_controller_ready">true</param>
+      <param name="set_control_mode_on_configure">false</param>
+      <param name="require_feedback_on_configure">true</param>
+      <param name="allow_partial_feedback">false</param>
+      <param name="disable_on_deactivate">true</param>
+      <param name="command_timeout">$(arg command_timeout)</param>
+      <param name="feedback_timeout">$(arg feedback_timeout)</param>
+      <param name="max_start_delta">0.1</param>
+      <param name="receive_timeout">0.001</param>
+      <param name="status_request_period">0.05</param>
+      <param name="initial_feedback_attempts">60</param>
+    </hardware>
+    <xacro:arm6_joint name="joint1"/>
+    <xacro:arm6_joint name="joint2"/>
+    <xacro:arm6_joint name="joint3"/>
+    <xacro:arm6_joint name="joint4"/>
+    <xacro:arm6_joint name="joint5"/>
+    <xacro:arm6_joint name="joint6"/>
+    <xacro:arm6_joint name="gripper_finger_joint1"/>
+  </ros2_control>
+</robot>

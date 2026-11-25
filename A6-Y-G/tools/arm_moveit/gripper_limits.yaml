@@ -1,0 +1,8 @@
+schema_version: 1
+# Software goal limits inside the unchanged A5 model's original travel.
+# Initial margin, not a measured/calibrated mechanical endpoint.
+defaults:
+  closed_margin_mm: 0.7
+  open_margin_mm: 0.7
+# Optional per-arm calibration, using the same keys as defaults.
+role_overrides: {}

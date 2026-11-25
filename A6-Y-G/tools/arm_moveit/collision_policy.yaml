@@ -1,0 +1,21 @@
+schema_version: 1
+# User confirmed: A5 geometry/kinematics are correct; decorative shells are
+# absent, motors and load-bearing parts remain. Keep the A5 URDF untouched.
+# These are whole-link self-collision exclusions, not reconstructed bare meshes.
+default_profile: bare
+profiles:
+  bare:
+    label: 裸机碰撞配置
+    description: 忽略 link1↔link4、link1↔link5 整对自碰撞；其他自碰撞和环境碰撞仍检查
+    disabled_pairs:
+      - [link1, link4]
+      - [link1, link5]
+    # Reported motion-right start posture: link2/link4 overlaps in the A5
+    # collision mesh. Apply this extra whole-link exclusion to that arm only.
+    role_disabled_pairs:
+      motion_right:
+        - [link2, link4]
+  full:
+    label: 完整碰撞配置
+    description: 恢复原移植版的自碰撞检查，包含 link1↔link4、link1↔link5、link2↔link4
+    disabled_pairs: []

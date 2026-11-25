@@ -1,0 +1,54 @@
+{
+  "trial": "j4_kp80_03",
+  "status": "parameters_applied_awaiting_user_capture",
+  "applied_at": "2026-11-25T23:41:30.364+08:00",
+  "result": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_j4_kp80_trial_20261125/1795621242294344529_apply/result.json",
+  "result_sha256": "db4456ada13df5ddbfd8d49b2fbf5bcdf3180f91179059ec834d2a3a7314f719",
+  "baseline_session": "teaching_75eac1124d",
+  "planned_gains": {
+    "4": {
+      "KP_APR": 80.0
+    }
+  },
+  "actual_j4_gains": {
+    "motion_left": {
+      "KP_APR": 80.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.003719999920576811,
+      "KI_ASR": 0.0020000000949949026
+    },
+    "motion_right": {
+      "KP_APR": 80.0,
+      "KI_APR": 0.0,
+      "KP_ASR": 0.003719999920576811,
+      "KI_ASR": 0.0020000000949949026
+    }
+  },
+  "roles": [
+    "motion_left",
+    "motion_right"
+  ],
+  "storage": "RAM only; lost on motor power cycle",
+  "rates": {
+    "control_hz": 250,
+    "per_axis_command_hz": 250,
+    "target_hz": 100,
+    "can_bitrate": 1000000
+  },
+  "frames": {
+    "0xcc": 72,
+    "0x33": 734,
+    "0x55": 2
+  },
+  "next_log_session": null,
+  "validation": {
+    "gain_writes": 2,
+    "writes_acknowledged": 2,
+    "independent_readbacks_per_write": 2,
+    "all_14_motors_disabled": true,
+    "only_j4_kp_apr_changed_per_motion_arm": true,
+    "teachers_not_accessed": true,
+    "motion_or_flash_commands": 0,
+    "unit_tests_passed": 8
+  }
+}

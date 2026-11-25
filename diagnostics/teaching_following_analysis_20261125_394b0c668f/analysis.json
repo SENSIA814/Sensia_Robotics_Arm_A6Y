@@ -1,0 +1,660 @@
+{
+  "session": "teaching_394b0c668f",
+  "started_local": "2026-11-25T21:14:20.689775+08:00",
+  "following_seconds": 31.95965517299919,
+  "quality": {
+    "schema": 1,
+    "pairs": [
+      [
+        "teaching_left",
+        "motion_left"
+      ],
+      [
+        "teaching_right",
+        "motion_right"
+      ]
+    ],
+    "devices": {
+      "teaching_left": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_304F33733036-if00",
+      "motion_left": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_304C33733036-if00",
+      "teaching_right": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209D3982534B-if00",
+      "motion_right": "/dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209B3971534B-if00"
+    },
+    "nominal_arm_hz": 250,
+    "nominal_target_hz": 100,
+    "units": {
+      "angle": "rad",
+      "velocity": "rad/s",
+      "time": "s",
+      "error": "sent_position - position"
+    },
+    "timebases": {
+      "control_time": "host steady clock at native read start",
+      "send_begin_time": "host steady clock before serial write",
+      "send_complete_time": "host steady clock after serial accepted frame; NOT CAN ACK",
+      "feedback_receive_time": "host steady clock when decoded; NOT motor sampling time",
+      "source_ros_time": "publisher ROS clock, system clock in this local deployment",
+      "receive_monotonic": "observer callback time; NOT source time"
+    },
+    "notes": [
+      "One latest native snapshot per observed control cycle, not every CAN frame.",
+      "J1-J6 position control on followers; J7 gripper is read-only.",
+      "Teacher MIT gravity has no servo position target; empty values are intentional.",
+      "Positive error means target exceeds actual in calibrated joint coordinates.",
+      "Only following phase is captured. Exit homing is excluded.",
+      "Queue drops and skipped native cycles invalidate precise latency estimates."
+    ],
+    "following_start_monotonic": 54793.49864806,
+    "following_stop_monotonic": 54825.458303233,
+    "complete": true,
+    "received": {
+      "arm:teaching_left": 7977,
+      "arm:motion_left": 7977,
+      "arm:motion_right": 7977,
+      "arm:teaching_right": 7977,
+      "raw:motion_right": 3191,
+      "safe:motion_right": 3191,
+      "raw:motion_left": 3191,
+      "safe:motion_left": 3191
+    },
+    "analysis_complete": true,
+    "written": {
+      "arm:teaching_left": 7977,
+      "arm:motion_left": 7977,
+      "arm:motion_right": 7977,
+      "arm:teaching_right": 7977,
+      "raw:motion_right": 3191,
+      "safe:motion_right": 3191,
+      "raw:motion_left": 3191,
+      "safe:motion_left": 3191
+    },
+    "queue_dropped": {},
+    "cycles": {
+      "teaching_left": {
+        "first": 637.0,
+        "last": 8613.0,
+        "skipped": 0,
+        "duplicates": 0,
+        "resets": 0
+      },
+      "motion_left": {
+        "first": 1663.0,
+        "last": 9639.0,
+        "skipped": 0,
+        "duplicates": 0,
+        "resets": 0
+      },
+      "motion_right": {
+        "first": 1088.0,
+        "last": 9064.0,
+        "skipped": 0,
+        "duplicates": 0,
+        "resets": 0
+      },
+      "teaching_right": {
+        "first": 243.0,
+        "last": 8219.0,
+        "skipped": 0,
+        "duplicates": 0,
+        "resets": 0
+      }
+    },
+    "error": null
+  },
+  "native_rates": [
+    {
+      "role": "motion_left",
+      "samples": 7977,
+      "seconds": 31.904004119998717,
+      "loop_hz": 249.99996771566117,
+      "command_hz": [
+        249.99996771566117,
+        249.99996771566117,
+        249.99996771566117,
+        249.99996771566117,
+        249.99996771566117,
+        249.99996771566117
+      ],
+      "feedback_hz": [
+        249.99996771566117,
+        249.99996771566117,
+        249.99996771566117,
+        249.99996771566117,
+        249.99996771566117,
+        249.99996771566117
+      ],
+      "new_cycles_over_6ms": 0.0,
+      "faults": 0,
+      "invalid_positions": 0
+    },
+    {
+      "role": "motion_right",
+      "samples": 7977,
+      "seconds": 31.90400348100229,
+      "loop_hz": 249.99997272284108,
+      "command_hz": [
+        249.99997272284108,
+        249.99997272284108,
+        249.99997272284108,
+        249.99997272284108,
+        249.99997272284108,
+        249.99997272284108
+      ],
+      "feedback_hz": [
+        249.99997272284108,
+        249.99997272284108,
+        249.99997272284108,
+        249.99997272284108,
+        249.99997272284108,
+        249.99997272284108
+      ],
+      "new_cycles_over_6ms": 0.0,
+      "faults": 0,
+      "invalid_positions": 0
+    },
+    {
+      "role": "teaching_left",
+      "samples": 7977,
+      "seconds": 31.904022834998614,
+      "loop_hz": 249.9998210648957,
+      "command_hz": [
+        249.9998210648957,
+        249.9998210648957,
+        249.9998210648957,
+        249.9998210648957,
+        249.9998210648957,
+        249.9998210648957
+      ],
+      "feedback_hz": [
+        249.9998210648957,
+        249.9998210648957,
+        249.9998210648957,
+        249.9998210648957,
+        249.9998210648957,
+        249.9998210648957
+      ],
+      "new_cycles_over_6ms": 0.0,
+      "faults": 0,
+      "invalid_positions": 0
+    },
+    {
+      "role": "teaching_right",
+      "samples": 7977,
+      "seconds": 31.904003478004597,
+      "loop_hz": 249.99997274633105,
+      "command_hz": [
+        249.99997274633105,
+        249.99997274633105,
+        249.99997274633105,
+        249.99997274633105,
+        249.99997274633105,
+        249.99997274633105
+      ],
+      "feedback_hz": [
+        249.99997274633105,
+        249.99997274633105,
+        249.99997274633105,
+        249.99997274633105,
+        249.99997274633105,
+        249.99997274633105
+      ],
+      "new_cycles_over_6ms": 0.0,
+      "faults": 0,
+      "invalid_positions": 0
+    }
+  ],
+  "observed_target_hz": 99.89148739844954,
+  "links": [
+    {
+      "side": "left",
+      "kind": "teacher_snapshot_to_raw",
+      "eligible": 1453,
+      "matched": 1453,
+      "unmatched": 0,
+      "interval_ms": {
+        "min": 1.5659357522963546,
+        "median": 3.5769618407357484,
+        "p95": 3.7776115743326955,
+        "max": 6.046261893061455
+      },
+      "matching_tolerance_rad": 2e-08,
+      "search_window_s": 0.08,
+      "note": "Changing six-axis vectors; latest matching teacher snapshot / first matching native send; repeated quantized values can understate source age."
+    },
+    {
+      "side": "left",
+      "kind": "safe_to_native_send",
+      "eligible": 2401,
+      "matched": 2401,
+      "unmatched": 0,
+      "interval_ms": {
+        "min": 0.20205287728458643,
+        "median": 2.233048442576546,
+        "p95": 4.158170137088746,
+        "max": 4.494726577831898
+      },
+      "matching_tolerance_rad": 1.5e-07,
+      "search_window_s": 0.08,
+      "note": "Changing six-axis vectors; latest matching teacher snapshot / first matching native send; repeated quantized values can understate source age."
+    },
+    {
+      "side": "right",
+      "kind": "teacher_snapshot_to_raw",
+      "eligible": 1716,
+      "matched": 1716,
+      "unmatched": 0,
+      "interval_ms": {
+        "min": 1.0424840947962366,
+        "median": 1.6794422117527574,
+        "p95": 3.238796607547556,
+        "max": 3.484569948341232
+      },
+      "matching_tolerance_rad": 2e-08,
+      "search_window_s": 0.08,
+      "note": "Changing six-axis vectors; latest matching teacher snapshot / first matching native send; repeated quantized values can understate source age."
+    },
+    {
+      "side": "right",
+      "kind": "safe_to_native_send",
+      "eligible": 1848,
+      "matched": 1848,
+      "unmatched": 0,
+      "interval_ms": {
+        "min": 0.11134581291116774,
+        "median": 2.162501546990825,
+        "p95": 4.169022146743373,
+        "max": 4.336685320595279
+      },
+      "matching_tolerance_rad": 1.5e-07,
+      "search_window_s": 0.08,
+      "note": "Changing six-axis vectors; latest matching teacher snapshot / first matching native send; repeated quantized values can understate source age."
+    }
+  ],
+  "joints": [
+    {
+      "side": "left",
+      "joint": 1,
+      "teacher_range_rad": 0.7038223849999999,
+      "teacher_minus_sent_peak_rad": 0.345270647,
+      "peak_time_s": 2.8491097040023305,
+      "at_peak": {
+        "teacher_q": 0.688372625,
+        "raw_q": 0.688372625,
+        "safe_q": 0.345009346,
+        "sent_q": 0.343101978,
+        "actual_q": 0.232890822
+      },
+      "native_error_peak_rad": 0.11173706299999997,
+      "native_error_rms_rad": 0.05593217761638774,
+      "last_5s_native_error_rad": -0.0003814760000000004,
+      "first_plateau_rad": 0.693331807,
+      "settling_band_rad": 0.01386663614,
+      "first_plateau_entry_s": {
+        "teacher_q": 2.805102434998844,
+        "raw_q": 2.8091056480043335,
+        "safe_q": 5.08914444900438,
+        "sent_q": 5.093154223002784,
+        "actual_q": 6.709148895999533
+      },
+      "after_teacher_hold_s": 3.9040464610006893,
+      "after_native_target_enters_band_s": 1.6159946729967487,
+      "plateau_13_15s_native_error_rad": -2.8999999956980105e-08
+    },
+    {
+      "side": "left",
+      "joint": 2,
+      "teacher_range_rad": 1.66895552,
+      "teacher_minus_sent_peak_rad": 1.34816983,
+      "peak_time_s": 18.029142343002604,
+      "at_peak": {
+        "teacher_q": -0.00171664,
+        "raw_q": -0.001335164,
+        "safe_q": 1.344927329,
+        "sent_q": 1.34645319,
+        "actual_q": 1.456664378
+      },
+      "native_error_peak_rad": 0.11173710400000014,
+      "native_error_rms_rad": 0.09061528148958697,
+      "last_5s_native_error_rad": -0.0026977949999999994,
+      "first_plateau_rad": 1.66723888,
+      "settling_band_rad": 0.0333447776,
+      "first_plateau_entry_s": {
+        "teacher_q": 2.7051163720025215,
+        "raw_q": 2.7091211560036754,
+        "safe_q": 10.309124837003765,
+        "sent_q": 10.313112174000707,
+        "actual_q": 11.421114251003019
+      },
+      "after_teacher_hold_s": 8.715997879000497,
+      "after_native_target_enters_band_s": 1.1080020770023111,
+      "plateau_13_15s_native_error_rad": 0.0011443790000000842,
+      "saturated_ramp_samples": 2175,
+      "saturated_ramp_velocity_rad_s": {
+        "min": 0.105006105,
+        "median": 0.148962149,
+        "p95": 0.163614164,
+        "max": 0.188034188
+      },
+      "saturated_ramp_native_error_rad": {
+        "min": 0.109448189,
+        "median": 0.11059268,
+        "p95": 0.111355602,
+        "max": 0.111737104
+      },
+      "velocity_over_error_per_s": {
+        "min": 0.9462216883839702,
+        "median": 1.3423145611662048,
+        "p95": 1.484552125234672,
+        "max": 1.7180198903587287
+      }
+    },
+    {
+      "side": "left",
+      "joint": 3,
+      "teacher_range_rad": 1.508354314,
+      "teacher_minus_sent_peak_rad": 1.237160496,
+      "peak_time_s": 18.0291425050018,
+      "at_peak": {
+        "teacher_q": 0.004386969,
+        "raw_q": 0.005531395,
+        "safe_q": 1.240021553,
+        "sent_q": 1.241547465,
+        "actual_q": 1.351758602
+      },
+      "native_error_peak_rad": 0.11173710800000003,
+      "native_error_rms_rad": 0.08642412876002514,
+      "last_5s_native_error_rad": -0.0007904169999999981,
+      "first_plateau_rad": 1.511596857,
+      "settling_band_rad": 0.03023193714,
+      "first_plateau_entry_s": {
+        "teacher_q": 2.2571225370047614,
+        "raw_q": 2.2571225370047614,
+        "safe_q": 9.349107164001907,
+        "sent_q": 9.35310719699919,
+        "actual_q": 10.509118287998717
+      },
+      "after_teacher_hold_s": 8.251995750993956,
+      "after_native_target_enters_band_s": 1.1560110909995274,
+      "plateau_13_15s_native_error_rad": 0.00038141800000013326,
+      "saturated_ramp_samples": 1928,
+      "saturated_ramp_velocity_rad_s": {
+        "min": 0.095238095,
+        "median": 0.148962149,
+        "p95": 0.168498168,
+        "max": 0.188034188
+      },
+      "saturated_ramp_native_error_rad": {
+        "min": 0.109829612,
+        "median": 0.1107833605,
+        "p95": 0.111355601,
+        "max": 0.111737099
+      },
+      "velocity_over_error_per_s": {
+        "min": 0.8523411798826954,
+        "median": 1.3377158370917845,
+        "p95": 1.5183556501345319,
+        "max": 1.7002414265542443
+      }
+    },
+    {
+      "side": "left",
+      "joint": 4,
+      "teacher_range_rad": 0.7053482879999999,
+      "teacher_minus_sent_peak_rad": 0.435414278,
+      "peak_time_s": 0.20111864100181265,
+      "at_peak": {
+        "teacher_q": 0.288586252,
+        "raw_q": 0.288586252,
+        "safe_q": -0.146828031,
+        "sent_q": -0.146828026,
+        "actual_q": -0.2176318
+      },
+      "native_error_peak_rad": 0.073855573,
+      "native_error_rms_rad": 0.02353121494423106,
+      "last_5s_native_error_rad": 0.0
+    },
+    {
+      "side": "left",
+      "joint": 5,
+      "teacher_range_rad": 0.835812924,
+      "teacher_minus_sent_peak_rad": 0.16113335699999998,
+      "peak_time_s": 0.20111874800204532,
+      "at_peak": {
+        "teacher_q": -0.288586252,
+        "raw_q": -0.288586252,
+        "safe_q": -0.127452888,
+        "sent_q": -0.127452895,
+        "actual_q": -0.055123217
+      },
+      "native_error_peak_rad": 0.073092619,
+      "native_error_rms_rad": 0.02242200652921153,
+      "last_5s_native_error_rad": 6.999999996315509e-09
+    },
+    {
+      "side": "left",
+      "joint": 6,
+      "teacher_range_rad": 0.416952773,
+      "teacher_minus_sent_peak_rad": 0.18364041799999997,
+      "peak_time_s": 0.20111884800280677,
+      "at_peak": {
+        "teacher_q": 0.31528954,
+        "raw_q": 0.318341344,
+        "safe_q": 0.131649119,
+        "sent_q": 0.131649122,
+        "actual_q": 0.058556497
+      },
+      "native_error_peak_rad": 0.07309262799999999,
+      "native_error_rms_rad": 0.013356947514382338,
+      "last_5s_native_error_rad": -0.00038147700000000506
+    },
+    {
+      "side": "right",
+      "joint": 1,
+      "teacher_range_rad": 0.740062562,
+      "teacher_minus_sent_peak_rad": 0.209846845,
+      "peak_time_s": 2.8887066840034095,
+      "at_peak": {
+        "teacher_q": -0.700579843,
+        "raw_q": -0.699053941,
+        "safe_q": -0.493403334,
+        "sent_q": -0.490732998,
+        "actual_q": -0.383192187
+      },
+      "native_error_peak_rad": 0.11059263600000002,
+      "native_error_rms_rad": 0.041315995896320984,
+      "last_5s_native_error_rad": -0.0003814739999999997,
+      "first_plateau_rad": -0.738727398,
+      "settling_band_rad": 0.01477454796,
+      "first_plateau_entry_s": {
+        "teacher_q": 2.98070652000024,
+        "raw_q": 2.9847248880032566,
+        "safe_q": 3.6047005350046675,
+        "sent_q": 3.6086874340035138,
+        "actual_q": 4.3087036780052586
+      },
+      "after_teacher_hold_s": 1.3279971580050187,
+      "after_native_target_enters_band_s": 0.7000162440017448,
+      "plateau_13_15s_native_error_rad": 7.000000024071085e-09
+    },
+    {
+      "side": "right",
+      "joint": 2,
+      "teacher_range_rad": 1.670862898,
+      "teacher_minus_sent_peak_rad": 1.0914368220000001,
+      "peak_time_s": 17.988719061002485,
+      "at_peak": {
+        "teacher_q": -0.00514992,
+        "raw_q": -0.004386969,
+        "safe_q": 1.083616579,
+        "sent_q": 1.086286902,
+        "actual_q": 1.193827726
+      },
+      "native_error_peak_rad": 0.110592633,
+      "native_error_rms_rad": 0.06008446824354894,
+      "last_5s_native_error_rad": 0.0003540089999999989,
+      "first_plateau_rad": 1.663424125,
+      "settling_band_rad": 0.0332684825,
+      "first_plateau_entry_s": {
+        "teacher_q": 2.96070951600268,
+        "raw_q": 2.964696612005355,
+        "safe_q": 4.876712794000923,
+        "sent_q": 4.880712887003028,
+        "actual_q": 5.360693401002209
+      },
+      "after_teacher_hold_s": 2.3999838849995285,
+      "after_native_target_enters_band_s": 0.4799805139991804,
+      "plateau_13_15s_native_error_rad": 9.000000078529524e-09,
+      "saturated_ramp_samples": 965,
+      "saturated_ramp_velocity_rad_s": {
+        "min": 0.256410256,
+        "median": 0.31990232,
+        "p95": 0.349206349,
+        "max": 0.378510379
+      },
+      "saturated_ramp_native_error_rad": {
+        "min": 0.106777833,
+        "median": 0.108685205,
+        "p95": 0.1102111386,
+        "max": 0.11059263
+      },
+      "velocity_over_error_per_s": {
+        "min": 2.3427550775860393,
+        "median": 2.9747068065986872,
+        "p95": 3.2587582766919283,
+        "max": 3.4948959160357154
+      }
+    },
+    {
+      "side": "right",
+      "joint": 3,
+      "teacher_range_rad": 1.4957656209999999,
+      "teacher_minus_sent_peak_rad": 0.867510701,
+      "peak_time_s": 18.228772189002484,
+      "at_peak": {
+        "teacher_q": 0.092126345,
+        "raw_q": 0.093652247,
+        "safe_q": 0.956966697,
+        "sent_q": 0.959637046,
+        "actual_q": 1.067177844
+      },
+      "native_error_peak_rad": 0.110592637,
+      "native_error_rms_rad": 0.05693582381910822,
+      "last_5s_native_error_rad": 0.0003540089999999989,
+      "first_plateau_rad": 1.499008164,
+      "settling_band_rad": 0.02998016328,
+      "first_plateau_entry_s": {
+        "teacher_q": 2.012703676999081,
+        "raw_q": 2.016700910004147,
+        "safe_q": 4.3047094870053115,
+        "sent_q": 4.31270482900436,
+        "actual_q": 4.824711304005177
+      },
+      "after_teacher_hold_s": 2.8120076270060963,
+      "after_native_target_enters_band_s": 0.5120064750008169,
+      "plateau_13_15s_native_error_rad": 0.0007629670000000033,
+      "saturated_ramp_samples": 820,
+      "saturated_ramp_velocity_rad_s": {
+        "min": 0.236874237,
+        "median": 0.31990232,
+        "p95": 0.363858364,
+        "max": 0.402930403
+      },
+      "saturated_ramp_native_error_rad": {
+        "min": 0.106014923,
+        "median": 0.1086852195,
+        "p95": 0.110211143,
+        "max": 0.110592637
+      },
+      "velocity_over_error_per_s": {
+        "min": 2.141863139482257,
+        "median": 2.9433827684792897,
+        "p95": 3.3618789653803782,
+        "max": 3.7467672436739483
+      }
+    },
+    {
+      "side": "right",
+      "joint": 4,
+      "teacher_range_rad": 0.693522545,
+      "teacher_minus_sent_peak_rad": 0.24925422199999997,
+      "peak_time_s": 0.2007127059987397,
+      "at_peak": {
+        "teacher_q": 0.071908141,
+        "raw_q": 0.071908141,
+        "safe_q": -0.177346075,
+        "sent_q": -0.177346081,
+        "actual_q": -0.243572137
+      },
+      "native_error_peak_rad": 0.071185243,
+      "native_error_rms_rad": 0.015216962772416638,
+      "last_5s_native_error_rad": 0.0
+    },
+    {
+      "side": "right",
+      "joint": 5,
+      "teacher_range_rad": 0.8548867019999999,
+      "teacher_minus_sent_peak_rad": 0.090178913,
+      "peak_time_s": 24.676720638002735,
+      "at_peak": {
+        "teacher_q": -0.024986648,
+        "raw_q": -0.024986648,
+        "safe_q": -0.105628672,
+        "sent_q": -0.115165561,
+        "actual_q": -0.178339818
+      },
+      "native_error_peak_rad": 0.07004082099999998,
+      "native_error_rms_rad": 0.015026135893735302,
+      "last_5s_native_error_rad": -9.999999994736442e-10
+    },
+    {
+      "side": "right",
+      "joint": 6,
+      "teacher_range_rad": 0.371938659,
+      "teacher_minus_sent_peak_rad": 0.014496065000000002,
+      "peak_time_s": 24.636709361999237,
+      "at_peak": {
+        "teacher_q": 0.157740139,
+        "raw_q": 0.157740139,
+        "safe_q": 0.157740139,
+        "sent_q": 0.172236204,
+        "actual_q": 0.192454414
+      },
+      "native_error_peak_rad": 0.061417563999999994,
+      "native_error_rms_rad": 0.008710079324828467,
+      "last_5s_native_error_rad": 0.0003814759999999917
+    }
+  ],
+  "motor_parameter_snapshot": {
+    "observed_at": "2026-11-25T20:58:38.147+08:00",
+    "source": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_step_logging_20261125/motor_parameters.json",
+    "motion_left_KP_APR": [
+      54.0,
+      54.0,
+      54.0,
+      54.0,
+      54.0,
+      54.0
+    ],
+    "motion_right_KP_APR": [
+      120.0,
+      120.0,
+      120.0,
+      120.0,
+      120.0,
+      120.0
+    ]
+  },
+  "conclusions": [
+    "主要延迟来自原程序相对运动臂当前位置的限步与运动端位置跟随响应的共同作用；不支持继续提通信/控制频率作为首要措施。",
+    "前三轴目标只能领先跟随臂当前反馈0.1125 rad，后三轴0.075 rad；下发目标成为斜坡。",
+    "相近约0.11 rad跟踪误差下，左J2/J3速度约0.15 rad/s，右约0.32 rad/s；与此前只读KP_APR 54/120的左右差异方向一致，不能据此认定唯一原因。"
+  ],
+  "caveats": [
+    "本次含初始运动、长保持与返回，并非单一理想阶跃；自动单阶跃报告拒绝拟合是合理的，本报告单独分析首段保持。",
+    "原报告每轴1个初始对齐空值，共12行，源于各流启动相位；本次原生周期无缺失、位置均有效，无须将该标记解释为CAN丢帧。",
+    "上述匹配间隔反映主机采样/发布/串口写入链路，不是纯CAN往返延迟或电机内部周期。",
+    "首段到位带取±max(0.01 rad,2%首段平台幅值)，统计从示教进入该带到实际持续进入该带的时间。",
+    "多轴同时运动且受跟随限步约束，不能直接从这些曲线确定新的PID参数。",
+    "J2/J3返回时下发目标有0.02 rad下限（关节下限+原程序limit_margin），这部分示教/运动角差不是电机静差。"
+  ]
+}

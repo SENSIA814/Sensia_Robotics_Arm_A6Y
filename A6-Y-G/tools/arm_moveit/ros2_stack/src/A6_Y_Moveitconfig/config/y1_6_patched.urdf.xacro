@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="y1_6">
+    <xacro:arg name="initial_positions_file" default="initial_positions.yaml" />
+    <xacro:arg name="motor_config_file" default="$(find A6_Y_Moveitconfig)/config/a6_y_damiao_motors.yaml" />
+    <xacro:arg name="hardware_name" default="A6YArmSystem" />
+    <xacro:arg name="hardware_plugin" default="mock_components/GenericSystem" />
+    <xacro:arg name="dry_run" default="true" />
+    <xacro:arg name="can_channel" default="/dev/ttyACM0" />
+    <xacro:arg name="can_bitrate" default="1000000" />
+    <xacro:arg name="tty_baudrate" default="115200" />
+    <xacro:arg name="control_mode" default="pos_vel" />
+    <xacro:arg name="auto_enable" default="false" />
+    <xacro:arg name="set_control_mode_on_configure" default="false" />
+    <xacro:arg name="require_feedback_on_configure" default="true" />
+    <xacro:arg name="allow_partial_feedback" default="false" />
+    <xacro:arg name="disable_on_deactivate" default="true" />
+    <xacro:arg name="command_timeout" default="0.2" />
+    <xacro:arg name="max_start_delta" default="0.25" />
+    <xacro:arg name="receive_timeout" default="0.001" />
+    <xacro:arg name="feedback_timeout" default="0.5" />
+    <xacro:arg name="status_request_period" default="0.05" />
+    <xacro:arg name="initial_feedback_attempts" default="60" />
+    <xacro:arg name="mit_kp" default="0.0" />
+    <xacro:arg name="mit_kd" default="0.3" />
+
+    <!-- Import y1_6 patched urdf file -->
+    <xacro:include filename="$(find y1_6)/urdf/y1.6_patched.urdf" />
+
+    <!-- Import control_xacro -->
+    <xacro:include filename="y1_6.ros2_control.xacro" />
+
+
+    <xacro:y1_6_ros2_control
+        hardware_name="$(arg hardware_name)"
+        initial_positions_file="$(arg initial_positions_file)"
+        motor_config_file="$(arg motor_config_file)"
+        hardware_plugin="$(arg hardware_plugin)"
+        dry_run="$(arg dry_run)"
+        can_channel="$(arg can_channel)"
+        can_bitrate="$(arg can_bitrate)"
+        tty_baudrate="$(arg tty_baudrate)"
+        control_mode="$(arg control_mode)"
+        auto_enable="$(arg auto_enable)"
+        set_control_mode_on_configure="$(arg set_control_mode_on_configure)"
+        require_feedback_on_configure="$(arg require_feedback_on_configure)"
+        allow_partial_feedback="$(arg allow_partial_feedback)"
+        disable_on_deactivate="$(arg disable_on_deactivate)"
+        command_timeout="$(arg command_timeout)"
+        max_start_delta="$(arg max_start_delta)"
+        receive_timeout="$(arg receive_timeout)"
+        feedback_timeout="$(arg feedback_timeout)"
+        status_request_period="$(arg status_request_period)"
+        initial_feedback_attempts="$(arg initial_feedback_attempts)"
+        mit_kp="$(arg mit_kp)"
+        mit_kd="$(arg mit_kd)"/>
+
+</robot>

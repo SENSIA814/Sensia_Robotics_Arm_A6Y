@@ -1,0 +1,660 @@
+{
+  "date": "2026-11-25",
+  "physical_devices_operated": 0,
+  "status": "multi_arm_completed_offline; homing_changes_verified_in_nominal_cases_with_unresolved_stiction_limits",
+  "real_log_findings": [
+    {
+      "session": "teaching_right_10182c8862",
+      "revision": 1,
+      "joint": "joint4",
+      "failure_message": "Return aborted: joint_speed revision=1 joint=joint4 value=0.564103 limit=0.500000 elapsed=2.495981 s position=0.462921 velocity=-0.564103",
+      "planned_peak_speed": 0.03756278697253644,
+      "failure_elapsed_s": 2.495981,
+      "fault_q": 0.462921,
+      "fault_velocity": -0.564103,
+      "reference_q_at_fault": 0.46696705240634784,
+      "reference_velocity_at_fault": -0.0329074779156325,
+      "tracking_error_at_fault": 0.004046052406347811,
+      "position_difference_peak_speed_50ms": 0.3208819602450088,
+      "position_difference_stationary_fraction_abs_lt_0p01": 0.6,
+      "motion_sample_count": 11,
+      "source_plan": "home_plan_001.json"
+    },
+    {
+      "session": "teaching_right_10182c8862",
+      "revision": 3,
+      "joint": "joint4",
+      "failure_message": "Return aborted: joint_speed revision=3 joint=joint4 value=0.593407 limit=0.500000 elapsed=2.632021 s position=0.223354 velocity=-0.593407",
+      "planned_peak_speed": 0.020067273641524188,
+      "failure_elapsed_s": 2.632021,
+      "fault_q": 0.223354,
+      "fault_velocity": -0.593407,
+      "reference_q_at_fault": 0.2398784098133419,
+      "reference_velocity_at_fault": -0.02006727364151363,
+      "tracking_error_at_fault": 0.01652440981334191,
+      "position_difference_peak_speed_50ms": 0.2462651192166895,
+      "position_difference_stationary_fraction_abs_lt_0p01": 0.6666666666666666,
+      "motion_sample_count": 13,
+      "source_plan": "home_plan_002.json"
+    },
+    {
+      "session": "teaching_left_fc457bbc64",
+      "revision": 1,
+      "joint": "joint4",
+      "failure_message": "Return aborted: joint_speed revision=1 joint=joint4 value=0.622711 limit=0.500000 elapsed=5.687998 s position=0.133707 velocity=-0.622711",
+      "planned_peak_speed": 0.09990009990009992,
+      "failure_elapsed_s": 5.687998,
+      "fault_q": 0.133707,
+      "fault_velocity": -0.622711,
+      "reference_q_at_fault": 0.1172019840714376,
+      "reference_velocity_at_fault": -0.0995893470638665,
+      "tracking_error_at_fault": -0.01650501592856239,
+      "position_difference_peak_speed_50ms": 0.2574769528332735,
+      "position_difference_stationary_fraction_abs_lt_0p01": 0.19696969696969696,
+      "motion_sample_count": 67,
+      "source_plan": "home_plan_001.json"
+    }
+  ],
+  "changes": {
+    "J4_home_stiffness": [
+      45.0,
+      22.5
+    ],
+    "J4_soft_speed_rad_s": 0.15,
+    "J4_direct_brake_gain": 0.3,
+    "all_joint_hard_speed_rad_s": 0.5,
+    "planned_speed_rad_s": 0.1,
+    "planned_acceleration_rad_s2": 0.2,
+    "multi_arm": "four independent sessions, explicit enable, per-device locks, serial home-on-close",
+    "feedback": "bounded callback drain plus source timestamps; unchanged .5s watchdog",
+    "dds_participant_index_max": 60
+  },
+  "unit_tests": {
+    "gravity_python": 46,
+    "operation_locks": 8,
+    "controller_cpp": 37,
+    "controller_cpp_suites": 6,
+    "result": "PASS",
+    "logs": [
+      "python_tests.log",
+      "brake_final_build.log"
+    ]
+  },
+  "multi_arm_pty": {
+    "result": "PASS",
+    "physical_devices": 0,
+    "roles": [
+      "teaching_left",
+      "teaching_right",
+      "motion_left",
+      "motion_right"
+    ],
+    "stages": [
+      "parallel_feedback_readonly",
+      "parallel_explicit_enable",
+      "duplicate_usb_rejected",
+      "tuning_isolated",
+      "release_disconnect_reconnect_isolated",
+      "feedback_fault_isolated"
+    ],
+    "virtual_hardware": "one independent process per PTY adapter",
+    "cyclonedds_config": "file:///home/taoqiu/文档/ChatGPT/A6Y远程遥操作/A6-Y-G/scripts/gravity_dds.xml",
+    "peer_monitor_samples": 137,
+    "observer_resyncs": 0,
+    "max_observer_resync_seconds": 0.0,
+    "no_peer_enable_disable_during_other_arm_operations": true,
+    "transport": {
+      "teaching_left": "/dev/pts/2",
+      "teaching_right": "/dev/pts/4",
+      "motion_left": "/dev/pts/5",
+      "motion_right": "/dev/pts/6"
+    },
+    "reports": [
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_60df94dca9",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_41a3c2f37a",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/motion_left_5e17081561",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/motion_right_8fa0b12d95",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_057bb20119",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_f9f40dedc4"
+    ],
+    "fault_error": "补偿期间电机反馈超时或报告故障，正在停止输出；停止核验：控制器启停失败",
+    "all_children_exited": true,
+    "elapsed_seconds": 13.889,
+    "mit_commands": {
+      "teaching_left": 1098,
+      "teaching_right": 5034,
+      "motion_left": 5070,
+      "motion_right": 5052
+    }
+  },
+  "qt_multi_arm": {
+    "result": "PASS",
+    "physical_devices": 0,
+    "qt_role_buttons": 4,
+    "rviz": false,
+    "parallel_dry_run_arms": 4,
+    "batch_feedback_and_explicit_enable": true,
+    "live_tuning_and_save_reload": true,
+    "per_arm_draft_and_plot_isolation": true,
+    "mock_enable_release_reenable_close": true,
+    "sequential_return_order": [
+      "motion_left",
+      "motion_right",
+      "teaching_left",
+      "teaching_right"
+    ],
+    "all_four_disable_confirmed": true,
+    "cyclonedds_config": "file:///home/taoqiu/文档/ChatGPT/A6Y远程遥操作/A6-Y-G/scripts/gravity_dds.xml",
+    "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_73982d0464",
+    "reports": {
+      "motion_left": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/motion_left_afe45882e0",
+      "motion_right": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/motion_right_4440676c9f",
+      "teaching_left": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_9d58222e68",
+      "teaching_right": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_73982d0464"
+    },
+    "verified_at": "2026-11-25T08:41:15.650633+08:00",
+    "verification_file": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/multi_gravity_ui_20261125/verification.json",
+    "screenshots": {
+      "gravity-live.png": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/multi_gravity_ui_20261125/gravity-live.png",
+      "gravity-parameters.png": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/multi_gravity_ui_20261125/gravity-parameters.png"
+    },
+    "ui_unit_tests_passed": 10,
+    "existing_compatibility_unit_tests_passed": 23,
+    "exit_events": {
+      "motion_left": [
+        {
+          "time": 1795567131.2053316,
+          "kind": "home_planning"
+        },
+        {
+          "time": 1795567146.3105178,
+          "kind": "home_executing",
+          "revision": 1,
+          "duration": 14.512802095169121,
+          "plan_file": "home_plan_001.json",
+          "peak_velocity": [
+            5.330138217346647e-07,
+            0.09989979174187733,
+            0.09990009990009993,
+            3.236137754297159e-08,
+            4.0139594651780124e-07,
+            1.562948990925184e-07
+          ],
+          "peak_acceleration": [
+            1.0649042642450466e-06,
+            0.19958903481517123,
+            0.19958965048214286,
+            6.46545502895265e-08,
+            8.019459114710018e-07,
+            3.122603912628696e-07
+          ]
+        },
+        {
+          "time": 1795567161.1873434,
+          "kind": "home_reached",
+          "positions": [
+            -6.4025400485843415e-06,
+            7.820827215958404e-06,
+            4.119243354119378e-06,
+            -3.8872353266924534e-07,
+            4.821551558561624e-06,
+            1.8774078832939271e-06,
+            -0.01
+          ],
+          "tolerance_rad": 0.005
+        },
+        {
+          "time": 1795567161.2820446,
+          "kind": "released",
+          "confirmed": true
+        },
+        {
+          "time": 1795567164.391881,
+          "kind": "closed",
+          "release_confirmed": true,
+          "result_file": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/motion_left_afe45882e0/result.json"
+        }
+      ],
+      "motion_right": [
+        {
+          "time": 1795567164.4334219,
+          "kind": "home_planning"
+        },
+        {
+          "time": 1795567178.9737327,
+          "kind": "home_executing",
+          "revision": 1,
+          "duration": 14.513204012066128,
+          "plan_file": "home_plan_001.json",
+          "peak_velocity": [
+            7.435869598726386e-08,
+            0.09990009990009993,
+            0.09990008489778579,
+            7.348290759351854e-07,
+            1.570667195997424e-07,
+            4.295329159383183e-07
+          ],
+          "peak_acceleration": [
+            1.4854982419479e-07,
+            0.19957507430937974,
+            0.19957504433855916,
+            1.4680022100196968e-06,
+            3.137794883789675e-07,
+            8.580978768031822e-07
+          ]
+        },
+        {
+          "time": 1795567193.830567,
+          "kind": "home_reached",
+          "positions": [
+            8.931895019486549e-07,
+            9.611657615787363e-06,
+            9.791863970494842e-06,
+            8.826696160249413e-06,
+            -1.8866703240200887e-06,
+            -5.159508059732617e-06,
+            -0.01
+          ],
+          "tolerance_rad": 0.005
+        },
+        {
+          "time": 1795567193.8648932,
+          "kind": "released",
+          "confirmed": true
+        },
+        {
+          "time": 1795567196.9905856,
+          "kind": "closed",
+          "release_confirmed": true,
+          "result_file": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/motion_right_4440676c9f/result.json"
+        }
+      ],
+      "teaching_left": [
+        {
+          "time": 1795567197.051744,
+          "kind": "home_planning"
+        },
+        {
+          "time": 1795567213.2816412,
+          "kind": "home_executing",
+          "revision": 1,
+          "duration": 14.512708289160644,
+          "plan_file": "home_plan_001.json",
+          "peak_velocity": [
+            5.626389522110059e-07,
+            0.0999000999000999,
+            0.09989976276811678,
+            3.0517232585714794e-07,
+            2.1908940208752086e-07,
+            4.5956226221024444e-08
+          ],
+          "peak_acceleration": [
+            1.1241112544844138e-06,
+            0.19959305373451022,
+            0.19959238016959813,
+            6.097118670952265e-07,
+            4.377245152631806e-07,
+            9.181716073092884e-08
+          ]
+        },
+        {
+          "time": 1795567228.1331584,
+          "kind": "home_reached",
+          "positions": [
+            6.758403102867306e-06,
+            2.8393192542716865e-06,
+            6.888939049094916e-06,
+            -3.6657213047146803e-06,
+            2.631695671007038e-06,
+            5.520248832181098e-07,
+            -0.01
+          ],
+          "tolerance_rad": 0.005
+        },
+        {
+          "time": 1795567228.1576614,
+          "kind": "released",
+          "confirmed": true
+        },
+        {
+          "time": 1795567231.262937,
+          "kind": "closed",
+          "release_confirmed": true,
+          "result_file": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_9d58222e68/result.json"
+        }
+      ],
+      "teaching_right": [
+        {
+          "time": 1795567231.3021019,
+          "kind": "home_planning"
+        },
+        {
+          "time": 1795567245.2700408,
+          "kind": "home_executing",
+          "revision": 1,
+          "duration": 14.512695945791108,
+          "plan_file": "home_plan_001.json",
+          "peak_velocity": [
+            5.297748675795156e-07,
+            0.09990009990009992,
+            0.09989954807726,
+            1.7855503765433168e-07,
+            7.834498523467742e-07,
+            1.1623188584102104e-07
+          ],
+          "peak_acceleration": [
+            1.058453589228984e-06,
+            0.19959349862467,
+            0.19959239612075486,
+            3.567406308715294e-07,
+            1.565278685238651e-06,
+            2.3222327875492196e-07
+          ]
+        },
+        {
+          "time": 1795567260.1612544,
+          "kind": "home_reached",
+          "positions": [
+            6.3636415451765045e-06,
+            2.6709531900026073e-06,
+            9.299434390898811e-06,
+            2.1447983384132385e-06,
+            9.41077867988497e-06,
+            -1.3961743051186208e-06,
+            -0.01
+          ],
+          "tolerance_rad": 0.005
+        },
+        {
+          "time": 1795567260.1914096,
+          "kind": "released",
+          "confirmed": true
+        },
+        {
+          "time": 1795567263.3162436,
+          "kind": "closed",
+          "release_confirmed": true,
+          "result_file": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_73982d0464/result.json"
+        }
+      ]
+    },
+    "source_sha256": {
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/A6-Y-G/tools/arm_gravity/gravity_view.py": "d69e97ce77ea993835d5d04dfc9f542e86a1532770a746c7b640149dbc0d6006",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/A6-Y-G/tools/arm_gravity/verify_ui.py": "9dabb9db045a38e47a687a05b8f790c5fca5ec4fd113760f09531b232e2515ce",
+      "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/A6-Y-G/tools/arm_gravity/test_multi_gravity_ui.py": "9573d03d353cf49572aef618cd0b4d04ed38dce026ce03f68a733b752a7659ee"
+    }
+  },
+  "home_plant_cases": [
+    {
+      "role": "teaching_right",
+      "scenario": "normal",
+      "profile": "unit",
+      "pose": "small",
+      "outcome": "home_completed_and_disabled",
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_5ded3fbf2d",
+      "peak_speed": [
+        0.051482998667742606,
+        0.09672246042640543,
+        0.1177987749861912,
+        0.06761892876294431,
+        0.07031678880343793,
+        0.0898437637627989
+      ],
+      "controller_failure": null,
+      "plant_assumptions": {
+        "gravity_scale": 1.0,
+        "gravity_mismatch": "uniform plant gravity only; not a payload model",
+        "viscous_friction": 0.15,
+        "coulomb_friction": 0.02,
+        "stiction": 0.025,
+        "stiction_velocity_threshold": 0.005,
+        "wrist_stiction": 0.025,
+        "wrist_coulomb": 0.02,
+        "command_delay": 0.0,
+        "static_friction_model": "coupled acceleration constraints with bounded static reactions and kinetic release",
+        "low_velocity_capture": "mass-metric projection below 0.005 rad/s; not identified from hardware",
+        "delay_model": "latest command sampled by non-real-time plant thread; requested delay plus sampling/scheduling error",
+        "supported_until_execution": true,
+        "supported_while_disabled": true,
+        "held_during_execution": false
+      }
+    },
+    {
+      "role": "teaching_left",
+      "scenario": "model_mismatch",
+      "profile": "unit",
+      "pose": "wrist",
+      "outcome": "controller_aborted_gravity_retained",
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_e2e46580d0",
+      "peak_speed": [
+        0.09772636557057365,
+        0.10135451166950814,
+        0.11411002811527439,
+        0.5770115589794859,
+        0.0,
+        0.0
+      ],
+      "controller_failure": {
+        "time": 1795567040.5255468,
+        "kind": "home_aborted",
+        "revision": 1,
+        "plan_file": "home_plan_001.json",
+        "message": "Return aborted: joint_speed revision=1 joint=joint4 value=0.549451 limit=0.500000 elapsed=2.576017 s position=0.443465 velocity=-0.549451",
+        "positions": [
+          0.08945601586938245,
+          0.005149919890135024,
+          0.0040054932478827965,
+          0.43011367971313064,
+          0.007820248722056888,
+          -0.024986648355840302,
+          4.582702367218161e-06
+        ],
+        "velocity": [
+          -0.0073260073260073,
+          0.0366300366300365,
+          -0.03174603174603163,
+          -0.012210012210012167,
+          -0.012210012210012167,
+          -0.012210012210012167,
+          0.0002918192918192908
+        ]
+      },
+      "plant_assumptions": {
+        "gravity_scale": 1.0,
+        "gravity_mismatch": "uniform plant gravity only; not a payload model",
+        "viscous_friction": 0.15,
+        "coulomb_friction": 0.02,
+        "stiction": 0.025,
+        "stiction_velocity_threshold": 0.005,
+        "wrist_stiction": 0.12,
+        "wrist_coulomb": 0.04,
+        "command_delay": 0.004,
+        "static_friction_model": "coupled acceleration constraints with bounded static reactions and kinetic release",
+        "low_velocity_capture": "mass-metric projection below 0.005 rad/s; not identified from hardware",
+        "delay_model": "latest command sampled by non-real-time plant thread; requested delay plus sampling/scheduling error",
+        "supported_until_execution": true,
+        "supported_while_disabled": true,
+        "held_during_execution": false
+      }
+    },
+    {
+      "role": "teaching_right",
+      "scenario": "model_mismatch",
+      "profile": "unit",
+      "pose": "wrist",
+      "outcome": "controller_aborted_gravity_retained",
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_5e5a6b52b2",
+      "peak_speed": [
+        0.050225596592817015,
+        0.15188421340841254,
+        0.18070103379167024,
+        0.7987271846442072,
+        0.0,
+        0.0
+      ],
+      "controller_failure": {
+        "time": 1795567060.6228752,
+        "kind": "home_aborted",
+        "revision": 1,
+        "plan_file": "home_plan_001.json",
+        "message": "Return aborted: joint_speed revision=1 joint=joint4 value=0.534799 limit=0.500000 elapsed=2.728006 s position=0.454528 velocity=-0.534799",
+        "positions": [
+          0.09098191805905209,
+          0.004768444342717615,
+          0.000953688868543523,
+          0.43812466620889623,
+          0.007820248722056888,
+          -0.024986648355840302,
+          4.582702367218161e-06
+        ],
+        "velocity": [
+          -0.0024420024420024333,
+          0.0512820512820511,
+          -0.0512820512820511,
+          0.0805860805860803,
+          -0.0073260073260073,
+          -0.0073260073260073,
+          0.0002918192918192908
+        ]
+      },
+      "plant_assumptions": {
+        "gravity_scale": 1.0,
+        "gravity_mismatch": "uniform plant gravity only; not a payload model",
+        "viscous_friction": 0.15,
+        "coulomb_friction": 0.02,
+        "stiction": 0.025,
+        "stiction_velocity_threshold": 0.005,
+        "wrist_stiction": 0.2,
+        "wrist_coulomb": 0.04,
+        "command_delay": 0.008,
+        "static_friction_model": "coupled acceleration constraints with bounded static reactions and kinetic release",
+        "low_velocity_capture": "mass-metric projection below 0.005 rad/s; not identified from hardware",
+        "delay_model": "latest command sampled by non-real-time plant thread; requested delay plus sampling/scheduling error",
+        "supported_until_execution": true,
+        "supported_while_disabled": true,
+        "held_during_execution": false
+      }
+    },
+    {
+      "role": "teaching_left",
+      "scenario": "normal",
+      "profile": "reference",
+      "pose": "recorded",
+      "outcome": "home_completed_and_disabled",
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_left_e829109aa9",
+      "peak_speed": [
+        0.013648399244488605,
+        0.12780543935858482,
+        0.15950790597405545,
+        0.4159850013149904,
+        0.05349565229982951,
+        0.07076041942309598
+      ],
+      "controller_failure": null,
+      "plant_assumptions": {
+        "gravity_scale": 1.0,
+        "gravity_mismatch": "uniform plant gravity only; not a payload model",
+        "viscous_friction": 0.15,
+        "coulomb_friction": 0.02,
+        "stiction": 0.025,
+        "stiction_velocity_threshold": 0.005,
+        "wrist_stiction": 0.025,
+        "wrist_coulomb": 0.02,
+        "command_delay": 0.0,
+        "static_friction_model": "coupled acceleration constraints with bounded static reactions and kinetic release",
+        "low_velocity_capture": "mass-metric projection below 0.005 rad/s; not identified from hardware",
+        "delay_model": "latest command sampled by non-real-time plant thread; requested delay plus sampling/scheduling error",
+        "supported_until_execution": true,
+        "supported_while_disabled": true,
+        "held_during_execution": false
+      }
+    },
+    {
+      "role": "teaching_right",
+      "scenario": "model_mismatch",
+      "profile": "unit",
+      "pose": "wrist",
+      "outcome": "controller_aborted_gravity_retained",
+      "report": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/arm_gravity_reports/teaching_right_cd0aa159b3",
+      "peak_speed": [
+        0.03837335510627971,
+        0.07252951029813641,
+        0.10744276335038051,
+        0.49072552700276656,
+        0.028627480422199154,
+        0.055639262046983134
+      ],
+      "controller_failure": {
+        "time": 1795567199.875527,
+        "kind": "home_aborted",
+        "revision": 1,
+        "plan_file": "home_plan_001.json",
+        "message": "Return aborted: zero_settling_timeout revision=1 joint=joint4 value=10.003737 limit=10.000000 elapsed=17.111992 s position=0.011635 velocity=-0.007326 (value=seconds after path end; position tolerance=0.005 rad, velocity tolerance=0.03 rad/s, stable time=0.3 s)",
+        "positions": [
+          0.0020981155107957505,
+          0.0005722133211261138,
+          -0.000953688868543523,
+          0.01163500419623098,
+          0.0024795910582131597,
+          0.0013351644159609322,
+          4.582702367218161e-06
+        ],
+        "velocity": [
+          -0.0024420024420024333,
+          0.0024420024420024333,
+          0.0024420024420024333,
+          -0.0073260073260073,
+          -0.0073260073260073,
+          -0.0073260073260073,
+          0.0002918192918192908
+        ]
+      },
+      "plant_assumptions": {
+        "gravity_scale": 1.0,
+        "gravity_mismatch": "uniform plant gravity only; not a payload model",
+        "viscous_friction": 0.15,
+        "coulomb_friction": 0.02,
+        "stiction": 0.025,
+        "stiction_velocity_threshold": 0.005,
+        "wrist_stiction": 0.12,
+        "wrist_coulomb": 0.04,
+        "command_delay": 0.0,
+        "static_friction_model": "coupled acceleration constraints with bounded static reactions and kinetic release",
+        "low_velocity_capture": "mass-metric projection below 0.005 rad/s; not identified from hardware",
+        "delay_model": "latest command sampled by non-real-time plant thread; requested delay plus sampling/scheduling error",
+        "supported_until_execution": true,
+        "supported_while_disabled": true,
+        "held_during_execution": false
+      }
+    }
+  ],
+  "limits": [
+    "No real hardware was operated. These tests do not establish real-arm compensation or homing performance.",
+    "Two nominal independent-body cases completed homing and verified disable; three stiction cases aborted, not successful homing.",
+    "J4 stiction .12Nm/sliding .04Nm with added4ms delay and .20/.04Nm with8ms delay still triggered speed protection; .12/.04Nm with no added delay timed out settling.",
+    "Plant inertia/friction/delay are assumptions, not hardware identification; 4ms non-real-time command sampling adds scheduling error.",
+    "The .5rad/s guard cancels return and restores ordinary gravity compensation; it is not an instantaneous mechanical speed clamp or emergency stop.",
+    "Separate arm collision models do not include the other arms.",
+    "Whole controllers package unrelated impedance failures documented in earlier revision were not changed or rerun."
+  ],
+  "prototype_logs": [
+    "brake_before.log",
+    "brake_after.log"
+  ],
+  "prototype_note": "These were preliminary controller/plant versions; not comparable final before/after evidence.",
+  "source_sha256": {
+    "src/a6_y_controllers/src/gravity_home.cpp": "268f1f93f859ca5b5334fae7d5841a487eb2f5fd3411ea6479faafcc1b949971",
+    "src/a6_y_controllers/include/a6_y_controllers/gravity_home_brake.hpp": "5b8f701cc0b5122cf3adcef4bc8771c050066409226cabd92c4ac8de44252c2c",
+    "src/a6_y_controllers/test/test_gravity_home_brake.cpp": "d0a1ca0a350e441fb087d6177aaab7bc17218b593b7bd3edbae4862d557f54d5",
+    "tools/arm_gravity/gravity_session.py": "0d21a91561804983dc844d8e2d9cafcec84247f46b86b3bdf1e20376e18779f3",
+    "tools/arm_gravity/gravity_home.py": "ac976e40bc9a3831989e9268fac97034f561f656e79c8abb5343da432b814dc4",
+    "tools/arm_gravity/gravity_view.py": "d69e97ce77ea993835d5d04dfc9f542e86a1532770a746c7b640149dbc0d6006",
+    "tools/arm_gravity/verify_home.py": "2153bed4205f4a3b71beee3e2350a6387115c9dbf5d8cc6fe2dcc4d5b69f84d8",
+    "tools/arm_gravity/verify_multi.py": "1ae1af6104cc7d9b713ff6f54f9534eb85d8d89976364d96269c9a8f2751467a",
+    "tools/arm_gravity/verify_ui.py": "9dabb9db045a38e47a687a05b8f790c5fca5ec4fd113760f09531b232e2515ce",
+    "tools/arm_diagnostics/operation_lock.py": "fddafc04fa47d173553074b58762ca2a0c7474f3af6b8e842d0554bcf2eb66ab",
+    "scripts/gravity_dds.xml": "109622a01ef3e3191cb565aaffb3a32e079cfa474a812d32cc707d04e61eff87",
+    "scripts/run_arm_gravity.bash": "d2b1de5ab1e7f78f9e2455022a8503bef6ec1a93ede5285904214eccb9121f74",
+    "scripts/test_arm_gravity.bash": "bcb4b12a6065ad3fd6c5a11563d771a4e7c3987ffeb5d80dee2048e6d43013a8"
+  }
+}

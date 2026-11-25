@@ -1,0 +1,11 @@
+{
+  "archive": "/home/taoqiu/\u6587\u6863/xwechat_files/wxid_30td89b7wmgj22_0ea1/msg/file/2026-11/A6_Y-main(1).zip",
+  "sha256": "a093680006ee5e9a6bda3f7dfc9d960e570de9d58ef76d621b94d6f4d3926b0b",
+  "files": {
+    "src/a6_y_teleop/a6_y_teleop/leader_follower_teleop.py": "515df7865584ab3f05f7b0074be0e1ac149d41e00f8b79c2771460d4f41b253f",
+    "src/a6_y_teleop/config/teleop.yaml": "b63d65d07e1eca367739dc4bcb7c0340c1f183d8a6669b39acecd67696ecaef3",
+    "src/a6_y_teleop/launch/a6_y_gravity_posvel_teleop.launch.py": "d5f520875a7bb0f5be839364032cb5946b3e8078f96b2b8a40223799f6526757",
+    "src/a6_y_ros2_control/launch/a6_y_dual_arm_teleop_bringup.launch.py": "12396a354f4d9c19eb48f306f43ebe411e1e8e77b615521f23b41769ea5a37a0",
+    "src/a6_y_ros2_control/config/follower_direct_position_controllers.yaml": "7d4d3d287d958020597a58be266758d8480e43075b8c22629257481bc52f3995"
+  }
+}
