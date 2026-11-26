@@ -514,9 +514,9 @@ A6Y_SESSION="../diagnostics/arm_teaching_reports/teaching_实际会话编号"
 
 重点查看 `references.csv`、`frequency.csv`、`step_arms.csv`、`step_targets.csv`、`step_tracking.csv`、`step_summary.json` / `.txt` 和 `step_quality.json`。比较稳定时间、超调和误差时，同时检查有效反馈、丢样和目标限步；串口 `send_complete_time` 只表示主机串口写入完成，不是电机 CAN 确认或实际动作时刻。
 
-![已有真机日志的左右 J4 跟随对比与误差分析](diagnostics/teaching_following_analysis_20261126_f1699253fb/j4_comparison.png)
+![最近一次真机运行的左右六轴下发目标与实际反馈全程对比](diagnostics/teaching_following_analysis_20261126_f1699253fb/02_target_vs_actual.png)
 
-*图 7：对已有真机日志的离线分析，展示启动追随、快速变向及静止误差。该次结果仍存在快速大幅变向滞后，不作为整个系统的性能保证。分析程序和报告见 [该次分析目录](diagnostics/teaching_following_analysis_20261126_f1699253fb/)。*
+*图 7：截至本次整理找到的最近一次真机运行，采集于 **2026-11-25 23:52:02～23:53:42（北京时间）**。左右两列分别展示运动左臂、运动右臂 J1～J6 约 100 秒的完整记录；橙色为底层下发目标，紫色为运动端实际反馈。图中目标已经经过限步处理，不等同于示教端原始位置；两者差异见 [示教端到下发目标的全程曲线](diagnostics/teaching_following_analysis_20261126_f1699253fb/01_teacher_vs_target.png)，J4 局部误差与分析程序保留在 [该次分析目录](diagnostics/teaching_following_analysis_20261126_f1699253fb/)。*
 
 ### 日志位置与常见问题
 
