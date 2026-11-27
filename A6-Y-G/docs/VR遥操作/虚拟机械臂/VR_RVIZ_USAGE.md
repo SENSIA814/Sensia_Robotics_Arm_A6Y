@@ -1,5 +1,7 @@
 # A5 虚拟机械臂 VR 使用说明
 
+当前入口总览、环境准备和三种模式的操作顺序见[VR 遥操作总入口](../README.md)。本页保留带日期的实现与调试记录；历史 `validation/` 文件未随本次源码发布，相应位置保留本地记录路径，不作为公开可下载的验证证据。下列命令均在仓库的 `A6-Y-G/` 目录执行。
+
 本入口使用 Quest 右手柄控制 RViz 中的 A5 运动学模型。ROS domain 默认为 84，命名空间为 `/arm6_vr`；没有 ros2_control、串口或 CAN 输出。真实机械臂仍由原有入口控制。
 
 ## 当前实现与验证
@@ -14,11 +16,11 @@
 - 七个独立坐标都有正确输出，手指 mimic 与 TCP TF 均存在，断流后保持姿态。7568 个录制状态离线重算，关节差为 0。
 - 已目视检查 RViz 模型和显示配置。实际 Quest 输入频率、浏览器追踪有效性及手柄操作方向仍需头显联调，不能由模拟客户端测试代替。
 
-报告位于 [核心测试](../../../validation/vr_rviz/unit_tests.xml)、[网关验证](../../../validation/vr_rviz/gateway_check.json)、[ROS 集成验证](../../../validation/vr_rviz/integration_check.json)、[回放验证](../../../validation/vr_rviz/replay_check.json)及 [RViz 截图](../../../validation/vr_rviz/rviz_home.png)。
+报告位于 核心测试（本地历史文件：`validation/vr_rviz/unit_tests.xml`）、网关验证（本地历史文件：`validation/vr_rviz/gateway_check.json`）、ROS 集成验证（本地历史文件：`validation/vr_rviz/integration_check.json`）、回放验证（本地历史文件：`validation/vr_rviz/replay_check.json`）及 RViz 截图（本地历史文件：`validation/vr_rviz/rviz_home.png`）。
 
 ## 启动
 
-从项目根目录执行。当前工作区已构建新包并安装独立网关环境；源码更新后仅需重建新包：
+从 `A6-Y-G/` 目录执行。以下为已有依赖环境中的更新命令；新克隆先按 [VR 统一入口](../README.md#准备构建与网关)构建主工程并安装网关环境：
 
 ```bash
 source scripts/environment.bash
@@ -37,7 +39,7 @@ colcon build --base-paths src --packages-select a6_y_vr_teleop --symlink-install
 ./scripts/run_vr_gateway.bash
 ```
 
-Quest 和主机连接同一局域网，浏览器访问 `https://<主机局域网IP>:8012`，完成本地开发证书信任操作后进入沉浸式 XR。2026-10-08 配置时主机地址为 **10.200.1.65**，对应地址为 **https://10.200.1.65:8012**；地址改变后需要重新生成包含新 IP 的证书。
+Quest 和主机连接同一局域网，浏览器访问 `https://<主机局域网IP>:8012`，完成本地开发证书信任操作后进入沉浸式 XR。主机地址改变后，需要重新生成包含新 IP 的证书。
 
 网页用于手柄输入，完整机械臂显示在电脑的 RViz 中，不传输电脑画面或摄像头图像。右手柄松开握把时应显示 HOLD，按住后显示 TELEOP。终端中的 `right events` 和 `pose_age` 可用于确认原始数据是否持续到达。首次连接或断连恢复，必须先松开握把，再按下；直接保持按下不会启动跟随。
 
@@ -127,12 +129,13 @@ export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
 uv pip sync --python .venv-vr/bin/python vr_gateway/requirements.lock
 ```
 
-若 `uv` 不在 PATH，当前安装路径是 `/home/alce/.local/bin/uv`。有完整 `python3-venv` 和 pip 的环境，也可用常规 venv 加 `pip install -r vr_gateway/requirements.lock`。
+若 `uv` 不在 PATH，先按它的安装位置配置 PATH；也可使用系统 `python3-venv` 创建常规虚拟环境，再执行 `pip install -r vr_gateway/requirements.lock`。
 
 首次证书生成：
 
 ```bash
-./scripts/create_vr_certificate.bash <主机局域网IPv4地址>
+read -r -p "主机局域网 IPv4 地址: " A6Y_VR_IP
+bash scripts/create_vr_certificate.bash "$A6Y_VR_IP"
 ```
 
 脚本不会覆盖已有证书。IP 改变时先把 `validation/vr_rviz/tls/` 下旧证书另存，再生成新证书。私钥不进入源码管理，也不放入网关公开静态目录。浏览器若无法进入 XR，先检查证书信任、HTTPS/WSS 地址和是否已进入沉浸式模式；本地 HTTPS 响应成功不等于头显已开启追踪。

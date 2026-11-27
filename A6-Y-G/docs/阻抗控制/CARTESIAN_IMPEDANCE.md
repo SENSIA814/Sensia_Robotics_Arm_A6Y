@@ -1,5 +1,7 @@
 # 固定末端位姿阻抗控制
 
+> 历史设计与实验记录：本页保留早期算法、参数与验证过程，正文中的 **50 Hz**、参数快照和本机路径不作为当前运行入口。当前原生控制器配置为 **125 Hz**，以 [笛卡尔阻抗 YAML](../../src/a6_y_controllers/config/a5_impedance_controllers.yaml) 为准。当前功能、接口与边界见 [控制器 README](../../src/a6_y_controllers/README.md)，构建及测试入口见 [底层开发与测试](../how-to/develop-and-test.md)。
+
 第一版实现末端位置、姿态的弹性保持：手推时允许偏移，松手后朝启动时的目标位姿恢复。控制点为夹爪中心 `tool_tcp`；坐标轴为 `base_link` 轴向。目标在控制器激活后的首次有效反馈中捕获，运行期间保持固定；停止后重新启动会捕获新的目标。
 
 独立插件 `a6_y_controllers/A6YCartesianImpedanceController` 与原重力控制器共用 A6-Y-G 的硬件驱动、七台电机反馈、URDF、Pinocchio mimic 模型和 MIT 力矩指令通道。两者占用相同命令接口，不能同时激活。通信方式、50 Hz 控制频率、电机方向、零点、夹爪传动比例均沿用当前工程。
