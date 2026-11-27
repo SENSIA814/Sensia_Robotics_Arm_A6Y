@@ -44,7 +44,9 @@ class SessionLog:
 def software_manifest(root):
     files = list((root/'tools/arm_gravity').glob('*.py'))
     files += [root/'tools/arm_gravity/motor_limits.json']
-    files += [root/'tools/arm_moveit/native_stack.py']
+    files += [root/'tools/arm_gravity/teaching_gripper_limits.yaml']
+    files += [root/'tools/arm_moveit'/name for name in (
+        'native_stack.py','gripper_policy.py','gripper_limits.yaml','motion_model.py')]
     files += list((root/'src/a6_y_controllers/src').glob('*.cpp'))
     files += list((root/'src/a6_y_ros2_control/src').glob('*.cpp'))
     files += list((root/'src/a6_y_controllers/include').rglob('*.hpp'))

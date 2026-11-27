@@ -32,6 +32,38 @@ def tick(m,now):
 
 
 class CommandReferenceTests(unittest.TestCase):
+    def test_gripper_mapping_requires_named_feedback_and_accepts_reordered_names(self):
+        m=LeaderFollowerTeleop.__new__(LeaderFollowerTeleop)
+        names=[f'joint{i}' for i in range(1,7)]+['gripper_finger_joint1']
+        m.config=TeleopConfig(joint_names=names,leader_joint_names=names,
+            leader_joint_index=list(range(7)),signs=[1.]*7,scales=[1.]*7,offsets=[0.]*7,
+            slew_into_bounds_joints=['gripper_finger_joint1'])
+        m.latest_leader=SimpleNamespace(name=list(reversed(names)),position=[-.012]+[.2]*6)
+        self.assertEqual(m.map_leader_to_follower(),[.2]*6+[-.012])
+        m.latest_leader=SimpleNamespace(name=names[:6]+['unrelated_joint'],position=[.2]*7)
+        self.assertIsNone(m.map_leader_to_follower())
+
+    def test_gripper_at_closed_zero_holds_first_then_slews_into_inset_limits(self):
+        m=mapper()
+        m.config.joint_names += ['gripper_finger_joint1']
+        m.config.min_position += [-.0343]
+        m.config.max_position += [-.0007]
+        m.config.limit_margin += [0.]
+        m.config.max_velocity += [.015]
+        m.config.slew_into_bounds_joints=['gripper_finger_joint1']
+        current=[.2]*6+[0.]
+        target=[.2]*6+[-.02]
+        output=m.apply_safety(target,current,now=0.)
+        self.assertEqual(output,current)
+        m.last_safe=output;m.last_command_time=0.
+        for i in range(1,201):
+            output=m.apply_safety(target,current,now=i*.01)
+            self.assertLessEqual(abs(output[6]-m.last_safe[6]),.015*.01+1e-12)
+            self.assertLessEqual(output[6],m.last_safe[6])
+            self.assertEqual(output[:6],current[:6])
+            m.last_safe=output;m.last_command_time=i*.01
+        self.assertLess(output[6],-.0007)
+
     def test_recorded_j4_startup_uses_gentle_transition_then_normal_following(self):
         m=mapper();m.config.soft_start_duration=1.2
         begin=[0.,0.,0.,math.radians(-20.184883),0.,0.]

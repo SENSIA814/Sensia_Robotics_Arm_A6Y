@@ -36,9 +36,17 @@ class MotorEmulator:
         self.roles=load_roles(); self.roles[role]['port']=self.port
         self.model=load_model(role,self.roles); self.ranges=protocol_ranges(self.model)
         self.q=np.array([.2,1.2,1.2,.1,.1,.2,-.01])
+        self.dq=np.zeros(7)
         self.enabled=set(); self.frames=[]; self.commands=[]; self.last_torque={}
         self.position_mode=position_mode;self.last_position={};self.mode_writes=[]
         self.native_port=native_port;self.modes={};self.preloaded=set()
+        # Only power-teaching motion arms own a J7 output. Ordinary gravity
+        # tests and passive teacher grippers retain the original prohibition.
+        self.gripper_follow = native_port
+        self.gripper_position_history=[]
+        self.gripper_torque_history=[]
+        self.contact_j7=None
+        self.contact_j7_torque=.20
         self.freeze_motion=False;self.reject_mode=False;self.max_speed={}
         self.shutdown=threading.Event(); self.drop_feedback=False; self.failure=None
         self.worker=threading.Thread(target=self.run,daemon=True); self.worker.start()
@@ -52,8 +60,13 @@ class MotorEmulator:
         motor=e['sign']*(self.q[i-1]-e['offset'])/e['position_scale']
         raw=round((motor+pmax)/(2*pmax)*65535)
         tau=self.last_torque.get(i,0.) if i in self.enabled else 0.
+        if i==7 and i in self.enabled and self.contact_j7 is not None:
+            tau=self.contact_j7_torque if self.last_position.get(7,-10)*e['position_scale'] > self.contact_j7 else 0.
         tm=self.ranges[i]['TMAX']; tround=round((tau+tm)/(2*tm)*4095)
-        data=bytes([(16 if i in self.enabled else 0)|i,raw>>8,raw&255,0x80,0x00|(tround>>8),tround&255,25,25])
+        vm=self.ranges[i]['VMAX']; motor_velocity=e['sign']*self.dq[i-1]/e['position_scale']
+        vround=round((motor_velocity+vm)/(2*vm)*4095)
+        data=bytes([(16 if i in self.enabled else 0)|i,raw>>8,raw&255,vround>>4,
+                    ((vround&15)<<4)|(tround>>8),tround&255,25,25])
         self.reply(i,data)
 
     def reply(self,i,data):
@@ -79,7 +92,8 @@ class MotorEmulator:
                         mode=int.from_bytes(data[4:8],'little')
                         if self.native_port:
                             assert not self.enabled,"mode write while motors enabled"
-                            assert data[0]!=7 and mode in (1,2)
+                            assert mode in (1,2)
+                            assert data[0]!=7 or self.gripper_follow, 'standalone gripper must stay read-only'
                             if self.reject_mode:continue
                             self.modes[data[0]]=mode;self.preloaded.discard(data[0])
                         else:assert mode==(2 if self.position_mode else 1),(self.position_mode,mode)
@@ -92,26 +106,34 @@ class MotorEmulator:
                     elif cid in range(1,8):
                         assert self.modes.get(cid)==1 if self.native_port else not self.position_mode,'MIT command in wrong mode'
                         self.preloaded.add(cid)
-                        assert cid!=7,'gripper must stay read-only'
+                        assert cid!=7 or self.gripper_follow,'standalone gripper must stay read-only'
                         kp=(data[3]&15)<<8|data[4]; kd=data[5]<<4|data[6]>>4
                         velocity=data[2]<<4|data[3]>>4
                         assert kp==kd==0,'MIT stiffness/damping unexpectedly nonzero'
                         assert velocity in (2047,2048),'MIT target velocity not zero'
                         traw=(data[6]&15)<<8|data[7]
                         tau=self.decode(traw,self.ranges[cid]['TMAX'],12)
+                        if cid==7:
+                            assert abs(tau)<=2.000001, 'J7 exceeds haptic cap after wire quantization'
+                            self.gripper_torque_history.append((time.monotonic(),tau))
                         self.last_torque[cid]=tau; self.commands.append((cid,tau))
                         self.feedback(cid)
                     elif 0x101<=cid<=0x107:
                         assert self.modes.get(cid-0x100)==2 if self.native_port else self.position_mode,'POS_VEL command in wrong mode'
-                        i=cid-0x100;assert i!=7,'gripper must stay read-only'
+                        i=cid-0x100;assert i!=7 or self.gripper_follow,'gripper must stay read-only'
                         position,speed=struct.unpack('<ff',data)
-                        limit=([7.5]*3+[5.]*3)[i-1] if self.native_port else .1
+                        entry=self.model['joints'][JOINTS[i-1]]
+                        limit=(.100/entry['position_scale'] if i==7 else ([7.5]*3+[5.]*3)[i-1]) if self.native_port else .1
                         assert np.isfinite([position,speed]).all() and 0<speed<=limit+.00001,(position,speed)
                         self.preloaded.add(i);self.max_speed[i]=max(self.max_speed.get(i,0),speed)
                         self.last_position[i]=position;self.commands.append((i,position))
+                        if i==7:
+                            q=entry['sign']*position*entry['position_scale']+entry['offset']
+                            self.gripper_position_history.append((time.monotonic(),q,speed,i in self.enabled))
                         if i in self.enabled and not self.freeze_motion:
-                            entry=self.model['joints'][JOINTS[i-1]]
                             self.q[i-1]=entry['sign']*position*entry['position_scale']+entry['offset']
+                            if i==7 and self.contact_j7 is not None:
+                                self.q[6]=min(self.q[6],self.contact_j7)
                         self.feedback(i)
                     else: raise AssertionError('unexpected frame '+line.decode())
         except Exception as exc: self.failure=exc

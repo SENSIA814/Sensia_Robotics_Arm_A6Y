@@ -1,6 +1,47 @@
-# 文档导航
+# 文档索引
 
-文档按用途放入中文分类文件夹，原文件名保持不变。启动和使用优先阅读“使用说明”；方案、参考分析和带日期的实测报告用于查阅设计依据与历史记录。
+[项目首页](../../README.md) · [工程入口](../README.md)
+
+当前动力示教文档按读者任务组织。命令默认从仓库根目录执行；较早的模块文档可能以 `A6-Y-G/` 为工作目录，请以该页说明为准。
+
+## 教程：第一次运行
+
+[首次离线运行](tutorials/first-offline-run.md)从依赖核验开始，带你完成配置检查、扫描 dry-run 和离线示教界面。
+
+## 操作指南：完成一项任务
+
+| 任务 | 指南 |
+| --- | --- |
+| 配对、真机启动、正常退出与立即失能 | [运行动力示教](how-to/run-power-teaching.md) |
+| 检查跟随与接触记录，导出诊断包 | [检查示教日志](how-to/inspect-teaching-logs.md) |
+| 核验新 USB-CAN 并迁移绑定 | [更换适配器](how-to/replace-usb-can-adapter.md) |
+| 修改代码后执行软件回归 | [运行离线测试](how-to/run-offline-tests.md) |
+
+## 参数参考：查入口、文件与单位
+
+[运行与配置](reference/runtime-and-configuration.md)汇总环境、角色、控制参数、配置文件和日志字段。设备相关的夹爪端点保存在[运行 YAML](../tools/arm_gravity/teaching_gripper_limits.yaml)，原始标定采样保留在本地。
+
+## 原理说明：理解控制行为
+
+[动力示教与夹爪反馈](explanation/power-teaching-and-gripper-feedback.md)解释绝对关节角跟随、夹爪百分比映射、接触保持、阻力回传与释放条件。
+
+## 独立工具与控制入口
+
+| 模块 | 文档 |
+| --- | --- |
+| 电机诊断与零位 | [七电机扫描、USB 身份与标零](../tools/arm_diagnostics/README.md) |
+| 只读模型 | [实时反馈、坐标换算与 RViz](../tools/arm_visualization/README.md) |
+| 独立重力补偿 | [多臂调参、参数保存与停止](../tools/arm_gravity/README.md) |
+| MoveIt | [轨迹规划与执行、夹爪控制](../tools/arm_moveit/README.md) |
+| 控制器开发 | [控制器说明](../src/a6_y_controllers/README.md) |
+| 截图 | [截图来源与状态](images/README.md) |
+| 历史实验数据 | [diagnostics 数据范围](../../diagnostics/README.md) |
+
+<a id="vr"></a>
+
+## VR、标定与历史专题
+
+以下为已有模块说明与专题资料。带日期的调参报告仅描述对应版本；方案文档用于理解设计，不替代当前入口的操作说明。它们保留原目录和链接，避免已有引用失效。
 
 | 分类 | 文档 |
 | --- | --- |
@@ -12,4 +53,4 @@
 | VR遥操作／参考方案 | [Meta to Piper 源码分析](VR遥操作/参考方案/VR_REFERENCE_ANALYSIS.md) · [Piper 与 A5 控制对比](VR遥操作/参考方案/VR_PIPER_CONTROL_COMPARISON.md) |
 | 图片资源 | [A5 TCP 几何示意图](图片资源/a5_tcp_geometry.png) |
 
-文档中的终端命令默认在项目根目录 `/home/alce/Code/A6-Y-G` 执行。完整项目介绍、环境准备和构建命令见 [项目 README](../README.md)。实测数据仍保存在项目根目录的 `validation/`。
+实测运行日志、下载包和原始标定采样不随本次发布上传。当前示教参数以[运行与配置](reference/runtime-and-configuration.md)及其链接的源码为准。

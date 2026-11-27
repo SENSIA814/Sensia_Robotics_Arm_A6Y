@@ -43,7 +43,8 @@ class StepRecorder:
         self.analysis_complete = False
         self.received, self.dropped, self.written, self.cycles = {}, {}, {}, {}
         self.metadata = dict(schema=1, pairs=pairs, devices=devices or {}, nominal_arm_hz=250, nominal_target_hz=100,
-            units=dict(angle='rad', velocity='rad/s', time='s', error='sent_position - position'),
+            units=dict(angle='J1-J6: rad; J7 single-finger displacement: m',
+                velocity='J1-J6: rad/s; J7: m/s', time='s', error='sent_position - position'),
             timebases=dict(control_time='host steady clock at native read start',
                 send_begin_time='host steady clock before serial write',
                 send_complete_time='host steady clock after serial accepted frame; NOT CAN ACK',
@@ -51,7 +52,7 @@ class StepRecorder:
                 source_ros_time='publisher ROS clock, system clock in this local deployment',
                 receive_monotonic='observer callback time; NOT source time'),
             notes=['One latest native snapshot per observed control cycle, not every CAN frame.',
-                   'J1-J6 position control on followers; J7 gripper is read-only.',
+                   'Followers command J1-J6 and J7 gripper; teacher J7 uses MIT contact haptics.',
                    'Teacher MIT gravity has no servo position target; empty values are intentional.',
                    'Positive error means target exceeds actual in calibrated joint coordinates.',
                    'Only following phase is captured. Exit homing is excluded.',
@@ -120,7 +121,7 @@ class StepRecorder:
                     'source_ros_time', *CYCLE_FIELDS] +
                     [f'{name}_j{i}' for i in range(1, 8) for name in ARM_FIELDS])
                 targets = csv.DictWriter(target_file, ['kind', 'leader', 'follower', 'receive_wall',
-                    'receive_monotonic', 'source_ros_time'] + [f'q_j{i}' for i in range(1, 7)])
+                    'receive_monotonic', 'source_ros_time'] + [f'q_j{i}' for i in range(1, 8)])
                 arms.writeheader(); targets.writeheader()
                 last_flush = time.monotonic()
                 while not self.finished.is_set() or not self.queue.empty():
@@ -136,7 +137,7 @@ class StepRecorder:
                                    receive_monotonic=mono, source_ros_time=stamp(msg))
                         # Use names when present; never silently interchange joint order.
                         positions = dict(zip(msg.name, msg.position))
-                        row.update({f'q_j{i}': positions.get(name) for i, name in enumerate(JOINTS[:6], 1)})
+                        row.update({f'q_j{i}': positions.get(name) for i, name in enumerate(JOINTS, 1)})
                         writer = targets
                     writer.writerow({k: (format(v, '.9f') if finite(v) else '')
                                      if isinstance(v, (float, int)) else v for k, v in row.items()})

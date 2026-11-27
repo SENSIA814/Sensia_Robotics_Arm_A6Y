@@ -13,6 +13,7 @@ import numpy as np
 from analyze_teaching_step import asof, response_metrics
 from teaching_step_log import StepRecorder
 from teaching_step_observer import StepObserverProcess
+from gravity_config import JOINTS
 
 
 class StepAnalysisTests(unittest.TestCase):
@@ -93,6 +94,31 @@ def message(cycle=1,mode=2):
 
 
 class StepRecorderTests(unittest.TestCase):
+    def test_controlled_gripper_logs_and_analysis_complete_with_meter_units(self):
+        with tempfile.TemporaryDirectory() as temp:
+            errors=[]
+            recorder=StepRecorder(temp,[('teaching_left','motion_left')],errors.append)
+            msg=message()
+            msg.joint_names=list(JOINTS)
+            msg.interface_values=[msg.interface_values[0]]*7
+            recorder.put('arm','motion_left',msg)
+            # Reversed message order must still put the gripper in q_j7.
+            action=NS(header=msg.header,name=list(reversed(JOINTS)),position=[-.012]+[.2]*6)
+            recorder.put('safe','motion_left',action,leader='teaching_left')
+            recorder.close()
+            self.assertTrue(recorder.done.wait(3.))
+            self.assertFalse(errors)
+            quality=json.loads(Path(temp,'step_quality.json').read_text())
+            self.assertTrue(quality['analysis_complete'])
+            report=json.loads(Path(temp,'step_summary.json').read_text())
+            gripper=report['results'][-1]
+            self.assertEqual(gripper['status'],'gripper_recorded_not_analyzed')
+            self.assertEqual(gripper['position_unit'],'m_single_finger')
+            self.assertNotIn('steady_error_rad',gripper)
+            with Path(temp,'step_targets.csv').open() as stream:
+                row=next(csv.DictReader(stream))
+            self.assertAlmostEqual(float(row['q_j7']),-.012)
+
     def test_full_lifecycle_pipe_does_not_block_or_raise_into_shutdown(self):
         observer=StepObserverProcess.__new__(StepObserverProcess)
         errors=[]

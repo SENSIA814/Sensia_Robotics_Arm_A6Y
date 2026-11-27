@@ -12,8 +12,9 @@ QT_QPA_PLATFORM=offscreen /usr/bin/python3 -m unittest discover -s "$A6Y_TEACHIN
 ctest --test-dir "$A6Y_GRAVITY_BUILD/build/a6_y_controllers" --output-on-failure -R 'a5_gravity|gravity_home|bounded|safe_zero|friction|haptic'
 ctest --test-dir "$A6Y_GRAVITY_BUILD/build/a6_y_ros2_control" --output-on-failure
 /usr/bin/python3 "$A6Y_TEACHING_TEST/tools/arm_gravity/verify_teaching_port.py"
+/usr/bin/python3 "$A6Y_TEACHING_TEST/tools/arm_gravity/verify_gripper_haptics.py"
 /usr/bin/python3 "$A6Y_TEACHING_TEST/tools/arm_gravity/verify_teaching_port.py" --single --exit-failure
 /usr/bin/python3 "$A6Y_TEACHING_TEST/tools/arm_gravity/verify_teaching_port.py" --single --fault
 /usr/bin/python3 "$A6Y_TEACHING_TEST/tools/arm_gravity/verify_teaching_port.py" --single --mode-failure
-/usr/bin/python3 "$A6Y_TEACHING_TEST/tools/arm_gravity/verify_teaching_port.py" --single --cancel-start
+/usr/bin/python3 "$A6Y_TEACHING_TEST/tools/arm_gravity/verify_teaching_port.py" --single --cancel-home
 QT_QPA_PLATFORM=offscreen /usr/bin/python3 "$A6Y_TEACHING_TEST/tools/arm_gravity/verify_teaching_ui.py"

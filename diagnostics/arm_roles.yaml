@@ -5,137 +5,15 @@ roles:
     display_name: 示教端右臂
     usb_serial: 209D3982534B
     by_id: /dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209D3982534B-if00
-    last_device: /dev/ttyACM2
-    temporary_interface: A
-    confirmed_by: user single-USB identification
-    confirmed_at: '2026-11-24T14:11:40.546987+08:00'
-    responding_motor_ids:
-    - 1
-    - 2
-    - 3
-    - 4
-    - 5
-    - 6
-    - 7
-    missing_expected_motor_ids: []
-    feedback_evidence: /home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/all_arms_20261124_1737.json
-    reported_connection_issue:
-      reported_by: user
-      reported_at: '2026-11-24T14:31:52.393458+08:00'
-      description: 用户已定位到有线松了；稍后再复检。
-      recheck_status: passed
-      last_feedback_preserved: true
-      rechecked_at: '2026-11-24T17:37:37.358193+08:00'
-      recheck_evidence: /home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/all_arms_20261124_1737.json
-      result: ID 1–7 均取得新鲜反馈；此前无响应的 ID 3–7 已恢复通信。
-    feedback_observed_at: '2026-11-24T17:37:37.358193+08:00'
-    present_at_last_connection_check: true
-    motor_states:
-      1: 0
-      2: 0
-      3: 0
-      4: 0
-      5: 0
-      6: 0
-      7: 0
-    feedback_history:
-    - observed_at: '2026-11-24T14:11:40.546987+08:00'
-      responding_motor_ids:
-      - 1
-      - 2
-      missing_expected_motor_ids:
-      - 3
-      - 4
-      - 5
-      - 6
-      - 7
-      feedback_evidence: /home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_right_20261124_1411.json
   teaching_left:
     display_name: 示教端左臂
     usb_serial: 304F33733036
     by_id: /dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_304F33733036-if00
-    last_device: /dev/ttyACM3
-    temporary_interface: B
-    confirmed_by: user single-USB identification
-    confirmed_at: '2026-11-24T14:31:52.393458+08:00'
-    responding_motor_ids:
-    - 1
-    - 2
-    - 3
-    - 4
-    - 5
-    - 6
-    - 7
-    missing_expected_motor_ids: []
-    feedback_evidence: /home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/all_arms_20261124_1737.json
-    motor_states:
-      1: 0
-      2: 0
-      3: 0
-      4: 0
-      5: 0
-      6: 0
-      7: 0
-    feedback_observed_at: '2026-11-24T17:37:37.358193+08:00'
-    present_at_last_connection_check: true
   motion_right:
     display_name: 运动端右臂
     usb_serial: 209B3971534B
     by_id: /dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_209B3971534B-if00
-    last_device: /dev/ttyACM1
-    temporary_interface: C
-    confirmed_by: user single-USB identification
-    confirmed_at: '2026-11-24T14:39:46.132346+08:00'
-    responding_motor_ids:
-    - 1
-    - 2
-    - 3
-    - 4
-    - 5
-    - 6
-    - 7
-    missing_expected_motor_ids: []
-    feedback_evidence: /home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/all_arms_20261124_1737.json
-    motor_states:
-      1: 0
-      2: 0
-      3: 0
-      4: 0
-      5: 0
-      6: 0
-      7: 0
-    feedback_observed_at: '2026-11-24T17:37:37.358193+08:00'
-    present_at_last_connection_check: true
   motion_left:
     display_name: 运动端左臂
     usb_serial: 304C33733036
     by_id: /dev/serial/by-id/usb-Openlight_Labs_CANable2_b158aa7-dirty_github.com_normaldotcom_canable2-fw.git_304C33733036-if00
-    last_device: /dev/ttyACM0
-    temporary_interface: D
-    confirmed_by: user single-USB identification
-    confirmed_at: '2026-11-24T14:37:53.477108+08:00'
-    responding_motor_ids:
-    - 1
-    - 2
-    - 3
-    - 4
-    - 5
-    - 6
-    - 7
-    missing_expected_motor_ids: []
-    feedback_evidence: /home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/all_arms_20261124_1737.json
-    motor_states:
-      1: 0
-      2: 0
-      3: 0
-      4: 0
-      5: 0
-      6: 0
-      7: 0
-    feedback_observed_at: '2026-11-24T17:37:37.358193+08:00'
-    present_at_last_connection_check: true
-updated_at: '2026-11-24T17:38:56.171949+08:00'
-last_connection_check_at: '2026-11-24T17:38:56.171949+08:00'
-all_four_adapters_present: true
-total_responding_motors: 28
-total_expected_motors: 28

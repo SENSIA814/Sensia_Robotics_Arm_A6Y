@@ -1,4 +1,4 @@
-"""Desktop lifecycle for the supplied, unmodified leader_follower_teleop node."""
+"""Desktop lifecycle for six-axis follow plus normalized, bounded gripper follow."""
 import csv
 import json
 import os
@@ -9,7 +9,7 @@ import traceback
 import uuid
 import numpy as np
 
-from gravity_config import ROOT, load_model
+from gravity_config import ROOT, JOINTS, load_model
 from teaching import TeachingCoordinator as LifecycleCoordinator, DEFAULT_PAIRS
 from teaching_logs import SessionLog, software_manifest, write_json
 from teaching_port_config import port_parameters, write_mapper_config, CONTROL_HZ, TARGET_HZ, CAN_BITRATE, POSITION_LIMIT_POLICY, position_bounds
@@ -17,6 +17,21 @@ from teaching_frequency_log import FrequencyLog
 from teaching_step_observer import StepObserverProcess
 from teaching_port_session import PortArmSession
 from native_stack import NativeStack
+from teaching_gripper import GRIPPER_JOINT, gripper_profile
+from a6_y_teleop.gripper_haptics import GripperHapticConfig
+from dataclasses import asdict
+
+
+def action_positions(message):
+    """Canonical mixed-unit order: six revolute radians then finger displacement m."""
+    if len(message.name) != len(message.position) or len(set(message.name)) != len(message.name):
+        raise ValueError('跟随目标关节名称/位置长度不符或名称重复')
+    positions = dict(zip(message.name,message.position))
+    if any(name not in positions for name in JOINTS):
+        raise ValueError('跟随目标缺少六轴或夹爪位置')
+    result = [float(positions[name]) for name in JOINTS]
+    if not np.isfinite(result).all():raise ValueError('跟随目标包含非有限位置')
+    return result
 
 
 class UpstreamRuntime:
@@ -41,7 +56,14 @@ class UpstreamRuntime:
         self.file = (folder/'references.csv').open('w',newline='')
         self.writer = csv.writer(self.file)
         self.writer.writerow(['wall_time','leader','follower','sequence']+
-            [f'{kind}_j{i}' for kind in ('raw','safe','leader_q','follower_q') for i in range(1,7)])
+            [f'{kind}_j{i}' for kind in ('raw','safe','leader_q','follower_q') for i in range(1,8)])
+        self.haptic_file = (folder/'gripper_haptics.csv').open('w', newline='')
+        self.haptic_writer = csv.writer(self.haptic_file)
+        self.haptic_writer.writerow(['wall_time','leader','follower','state','raw_m','target_m',
+                                     'actual_m','follower_motor_Nm','teacher_motor_Nm',
+                                     'contact_reason','reflected_motor_Nm','damping_motor_Nm',
+                                     'leader_velocity_m_s','follower_velocity_m_s'])
+        self.haptic_state = {}
         try:
             topics = {}
             for leader,follower in pairs:
@@ -51,6 +73,8 @@ class UpstreamRuntime:
                 self.publishers[follower] = self.node.create_publisher(Bool,t['enable_topic'],10)
                 self.node.create_subscription(String,t['status_topic'],
                     lambda msg,r=follower:self.on_status(r,msg),10)
+                self.node.create_subscription(String, config['gripper_haptics']['status_topic'],
+                    lambda msg,l=leader,r=follower:self.on_haptic(l,r,msg),10)
                 self.node.create_subscription(JointState,t['raw_action_topic'],
                     lambda msg,l=leader,r=follower:self.on_raw(l,r,msg),10)
                 self.node.create_subscription(JointState,t['safe_action_topic'],
@@ -78,7 +102,19 @@ class UpstreamRuntime:
         self.status[follower] = msg.data
 
     def on_raw(self, leader, follower, msg):
-        self.raw[follower] = list(msg.position)
+        self.raw[follower] = action_positions(msg)
+
+    def on_haptic(self, leader, follower, msg):
+        data = json.loads(msg.data)
+        state = data['state']
+        if self.haptic_state.get(follower) != state:
+            self.owner._event('gripper_haptic_state', leader=leader, follower=follower, **data)
+            self.haptic_state[follower] = state
+            self.owner.update(gripper_haptics=dict(self.haptic_state))
+        self.haptic_writer.writerow([data.get('wall_time',time.time()),leader,follower,state]+
+            [data.get(k) for k in ('raw','target','actual','follower_torque','teacher_torque',
+                                 'contact_reason','reflected_torque','damping_torque',
+                                 'leader_velocity','follower_velocity')])
 
     def on_action(self, leader, follower, msg):
         self.count[follower] += 1
@@ -86,7 +122,7 @@ class UpstreamRuntime:
         source = self.owner.sessions[leader].feedback.snapshot()['q']
         target = self.owner.sessions[follower].feedback.snapshot()['q']
         self.writer.writerow([time.time(),leader,follower,self.count[follower],
-            *self.raw.get(follower,[None]*6),*msg.position,*source[:6],*target[:6]])
+            *self.raw.get(follower,[None]*7),*action_positions(msg),*source[:7],*target[:7]])
 
     def pump(self):
         if self.step:self.step.check()
@@ -113,6 +149,7 @@ class UpstreamRuntime:
         self.node.destroy_node()
         if self.context.ok():self.context.shutdown()
         self.file.close()
+        self.haptic_file.close()
 
 
 class TeachingCoordinator(LifecycleCoordinator):
@@ -127,6 +164,7 @@ class TeachingCoordinator(LifecycleCoordinator):
     def start(self, pairs=DEFAULT_PAIRS, frequency=TARGET_HZ, mock=True, with_rviz=False):
         if frequency != TARGET_HZ:
             raise ValueError(f'当前动力示教目标发送频率固定为 {TARGET_HZ} Hz')
+        self.update(gripper_haptics={})
         return super().start(pairs,frequency,mock,with_rviz)
 
     def _close_sessions(self):
@@ -193,8 +231,16 @@ class TeachingCoordinator(LifecycleCoordinator):
         hw = state['hardware']
         if not state['active'] or not session._fresh(enabled=True,sample=hw):
             raise RuntimeError(self.roles[state['role']]['name']+'：反馈过期或电机异常，停止整组跟随')
-        q=np.asarray(hw['q'][:6],float);v=np.asarray(hw['velocity'][:6],float)
-        limits=np.asarray(self.limit_records[state['role']]['feedback_velocity_limits'])
+        q=np.asarray(hw['q'],float);v=np.asarray(hw['velocity'],float)
+        record=self.limit_records[state['role']]
+        gripper=session.model['joints'][GRIPPER_JOINT]
+        motor=record['motors'][gripper['motor_id']]
+        # J7 feedback validity uses the actual motor VMAX and coordinate scale;
+        # the slower command limit is a different quantity and is not a fault test.
+        limits=np.asarray([*record['feedback_velocity_limits'],
+            motor['VMAX']*abs(float(gripper['position_scale']))])
+        if q.shape != (7,) or v.shape != (7,):
+            raise RuntimeError(state['role']+'：需要完整七轴位置/速度反馈')
         if not np.isfinite(q).all() or not np.isfinite(v).all() or np.any(np.abs(v)>limits):
             raise RuntimeError(state['role']+'：反馈无效或超过该电机 VMAX 协议范围')
         return q
@@ -226,7 +272,9 @@ class TeachingCoordinator(LifecycleCoordinator):
                 configured_rates=rates,
                 implementation='archive_teleop_direct_start',startup_home=False,exit_home=True,home_backend='pos_vel',
                 position_limit_policy=POSITION_LIMIT_POLICY,
-                leader_backend='mit_gravity',follower_backend='stock_direct_position')
+                leader_backend='mit_gravity_with_gripper_haptics',follower_backend='stock_direct_position_7d',
+                gripper_follow=True,gripper_mapping='normalized_open_fraction',
+                position_units=['rad']*6+['m'])
             write_json(folder/'software.json',software_manifest(ROOT))
             write_json(folder/'motor_limits.json',self.limit_records)
             write_json(folder/'session.json',dict(pairs=pairs,frequency=frequency,mock=mock,
@@ -234,7 +282,13 @@ class TeachingCoordinator(LifecycleCoordinator):
                 roles={r:self.roles[r] for r in self.sessions},startup_home=False,exit_home=True,home_backend='pos_vel',
                 position_limit_policy=POSITION_LIMIT_POLICY,
                 position_bounds={r:position_bounds(load_model(r,self.roles)) for r in self.sessions},
-                leader_backend='mit_gravity',follower_backend='stock_direct_position',
+                leader_backend='mit_gravity_with_gripper_haptics',follower_backend='stock_direct_position_7d',
+                gripper_haptics=dict(parameters=asdict(GripperHapticConfig()),
+                    contact_hold='capture_position',follower_force_control=False),
+                gripper_follow=True,gripper_mapping='normalized_open_fraction',
+                gripper_profiles={r:gripper_profile(load_model(r,self.roles)) for r in self.sessions},
+                joint_order=list(JOINTS),position_units=['rad']*6+['m'],
+                exit_gripper_policy='hold_measured_opening_then_disable',
                 application_log=os.environ.get('A6Y_TEACHING_APP_LOG')))
             try:timing=FrequencyLog(folder)
             except OSError as exc:self._log_failure(exc)
@@ -258,11 +312,12 @@ class TeachingCoordinator(LifecycleCoordinator):
             runtime.count={r:0 for r in runtime.count}
             self._event('startup_follow_reference',startup_home=False,
                 references=[dict(leader=leader,follower=follower,
-                    teacher_position=self.sessions[leader].feedback.snapshot()['q'][:6],
-                    follower_position=self.sessions[follower].feedback.snapshot()['q'][:6]) for leader,follower in pairs])
+                    teacher_position=self.sessions[leader].feedback.snapshot()['q'][:7],
+                    follower_position=self.sessions[follower].feedback.snapshot()['q'][:7],
+                    position_units=['rad']*6+['m']) for leader,follower in pairs])
             runtime.enable(True)
             started=time.monotonic();last_flush=started
-            self.update(phase='following',status='示教臂：MIT 重力补偿；运动臂：POS_VEL 跟随示教臂当前位置')
+            self.update(phase='following',status='示教夹爪：轻阻尼、接触力反馈；运动夹爪：百分比跟随、接触后保持')
             while not self.stop_requested.is_set():
                 self._check();runtime.pump()
                 now=time.monotonic()
@@ -276,6 +331,7 @@ class TeachingCoordinator(LifecycleCoordinator):
                         raise RuntimeError(follower+' 原程序目标发布超时')
                 if now-last_flush>.2:
                     runtime.file.flush()
+                    runtime.haptic_file.flush()
                     if timing:
                         try:timing.sample(self.sessions,'following')
                         except Exception as exc:

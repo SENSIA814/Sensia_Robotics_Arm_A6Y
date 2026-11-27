@@ -42,13 +42,13 @@ class ArchivePortTests(unittest.TestCase):
     def test_native_and_mapper_keep_negative_and_zero_teacher_targets(self):
         with tempfile.TemporaryDirectory() as temp:
             follower=SimpleNamespace(namespace='/follower',model=load_model('motion_right'))
-            path,_=write_mapper_config(temp,SimpleNamespace(namespace='/teacher'),follower)
+            path,_=write_mapper_config(temp,SimpleNamespace(namespace='/teacher',model=load_model('teaching_left')),follower)
             config=load_config(str(path))
             # Exercise the actual mapper and the same protocol position bounds.
             mapper=LeaderFollowerTeleop.__new__(LeaderFollowerTeleop)
             mapper.config=config;mapper.last_safe=None;mapper.last_command_time=None
             for j2 in (-.002479591,0.,.000572213):
-                teacher=[-.077630274,j2,.00171664,.001335164,.001335164,.060463874]
+                teacher=[-.077630274,j2,.00171664,.001335164,.001335164,.060463874,-.01]
                 self.assertEqual(mapper.apply_safety(teacher,teacher),teacher)
             path=write_port_control(follower.model,port_parameters('motion_right'),temp,'/follower','cm',False,True)
             data=yaml.safe_load(path.read_text())
@@ -127,16 +127,16 @@ class ArchivePortTests(unittest.TestCase):
         finally:
             allow_worker_exit.set();old.join(2.)
 
-    def test_actual_upstream_loader_accepts_six_axis_cross_pair_config(self):
+    def test_actual_upstream_loader_accepts_seven_axis_cross_pair_config(self):
         with tempfile.TemporaryDirectory() as temp:
-            leader=SimpleNamespace(namespace='/left_teacher')
+            leader=SimpleNamespace(namespace='/left_teacher',model=load_model('teaching_left'))
             follower=SimpleNamespace(namespace='/right_motion',model=load_model('motion_right'))
             path,_=write_mapper_config(temp,leader,follower,100.)
             config=load_config(str(path))
-            self.assertEqual(config.joint_names,list(JOINTS[:6]))
+            self.assertEqual(config.joint_names,list(JOINTS))
             self.assertEqual(config.leader_joint_state_topic,'/left_teacher/joint_states')
             self.assertEqual(config.command_topic,'/right_motion/direct_position_controller/commands')
-            self.assertEqual(config.max_velocity,[7.5]*3+[5.]*3)
+            self.assertEqual(config.max_velocity,[7.5]*3+[5.]*3+[.100])
             self.assertEqual(config.max_joint_step,.35)
             self.assertEqual(config.step_reference,'previous_command')
             self.assertEqual(config.soft_start_duration,1.2)
@@ -159,14 +159,15 @@ class ArchivePortTests(unittest.TestCase):
                     self.assertNotIn('/test/'+CONTROLLER,data)
                     self.assertNotIn(CONTROLLER,data['/test/cm']['ros__parameters'])
                 self.assertEqual(data['/test/'+HOME]['ros__parameters']['command_interfaces'],['position'])
-                self.assertEqual(data['/test/'+FOLLOW]['ros__parameters']['joints'],list(JOINTS[:6]))
+                self.assertEqual(data['/test/'+FOLLOW]['ros__parameters']['joints'],list(JOINTS))
                 robot=ET.fromstring(data['/test/cm']['ros__parameters']['robot_description'])
                 hardware=robot.find('ros2_control/hardware')
                 self.assertEqual(hardware.find("param[@name='can_bitrate']").text,'1000000')
                 self.assertEqual(hardware.find("param[@name='diagnostic_update_rate']").text,'250')
                 self.assertEqual(hardware.find("param[@name='control_mode']").text,'mit' if teacher else 'pos_vel')
                 self.assertEqual(hardware.find("param[@name='defer_enable_until_controller_ready']").text,'true')
-                self.assertEqual(robot.findall('ros2_control/joint')[-1].find("param[@name='read_only']").text,'true')
+                self.assertEqual(robot.findall('ros2_control/joint')[-1].find("param[@name='read_only']").text,'false')
+                self.assertEqual(float(robot.findall('ros2_control/joint')[-1].find("param[@name='max_velocity']").text),.100)
 
 
 if __name__=='__main__':unittest.main()

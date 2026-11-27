@@ -9,6 +9,35 @@ import numpy as np
 from gravity_config import JOINTS, CONTROLLER
 from gravity_session import GravitySession, GravityStack
 from teaching_port_config import HOME, FOLLOW, HOME_TOLERANCE, HOME_TIMEOUT, write_port_control, port_parameters, position_bounds
+from teaching_gripper import GRIPPER_JOINT, controlled_joints, gripper_profile
+
+
+GRIPPER_HOLD_TOLERANCE = .002  # Metres of one finger, not radians or jaw width.
+
+
+def home_targets(model, positions):
+    """Return only six axes to zero; preserve each gripper's measured opening."""
+    names = controlled_joints(model)
+    targets = {name: 0. for name in JOINTS[:6]}
+    if GRIPPER_JOINT in names:
+        if positions is None or len(positions) != len(JOINTS):
+            raise ValueError('回零保持夹爪需要完整七轴反馈')
+        value = float(positions[6])
+        limits = gripper_profile(model)
+        if not np.isfinite(value) or not limits['hardware_min_position_m'] <= value <= limits['hardware_max_position_m']:
+            raise ValueError('夹爪实际位置非有限或超出电机协议范围，不能生成回零保持目标')
+        targets[GRIPPER_JOINT] = value
+    return targets
+
+
+def verify_gripper_hold(positions, targets):
+    if GRIPPER_JOINT not in targets:
+        return
+    if positions is None or len(positions) != len(JOINTS):
+        raise RuntimeError('夹爪保持反馈缺失')
+    actual = float(positions[6])
+    if not np.isfinite(actual) or abs(actual-targets[GRIPPER_JOINT]) > GRIPPER_HOLD_TOLERANCE:
+        raise RuntimeError('退出回零期间夹爪未保持原开度（单指位移容差 0.002 m）')
 
 
 class PortStack(GravityStack):
@@ -71,17 +100,20 @@ class NativeHome:
         if exiting:s.cancel_home.clear()
         if s.release_event.is_set() or s.stop_event.is_set():raise InterruptedError('回零已取消')
         s._select(HOME)
+        targets = home_targets(s.model, s.feedback.measured())
         robot = ET.Element('robot',name='native_home')
         group = ET.SubElement(robot,'group_state',name='home',group='arm')
-        for name in JOINTS[:6]:ET.SubElement(group,'joint',name=name,value='0')
+        for name,value in targets.items():ET.SubElement(group,'joint',name=name,value=str(value))
         srdf = s.stack.directory/'native_home.srdf'
         srdf.write_text(ET.tostring(robot,encoding='unicode'))
         s.update(busy=True,home_stage='executing',status='电机原生 POS_VEL 位置模式回零')
         s._event('native_home_started',controller=HOME,mode='pos_vel',move_duration=20.,hold_duration=2.,
-                 timeout=HOME_TIMEOUT,exiting=exiting)
+                 timeout=HOME_TIMEOUT,exiting=exiting,targets=targets,
+                 gripper_policy='hold_measured_opening_then_disable')
+        joint_args = [value for name in targets for value in ('--joint',name)]
         self.child = s.stack.spawn('native_home','a6_y_ros2_control','move_to_group_state.py',
             ['--srdf',str(srdf),'--action',s.namespace+'/'+HOME+'/follow_joint_trajectory',
-             '--joint-state-topic',s.namespace+'/joint_states'])
+             '--joint-state-topic',s.namespace+'/joint_states',*joint_args])
         try:
             started = time.monotonic();deadline = started+HOME_TIMEOUT;next_progress=started
             while self.child.poll() is None:
@@ -89,6 +121,7 @@ class NativeHome:
                 if s.cancel_home.is_set() or s.release_event.is_set() or s.stop_event.is_set() or (s.close_event.is_set() and not exiting):
                     raise InterruptedError('原生回零已请求取消')
                 if not s._fresh_after_pending(enabled=True):raise RuntimeError('原生回零期间反馈异常')
+                verify_gripper_hold(s.feedback.measured(), targets)
                 if time.monotonic()>deadline:raise TimeoutError('原生回零工具超时，见 native_home.log')
                 if time.monotonic()>=next_progress:
                     elapsed=time.monotonic()-started
@@ -102,6 +135,7 @@ class NativeHome:
             s._wait(lambda:s._fresh(enabled=True),timeout=2.)
             if np.max(np.abs(s.feedback.measured()[:6])) > HOME_TOLERANCE:
                 raise RuntimeError('原生位置回零结果与实际反馈不符（容差 0.03 rad）')
+            verify_gripper_hold(s.feedback.measured(), targets)
             s._event('native_home_reached',positions=s.feedback.measured().tolist(),tolerance=HOME_TOLERANCE)
         finally:
             self.cancel()
@@ -135,16 +169,31 @@ class PortArmSession(GravitySession):
         if positions is None or len(positions) != len(JOINTS):
             raise ValueError('启动需要完整的七轴实际反馈')
         bounds = position_bounds(self.model)
+        grip = gripper_profile(self.model)
+        bounds[GRIPPER_JOINT] = (grip['hardware_min_position_m'],grip['hardware_max_position_m'])
         for name,q in zip(JOINTS,positions):
             low,high = bounds[name]
             if not np.isfinite(q) or not low <= q <= high:
-                raise ValueError(f'{name} 实际位置 {q} 超出电机 PMAX 换算范围 [{low}, {high}]')
+                label = '夹爪协议范围/m' if name == GRIPPER_JOINT else '电机 PMAX 换算范围/rad'
+                raise ValueError(f'{name} 实际位置 {q} 超出{label} [{low}, {high}]')
+
+    def _fresh(self, disabled=False, enabled=False, sample=None):
+        state = self.feedback.snapshot() if sample is None else sample
+        if not super()._fresh(disabled=disabled,enabled=enabled,sample=state):return False
+        with self.lock:mock=self.state['mock']
+        if mock:return True
+        row = state['rows'].get(GRIPPER_JOINT,{})
+        if row.get('position_valid') != 1 or not 0 <= row.get('position_age',-1) < .5:
+            return False
+        if enabled:
+            if row.get('motor_error') != 1.:return False
+        return True
 
     def _ready_status(self):
-        return '反馈就绪，等待示教臂 MIT 重力补偿' if self.model['role'].startswith('teaching_') else '反馈就绪，等待运动臂 POS_VEL 跟随'
+        return '反馈就绪，等待六轴重力补偿与夹爪零刚度力反馈' if self.model['role'].startswith('teaching_') else '反馈就绪，等待六轴及夹爪 POS_VEL 跟随'
 
     def _enabled_status(self):
-        return '示教臂 MIT 重力补偿' if self.model['role'].startswith('teaching_') else '运动臂 POS_VEL 位置跟随（无重力补偿）'
+        return '示教臂六轴 MIT 重力补偿，夹爪轻阻尼、接触反馈' if self.model['role'].startswith('teaching_') else '运动臂六轴及夹爪 POS_VEL 位置跟随（无重力补偿）'
 
     def _controllers_ready(self):
         children = [p for n,p in self.stack.control_children if n.startswith('spawner_')]
@@ -226,7 +275,7 @@ class PortArmSession(GravitySession):
             try:self.home.cancel()
             except Exception as exc:self._event('home_cancel_unverified',message=str(exc))
         super()._release()
-        self.update(follow_phase=0)
+        self.update(follow_phase=0,status='控制输出已停止，已核验七台电机失能，反馈保持连接')
 
     def _close_normally(self):
         self.update(busy=True,notice='')

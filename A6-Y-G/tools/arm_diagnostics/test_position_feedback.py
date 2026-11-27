@@ -18,13 +18,26 @@ class PositionTests(unittest.TestCase):
     def test_checked_in_ranges_match_all_twenty_eight_measured_parameters(self):
         scales = load_position_scales()
         evidence = json.loads((scanner.ROOT.parent / 'diagnostics/all_arms_20261124_1737.json').read_text())
+        roles = yaml.safe_load(scanner.DEFAULT_ROLES.read_text())['roles']
+        checked_serials = set()
         self.assertEqual(sum(len(motors) for motors in scales.values()), 28)
         for adapter in evidence['adapters']:
             serial = adapter['port'].rsplit('_', 1)[1].removesuffix('-if00')
+            # A replaced USB adapter keeps the same physical motors and PMAX.
+            # Resolve the original measurement through the recorded binding history.
+            current = [entry['usb_serial'] for entry in roles.values()
+                       if serial == entry['usb_serial'] or any(
+                           serial == item['previous_binding']['usb_serial']
+                           for item in entry.get('adapter_history', []))]
+            self.assertEqual(len(current), 1, serial)
+            serial = current[0]
+            self.assertNotIn(serial, checked_serials)
+            checked_serials.add(serial)
             for motor in adapter['motors']:
                 scale = scales[serial][motor['requested_id']]
                 self.assertEqual(scale['pmax_rad'], motor['parameters']['PMAX'])
                 self.assertEqual(scale['measured_at'], evidence['time'])
+        self.assertEqual(checked_serials, set(scales))
 
     def test_signed_endpoints_and_gripper_specific_ranges(self):
         scales = load_position_scales()

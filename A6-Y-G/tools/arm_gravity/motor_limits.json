@@ -421,7 +421,7 @@
     }
   },
   "schema_version": 1,
-  "source": "/home/taoqiu/文档/ChatGPT/A6Y远程遥操作/diagnostics/teaching_motor_limits_revision_20261125/motor_registers.json",
+  "source": "diagnostics/teaching_motor_limits_revision_20261125/motor_registers.json",
   "source_sha256": "12eca7820e51b06709b0354c092f71622322bdaf8ef8ce54494aed0225b6a321",
   "feedback_speed_policy": "VMAX * abs(position_scale); protocol feedback validity, not commanded speed",
   "parameter_reference": "https://doc.switch-science.com/media/files/5e033168-99f1-4d2d-b758-e03192a1f071.pdf"

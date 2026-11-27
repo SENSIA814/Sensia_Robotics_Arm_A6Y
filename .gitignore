@@ -32,6 +32,8 @@ venv/
 *.mcap
 
 # Runtime data remains on the local machine; keep source and curated evidence.
+/downloads/
+/diagnostics/github_publish_*/
 /A6-Y-G/validation/
 /diagnostics/*_logs/
 /diagnostics/*_reports/

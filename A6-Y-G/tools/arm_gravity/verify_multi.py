@@ -36,9 +36,9 @@ def _emulator_process(role, connection, position_mode=False, native_port=False):
                 audit['nonqueries'] += not (cid == 0x7ff and data[2] == 0xcc)
                 audit['gripper_commands'] += cid in (7,0x107)
                 audit['zero_commands'] += data == b'\xff' * 7 + b'\xfe'
-                if 0x101 <= cid <= 0x106:
+                if 0x101 <= cid <= 0x107:
                     i = cid - 0x100
-                    entry = emulator.model['joints']['joint'+str(i)]
+                    entry = emulator.model['joints']['gripper_finger_joint1' if i==7 else 'joint'+str(i)]
                     q = entry['sign'] * struct.unpack('<ff', data)[0] * entry['position_scale'] + entry['offset']
                     values = audit['position_commands'].setdefault(i, dict(first=q, min=q, max=q, count=0))
                     values.update(min=min(values['min'], q), max=max(values['max'], q), count=values['count']+1)
@@ -47,6 +47,8 @@ def _emulator_process(role, connection, position_mode=False, native_port=False):
                         commands=len(emulator.commands),
                         last_torque=emulator.last_torque.copy(),
                         last_position=emulator.last_position.copy(),mode_writes=list(emulator.mode_writes),
+                        gripper_position_history=list(emulator.gripper_position_history),
+                        gripper_torque_history=list(emulator.gripper_torque_history),
                         max_speed=emulator.max_speed.copy(),q=emulator.q.tolist(),
                         failure=repr(emulator.failure) if emulator.failure else None)
 
@@ -57,6 +59,15 @@ def _emulator_process(role, connection, position_mode=False, native_port=False):
                 q=np.asarray(command[1],dtype=float)
                 assert q.shape==(7,) and np.isfinite(q).all()
                 emulator.q=q.copy()
+            elif isinstance(command,tuple) and command[0]=='contact_j7':
+                emulator.contact_j7=command[1]
+                if len(command)>2:
+                    assert np.isfinite(command[2]) and 0 <= command[2] <= emulator.ranges[7]['TMAX']
+                    emulator.contact_j7_torque=float(command[2])
+            elif isinstance(command,tuple) and command[0]=='set_dq':
+                dq=np.asarray(command[1],dtype=float)
+                assert dq.shape==(7,) and np.isfinite(dq).all()
+                emulator.dq=dq.copy()
             elif command == 'freeze_motion':
                 emulator.freeze_motion = True
             elif command == 'reject_mode':
@@ -65,6 +76,8 @@ def _emulator_process(role, connection, position_mode=False, native_port=False):
                 emulator.freeze_motion = False
             elif command == 'drop_feedback':
                 emulator.drop_feedback = True
+            elif command == 'restore_feedback':
+                emulator.drop_feedback = False
             elif command == 'close':
                 state = snapshot()
                 emulator.close()

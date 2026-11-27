@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">A6Y 双对动力示教与夹爪接触反馈</title>
+  <desc id="desc">示教左臂对应运动左臂，示教右臂对应运动右臂。示教臂六轴使用重力补偿，J7 使用触觉力矩控制；运动臂七个电机使用 POS_VEL 位置跟随。位置和夹爪开度目标从示教臂发往运动臂。运动端夹爪检测到接触后，向对应示教夹爪反馈阻力。反向反馈仅作用于 J7，不表示六轴力反馈。</desc>
+  <rect width="1200" height="800" rx="16" fill="#0D151D"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans CJK SC', 'PingFang SC', sans-serif">
+    <g id="heading" fill="#DFE8EF">
+      <text x="64" y="88" font-size="56" font-weight="650">双对动力示教</text>
+      <text x="64" y="142" font-size="34" fill="#9BB0C1">两组独立配对 · 夹爪接触阻力回传</text>
+    </g>
+    <defs>
+      <marker id="forward-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+        <path d="M 1 1 L 10 6 L 1 11" fill="none" stroke="#64D8BE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="feedback-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+        <path d="M 1 1 L 10 6 L 1 11" fill="none" stroke="#E7B571" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+    <g id="left-pair">
+      <rect x="64" y="195" width="352" height="226" rx="12" fill="#16232E" stroke="#34485A" stroke-width="2"/>
+      <rect x="784" y="195" width="352" height="226" rx="12" fill="#16232E" stroke="#34485A" stroke-width="2"/>
+      <text x="240" y="258" text-anchor="middle" fill="#DFE8EF" font-size="44" font-weight="600">示教左臂</text>
+      <text x="240" y="322" text-anchor="middle" fill="#DFE8EF" font-size="36">六轴重力补偿</text>
+      <text x="240" y="375" text-anchor="middle" fill="#E7B571" font-size="36">J7 触觉</text>
+      <text x="960" y="258" text-anchor="middle" fill="#DFE8EF" font-size="44" font-weight="600">运动左臂</text>
+      <text x="960" y="330" text-anchor="middle" fill="#DFE8EF" font-size="36">七轴 POS_VEL</text>
+      <text x="960" y="379" text-anchor="middle" fill="#9BB0C1" font-size="34">位置跟随</text>
+      <text x="600" y="266" text-anchor="middle" fill="#64D8BE" font-size="36">位置 / 开度</text>
+      <path d="M 440 287 H 760" fill="none" stroke="#64D8BE" stroke-width="4" marker-end="url(#forward-arrow)"/>
+      <path d="M 760 343 H 440" fill="none" stroke="#E7B571" stroke-width="4" marker-end="url(#feedback-arrow)"/>
+      <text x="600" y="389" text-anchor="middle" fill="#E7B571" font-size="36">J7 接触阻力</text>
+    </g>
+    <g id="right-pair" transform="translate(0 270)">
+      <rect x="64" y="195" width="352" height="226" rx="12" fill="#16232E" stroke="#34485A" stroke-width="2"/>
+      <rect x="784" y="195" width="352" height="226" rx="12" fill="#16232E" stroke="#34485A" stroke-width="2"/>
+      <text x="240" y="258" text-anchor="middle" fill="#DFE8EF" font-size="44" font-weight="600">示教右臂</text>
+      <text x="240" y="322" text-anchor="middle" fill="#DFE8EF" font-size="36">六轴重力补偿</text>
+      <text x="240" y="375" text-anchor="middle" fill="#E7B571" font-size="36">J7 触觉</text>
+      <text x="960" y="258" text-anchor="middle" fill="#DFE8EF" font-size="44" font-weight="600">运动右臂</text>
+      <text x="960" y="330" text-anchor="middle" fill="#DFE8EF" font-size="36">七轴 POS_VEL</text>
+      <text x="960" y="379" text-anchor="middle" fill="#9BB0C1" font-size="34">位置跟随</text>
+      <text x="600" y="266" text-anchor="middle" fill="#64D8BE" font-size="36">位置 / 开度</text>
+      <path d="M 440 287 H 760" fill="none" stroke="#64D8BE" stroke-width="4" marker-end="url(#forward-arrow)"/>
+      <path d="M 760 343 H 440" fill="none" stroke="#E7B571" stroke-width="4" marker-end="url(#feedback-arrow)"/>
+      <text x="600" y="389" text-anchor="middle" fill="#E7B571" font-size="36">J7 接触阻力</text>
+    </g>
+    <text id="scope" x="64" y="753" fill="#9BB0C1" font-size="34">接触反馈仅作用于夹爪 J7</text>
+  </g>
+</svg>

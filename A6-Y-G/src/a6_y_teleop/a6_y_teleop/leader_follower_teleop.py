@@ -52,6 +52,9 @@ class TeleopConfig:
     limit_margin: List[float] = field(default_factory=lambda: [0.02] * 6)
     # Power teaching opts in; unrelated launch paths retain their supplied behavior.
     step_reference: str = "feedback"
+    # Selected joints may start outside an inset software goal range. Their
+    # hardware/startup limits must be validated separately before enabling.
+    slew_into_bounds_joints: List[str] = field(default_factory=list)
 
     smoothing_alpha: float = 1.0
     soft_start_duration: float = 0.1
@@ -66,6 +69,7 @@ class TeleopConfig:
     require_follower_feedback: bool = True
     require_leader_feedback: bool = True
     status_period: float = 0.5
+    gripper_haptics: Optional[Dict[str, Any]] = None
 
 
 def default_config_file() -> str:
@@ -201,6 +205,7 @@ def load_config(path: str) -> TeleopConfig:
     )
     config.max_joint_step = float(nested(data, "limits.max_joint_step", config.max_joint_step))
     config.step_reference = str(nested(data, "limits.step_reference", config.step_reference))
+    config.slew_into_bounds_joints = list(nested(data, "limits.slew_into_bounds_joints", []))
     config.limit_margin = as_float_list_or_scalar(
         nested(data, "limits.limit_margin", config.limit_margin),
         config.limit_margin,
@@ -237,12 +242,23 @@ def load_config(path: str) -> TeleopConfig:
     )
     config.require_leader_feedback = bool(nested(data, "feedback.require_leader_feedback", config.require_leader_feedback))
     config.status_period = float(nested(data, "feedback.status_period", config.status_period))
+    config.gripper_haptics = data.get('gripper_haptics')
 
     validate_config(config)
     return config
 
 
 def validate_config(config: TeleopConfig) -> None:
+    if config.gripper_haptics is not None:
+        from .gripper_haptics import GripperHapticConfig
+        GripperHapticConfig(**config.gripper_haptics['parameters'])
+        if (config.joint_names != DEFAULT_JOINTS+['gripper_finger_joint1'] or
+                config.step_reference != 'previous_command' or
+                config.signs[6] != 1. or config.scales[6] <= 0.):
+            raise ValueError('Gripper haptics requires named seven-joint positive percentage mapping')
+        for name in ('effort_topic', 'gate_topic', 'status_topic', 'leader_feedback_topic', 'follower_feedback_topic'):
+            if not config.gripper_haptics.get(name):
+                raise ValueError('Missing gripper haptic topic: '+name)
     if config.control_hz <= 0.0 or not math.isfinite(config.control_hz):
         raise ValueError("teleop.control_hz must be finite and positive")
     if not 0.0 < config.smoothing_alpha <= 1.0:
@@ -255,6 +271,10 @@ def validate_config(config: TeleopConfig) -> None:
         raise ValueError("teleop.command_type must be 'position_array' or 'trajectory'")
     if config.step_reference not in ("feedback", "previous_command"):
         raise ValueError("limits.step_reference must be 'feedback' or 'previous_command'")
+    if any(name not in config.joint_names for name in config.slew_into_bounds_joints):
+        raise ValueError("limits.slew_into_bounds_joints contains an unknown joint")
+    if config.slew_into_bounds_joints and config.step_reference != "previous_command":
+        raise ValueError("slew_into_bounds_joints requires previous_command")
     if config.step_reference == "previous_command":
         if not math.isfinite(config.max_joint_step) or config.max_joint_step <= 0.0:
             raise ValueError("limits.max_joint_step must be finite and positive for previous_command")
@@ -307,6 +327,10 @@ class LeaderFollowerTeleop(Node):
         self.filtered_raw_velocity: Optional[List[float]] = None
         self.last_status_time = 0.0
         self.last_status_text = ""
+        self.gripper_bridge = None
+        if self.config.gripper_haptics is not None:
+            from .gripper_haptics_ros import GripperHapticBridge
+            self.gripper_bridge = GripperHapticBridge(self, self.config.gripper_haptics)
 
         self.create_subscription(JointState, self.config.leader_joint_state_topic, self.on_leader_state, 20)
         self.create_subscription(JointState, self.config.follower_joint_state_topic, self.on_follower_state, 20)
@@ -350,6 +374,8 @@ class LeaderFollowerTeleop(Node):
             self.reset_command_reference()
 
     def reset_command_reference(self) -> None:
+        if getattr(self, 'gripper_bridge', None) is not None:
+            self.gripper_bridge.stop()
         if self.config.step_reference == "previous_command":
             self.last_safe = None
             self.last_command_time = None
@@ -413,6 +439,15 @@ class LeaderFollowerTeleop(Node):
 
         candidate = self.apply_soft_start(target, now)
         safe = self.apply_safety(candidate, follower_positions, now=now)
+        if getattr(self, 'gripper_bridge', None) is not None:
+            try:
+                safe = self.gripper_bridge.apply(target, safe, self.last_safe or follower_positions,
+                                                 now, self.soft_start_begin is not None)
+            except ValueError as exc:
+                self.reset_command_reference()
+                self.publish_status(str(exc))
+                self.publish_hold_if_possible(follower_positions)
+                return
 
         self.publish_action(self.raw_pub, target)
         self.publish_action(self.safe_pub, safe)
@@ -425,6 +460,8 @@ class LeaderFollowerTeleop(Node):
 
     def feedback_errors(self, now: float) -> List[str]:
         errors = []
+        if getattr(self, 'gripper_bridge', None) is not None:
+            errors.extend(self.gripper_bridge.errors(now))
         if self.config.require_leader_feedback:
             if self.latest_leader is None:
                 errors.append("missing leader joint state")
@@ -460,6 +497,11 @@ class LeaderFollowerTeleop(Node):
             leader_name = self.config.leader_joint_names[leader_index]
             if leader_name in by_name:
                 leader_value = by_name[leader_name]
+            elif self.config.joint_names[follower_index] in self.config.slew_into_bounds_joints:
+                # An inset-range joint (the meter-valued gripper in teaching)
+                # must be positively identified. Never substitute another
+                # joint's positional slot when its named feedback is missing.
+                return None
             elif leader_index < len(self.latest_leader.position):
                 leader_value = float(self.latest_leader.position[leader_index])
             else:
@@ -586,7 +628,13 @@ class LeaderFollowerTeleop(Node):
                 if step_limit > 0.0:
                     delta = min(max(limited - follower_positions[index], -step_limit), step_limit)
                     limited = follower_positions[index] + delta
-            safe.append(min(max(limited, low), high))
+            if command_reference and self.config.joint_names[index] in self.config.slew_into_bounds_joints:
+                # E.g. a closed gripper can start at 0 while the inset goal is
+                # -0.0007 m. Preserve the first measured hold and slew inward;
+                # a final clamp here would bypass both dt=0 and the speed limit.
+                safe.append(limited)
+            else:
+                safe.append(min(max(limited, low), high))
         return safe
 
     def publish_hold_if_possible(self, follower_positions: Optional[List[float]]) -> None:

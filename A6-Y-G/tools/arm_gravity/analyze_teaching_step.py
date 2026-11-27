@@ -166,7 +166,7 @@ def response_metrics(t, teacher, target, actual, raw=None, safe=None):
 def load_arms(path):
     fields = ['receive_wall','receive_monotonic','control_time','dry_run'] + [f'{name}_j{i}'
         for i in range(1,8) for name in ('position','sent_position','feedback_receive_time',
-            'send_complete_time','sent_mode','position_valid','position_age','fault','enabled')]
+            'send_complete_time','sent_mode','command_count','position_valid','position_age','fault','enabled')]
     rows = {}
     with path.open() as stream:
         for row in csv.DictReader(stream):
@@ -207,7 +207,11 @@ def analyze_folder(folder):
             for joint in range(1,8):
                 result = dict(leader=leader,follower=follower,joint=joint,status='missing_data',flags=[])
                 if joint == 7:
-                    result['status'] = 'read_only_gripper'
+                    controlled = follower in arms and np.any(arms[follower]['command_count_j7'] > 0)
+                    result['status'] = 'gripper_recorded_not_analyzed' if controlled else 'read_only_gripper'
+                    result['position_unit'] = 'm_single_finger'
+                    if controlled:
+                        result['flags'].append('J7 raw targets and feedback retained; radian step thresholds do not apply')
                 elif leader in arms and follower in arms:
                     a,b = arms[leader],arms[follower]
                     key = lambda name:f'{name}_j{joint}'
@@ -252,6 +256,7 @@ def analyze_folder(folder):
         for result in report['results']:
             writer.writerow(dict(result,flags=';'.join(result['flags'])))
     labels=dict(measured='已测得',not_settled='未稳定',no_excitation='未激励',read_only_gripper='夹爪只读',
+                gripper_recorded_not_analyzed='夹爪已记录（米），不套用六轴角度阶跃阈值',
         insufficient_data='数据不足',missing_data='缺少数据',returned_or_multiple_movements='回到起点/多次移动',
         initial_teacher_not_stable='初始示教姿态未静止',teacher_not_held='示教端未保持静止',
         reversal_or_multiple_movements='反向/多次移动',target_not_excited='下发目标变化不足',

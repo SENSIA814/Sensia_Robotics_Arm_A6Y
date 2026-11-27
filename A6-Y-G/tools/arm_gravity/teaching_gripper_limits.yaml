@@ -1,0 +1,32 @@
+schema_version: 1
+calibration_id: 20261127_manual_j7_endpoints
+measured_at: '2026-11-27T17:08:38+08:00'
+method: operator_positioned_disabled_motor_30_samples_per_endpoint
+physical_jaw_gap_measured: false
+endpoint_margin_motor_rad: 0.02928870292887029
+feedback_tolerance_motor_rad: 0.0041841004184100415
+roles:
+  motion_left:
+    usb_serial: 304C33733036
+    motor_id: 7
+    pmax_rad: 3.140000104904175
+    closed_motor_rad: -0.010301366026617575
+    open_motor_rad: -1.7218613530165763
+  motion_right:
+    usb_serial: 209B3971534B
+    motor_id: 7
+    pmax_rad: 12.565999984741211
+    closed_motor_rad: -0.00019174486892126197
+    open_motor_rad: -1.7270460343719236
+  teaching_left:
+    usb_serial: 304F33733036
+    motor_id: 7
+    pmax_rad: 12.565999984741211
+    closed_motor_rad: -0.026269047042184468
+    open_motor_rad: -1.6894640400633971
+  teaching_right:
+    usb_serial: 209D3982534B
+    motor_id: 7
+    pmax_rad: 12.565999984741211
+    closed_motor_rad: 0.010162478052816226
+    open_motor_rad: -1.6484306381142932

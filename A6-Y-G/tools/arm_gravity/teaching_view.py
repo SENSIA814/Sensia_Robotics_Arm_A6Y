@@ -2,6 +2,8 @@
 """Desktop pair selection and protected lifecycle for joint teaching."""
 import argparse
 import json
+import math
+import os
 from pathlib import Path
 import signal
 import sys
@@ -19,6 +21,7 @@ from teaching import DEFAULT_PAIRS, validate_pairs
 from teaching_port import TeachingCoordinator
 from gravity_config import load_roles, load_model
 from teaching_port_config import port_parameters, CONTROL_HZ, TARGET_HZ, CAN_BITRATE
+from teaching_gripper import gripper_profile, opening_percent
 from arm_view import STYLE
 from teaching_logs import LogTail,export_report,summary_text
 
@@ -40,7 +43,7 @@ class TeachingWindow(QWidget):
         box=QVBoxLayout(self);box.setContentsMargins(22,18,22,18);box.setSpacing(10)
         title=QLabel('动力示教 · 原程序位置跟随');title.setStyleSheet('font-size:24px;font-weight:600');box.addWidget(title)
         note=QLabel('选择配对 → 示教臂开启重力补偿 → 运动臂跟随示教臂当前位置（启动不回零）\n'
-                    '默认左对左、右对右；取消一组即为 1 对 1。仅 J1～J6 参与，夹爪保持只读。\n'
+                    '默认左对左、右对右；取消一组即为 1 对 1。夹爪按 0～100% 跟随；示教夹爪轻微阻尼，抓到物体后反馈阻力。\n'
                     '阶跃采集：开始跟随后静止 2 秒 → 手动移动一次 → 保持至少 10 秒 → 停止并导出日志。')
         note.setWordWrap(True);box.addWidget(note)
         self.pair_checks=[];self.leaders=[];self.followers=[];self.configuration=[]
@@ -71,7 +74,8 @@ class TeachingWindow(QWidget):
         self.release_button=QPushButton('已托住全部 · 立即失能');self.release_button.clicked.connect(self.release)
         self.release_button.setObjectName('stop')
         for button in (self.start_button,self.stop_button,self.release_button):actions.addWidget(button)
-        self.table=QTableWidget(4,4);self.table.setHorizontalHeaderLabels(['机械臂','运行状态','J1～J6 反馈 / rad','失能核验'])
+        self.gripper_profiles={r:gripper_profile(load_model(r,self.coordinator.roles)) for r in self.coordinator.roles}
+        self.table=QTableWidget(4,4);self.table.setHorizontalHeaderLabels(['机械臂','运行状态','J1～J6 / rad；夹爪开度 / %','失能核验'])
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         for col in (0,2,3):self.table.horizontalHeader().setSectionResizeMode(col,QHeaderView.ResizeToContents)
         self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.setAlternatingRowColors(True)
@@ -105,7 +109,7 @@ class TeachingWindow(QWidget):
         splitter.addWidget(logs);splitter.setSizes([190,260])
         self.metrics=QLabel();self.metrics.setWordWrap(True);box.addWidget(self.metrics)
         footer=QLabel('反馈速度范围按各电机实读 VMAX；逐轴数值与参数来源见启动日志。\n'
-                      '使用原程序的目标映射与 POS_VEL 跟随；启动不回零；退出各臂同时原生位置回零，超时停止等待。跟随时无跨臂或环境碰撞模型，请保持运动空间畅通。\n'
+                      '夹爪两端各内收单指 0.7 mm，单指限速 100 mm/s。空载阻尼上限 0.015 N·m，接触反馈与阻尼合计上限 2.0 N·m（电机力矩）。启动不回零；退出六轴回零、四个夹爪保持开度后失能。\n'
                       '关窗 / Ctrl+C 执行正常退出保护；失败保留窗口。立即失能会跳过回零并失去力矩支撑。')
         footer.setWordWrap(True);box.addWidget(footer)
         self.timer=QTimer(self);self.timer.timeout.connect(self.refresh);self.timer.start(100);self.refresh()
@@ -213,26 +217,34 @@ class TeachingWindow(QWidget):
         for row,role in enumerate(('teaching_left','motion_left','teaching_right','motion_right')):
             arm=state['arms'].get(role,{});q=arm.get('hardware',{}).get('q')
             values=[self.coordinator.roles[role]['name'],arm.get('status','未选择 / 未连接'),
-                    '  '.join(f'{x:+.3f}' for x in q[:6]) if q is not None else '—',
+                    ('  '.join(f'{x:+.3f}' for x in q[:6])+f' | 夹爪 {opening_percent(self.gripper_profiles[role],q[6]):.1f}%') if q is not None and len(q)==7 and math.isfinite(q[6]) else '—',
                     '已确认' if arm.get('release_confirmed') is True else '未确认' if arm else '—']
+            haptic=state.get('gripper_haptics',{}).get(role)
+            if state['phase']=='following' and haptic in ('free','contact'):
+                values[1]+='；'+('夹爪接触保持' if haptic=='contact' else '夹爪自由跟随')
             for col,text in enumerate(values):
                 item=QTableWidgetItem(text);item.setToolTip(text);self.table.setItem(row,col,item)
         self.metrics.setText(f"每组观测目标：{state.get('packets',0)}　目标观测平均：{state.get('actual_hz',0):.1f} Hz\n日志：{state.get('directory') or '尚未开始'}")
         self.refresh_logs(state)
-        if self.close_pending:
-            if state['close_failed'] or (not state['running'] and state['phase']=='error'):
-                self.close_pending=False
-            elif not busy and state['phase']=='stopped':
-                self.close_pending=False;self.close()
+        if self.close_pending and state.get('close_failed'):
+            # A failed exit keeps the window available and permits a new close
+            # request; otherwise close_pending suppresses every later retry.
+            self.close_pending=False
+        if self.close_pending and not busy:
+            self.close_pending=False;self.close()
 
     def closeEvent(self,event):
         state=self.coordinator.snapshot()
         if self.coordinator.alive() or state['running'] or (self.coordinator.worker and self.coordinator.worker.is_alive()):
             if not self.close_pending:self.close_pending=True;self.coordinator.stop()
             event.ignore()
-        elif state.get('close_failed'):
-            self.error.setText((state.get('close_error') or state['error'])+'；退出保护未完成，窗口保留');event.ignore()
-        else:event.accept()
+        else:
+            # A stopped coordinator means every session worker has already torn
+            # down its ROS nodes and controller processes (or has been asked to).
+            # Exit even when the last session left an unconfirmed release; the
+            # alternative traps the window behind an unreachable "立即失能".
+            # Motor watchdogs disable any arm whose command stream was cut.
+            event.accept()
 
 
 def main():
@@ -241,10 +253,24 @@ def main():
     args=parser.parse_args()
     if args.check:
         roles=load_roles();validate_pairs(DEFAULT_PAIRS,roles)
-        for role in (r for pair in DEFAULT_PAIRS for r in pair):load_model(role,roles);port_parameters(role,roles)
-        print('动力示教四臂模型、身份、默认配对及参数检查通过；没有连接硬件。');return
+        for role in (r for pair in DEFAULT_PAIRS for r in pair):
+            gripper_profile(load_model(role,roles));port_parameters(role,roles)
+        print('动力示教四臂模型、身份、默认配对、夹爪端点及速度参数检查通过；没有连接硬件。');return
     app=QApplication(sys.argv[:1]);app.setFont(QFont('Noto Sans CJK SC',10))
-    window=TeachingWindow();signal.signal(signal.SIGINT,lambda *_:window.close());signal.signal(signal.SIGTERM,lambda *_:window.close())
+    window=TeachingWindow()
+    interrupt_at=[None]
+    def handle_interrupt(*_):
+        # First Ctrl+C requests a graceful close. A second one, once the
+        # graceful path has had a couple of seconds and still has not exited,
+        # leaves immediately. process_guard reaps the native ROS nodes when
+        # this PID disappears; motor watchdogs disable any energized arm.
+        now=time.monotonic()
+        if interrupt_at[0] is not None and now-interrupt_at[0]>=2.0:
+            os._exit(1)
+        interrupt_at[0]=now
+        window.close()
+    signal.signal(signal.SIGINT,handle_interrupt)
+    signal.signal(signal.SIGTERM,handle_interrupt)
     def ui_exception(kind,value,tb):
         detail=''.join(traceback.format_exception(kind,value,tb))
         # The launcher also captures stderr before Qt or ROS can initialize.
@@ -253,6 +279,10 @@ def main():
         window.log_notice.setText('界面异常已记录：'+str(value))
     sys.excepthook=ui_exception
     window.show();app.exec_()
+    # The window has closed and every session worker has finished. Force the
+    # interpreter to exit even if a non-daemon ROS/middleware thread lingers;
+    # the terminal must return to the caller instead of hanging on Ctrl+C.
+    os._exit(0)
 
 
 if __name__=='__main__':main()
