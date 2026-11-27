@@ -10,6 +10,7 @@ import numpy as np
 from gravity_config import ROOT, CONTROLLER, JOINTS, load_roles
 from teaching import DEFAULT_PAIRS
 from teaching_port import TeachingCoordinator
+from teaching_port_config import STARTUP_BLEND_SECONDS
 from verify_multi import ProcessMotorEmulator, cleanup
 
 
@@ -52,7 +53,7 @@ def verify(single=False, fault=False, exit_failure=False, mode_failure=False, ca
         c=TeachingCoordinator(roles=roles,report_dir=ROOT.parent/'diagnostics/arm_teaching_test_reports')
         c.start(pairs,mock=False,with_rviz=False)
         state=wait(c,lambda s:s['phase']=='following',timeout=30)
-        time.sleep(.8)
+        time.sleep(STARTUP_BLEND_SECONDS+.3)
         for role,em in emulators.items():
             data=em.snapshot();modes=[m for i,m in data['mode_writes'] if i==1]
             assert modes==([1] if role.startswith('teaching') else [2]),(role,modes)

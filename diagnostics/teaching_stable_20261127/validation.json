@@ -1,0 +1,18 @@
+{
+  "validated_at": "2026-11-27T14:07:26.508511+08:00",
+  "build": "5 ROS packages passed",
+  "unit_tests": {
+    "count": 115,
+    "result": "passed"
+  },
+  "offline_model_identity_configuration": "passed",
+  "frozen_source_files_verified": 463,
+  "installed_mapper_sha256": "55ec274301039e2ec3c781adb423c47ee61178edbd31a199296127acd5febd11",
+  "previous_virtual_serial_validation": {
+    "performed_at": "2026-11-27T12:34:05+08:00",
+    "recorded_start": "passed",
+    "cancel_exit_home": "passed"
+  },
+  "physical_motion_performed_for_publication": false,
+  "flash_writes_for_publication": 0
+}

@@ -10,6 +10,7 @@ HOME = 'arm_controller'
 FOLLOW = 'direct_position_controller'
 CONTROL_HZ = 250
 TARGET_HZ = 100
+STARTUP_BLEND_SECONDS = 1.2
 CAN_BITRATE = 1000000
 TIMING_INTERFACES = ('control_time', 'control_cycle_count', 'control_period',
                      'control_overrun_count', 'read_duration', 'write_duration',
@@ -104,9 +105,11 @@ def write_mapper_config(folder, leader, follower, frequency=TARGET_HZ):
     config['joints'] = {k:v[:6] for k,v in config['joints'].items()}
     bounds = position_bounds(follower.model)
     config['limits'].update(
+        step_reference='previous_command',
         min_position=[bounds[n][0] for n in JOINTS[:6]],
         max_position=[bounds[n][1] for n in JOINTS[:6]],
         limit_margin=[0.]*6)
+    config['smoothing']['soft_start_duration'] = STARTUP_BLEND_SECONDS
     for section in ('limits','prediction'):
         for key,value in config[section].items():
             if isinstance(value,list):config[section][key] = value[:6]

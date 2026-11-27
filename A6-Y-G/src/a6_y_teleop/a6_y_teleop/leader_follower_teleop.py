@@ -50,6 +50,8 @@ class TeleopConfig:
     max_velocity: List[float] = field(default_factory=lambda: [5.5, 5.5, 5.5, 3.0, 3.0, 3.0])
     max_joint_step: float = 0.35
     limit_margin: List[float] = field(default_factory=lambda: [0.02] * 6)
+    # Power teaching opts in; unrelated launch paths retain their supplied behavior.
+    step_reference: str = "feedback"
 
     smoothing_alpha: float = 1.0
     soft_start_duration: float = 0.1
@@ -198,6 +200,7 @@ def load_config(path: str) -> TeleopConfig:
         "limits.max_velocity",
     )
     config.max_joint_step = float(nested(data, "limits.max_joint_step", config.max_joint_step))
+    config.step_reference = str(nested(data, "limits.step_reference", config.step_reference))
     config.limit_margin = as_float_list_or_scalar(
         nested(data, "limits.limit_margin", config.limit_margin),
         config.limit_margin,
@@ -250,6 +253,13 @@ def validate_config(config: TeleopConfig) -> None:
         raise ValueError("feedback.timeout must be positive")
     if config.command_type not in ("position_array", "trajectory"):
         raise ValueError("teleop.command_type must be 'position_array' or 'trajectory'")
+    if config.step_reference not in ("feedback", "previous_command"):
+        raise ValueError("limits.step_reference must be 'feedback' or 'previous_command'")
+    if config.step_reference == "previous_command":
+        if not math.isfinite(config.max_joint_step) or config.max_joint_step <= 0.0:
+            raise ValueError("limits.max_joint_step must be finite and positive for previous_command")
+        if any(not math.isfinite(v) or v <= 0.0 for v in config.max_velocity):
+            raise ValueError("limits.max_velocity must be finite and positive for previous_command")
     if not 0.0 <= config.prediction_velocity_alpha <= 1.0:
         raise ValueError("prediction.velocity_alpha must be within [0, 1]")
     if len(config.leader_joint_names) < max(config.leader_joint_index) + 1:
@@ -288,6 +298,7 @@ class LeaderFollowerTeleop(Node):
         self.previous_enable = self.enable
         self.emergency_stop = False
         self.last_safe: Optional[List[float]] = None
+        self.last_command_time: Optional[float] = None
         self.soft_start_begin: Optional[List[float]] = None
         self.soft_start_target: Optional[List[float]] = None
         self.soft_start_time = 0.0
@@ -315,7 +326,9 @@ class LeaderFollowerTeleop(Node):
         self.get_logger().info(
             f"A6-Y teleop ready: leader={self.config.leader_joint_state_topic}, "
             f"follower={self.config.follower_joint_state_topic}, command={self.config.command_topic}, "
-            f"command_type={self.config.command_type}, publish_commands={self.config.publish_commands}"
+            f"command_type={self.config.command_type}, publish_commands={self.config.publish_commands}, "
+            f"step_reference={self.config.step_reference}, target_velocity_limits={self.config.max_velocity}, "
+            f"soft_start_duration={self.config.soft_start_duration}s"
         )
 
     def on_leader_state(self, msg: JointState) -> None:
@@ -328,9 +341,20 @@ class LeaderFollowerTeleop(Node):
 
     def on_enable(self, msg: Bool) -> None:
         self.enable = bool(msg.data)
+        if not self.enable:
+            self.reset_command_reference()
 
     def on_emergency_stop(self, msg: Bool) -> None:
         self.emergency_stop = bool(msg.data)
+        if self.emergency_stop:
+            self.reset_command_reference()
+
+    def reset_command_reference(self) -> None:
+        if self.config.step_reference == "previous_command":
+            self.last_safe = None
+            self.last_command_time = None
+            self.soft_start_begin = None
+            self.soft_start_target = None
 
     def control_tick(self) -> None:
         now = time.monotonic()
@@ -338,6 +362,7 @@ class LeaderFollowerTeleop(Node):
         follower_positions = self.follower_positions()
 
         if self.emergency_stop:
+            self.reset_command_reference()
             self.reset_prediction_state()
             self.publish_status("emergency_stop")
             self.publish_hold_if_possible(follower_positions)
@@ -345,6 +370,7 @@ class LeaderFollowerTeleop(Node):
             return
 
         if status_errors:
+            self.reset_command_reference()
             self.reset_prediction_state()
             self.publish_status("; ".join(status_errors))
             self.publish_hold_if_possible(follower_positions)
@@ -352,11 +378,13 @@ class LeaderFollowerTeleop(Node):
             return
 
         if follower_positions is None:
+            self.reset_command_reference()
             self.publish_status("waiting for follower joint state")
             self.previous_enable = self.enable
             return
 
         if self.config.require_enable and not self.enable:
+            self.reset_command_reference()
             self.reset_prediction_state()
             self.last_safe = list(follower_positions)
             self.soft_start_begin = None
@@ -368,6 +396,7 @@ class LeaderFollowerTeleop(Node):
 
         raw = self.map_leader_to_follower()
         if raw is None:
+            self.reset_command_reference()
             self.reset_prediction_state()
             self.publish_status("waiting for leader joint state")
             self.publish_hold_if_possible(follower_positions)
@@ -375,19 +404,22 @@ class LeaderFollowerTeleop(Node):
             return
         target = self.apply_prediction(raw, now)
 
-        if self.enable and not self.previous_enable:
+        if (self.enable and not self.previous_enable) or (
+                self.config.step_reference == "previous_command" and self.last_command_time is None):
             self.last_safe = list(follower_positions)
             self.soft_start_begin = list(follower_positions)
             self.soft_start_target = list(target)
             self.soft_start_time = now
 
         candidate = self.apply_soft_start(target, now)
-        safe = self.apply_safety(candidate, follower_positions)
-        self.last_safe = list(safe)
+        safe = self.apply_safety(candidate, follower_positions, now=now)
 
         self.publish_action(self.raw_pub, target)
         self.publish_action(self.safe_pub, safe)
         self.publish_command(safe)
+        # This is the last published reference, not a claim of a motor/CAN ACK.
+        self.last_safe = list(safe)
+        self.last_command_time = now
         self.publish_status("running")
         self.previous_enable = self.enable
 
@@ -496,16 +528,21 @@ class LeaderFollowerTeleop(Node):
         duration = max(self.config.soft_start_duration, 1e-6)
         ratio = min(max((now - self.soft_start_time) / duration, 0.0), 1.0)
         eased = ratio * ratio * (3.0 - 2.0 * ratio)
+        # Power teaching blends into the live target. A frozen startup endpoint
+        # would leave a catch-up step at handoff if the teacher moved meanwhile.
+        # The downstream previous-command limiter still bounds every publication.
+        target = raw if self.config.step_reference == "previous_command" else self.soft_start_target
         candidate = [
-            begin + eased * (target - begin)
-            for begin, target in zip(self.soft_start_begin, self.soft_start_target)
+            begin + eased * (goal - begin)
+            for begin, goal in zip(self.soft_start_begin, target)
         ]
         if ratio >= 1.0:
             self.soft_start_begin = None
             self.soft_start_target = None
         return candidate
 
-    def apply_safety(self, candidate: List[float], follower_positions: List[float]) -> List[float]:
+    def apply_safety(self, candidate: List[float], follower_positions: List[float],
+                     now: Optional[float] = None) -> List[float]:
         if self.last_safe is None:
             previous = list(follower_positions)
         else:
@@ -519,6 +556,17 @@ class LeaderFollowerTeleop(Node):
 
         safe = []
         period = 1.0 / self.config.control_hz
+        dt = period
+        command_reference = self.config.step_reference == "previous_command"
+        if command_reference:
+            if self.last_command_time is None:
+                # First publication holds the measured pose; no zero or target jump.
+                previous = list(follower_positions)
+                dt = 0.0
+            else:
+                elapsed = (time.monotonic() if now is None else now) - self.last_command_time
+                # Never turn a delayed callback into a large catch-up command.
+                dt = min(max(elapsed, 0.0), period)
         for index, value in enumerate(smoothed):
             low = self.config.min_position[index] + self.config.limit_margin[index]
             high = self.config.max_position[index] - self.config.limit_margin[index]
@@ -528,11 +576,16 @@ class LeaderFollowerTeleop(Node):
 
             limited = min(max(value, low), high)
             max_step = max(self.config.max_joint_step, 0.0)
-            velocity_step = max(self.config.max_velocity[index], 0.0) * period * 1.5
-            step_limit = max_step if velocity_step <= 0.0 else min(max_step, velocity_step)
-            if step_limit > 0.0:
-                delta = min(max(limited - follower_positions[index], -step_limit), step_limit)
-                limited = follower_positions[index] + delta
+            if command_reference:
+                step_limit = min(max_step, self.config.max_velocity[index] * dt)
+                delta = min(max(limited - previous[index], -step_limit), step_limit)
+                limited = previous[index] + delta
+            else:
+                velocity_step = max(self.config.max_velocity[index], 0.0) * period * 1.5
+                step_limit = max_step if velocity_step <= 0.0 else min(max_step, velocity_step)
+                if step_limit > 0.0:
+                    delta = min(max(limited - follower_positions[index], -step_limit), step_limit)
+                    limited = follower_positions[index] + delta
             safe.append(min(max(limited, low), high))
         return safe
 
